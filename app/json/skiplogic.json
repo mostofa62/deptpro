@@ -1,0 +1,82 @@
+{
+    "introduction_permission.interviewer_permission": {
+        "radio": [
+            {
+                "condition": "is",
+                "value": [
+                    1
+                ],
+                "route": "2eligibility_timeselection",
+                "node": "eligiility_timeselection.gender"
+            },
+            {
+                "condition": "is",
+                "value": [
+                    2
+                ],
+                "route": null,
+                "node": "terminate"
+            }
+        ]
+    },
+    "eligibility_timeselection.age": {
+        "age_dropdown": [
+            {
+                "condition": "lt",
+                "value": 18,
+                "route": null,
+                "node": "terminate"
+            },
+            {
+                "condition": "is",
+                "value": [
+                    888,
+                    999
+                ],
+                "route": null,
+                "node": "terminate"
+            }
+        ]
+    },
+    "eligibility_timeselection.permanent_residency": {
+        "dropdown": [
+            {
+                "condition": "is",
+                "value": [
+                    2,
+                    888,
+                    999
+                ],
+                "route": null,
+                "node": "terminate"
+            }
+        ]
+    },
+    "treatment_facilities.name_of_facility_provider.reason": {
+        "text_radio": [
+            {
+                "condition": "is",
+                "value": [
+                    888,
+                    999
+                ],
+                "route": "6treatment_facilities_not",
+                "node": "treatment_facilities_not.treatment_required_not_taken"
+            }
+        ]
+    },
+    "treatment_facilities_last.treatment_location_last_year": {
+        "radio": [
+            {
+                "condition": "is",
+                "value": [
+                    2,
+                    888,
+                    999
+                ],
+                "route": "6treatment_facilities_not",
+                "node": "treatment_facilities_not.treatment_required_not_taken"
+            }
+        ]
+    }
+}

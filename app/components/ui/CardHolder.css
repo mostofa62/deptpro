@@ -1,0 +1,22 @@
+.card-holder {
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .header {
+    background-color: #43ACD6;
+    color: #fff;
+    padding: 10px;
+    text-align: left;
+    font-size: 15px;
+    font-weight:600;
+  }
+  
+  .body {
+    padding: 20px;
+  }
+  
+  

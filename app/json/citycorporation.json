@@ -1,0 +1,14 @@
+[
+{"label":"Dhaka North City Corporation", "value":6586,"parent":2942},
+{"label":"Dhaka South City Corporation", "value":6587,"parent":2942},
+{"label":"Gazipur City Corporation", "value":6588,"parent":150},
+{"label":"Narayanganj City Corporation", "value":6589,"parent":1007},
+{"label":"Chattogram City Corporation", "value":6590,"parent":3152},
+{"label":"Cumilla City Corporation", "value":6591,"parent":28},
+{"label":"Barishal City Corporation", "value":6592,"parent":999},
+{"label":"Khulna City Corporation", "value":6593,"parent":2056},
+{"label":"Mymensingh City Corporation", "value":6594,"parent":2001},
+{"label":"Rajshahi City Corporation", "value":6595,"parent":1004},
+{"label":"Rangpur City Corporation", "value":6596,"parent":1987},
+{"label":"Sylhet City Corporation", "value":6597,"parent":128} 
+]

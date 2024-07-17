@@ -1,0 +1,37 @@
+{
+    "gender":[
+        {
+            "not":[1],
+            "fields":{
+                "age":0,
+                "food_choices":[],
+                "found":[],
+                "fellings":{}               
+
+            }        
+    
+        }
+        
+    ],
+    "age":[
+        {
+            "range":[18,35],
+            "fields":{                
+                "found":[],
+                "fellings":{}
+            }        
+
+        },
+
+        {
+            "range":[36,45],
+            "fields":{                
+                "food_choices":[],
+                "fellings":{}
+            }        
+    
+        
+        }
+        
+    ]
+}
