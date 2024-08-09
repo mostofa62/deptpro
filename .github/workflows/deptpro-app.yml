@@ -1,0 +1,27 @@
+name: DEBTPRO Client app
+
+on:
+  push:
+    branches: 
+      - main
+    paths:
+      - '**'
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set current date as env variable
+        shell: bash
+        run: echo "NOW=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+      - name: build with arguments in mostofa62 repo with datetime
+        run: docker build --build-arg NEXT_PUBLIC_APP_NAME=${{ secrets.NEXT_PUBLIC_APP_NAME }} --build-arg NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} --build-arg NEXT_PUBLIC_NUMBER_OF_PAGE=${{ secrets.NEXT_PUBLIC_NUMBER_OF_PAGE }} --build-arg NEXT_PUBLIC_PER_PAGE_LIST=${{ secrets.NEXT_PUBLIC_PER_PAGE_LIST }} -t mostofa62/debtpro_app:${{ env.NOW }} .        
+      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      - run: docker push mostofa62/debtpro_app:${{ env.NOW }}
