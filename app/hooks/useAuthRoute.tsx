@@ -18,54 +18,41 @@ const UseAuthRoute = ({ children }: DefaultLayoutProps) => {
 
         
     const authCtx = useAuth();
-    //const router = useRouter();
+    const role:any = authCtx.role;
+    const router = useRouter();
     const path = usePathname();
-    let redirect = '/login';
+    let redirect:any = '/';
     let showChildren = true;
-    //const [user, setUser] = useState(null)
-    /*
-    const fetchUser=async()=>{
-        //console.log(id);
-        const response = await axios.get(`${url}userby/t/${authCtx.userId}/${authCtx.token}`);
-        //return response.data.user;
-        setUser(response.data.user);
-    };
 
-    useEffect(()=>{
-        fetchUser()
-    },[])
+    const isLoggedIn = authCtx.isLoggedIn;
+   
 
-*/
-
-    //console.log(path);
-    //const router = useRouter();
-    
-    //if(!authCtx.isLoggedIn){
-        //redirect= '/login';
-        //showChildren=false;
-    //    router.push('/login');
-    //}
-    if(authCtx.isLoggedIn){
-        if(path == "/login"){
-            redirect = authCtx.role == "1" ?"/admin":"/user";
+   
+    if(isLoggedIn){
+        //alert(parseInt(role));
+        if(path == "/"){
+            //alert(path)
+            redirect = parseInt(role) < 10 ?"/admin/dashboard":"/member/dashboard";
             showChildren=false;
 
         }
         //console.log(path.substring(1,4))
-        if(authCtx.role == "1" && path.substring(1,5)=='user'){
-            redirect = "/admin";
+        if(parseInt(role) < 10 && path.includes('member')){
+            redirect = "/admin/dashboard";
             showChildren=false;
 
         }
 
-        if(authCtx.role == "2" && path.substring(1,6)=='admin'){
-            redirect = "/user";
+        if(parseInt(role) >=10 && path.substring(1,6)=='admin'){
+            redirect = "/member/dashboard";
             showChildren=false;
 
         }
     }
+    
+    
 
-    //router.push(redirect);
+   //router.push(redirect);
     const redirect_dom =<div className="dark:bg-boxdark-2 dark:text-bodydark">
       <div className="flex h-screen overflow-hidde">
         

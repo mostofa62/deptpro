@@ -7,6 +7,8 @@ interface CheckType{
   value:any;
   labelFor:string;
   onChange:()=>{};
+  onClick:()=>{};
+  errorClass:string;
 }
 
 const CheckComponent = ({
@@ -14,20 +16,24 @@ const CheckComponent = ({
   checked,
   labelFor,  
   label,
-  onChange
+  onChange,
+  onClick,
+  errorClass
 }:CheckType)=>{
 
         return (
             <>
               <label
                 htmlFor={labelFor}
-                className="flex cursor-pointer select-none items-center"
+                className={`flex cursor-pointer select-none items-center ${errorClass}`}
               >
               <div className='relative'>
               <input className="sr-only" {...field} 
                 type="checkbox" 
                 checked={checked} 
-                onChange={onChange} />                
+                onChange={onChange} 
+                onClick={onClick}
+                />                
                  
               </div>
               

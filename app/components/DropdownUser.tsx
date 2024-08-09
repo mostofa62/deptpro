@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useContext } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import UserOne from '../images/user/user-01.png';
-const url = process.env.url;
+const url = process.env.NEXT_PUBLIC_API_URL;
 import axios from 'axios';
 
 import { useRouter } from "next/navigation";
@@ -15,6 +15,9 @@ const DropdownUser = () => {
   const authContext = useAuth();
   const {isLoggedIn} = authContext;
   const router = useRouter()
+  let Loguser:any = authContext.role;
+  let urlSuffix = (Loguser && parseInt(Loguser) < 10 )?'admin-logout':'member-logout';
+  let redirect = (Loguser && parseInt(Loguser) < 10 )?'/admin':'/member';
 
   const [displayName, setDisplayName] = useState("");
 
@@ -25,8 +28,8 @@ const DropdownUser = () => {
   },[authContext.displayName])
 
   const logoutHandler = async()=>{
-    /*
-    await axios.post(`${url}logout`, 
+    
+    await axios.post(`${url}${urlSuffix}`, 
     {token:authContext.token }, {
     
     headers: {
@@ -35,14 +38,14 @@ const DropdownUser = () => {
   }
 ) .then(function (response) {
       authContext.logout();
-      router.push('/');
+      router.push(redirect);
     
 })
 .catch(function (error) {
   //console.log(error);
 });
-*/
-router.push('/');
+
+
 
   };
 
@@ -52,7 +55,7 @@ router.push('/');
 
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
-  let Loguser = authContext.role;
+  
   //if (typeof window !== 'undefined') {
   //Loguser = localStorage.getItem('Loguser');
   //}
@@ -92,12 +95,14 @@ router.push('/');
           setDropdownOpen(!dropdownOpen)
         }}
         className="flex items-center gap-4"
-        href={(Loguser && Loguser == '1')?'/admin':'/user'}
+        href={(Loguser && Loguser == '1')?'/admin/dashboard':'/member/dashboard'}
       >
         <span className="hidden text-right lg:block">
+          {/*
           <span className="block text-xs font-bold hover:bg-[#0a4a82] hover:text-[#f5f5f8] dark:text-white">
             {displayName}
           </span>
+          */}
           {/*
           <span className="block text-xs">UX Designer</span>
   */}
@@ -142,7 +147,7 @@ router.push('/');
           
           <li>
             <Link
-              href={(Loguser && Loguser == '1')?'/admin/profile':'/user/profile'}
+              href={(Loguser && parseInt(Loguser) < 10 )?'/admin/profile':'/member/profile'}
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out  hover:text-[#0a4a82] lg:text-base"
             >
               <svg

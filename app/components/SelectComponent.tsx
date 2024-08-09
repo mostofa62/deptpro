@@ -20,7 +20,7 @@ interface SelectProps{
   }
 
 const containerStyle = "flex flex-col gap-4 w-full bg-white dark:bg-form-input";
-const controlStyles="z-25 w-full appearance-none rounded border border-stroke bg-transparent py-2 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input";
+const controlStyles="z-25 w-full appearance-none rounded border border-stroke bg-transparent pt-1 px-8 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input";
 const valueContainerStyle="text-black dark:text-white";
 const placeholderStyle="text-center text-black dark:text-white";
 const singleValueStyle="text-black dark:text-white";

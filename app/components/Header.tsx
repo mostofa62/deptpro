@@ -13,8 +13,8 @@ import { useEffect,useCallback } from 'react';
 
 
 const app_name:any = process.env.app_name;
-const url = process.env.api_url;
-const interval_for_boundary:any = process.env.interval_for_boundary;
+const url = process.env.NEXT_PUBLIC_API_URL;
+
 
 
 
@@ -36,46 +36,9 @@ const Header = (props: {
     financial_frdom_target:'1,000,000'
   };
 
-  useEffect(()=>{
-    const boundary_interval = interval_for_boundary * (1000 * 60); // 5 SECond
+  
 
-    const fetchBounday = async()=>{
-      const {data} = await axios.get(`${url}boundary`);
-      if(typeof window !== 'undefined'){
-        localStorage.setItem('boundary',JSON.stringify(data.boundary))
-      }
-    }
-    const interval = setInterval(fetchBounday,boundary_interval)
-    return () => {
-      clearInterval(interval);
-    }; 
-  },[])
-
-  const logoutHandler = async()=>{
-    location.push('/');
-    /*
-    await axios.post(`${url}logout-staff`, 
-    {
-      token:authCtx.token,
-      //logout_by_click:1 
-    }, {
-    
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }
-) .then(function (response) {
-      authCtx.logout();
-      location.push('/');
-    
-})
-.catch(function (error) {
-  //console.log(error);
-});
-*/
-
-  };
-
+  
 
   return (
     <header className="sticky top-0 z-999 flex w-full bg-[#43ACD6]">
@@ -313,7 +276,7 @@ const Header = (props: {
           
   
   </>}
-          <DropdownUser />
+          {authCtx.isLoggedIn && <DropdownUser />}
           {/* <!-- User Area --> */}
         </div>
       </div>

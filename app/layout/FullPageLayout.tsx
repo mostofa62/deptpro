@@ -27,16 +27,20 @@ const FullPageLayout = ({ children }: DefaultLayoutProps) => {
     
   },[])
   */
+ /*
   useEffect(()=>{
     /*
     if(typeof redirect !='undefined'){
       router.push(redirect);
     }*/
+   /*
     if(!authCtx.isLoggedIn){
       router.push('/');
     }
+      
   },[authCtx.isLoggedIn,router,pathname])
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  */
+  //const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark">
