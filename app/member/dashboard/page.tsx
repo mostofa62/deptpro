@@ -1,13 +1,16 @@
 "use client";
 import DefaultLayout from "@/app/layout/DefaultLayout";
 import Link from "next/link";
-import {useEffect} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import useAuth from '@/app/hooks/useAuth';
 import CardHolder from "@/app/components/ui/CardHolder";
 import DataProgress from "@/app/components/ui/DataProgress";
 import Pie from "@/app/components/chart/Pie";
 
 import dynamic from "next/dynamic";
+import axios from "axios";
+
+const url = process.env.NEXT_PUBLIC_API_URL;
 
 const debt_payoff_progress = [
 {
@@ -65,14 +68,35 @@ const GaugeData  = [
   },
 ];
 
+
 //const ThermoMeterF = dynamic(()=>import('../components/chart/Thermometer'),{ssr:false});
 
 //const ThermoMeterF = dynamic(() => import('../components/chart/ThermoMeter'), { ssr: false });
 export default function DashBoard() {
   const authCtx = useAuth();
-
+  const user_id = authCtx.userId;
 
   //Pusher.logToConsole = true;
+
+  const [transactioData, setTransactionData] = useState({
+    'debt_list':[],
+    
+  })
+
+  const fetchDataCallback=useCallback(async()=>{
+    //console.log(id);
+      const response = await axios.get(`${url}debt-dashboard-data/${user_id}`);
+      //return response.data.user;
+      setTransactionData(response.data);
+            
+
+  },[user_id]);
+  useEffect(()=>{
+      
+      fetchDataCallback();
+      
+
+  },[fetchDataCallback]);
 
 
   
@@ -90,15 +114,15 @@ export default function DashBoard() {
 
           <div className="mt-2">
           <CardHolder title="Debt Payoff Progress">
-            { debt_payoff_progress.map((dp)=>{
-
+            { transactioData.debt_list.map((dp:any,i:number)=>{
+              let colorNumber = 39;
               return (
                 <>
                 <DataProgress 
                 title={dp.title} 
                 progress={dp.progress}
-                color={dp.color}
-                amount={dp.amount}
+                color={`#C700${colorNumber+i*30}`}
+                amount={Intl.NumberFormat('en-US').format(dp.amount)}
                 />
                 </>
               )

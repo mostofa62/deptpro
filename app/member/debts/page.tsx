@@ -98,7 +98,7 @@ const Debt = ()=>{
                 const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
                   return sum + row.original.balance;
                 }, 0);
-                return <p><span>$</span><span className="px-2">{total}</span></p>;
+                return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
               },
           },
   
@@ -117,7 +117,7 @@ const Debt = ()=>{
               const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
                 return sum + row.original.monthly_payment;
               }, 0);
-              return <p><span>$</span><span className="px-2">{total}</span></p>;
+              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
             },
           },
 
@@ -130,7 +130,7 @@ const Debt = ()=>{
               const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
                 return sum + row.original.monthly_interest;
               }, 0);
-              return <p><span>$</span><span className="px-2">{total}</span></p>;
+              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
             },
           },
 

@@ -6,7 +6,8 @@ import Image from 'next/image';
 import useAuth from '@/app/hooks/useAuth';
 import axios from 'axios';
 import { useRouter,usePathname } from 'next/navigation';
-import { useEffect,useCallback } from 'react';
+import { useEffect,useCallback, useState } from 'react';
+import useApp from '../hooks/useApp';
 
 //const APP_KEY:any = process.env.pusher_app_key;
 //const APP_CLUSTER:any = process.env.pusher_app_cluster;
@@ -28,6 +29,12 @@ const Header = (props: {
   const pathname  = usePathname();
 
   const authCtx = useAuth();
+  const user_id = authCtx.userId;
+
+  const appCtx = useApp();
+  const debtsAccountsScreen = appCtx.debtsAccountsScreen;
+
+  
 
   const data = {
     debt_balance:'187,200',
@@ -35,6 +42,28 @@ const Header = (props: {
     financial_frdom_date:'SEPT 2030',
     financial_frdom_target:'1,000,000'
   };
+
+  const [transactioData, setTransactionData] = useState({
+    'debt_total_balance':0,
+    'debt_free_date':'',
+    'financial_frdom_date':'',
+    'financial_frdom_target':''
+  })
+
+  const fetchDataCallback=useCallback(async()=>{
+    //console.log(id);
+      const response = await axios.get(`${url}debt-header-data/${user_id}`);
+      //return response.data.user;
+      setTransactionData(response.data);
+            
+
+  },[user_id]);
+  useEffect(()=>{
+      
+      fetchDataCallback();
+      
+
+  },[fetchDataCallback,debtsAccountsScreen]);
 
   
 
@@ -106,7 +135,7 @@ const Header = (props: {
           <div className="row-span-2 col-span-2 ml-[5px]">
             <span className='text-[17px] mb-[2px] text-[#C1FF72] font-bold'>
               <span className="">$</span>
-              <span className='px-1'>{data.debt_balance}</span>
+              <span className='px-1'>{Intl.NumberFormat('en-US').format(transactioData.debt_total_balance)}</span>
             </span>
           </div>
         </div>
