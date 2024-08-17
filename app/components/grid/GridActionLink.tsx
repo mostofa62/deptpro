@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {  useState } from "react";
+import {  memo, useCallback, useState } from "react";
 
 //const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -11,16 +11,16 @@ interface GridLinkProps{
 }
 
 
-const GridActionLink = ({hoveredRowHeight,items}:GridLinkProps)=>{
+const GridActionLink = memo(({hoveredRowHeight,items}:GridLinkProps)=>{
 
     const [hoveredButton, setHoveredButton] = useState<string>('');
 
-    const setHoverId = (actionId:string)=>{
+    const setHoverId = useCallback((actionId:string)=>{
         setHoveredButton(actionId)
-    }
-    const removeHoverId = ()=>{
+    },[])
+    const removeHoverId = useCallback(()=>{
         setHoveredButton('')
-    }
+    },[])
 
 
 
@@ -77,6 +77,7 @@ const GridActionLink = ({hoveredRowHeight,items}:GridLinkProps)=>{
     )
 
 
-}
-
+});
+// Set displayName for better debugging
+GridActionLink.displayName = 'GridActionLink';
 export default GridActionLink;

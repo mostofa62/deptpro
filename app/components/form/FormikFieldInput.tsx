@@ -30,7 +30,7 @@ export default function FormikFieldInput({
              <Field
               
              className="w-full rounded border border-stroke bg-transparent py-2 pl-6 pr-10 outline-none focus:border-[#0a4a82] focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-[#0a4a82]"
-             name={name} placeholder={`Provide ${placeHolder}`} onchange={onChangeField?onChangeField:(e:any)=>{}} {...props} />
+             name={name} placeholder={`Provide ${placeHolder}`} onChange={onChangeField?onChangeField:(e:any)=>{}} {...props} />
                    {errorMessage &&
 
                         <span className="mt-5 ml-1 font-semibold text-[#B45454]">

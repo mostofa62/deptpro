@@ -142,14 +142,15 @@ export default function DashBoard() {
             { saving_progress.map((dp)=>{
 
               return (
-                <>
+                
                 <DataProgress 
+                key={dp.title}
                 title={dp.title} 
                 progress={dp.progress}
                 color={dp.color}
                 amount={dp.amount}
                 />
-                </>
+                
               )
 
             })
