@@ -9,6 +9,7 @@ import Pie from "@/app/components/chart/Pie";
 
 import dynamic from "next/dynamic";
 import axios from "axios";
+import { generateRandomColor, generateRandomMixedColor } from "@/app/components/utils/Util";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -163,7 +164,7 @@ export default function DashBoard() {
                 <DataProgress 
                 title={dp.title} 
                 progress={dp.progress}
-                color={`#C700${colorNumber+i*30}`}
+                color={generateRandomMixedColor()}
                 amount={Intl.NumberFormat('en-US').format(dp.amount)}
                 />
                 </>
