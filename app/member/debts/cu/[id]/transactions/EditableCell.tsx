@@ -1,7 +1,7 @@
 // src/components/EditableCell.tsx
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
-import { ValidationSchemaEditInline } from '../DataValidationSchema';
+//import { ValidationSchemaEditInline } from '../DataValidationSchema';
 
 
 interface EditableCellProps {
@@ -16,12 +16,12 @@ const EditableCell: React.FC<EditableCellProps> = ({ initialValue, id, field, on
   // Define a dynamic validation schema based on field type
   
   const [editing, setEditing] = useState(isEditable);
-  const validationSchema:any =  ValidationSchemaEditInline
+  //const validationSchema:any =  ValidationSchemaEditInline
  
 
   const formik:any = useFormik({
     initialValues: { value: initialValue },
-    validationSchema: validationSchema.shape({ value: validationSchema.fields[field] }),
+    //validationSchema: validationSchema.shape({ value: validationSchema.fields[field] }),
     
     onSubmit: async (values) => {
         await onSave(id, field, values.value);
