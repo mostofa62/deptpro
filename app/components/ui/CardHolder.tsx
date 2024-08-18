@@ -11,9 +11,9 @@ const CardHolder = ({title, children}:CardHolderType)=>{
 
 
 return(    
-<div className="card-holder">
+<div className="card-holder flex-grow">
   <div className="header">{title}</div>
-  <div className="body">
+  <div className="body h-full">
     {children}
   </div>
 </div>

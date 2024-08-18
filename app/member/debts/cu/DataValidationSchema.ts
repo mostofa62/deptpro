@@ -35,7 +35,7 @@ export const DataLabel = {
   name:'Debt Account Name',
   debt_type:'Type of Dept',
   balance:'Current Balance',
-  highest_balance:'Begining / Highest Balance',   
+  highest_balance:'Beginning / Highest Balance',   
   monthly_payment:'Minimum Payment',
   credit_limit:'Credit Limit',
   interest_rate:'Interest Rate (%)',  
