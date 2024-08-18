@@ -123,22 +123,42 @@ const Header = (props: {
 
         <div className="hidden sm:block">
 
-        <div className="grid grid-rows-3 grid-flow-col h-[40px] uppercase">
-          <div className="row-span-3 mt-[4px]">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
-                  <path fill="#f5f5f8" d="M5 19h-4v-4h4v4zm6 0h-4v-8h4v8zm6 0h-4v-13h4v13zm6 0h-4v-19h4v19zm1 2h-24v2h24v-2z"/>
-            </svg>
-          </div>
-          <div className="col-span-2 mt-[-6px] ml-[5px]">
-            <span className='text-[10px] text-white font-semibold'>DEBT BALANCE</span>
-          </div>
-          <div className="row-span-2 col-span-2 ml-[5px]">
-            <span className='text-[17px] mb-[2px] text-[#C1FF72] font-bold'>
-              <span className="">$</span>
-              <span className='px-1'>{Intl.NumberFormat('en-US').format(transactioData.debt_total_balance)}</span>
-            </span>
-          </div>
-        </div>
+        <div className="grid grid-cols-2 gap-4 h-auto">
+  
+  <div className="grid grid-rows-3 grid-flow-col h-[40px] uppercase">
+    <div className="row-span-3 mt-[2px]">
+      <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 24 24">
+        <path fill="#f5f5f8" d="M5 19h-4v-4h4v4zm6 0h-4v-8h4v8zm6 0h-4v-13h4v13zm6 0h-4v-19h4v19zm1 2h-24v2h24v-2z"/>
+      </svg>
+    </div>
+    <div className="col-span-2 mt-[-6px] ml-[5px]">
+      <span className='text-[14px] text-white font-semibold'>DEBT BALANCE</span>
+    </div>
+    <div className="row-span-2 col-span-2 ml-[5px]">
+      <span className='text-[17px] mb-[2px] text-[#C1FF72] font-bold'>
+        <span className="">$</span>
+        <span className='px-1'>{Intl.NumberFormat('en-US').format(transactioData.debt_total_balance)}</span>
+      </span>
+    </div>
+  </div>
+
+  
+  <div className="grid grid-rows-2 h-[40px] uppercase">
+    <div className='mt-[-6px] ml-[5px]'>
+      <span className='text-[14px] text-white font-semibold'>
+        DEBT FREE DATE
+      </span>
+    </div>
+    <div className='ml-[5px] mt-[-6px]'>
+      <span className='text-[17px] text-[#C1FF72] font-bold'>                
+        <span>{data.debt_free_date}</span>
+      </span>
+    </div>
+  </div>
+
+  
+</div>
+
 
           
         
@@ -183,7 +203,7 @@ const Header = (props: {
 
         <div className="flex items-center">
           <ul className="flex items-center uppercase">
-          
+          {/*
           <li className="relative">
 
             <div className="grid grid-flow-row">
@@ -204,6 +224,7 @@ const Header = (props: {
             
             
           </li>
+          */}
 
 
 
@@ -211,7 +232,7 @@ const Header = (props: {
 
             <div className="grid grid-flow-row">
               <div className='mt-[-6px]'>
-                <span className='text-[10px] text-white font-semibold'>
+                <span className='text-[14px] text-white font-semibold'>
                   FINANCIAL FREEDOM DATE
                 </span>
               </div>
@@ -233,7 +254,7 @@ const Header = (props: {
 
             <div className="grid grid-flow-row">
               <div className='mt-[-6px]'>
-                <span className='text-[10px] text-white font-semibold'>
+                <span className='text-[14px] text-white font-semibold'>
                   FINANCIAL FREEDOM TARGET
                 </span>
               </div>

@@ -9,6 +9,7 @@ import Pie from "@/app/components/chart/Pie";
 
 import dynamic from "next/dynamic";
 import axios from "axios";
+import { generateRandomColor, generateRandomMixedColor } from "@/app/components/utils/Util";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -39,7 +40,7 @@ const saving_progress = [
   }
   ,
   {
-    title:'52 Weeks Savings',  
+    title:'Emergency Savings',  
     progress:'50.5',
     amount:'137,092.83',
     color:'#37b75b'
@@ -112,64 +113,15 @@ export default function DashBoard() {
         <DefaultLayout>
         <div className="grid grid-flow-row">
 
-          <div className="mt-2">
-          <CardHolder title="Debt Payoff Progress">
-            { transactioData.debt_list.map((dp:any,i:number)=>{
-              let colorNumber = 39;
-              return (
-                <>
-                <DataProgress 
-                title={dp.title} 
-                progress={dp.progress}
-                color={`#C700${colorNumber+i*30}`}
-                amount={Intl.NumberFormat('en-US').format(dp.amount)}
-                />
-                </>
-              )
-
-            })
-
-
-            }
-
-          </CardHolder>
-          </div>
-
-
-
-          <div className="mt-3">
-          <CardHolder title="Saving Progress">
-            { saving_progress.map((dp)=>{
-
-              return (
-                
-                <DataProgress 
-                key={dp.title}
-                title={dp.title} 
-                progress={dp.progress}
-                color={dp.color}
-                amount={dp.amount}
-                />
-                
-              )
-
-            })
-
-
-            }
-
-          </CardHolder>
-          </div>
-
-          <div className="mt-4">
+        <div className="mt-2">
           <div className="grid grid-cols-2 gap-1">
-            <div>
+            <div className="flex flex-col h-full">
             <CardHolder title="Total Allocation">
               <Pie/>
             </CardHolder>
               
             </div>
-            <div>
+            <div className="flex flex-col h-full">
               <CardHolder title="Credit Utilization">
                 <div className="grid grid-cols-2">                  
                   <div className="w-[100%] h-[100%]"><GaugeComponentF/></div>
@@ -202,6 +154,57 @@ export default function DashBoard() {
 
           </div>
           </div>
+                    
+          <div className="mt-2">
+          <CardHolder title="Debt Payoff Progress">
+            { transactioData.debt_list.map((dp:any,i:number)=>{
+              let colorNumber = 39;
+              return (
+                <>
+                <DataProgress 
+                title={dp.title} 
+                progress={dp.progress}
+                color={generateRandomMixedColor()}
+                amount={Intl.NumberFormat('en-US').format(dp.amount)}
+                />
+                </>
+              )
+
+            })
+
+
+            }
+
+          </CardHolder>
+          </div>
+
+
+{
+          <div className="mt-3">
+          <CardHolder title="Saving Progress">
+            { saving_progress.map((dp)=>{
+
+              return (
+                
+                <DataProgress 
+                key={dp.title}
+                title={dp.title} 
+                progress={dp.progress}
+                color={dp.color}
+                amount={dp.amount}
+                />
+                
+              )
+
+            })
+
+
+            }
+
+          </CardHolder>
+          </div>
+}
+          
 
         </div>
         
