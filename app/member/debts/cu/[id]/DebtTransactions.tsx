@@ -9,6 +9,7 @@ import { useMemo, useRef, useState } from 'react';
 import CardHolderDefault from '@/app/components/ui/CardHolderDefault';
 import Loading from '@/app/loading';
 import useApp from '@/app/hooks/useApp';
+import EditableCell from './transactions/EditableCell';
 
 const per_page_list = PerPageList();
 const per_page = per_page_list[0];
@@ -99,6 +100,20 @@ const DebtTransactions = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
             {
               accessorKey: 'trans_date',
               header: 'Date',
+              /*
+              cell: ({ getValue, row, column }) => {
+                const initialValue = getValue<string>();
+                return (
+                  <EditableCell
+                    initialValue={initialValue}
+                    id={row.original._id}
+                    field={column.id}
+                    onSave={saveData}
+                    isEditable={false}
+                  />
+                );
+              },
+              */
             }, 
             
             {
@@ -115,6 +130,20 @@ const DebtTransactions = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
             {
                 accessorKey: 'amount',
                 header: 'Amount',
+                /*
+                cell: ({ getValue, row, column }) => {
+                  const initialValue = getValue<number>();
+                  return (
+                    <EditableCell
+                      initialValue={initialValue}
+                      id={row.original._id}
+                      field={column.id}
+                      onSave={saveData}
+                      isEditable={false}
+                    />
+                  );
+                },
+                */
                 cell: info => <p><span>$</span><span>{info.getValue()}</span></p>
                 
             },
@@ -221,6 +250,26 @@ const DebtTransactions = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
                                         
                     
                   }
+
+
+
+                  const saveData = async (id: string, field: string, value: any) => {
+                    try {
+                      const response = await fetch(`/api/data/${id}`, {
+                        method: 'PATCH',
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ [field]: value }),
+                      });
+                  
+                      if (!response.ok) {
+                        throw new Error('Failed to save data');
+                      }
+                    } catch (error) {
+                      console.error('Error saving data:', error);
+                    }
+                  };
         
 
                 return(

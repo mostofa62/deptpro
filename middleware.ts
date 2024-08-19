@@ -23,12 +23,13 @@ export const config = {
 */ 
 export function middleware(request: NextRequest) {
     // Call our authentication function to check the request
-    const { pathname } = request.nextUrl
+    
 
     const url = request.nextUrl.clone();
     const role = getUserRole(request);
 
-    if (role) {
+    if (role!=null) {
+      
       if (url.pathname === '/member' || url.pathname === '/admin' || url.pathname === '/' || url.pathname === '') {
         // Redirect to the appropriate dashboard based on role
         if (role < 10) {
@@ -54,7 +55,22 @@ export function middleware(request: NextRequest) {
           return NextResponse.redirect(url);
         }
       }
-    } 
+    }else {
+      // Handle the case where no role is found
+      if (url.pathname.startsWith('/admin') && url.pathname !== '/admin') {
+        url.pathname = '/admin'; // Redirect to default admin path
+        return NextResponse.redirect(url);
+      }
+      if (url.pathname.startsWith('/member') && url.pathname !== '/member') {
+        url.pathname = '/member'; // Redirect to default member path
+        return NextResponse.redirect(url);
+      }
+      // If the path is '/', redirect to a default page
+      if (url.pathname === '/' && url.pathname !== '/'  || url.pathname === '') {
+        url.pathname = '/'; // Redirect to member path by default
+        return NextResponse.redirect(url);
+      }
+    }
 
    
     return NextResponse.next();

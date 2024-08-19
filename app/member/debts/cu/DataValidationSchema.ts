@@ -2,11 +2,14 @@ import { object, string, number } from "yup";
 export const DataSchema = {
     name:'',
     debt_type:{'label':'','value':''},
+    payor:'',
     balance:0,
     highest_balance:0,
+    minimum_payment:0,
     monthly_payment:0,
     credit_limit:0,
-    interest_rate:0,    
+    interest_rate:0, 
+    start_date:'',   
     due_date:'',
     notes:'',
     //Promotional Interest Rate
@@ -34,11 +37,14 @@ export const DataSchema = {
 export const DataLabel = {
   name:'Debt Account Name',
   debt_type:'Type of Dept',
+  payor:'Payor',
   balance:'Current Balance',
-  highest_balance:'Beginning / Highest Balance',   
-  monthly_payment:'Minimum Payment',
+  highest_balance:'Beginning / Highest Balance',
+  minimum_payment:'Minimum Payment',   
+  monthly_payment:'Monthly Payment',
   credit_limit:'Credit Limit',
-  interest_rate:'Interest Rate (%)',  
+  interest_rate:'Interest Rate (%)',
+  start_date:'Start Date',  
   due_date:'Next Due Date',
   notes:'Note',
 
@@ -109,6 +115,9 @@ export const ValidationSchema =  object().shape({
 
               highest_balance: number().min(0,`${DataLabel.highest_balance} least 0`)              
               .required(`${DataLabel.highest_balance} is required`),
+
+              minimum_payment: number().min(0,`${DataLabel.minimum_payment} least 0`)              
+              .required(`${DataLabel.minimum_payment} is required`),
 
               monthly_payment: number().min(0,`${DataLabel.monthly_payment} least 0`)              
               .required(`${DataLabel.monthly_payment} is required`),

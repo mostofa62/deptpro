@@ -109,7 +109,7 @@ export default function InsuranceCreate() {
             <FormikFormHolder legend="DEBT Account Details">
 
 <div className="flex flex-row">
-    <div className="w-[50%]">
+    <div className="w-[32%]">
         
         <FormikFieldInput 
         label={DataLabel.name} 
@@ -131,8 +131,31 @@ export default function InsuranceCreate() {
         
         
     </div>
+
+    <div className="ml-[24px] w-[32%]">
+        
+        <FormikFieldInput 
+        label={DataLabel.payor} 
+        name={`fetchdata.payor`}
+        placeHolder={`${DataLabel.payor}`}
+        errorMessage ={ errors.fetchdata &&                                        
+            errors.fetchdata.payor &&
+            touched.fetchdata &&            
+            touched.fetchdata.payor &&  errors.fetchdata.payor}
+        onChangeField = {(e:any)=>{
+            const {value, name} = e.target;
+            setFieldValue(
+                name,
+                value
+              );
+        }}
+        />
+        
+        
+        
+    </div>
     
-    <div className="ml-[24px] w-[50%]">
+    <div className="ml-[24px] w-[32%]">
 
     <FormikSelectInput
             label={DataLabel.debt_type}
@@ -201,7 +224,27 @@ export default function InsuranceCreate() {
 </div>
 
 <div className="flex flex-row">
-    <div className="w-[50%]">
+    <div className="w-[32%]">
+
+    <FormikFieldInput 
+        type="number"
+        step="any"
+        min={0}
+        label={DataLabel.minimum_payment} 
+        name={`fetchdata.minimum_payment`}
+        placeHolder={`${DataLabel.minimum_payment}`}
+        errorMessage ={ errors.fetchdata &&                                        
+            errors.fetchdata.minimum_payment &&
+            touched.fetchdata &&            
+            touched.fetchdata.minimum_payment &&  errors.fetchdata.minimum_payment}        
+        />
+        
+        
+    </div>
+
+    <div className="ml-[24px] w-[32%]">
+
+    
 
     <FormikFieldInput 
         type="number"
@@ -219,7 +262,7 @@ export default function InsuranceCreate() {
         
     </div>
     
-    <div className="ml-[24px] w-[50%]">
+    <div className="ml-[24px] w-[32%]">
 
     
 
@@ -243,7 +286,7 @@ export default function InsuranceCreate() {
 </div>
 
 <div className="flex flex-row">
-    <div className="w-[50%]">
+    <div className="w-[32%]">
 
     <FormikFieldInput 
         type="number"
@@ -260,8 +303,26 @@ export default function InsuranceCreate() {
         
         
     </div>
+
+    <div className="ml-[24px] w-[32%]">
+
     
-    <div className="ml-[24px] w-[50%]">
+
+    <FormikFieldInput 
+        type="date"
+        label={DataLabel.start_date} 
+        name={`fetchdata.start_date`}
+        placeHolder={`${DataLabel.start_date}`}
+        errorMessage ={ errors.fetchdata &&                                        
+            errors.fetchdata.start_date &&
+            touched.fetchdata &&            
+            touched.fetchdata.start_date &&  errors.fetchdata.start_date}        
+        />
+        
+        
+    </div>
+    
+    <div className="ml-[24px] w-[32%]">
 
     
 
