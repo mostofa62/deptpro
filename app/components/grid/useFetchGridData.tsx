@@ -105,7 +105,8 @@ interface hookData{
   pagination:any;
   sorting:any;
   globalFilter:any;
-  setTableData:(data:[])=>void
+  setTableData:(data:[])=>void,
+  setExtraPayload?:(payload_data:any)=>void
 }
 
 const useFetchGridData = ({
@@ -113,7 +114,8 @@ const useFetchGridData = ({
     pagination,
     sorting,
     globalFilter,
-    setTableData
+    setTableData,
+    setExtraPayload
 }:hookData)=>{
 
     //const [data, setData] = useState<[]>([]);
@@ -137,6 +139,9 @@ const useFetchGridData = ({
             setTableData(response.data.rows)
             setTotalRows(response.data.totalRows);
             setPageCount(response.data.pageCount);
+            if(typeof response.data.extra_payload != 'undefined' && setExtraPayload){              
+              setExtraPayload(response.data.extra_payload);
+            }
         }catch (error: any) {
             setError(error.message || 'Something went wrong!');
         }

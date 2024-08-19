@@ -16,18 +16,32 @@ const per_page = per_page_list[0];
 
 interface DataRow {
     _id:string;    
-    name: string;   
+    name: string;
+    debt_type:string;
+    payor:string;   
     balance:number;
     interest_rate:number;
     monthly_payment:number;
     monthly_interest:number;
     next_due_date: string;
 }
+interface ExtraPayloadProps{
+  total_balance:number;
+  total_monthly_payment:number;
+  total_monthly_interest:number;
+  total_paid_off:number;
+}
 const Debt = ()=>{
 
     console.log('Loading ...')
 
     const authCtx = useAuth();
+
+    const [extraPayload, setExtraPayload] = useState<ExtraPayloadProps>({
+      total_balance:0,
+      total_monthly_payment:0,
+      total_monthly_interest:0,
+      total_paid_off:0});
 
     const [data, setData] = useState<DataRow[]>([]);
     const [sorting, setSorting] = useState<SortingState>([]);       
@@ -63,6 +77,10 @@ const Debt = ()=>{
     const setTableData = useCallback((tableData: DataRow[]) => {
       setData(tableData);
     }, []);
+
+    const setExtraPayloadHandler = useCallback((extra_payload:ExtraPayloadProps)=>{
+      setExtraPayload(extra_payload)
+    },[])
   
   
       const {error,loading,totalRows,pageCount} = useFetchGridData({
@@ -70,7 +88,8 @@ const Debt = ()=>{
       pagination:pagination,
       sorting:sorting,
       globalFilter:globalFilter,
-      setTableData:setTableData    
+      setTableData:setTableData,
+      setExtraPayload:setExtraPayloadHandler    
       })
   
       const columns: ColumnDef<DataRow>[] = useMemo(() => [
@@ -88,18 +107,33 @@ const Debt = ()=>{
               header: 'Name',
               cell: (info) => <p><Link className="text-[#0166FF]" href={`debts/cu/${info.row.getValue('_id')}`}>{info.getValue()}</Link></p>,
           },
+
+          {
+            accessorKey: 'debt_type',
+            header: 'Category',
+            
+          },
+
+          {
+            accessorKey: 'payor',
+            header: 'Payor',
+            
+          },
             
           
           {
               accessorKey: 'balance',
               header: 'Balance',
               cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>()}</span></p>,
+              footer:(props)=><p><span>$</span><span className="px-2">{extraPayload.total_balance.toFixed(2)}</span></p>
+              /*
               footer: (props) => {
                 const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
                   return sum + row.original.balance;
                 }, 0);
                 return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
               },
+              */
           },
   
           {
@@ -288,7 +322,7 @@ const Debt = ()=>{
                         </p>
                     </div>
                     <div className="py-[15px] px-10">
-                      <p className="text-[15px] leading-[15px] text-[#4F4F4F]">1-50 of 100</p>
+                      <p className="text-[15px] leading-[15px] text-[#4F4F4F]">{showingText}</p>
                     </div>
                     <div>
                        <GridGlobalSearch 

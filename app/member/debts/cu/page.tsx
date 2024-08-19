@@ -90,7 +90,7 @@ export default function InsuranceCreate() {
                             </Link>
                     </div>
                     <div className="ml-[50px] pt-[5px]">
-                        <span className="text-[25px] font-medium capitalize text-[#4F4F4F]">ADD NEW BILL ACCOUNT</span>
+                        <span className="text-[25px] font-medium capitalize text-[#4F4F4F]">ADD NEW DEBT ACCOUNT</span>
                     </div>
                 </div>
             
