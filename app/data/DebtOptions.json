@@ -1,0 +1,18 @@
+{
+
+    "DeptPayOffMethod":[
+
+        {"value":1  ,"label":"Debt Snowball - lowest balance first" },
+        {"value":2 ,"label":"Debt Avalanche - highest interest rate first" },
+        {"value":11 ,"label":"Hybrid (Debt Ratio)" },
+        {"value":13 ,"label":"Cash Flow Index (CFI)" },
+        {"value":3 ,"label":"Custom - highest sort number first" },
+        {"value":4 ,"label":"Custom - lowest sort number first" },
+        {"value":5 ,"label":"Highest monthly payment first" },
+        {"value":8 ,"label":"Highest credit utilization first" },
+        {"value":10 ,"label":"Highest monthly interest paid first" },
+        {"value":12 ,"label":"Lowest interest rate paid first" }
+
+    ]
+
+}

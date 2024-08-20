@@ -28,7 +28,7 @@ export default function FormikSelectInput({
 
         return (
             <>
-            <label className="mb-2.5 block font-bold text-[#4F4F4F]">
+            <label className="mb-2.5 block font-medium text-[#4F4F4F]">
                 {label}
             </label>
             <div className="relative">

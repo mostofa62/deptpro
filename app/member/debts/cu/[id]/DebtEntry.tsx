@@ -178,6 +178,7 @@ const DebtEntry=({debt_acc_id, user_id,transaction_data}:DebtProps)=>{
 
                 <FormikFieldInput 
                     type="number"
+                    step={"any"}
                     label={DataLabel.amount} 
                     name={`fetchdata.amount`}
                     placeHolder={`${DataLabel.amount}`}

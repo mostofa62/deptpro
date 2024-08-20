@@ -209,6 +209,7 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 
 <FormikFieldInput 
     type="number"
+    step={"any"}
     label={DataLabelUpdate.balance} 
     name={`fetchdata.balance`}
     placeHolder={`${DataLabelUpdate.balance}`}
@@ -225,6 +226,7 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 
 <FormikFieldInput 
     type="number"
+    step={"any"}
     label={DataLabelUpdate.highest_balance} 
     name={`fetchdata.highest_balance`}
     placeHolder={`${DataLabelUpdate.highest_balance}`}
@@ -263,6 +265,7 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 
 <FormikFieldInput 
     type="number"
+    step={"any"}
     label={DataLabelUpdate.monthly_payment} 
     name={`fetchdata.monthly_payment`}
     placeHolder={`${DataLabelUpdate.monthly_payment}`}
@@ -279,6 +282,7 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 
 <FormikFieldInput 
     type="number"
+    step={"any"}
     label={DataLabelUpdate.interest_rate} 
     name={`fetchdata.interest_rate`}
     placeHolder={`${DataLabelUpdate.interest_rate}`}
@@ -295,6 +299,7 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 
 <FormikFieldInput 
     type="number"
+    step={"any"}
     label={DataLabelUpdate.credit_limit} 
     name={`fetchdata.credit_limit`}
     placeHolder={`${DataLabelUpdate.credit_limit}`}
