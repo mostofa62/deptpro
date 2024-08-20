@@ -8,6 +8,7 @@ import UseAuthRoute from '@/app/hooks/useAuthRoute';
 import { useRouter, usePathname } from "next/navigation";
 import { RouteChangeListener } from '../components/utils/RouteChangeListener';
 import { AppContextProvider } from '../context/app-context';
+import HeaderSummary from '../member/debts/HeaderSummary';
 
 
 
@@ -47,6 +48,7 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
           {/* <!-- ===== Main Content Start ===== --> */}
           <main>
             <div className="mx-auto max-w-screen-2xl p-1 md:p-2 2xl:p-10">
+              <HeaderSummary/>
               
               {children}
               

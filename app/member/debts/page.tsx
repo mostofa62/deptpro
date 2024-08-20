@@ -28,6 +28,7 @@ interface DataRow {
 interface ExtraPayloadProps{
   total_balance:number;
   total_monthly_payment:number;
+  total_minimum_payment:number;
   total_monthly_interest:number;
   total_paid_off:number;
 }
@@ -39,6 +40,7 @@ const Debt = ()=>{
 
     const [extraPayload, setExtraPayload] = useState<ExtraPayloadProps>({
       total_balance:0,
+      total_minimum_payment:0,
       total_monthly_payment:0,
       total_monthly_interest:0,
       total_paid_off:0});
@@ -96,6 +98,7 @@ const Debt = ()=>{
       const total_paid_off = extraPayload.total_paid_off;
       const total_monthly_payment = extraPayload.total_monthly_payment;
       const total_monthly_interest = extraPayload.total_monthly_interest;
+      const total_minimum_payment = extraPayload.total_minimum_payment;
   
       const columns: ColumnDef<DataRow>[] = useMemo(() => [
       
@@ -125,6 +128,11 @@ const Debt = ()=>{
             header: 'Payor',
             
           },
+
+          {
+            accessorKey: 'due_date',
+            header: 'Due Date',
+          },  
             
           
           {
@@ -142,16 +150,26 @@ const Debt = ()=>{
               */
           },
   
+          
+
           {
-              accessorKey: 'interest_rate',
-              header: 'Interest Rate',
-              cell: (info) => <p><span className="px-2">{info.getValue<number>()}</span><span>%</span></p>,
-              
+            accessorKey: 'minimum_payment',
+            header: 'Mimimum Payment',
+            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>()}</span></p>,
+            /*
+            footer: (props) => {
+              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
+                return sum + row.original.monthly_payment;
+              }, 0);
+              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
+            },
+            */
+           footer:(props)=><p><span>$</span><span className="px-2">{total_minimum_payment.toFixed(2)}</span></p>
           },
 
           {
             accessorKey: 'monthly_payment',
-            header: 'Payment',
+            header: 'Monthly Payment',
             cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>()}</span></p>,
             /*
             footer: (props) => {
@@ -162,6 +180,13 @@ const Debt = ()=>{
             },
             */
            footer:(props)=><p><span>$</span><span className="px-2">{total_monthly_payment.toFixed(2)}</span></p>
+          },
+
+          {
+            accessorKey: 'interest_rate',
+            header: 'Interest Rate',
+            cell: (info) => <p><span className="px-2">{info.getValue<number>()}</span><span>%</span></p>,
+            
           },
 
 
@@ -180,10 +205,7 @@ const Debt = ()=>{
             footer:(props)=><p><span>$</span><span className="px-2">{total_monthly_interest.toFixed(2)}</span></p>
           },
 
-          {
-            accessorKey: 'due_date',
-            header: 'Due Date',
-          },          
+                  
           /*
           {
               id: 'actions',
@@ -196,7 +218,7 @@ const Debt = ()=>{
           },
           */
       
-          ], [/*hoveredRowId*/,total_balance,total_paid_off,total_monthly_payment,total_monthly_interest]);
+          ], [/*hoveredRowId*/,total_balance,total_paid_off,total_monthly_payment,total_monthly_interest, total_minimum_payment]);
       
           const table = useReactTable({
               data,
