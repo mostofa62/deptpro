@@ -102,9 +102,9 @@ export const  DeleteActionGlobal = async(
 
 interface hookData{
   urlSuffix:string;    
-  pagination:any;
-  sorting:any;
-  globalFilter:any;
+  pagination?:any;
+  sorting?:any;
+  globalFilter?:any;
   setTableData:(data:[])=>void,
   setExtraPayload?:(payload_data:any)=>void
 }
@@ -130,15 +130,19 @@ const useFetchGridData = ({
       setError(null);
       try{
             const response = await axios.post(`${url}${urlSuffix}`, {
-                pageIndex: pagination.pageIndex,
-                pageSize: pagination.pageSize,
-                sortBy: sorting,
-                filter: globalFilter,
+                pageIndex:  pagination ? pagination.pageIndex:0,
+                pageSize: pagination? pagination.pageSize:0,
+                sortBy: sorting? sorting:null,
+                filter: globalFilter? globalFilter:null,
             });
             //setData(response.data.rows);
             setTableData(response.data.rows)
-            setTotalRows(response.data.totalRows);
-            setPageCount(response.data.pageCount);
+            if(typeof response.data.totalRows != 'undefined' && setTotalRows){ 
+              setTotalRows(response.data.totalRows);
+            }
+            if(typeof response.data.pageCount != 'undefined' && setPageCount){ 
+              setPageCount(response.data.pageCount);
+            }
             if(typeof response.data.extra_payload != 'undefined' && setExtraPayload){              
               setExtraPayload(response.data.extra_payload);
             }

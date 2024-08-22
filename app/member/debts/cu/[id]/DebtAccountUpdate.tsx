@@ -154,7 +154,7 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 
 <hr className="mt-2 border-stroke"/>
 
-<div className="flex flex-row mt-2">
+<div className="flex flex-row mt-[15px]">
 <div className="w-[48%]">
     
     <FormikFieldInput 
@@ -204,7 +204,7 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 </div>
 
 
-<div className="flex flex-row">
+<div className="flex flex-row mt-[15px]">
 <div className="w-[34%]">
 
 <FormikFieldInput 
@@ -260,8 +260,31 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 </div>
 
 
-<div className="flex flex-row">
-<div className="w-[34%]">
+<div className="flex flex-row mt-[15px]">
+<div className="w-[50%]">
+
+
+
+
+<FormikFieldInput 
+        type="number"
+        step="any"
+        min={0}
+        label={DataLabelUpdate.minimum_payment} 
+        name={`fetchdata.minimum_payment`}
+        placeHolder={`${DataLabelUpdate.minimum_payment}`}
+        errorMessage ={ errors.fetchdata &&                                        
+            errors.fetchdata.minimum_payment &&
+            touched.fetchdata &&            
+            touched.fetchdata.minimum_payment &&  errors.fetchdata.minimum_payment}        
+        />
+    
+    
+</div>
+
+
+<div className="ml-[24px] w-[50%]">
+
 
 <FormikFieldInput 
     type="number"
@@ -274,11 +297,15 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
         touched.fetchdata &&            
         touched.fetchdata.monthly_payment &&  errors.fetchdata.monthly_payment}        
     />
+
     
     
 </div>
+</div>
 
-<div className="ml-[24px] w-[34%]">
+
+<div className="flex flex-row mt-[15px]">
+<div className="w-[50%]">
 
 <FormikFieldInput 
     type="number"
@@ -295,7 +322,7 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
     
 </div>
 
-<div className="ml-[24px] w-[30%]">
+<div className="ml-[24px] w-[50%]">
 
 <FormikFieldInput 
     type="number"
@@ -331,7 +358,7 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 
 
 
-<div className="flex flex-row">
+<div className="flex flex-row mt-[15px]">
 
 <div className="w-full">
     
@@ -357,7 +384,7 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 <hr className="mt-2 border-stroke"/>
 
 
-<div className="flex flex-row mt-4">
+<div className="flex flex-row mt-[15px]">
 <div className="w-[48%]">
 
     
@@ -443,7 +470,7 @@ component={CheckComponent}
     </div>
 </div>
 
-<div className="flex flex-row mt-4 gap-1">
+<div className="flex flex-row mt-[15px] gap-1">
 <div className="w-[48%]">
 
 <FormikSelectInput

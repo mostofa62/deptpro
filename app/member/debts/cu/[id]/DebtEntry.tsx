@@ -20,10 +20,11 @@ interface DebtProps{
         'transactionType':{}[],
         'transactionMonth':{}[],
         'transactionYear':{}[]
-    }
+    },
+    currentDate:string
 }
 
-const DebtEntry=({debt_acc_id, user_id,transaction_data}:DebtProps)=>{
+const DebtEntry=({debt_acc_id, user_id,transaction_data,currentDate}:DebtProps)=>{
 
     const appCtx = useApp();
     const debtsAccountsScreen = appCtx.debtsAccountsScreen;
@@ -33,6 +34,7 @@ const DebtEntry=({debt_acc_id, user_id,transaction_data}:DebtProps)=>{
     
 
     const fetchdata = fetchFomrData;
+    fetchdata.trans_date = currentDate;
 
     const handleFormSubmit = async(values:any,{ resetForm }:any)=>{
         //alert(JSON.stringify(values));
@@ -110,7 +112,7 @@ const DebtEntry=({debt_acc_id, user_id,transaction_data}:DebtProps)=>{
                 </div>
             </div>    
 
-            <div className="flex flex-row">
+            <div className="flex flex-row mt-[15px]">
                 <div className="w-full">
 
                 <FormikFieldInput 
@@ -128,7 +130,7 @@ const DebtEntry=({debt_acc_id, user_id,transaction_data}:DebtProps)=>{
                 </div>
             </div>
             
-            <div className="flex flex-row">
+            <div className="flex flex-row mt-[15px]">
                 <div className="w-[48%]">
 
                 <FormikSelectInput
@@ -173,7 +175,7 @@ const DebtEntry=({debt_acc_id, user_id,transaction_data}:DebtProps)=>{
             </div>    
 
 
-            <div className="flex flex-row mt-2">
+            <div className="flex flex-row mt-[15px]">
                 <div className="w-full">
 
                 <FormikFieldInput 
@@ -192,7 +194,7 @@ const DebtEntry=({debt_acc_id, user_id,transaction_data}:DebtProps)=>{
                 </div>
             </div>
 
-            <div className="flex flex-row mt-4">
+            <div className="flex flex-row mt-[15px]">
                 <div className="w-full">
 
                 

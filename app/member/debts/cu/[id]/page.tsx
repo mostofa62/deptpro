@@ -13,6 +13,7 @@ import CurrentDebtDashboard from "./CurrentDebtDashboard";
 import DebtTransactions from "./DebtTransactions";
 import DebtAccountUpdate from "./DebtAccountUpdate";
 import DebtEntry from "./DebtEntry";
+import DebtAmortization from "./DebtAmortization";
 
 interface Tab {
   label: string;
@@ -24,10 +25,10 @@ interface Tab {
 const url = process.env.NEXT_PUBLIC_API_URL;
 export default function InsuranceCreate({
     params,
-    searchParams
+    searchParams    
   }:{
     params: { id: string }
-    searchParams: { [key: string]: string | string[] | undefined }
+    searchParams: { [key: string]: string | string[] | undefined },    
   
   }) {
     const authCtx = useAuth();
@@ -38,6 +39,8 @@ export default function InsuranceCreate({
     
     const id = params.id;
     const user_id:any = authCtx.userId;
+
+    const [currentDate, setCurrentDate] = useState<string>('');
    
     const [transactioData, setTransactionData] = useState({
       'transactionType':[],
@@ -60,6 +63,10 @@ export default function InsuranceCreate({
     useEffect(()=>{
         
         fetchDataCallback();
+
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+        setCurrentDate(formattedDate);
         
     
     },[fetchDataCallback]);
@@ -82,7 +89,16 @@ export default function InsuranceCreate({
         //onPayment={onPaymentHandler}
         //onEdit={onEditHandler}
         />
-      }  
+      } ,
+      { label: 'Amortization', content: <DebtAmortization 
+
+        user_id={user_id} 
+        debt_acc_id={id} 
+        tab_number={activeTab}
+        //onPayment={onPaymentHandler}
+        //onEdit={onEditHandler}
+        />
+      } 
     ];
     
     return(
@@ -103,9 +119,9 @@ export default function InsuranceCreate({
                     <DebtEntry
                     debt_acc_id={id} 
                     user_id={user_id}
-                    transaction_data={transactioData}                                       
-                     />
-                                                           
+                    transaction_data={transactioData}
+                    currentDate={currentDate}                                       
+                     />                                                         
                 </div>
                 
                 

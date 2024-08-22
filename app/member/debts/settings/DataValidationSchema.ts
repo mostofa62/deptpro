@@ -11,7 +11,7 @@ export const DataSchema = {
 
 export const DataLabel = {
   
-  monthly_budget:'Monthly Debt Total',
+  monthly_budget:'Debt Budget',
   debt_payoff_method:'Debt Payoff Method',
   
   

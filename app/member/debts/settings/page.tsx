@@ -130,7 +130,7 @@ export default function Setting() {
         onSubmit={handleFormSubmit}
 
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
-            <FormikFormHolder legend="DEBT Account Details">
+            <FormikFormHolder legend="Debt Setting Details">
 
 <div className="flex flex-row">
   
