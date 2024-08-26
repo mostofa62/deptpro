@@ -56,7 +56,7 @@ const HeaderSummary = ()=>{
             </CardHolderTiny>
             </div>
 
-            <div className="w-[15%]">
+            <div className="w-[20%]">
             <CardHolderTiny>
                 <div className="flex flex-row">
                 <div className="bg-[#828ba1] w-full text-center text-white">
@@ -75,7 +75,7 @@ const HeaderSummary = ()=>{
 
             
 
-            <div className="w-[15%]">
+            <div className="w-[20%]">
             <CardHolderTiny>
                 <div className="flex flex-row">
                 <div className="bg-[#828ba1] w-full text-center text-white">
@@ -92,7 +92,7 @@ const HeaderSummary = ()=>{
             </CardHolderTiny>
             </div>
 
-            <div className="w-[15%]">
+            <div className="w-[20%]">
             <CardHolderTiny>
                 <div className="flex flex-row">
                 <div className="bg-[#828ba1] w-full text-center text-white">

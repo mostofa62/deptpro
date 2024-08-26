@@ -45,7 +45,7 @@ const Header = (props: {
 
   const [transactioData, setTransactionData] = useState({
     'debt_total_balance':0,
-    'debt_free_date':'',
+    'month_debt_free':'',
     'financial_frdom_date':'',
     'financial_frdom_target':''
   })
@@ -151,7 +151,7 @@ const Header = (props: {
     </div>
     <div className='ml-[5px] mt-[-6px]'>
       <span className='text-[17px] text-[#C1FF72] font-bold'>                
-        <span>{data.debt_free_date}</span>
+        <span>{transactioData.month_debt_free}</span>
       </span>
     </div>
   </div>
