@@ -5,7 +5,7 @@ interface DefaultLayoutProps {
 }
 const CardHolderTiny = ({ children }: DefaultLayoutProps) => {
   return (
-    <div className="rounded border border-stroke bg-white py-2 px-3 shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div className="rounded border-2 border-[#06c3ef]  bg-white py-2 px-3 shadow-default dark:border-strokedark dark:bg-boxdark">
       {children}
     </div>
   );

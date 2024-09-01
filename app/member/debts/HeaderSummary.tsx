@@ -42,13 +42,13 @@ const HeaderSummary = ()=>{
             <div className="w-[15%]">
             <CardHolderTiny>
                 <div className="flex flex-row">
-                <div className="bg-[#828ba1] w-full text-center text-white">
-                    <p className="text-[15px]">Overall Progress</p>
+                <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
+                    <p className="text-[15px] font-semibold">Overall Progress</p>
                 </div>
                 </div>
-                <div className="flex flex-row">
-                <div className="w-full text-center text-[#48ce67]">
-                    <Link href={'/member/debt/settings'}>
+                <div className="flex flex-row py-2">
+                <div className="w-full text-center text-[#31c4a2]">
+                    <Link className="text-[19px] font-semibold" href={'/member/debt/settings'}>
                     {transactioData.total_paid_off.toFixed(2)} %
                     </Link>
                 </div>
@@ -59,13 +59,13 @@ const HeaderSummary = ()=>{
             <div className="w-[20%]">
             <CardHolderTiny>
                 <div className="flex flex-row">
-                <div className="bg-[#828ba1] w-full text-center text-white">
-                    <p className="text-[15px]">Snowball Amounts</p>
+                <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
+                    <p className="text-[15px] font-semibold">Snowball Amounts</p>
                 </div>
                 </div>
-                <div className="flex flex-row">
-                <div className="w-full text-center text-[#48ce67]">
-                    <Link href={'/member/debt/settings'}>
+                <div className="flex flex-row py-2">
+                <div className="w-full text-center text-[#31c4a2]">
+                    <Link className="text-[19px] font-semibold" href={'/member/debt/settings'}>
                     $ {Intl.NumberFormat('en-US').format(transactioData.snowball_amount)}
                     </Link>
                 </div>
@@ -78,13 +78,13 @@ const HeaderSummary = ()=>{
             <div className="w-[20%]">
             <CardHolderTiny>
                 <div className="flex flex-row">
-                <div className="bg-[#828ba1] w-full text-center text-white">
-                    <p className="text-[15px]">Minimum Payments</p>
+                <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
+                    <p className="text-[15px] font-semibold">Minimum Payments</p>
                 </div>
                 </div>
-                <div className="flex flex-row">
-                <div className="w-full text-center text-[#48ce67]">
-                    <Link href={'/member/debts'}>
+                <div className="flex flex-row py-2">
+                <div className="w-full text-center text-[#31c4a2]">
+                    <Link className="text-[19px] font-semibold" href={'/member/debts'}>
                     $ {Intl.NumberFormat('en-US').format(transactioData.total_monthly_minimum)}
                     </Link>
                 </div>
@@ -95,13 +95,13 @@ const HeaderSummary = ()=>{
             <div className="w-[20%]">
             <CardHolderTiny>
                 <div className="flex flex-row">
-                <div className="bg-[#828ba1] w-full text-center text-white">
-                    <p className="text-[15px]">Monthly Budget</p>
+                <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
+                    <p className="text-[15px] font-semibold">Monthly Debt Budget</p>
                 </div>
                 </div>
-                <div className="flex flex-row">
-                <div className="w-full text-center text-[#48ce67]">
-                    <Link href={'/member/debt/settings'}>
+                <div className="flex flex-row py-2">
+                <div className="w-full text-center text-[#31c4a2]">
+                    <Link className="text-[19px] font-semibold" href={'/member/debt/settings'}>
                     $ {Intl.NumberFormat('en-US').format(transactioData.monthly_budget)}
                     </Link>
                 </div>
@@ -112,13 +112,13 @@ const HeaderSummary = ()=>{
             <div className="w-[15%]">
             <CardHolderTiny>
                 <div className="flex flex-row">
-                <div className="bg-[#828ba1] w-full text-center text-white">
-                    <p className="text-[15px]">Active Debts</p>
+                <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
+                    <p className="text-[15px] font-semibold">Active Debts</p>
                 </div>
                 </div>
-                <div className="flex flex-row">
-                <div className="w-full text-center text-[#48ce67]">
-                    <Link href={'/member/debts'}>
+                <div className="flex flex-row py-2">
+                <div className="w-full text-center text-[#31c4a2]">
+                    <Link className="text-[19px] font-semibold" href={'/member/debts'}>
                     {transactioData.active_debt_account}
                     </Link>
                 </div>

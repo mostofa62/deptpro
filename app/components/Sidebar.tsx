@@ -97,7 +97,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       }`}
     >
       {/* <!-- SIDEBAR HEADER --> */}
-      <div className="flex items-center justify-between gap-2 px-6">
+      <div className="flex items-center justify-between py-2 gap-2 px-6">
         
         {/*
         <button
@@ -146,8 +146,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 <li key={1}>
   <Link
     href={(Loguser && parseInt(Loguser) < 10 )?'/admin/dashboard':'/member/dashboard'}
-    className={`uppercase text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#0a4a82] duration-300 ease-in-out hover:bg-[#0a4a82] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
-      pathname.substring(1,pathname.length)=='dashboard' && 'bg-[#0a4a82] text-[#f5f5f8]'
+    className={`uppercase text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
+      pathname.substring(1,pathname.length)=='dashboard' && 'bg-[#43ACD6] text-[#f5f5f8]'
     }`}
   >
     
@@ -160,8 +160,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 <li key={20}>
   <Link
     href={'/admin/clients'}
-    className={`uppercase text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#0a4a82] duration-300 ease-in-out hover:bg-[#0a4a82] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
-      pathname.includes('clients') && 'bg-[#0a4a82] text-[#f5f5f8]'
+    className={`uppercase text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
+      pathname.includes('clients') && 'bg-[#43ACD6] text-[#f5f5f8]'
     }`}
   >
   Clients
@@ -186,9 +186,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         href="#"
                        
 
-                        className={`uppercase text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#0a4a82] duration-300 ease-in-out hover:bg-[#0a4a82] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
+                        className={`uppercase text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
                           (pathname === '/debts' ||
-                            pathname.includes('debts')) && 'bg-[#0a4a82] text-[#f5f5f8]'
+                            pathname.includes('debts')) && 'bg-[#43ACD6] text-[#f5f5f8]'
                         }`}
 
                         onClick={(e) => {
@@ -232,8 +232,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 <li key={101}>
   <Link
     href={'/member/debts'}
-    className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out   hover:text-[#0166FF] ${
-      pathname.slice(-5) =='debts' ?'text-[#0166FF]':'text-[#4F4F4F]'
+    className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out   hover:text-[#43ACD6] ${
+      pathname.slice(-5) =='debts' ?'text-[#43ACD6]':'text-[#4F4F4F]'
     }`}
   >
     <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} fill="currentColor" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
@@ -247,8 +247,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 <li key={103}>
   <Link
     href={'/member/debts/settings'}
-    className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out  hover:text-[#0166FF] ${
-      pathname.slice(-8) =='settings' ? 'text-[#0166FF]':'text-[#4F4F4F]'
+    className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out  hover:text-[#43ACD6] ${
+      pathname.slice(-8) =='settings' ? 'text-[#43ACD6]':'text-[#4F4F4F]'
     }`}
   >
     
@@ -302,8 +302,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 <li key={102}>
   <Link
     href={'/member/debts/cu'}
-    className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out  hover:text-[#0166FF] ${
-      pathname.slice(-2) =='cu' ? 'text-[#0166FF]':'text-[#4F4F4F]'
+    className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out  hover:text-[#43ACD6] ${
+      pathname.slice(-2) =='cu' ? 'text-[#43ACD6]':'text-[#4F4F4F]'
     }`}
   >
     <svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
@@ -343,9 +343,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         href="#"
                        
 
-                        className={`uppercase text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#0a4a82] duration-300 ease-in-out hover:bg-[#0a4a82] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
+                        className={`uppercase text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
                           (pathname === '/bills' ||
-                            pathname.includes('bills')) && 'bg-[#0a4a82] text-[#f5f5f8]'
+                            pathname.includes('bills')) && 'bg-[#43ACD6] text-[#f5f5f8]'
                         }`}
 
                         onClick={(e) => {
@@ -389,8 +389,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 <li key={211}>
   <Link
     href={'/member/bills'}
-    className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out   hover:text-[#0166FF] ${
-      pathname.slice(-5) =='bills' ?'text-[#0166FF]':'text-[#4F4F4F]'
+    className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out   hover:text-[#43ACD6] ${
+      pathname.slice(-5) =='bills' ?'text-[#43ACD6]':'text-[#4F4F4F]'
     }`}
   >
     <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} fill="currentColor" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
@@ -408,8 +408,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 <li key={222}>
   <Link
     href={'/member/bills/cu'}
-    className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out  hover:text-[#0166FF] ${
-      pathname.slice(-2) =='cu' ? 'text-[#0166FF]':'text-[#4F4F4F]'
+    className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out  hover:text-[#43ACD6] ${
+      pathname.slice(-2) =='cu' ? 'text-[#43ACD6]':'text-[#4F4F4F]'
     }`}
   >
     <svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
