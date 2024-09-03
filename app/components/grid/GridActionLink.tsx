@@ -39,7 +39,7 @@ const GridActionLink = memo(({hoveredRowHeight,items}:GridLinkProps)=>{
                             onClick={v.onClick}
                             onMouseOver={()=>{setHoverId(v.actionId)}}
                             onMouseOut={removeHoverId}
-                            className={`cursor-pointer hover:text-[#0166FF]`}
+                            className={`cursor-pointer hover:text-[#43ACD6]`}
                             >
                             {v.icon} 
                             </button>
@@ -47,7 +47,7 @@ const GridActionLink = memo(({hoveredRowHeight,items}:GridLinkProps)=>{
                             <Link  
                             onMouseOver={()=>{setHoverId(v.actionId)}}
                             onMouseOut={removeHoverId}
-                            className={`cursor-pointer hover:text-[#0166FF]`}  
+                            className={`cursor-pointer hover:text-[#43ACD6]`}  
                             href={v.link}>                        
                                 {v.icon}                                    
                             </Link>

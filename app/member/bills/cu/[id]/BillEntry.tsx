@@ -166,7 +166,7 @@ const BillEntry=({bill_acc_id, user_id,editData,cleanData}:BillProps)=>{
 
             <div className="flex flex-row mt-4">
                 <div className="w-[40%]">
-                        <button  type="submit" className="text-[15px] h-[40px] bg-[#0166FF] rounded text-white px-4  capitalize text-center font-semibold">
+                        <button  type="submit" className="text-[15px] h-[40px] bg-[#43ACD6] rounded text-white px-4  capitalize text-center font-semibold">
                             Save
                         </button>
                 </div>

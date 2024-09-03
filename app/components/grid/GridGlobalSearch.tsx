@@ -69,7 +69,7 @@ const GridGlobalSearch = ({
                             </div>
                             <div className="ml-[-2px]">
 
-                                    <button className="bg-[#0166FF] w-[92px] text-white py-1 px-2 rounded-tr rounded-br h-[45px] text-[18px] font-medium" onClick={applyFilter}>
+                                    <button className="bg-[#43ACD6] w-[92px] text-white py-1 px-2 rounded-tr rounded-br h-[45px] text-[18px] font-medium" onClick={applyFilter}>
                                       {searchButtonText}
                                     </button>
                             </div>

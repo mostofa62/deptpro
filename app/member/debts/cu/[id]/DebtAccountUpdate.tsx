@@ -534,7 +534,7 @@ component={CheckComponent}
         <div className="mt-[100px]">
                 <div className="flex flex-row gap-4">
                     <div className="relative top-0">
-                        <button className="flex flex-row text-[15px] h-[40px] bg-[#0166FF] rounded text-white px-2.5 py-2  capitalize text-center font-semibold" onClick={handleSubmit}>
+                        <button className="flex flex-row text-[15px] h-[40px] bg-[#43ACD6] rounded text-white px-2.5 py-2  capitalize text-center font-semibold" onClick={handleSubmit}>
                         <svg className="mt-1" width={15} height={15} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                         </svg>

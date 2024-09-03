@@ -16,7 +16,10 @@ const HeaderSummary = ()=>{
         'total_monthly_minimum':0,
         'snowball_amount':0,
         'total_paid_off':0,
-        'active_debt_account':0
+        'active_debt_account':0,
+        'total_monthly_net_income':0,
+        'total_monthly_bill_expese':0
+
       })
 
       const fetchDataCallback=useCallback(async()=>{
@@ -60,7 +63,8 @@ const HeaderSummary = ()=>{
             <CardHolderTiny>
                 <div className="flex flex-row">
                 <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
-                    <p className="text-[15px] font-semibold">Snowball Amounts</p>
+                    {/* <p className="text-[15px] font-semibold">Snowball Amounts</p> */}
+                    <p className="text-[15px] font-semibold">Monthly + Cashflow</p>
                 </div>
                 </div>
                 <div className="flex flex-row py-2">
@@ -73,24 +77,6 @@ const HeaderSummary = ()=>{
             </CardHolderTiny>
             </div>
 
-            
-
-            <div className="w-[20%]">
-            <CardHolderTiny>
-                <div className="flex flex-row">
-                <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
-                    <p className="text-[15px] font-semibold">Minimum Payments</p>
-                </div>
-                </div>
-                <div className="flex flex-row py-2">
-                <div className="w-full text-center text-[#31c4a2]">
-                    <Link className="text-[19px] font-semibold" href={'/member/debts'}>
-                    $ {Intl.NumberFormat('en-US').format(transactioData.total_monthly_minimum)}
-                    </Link>
-                </div>
-                </div>
-            </CardHolderTiny>
-            </div>
 
             <div className="w-[20%]">
             <CardHolderTiny>
@@ -109,7 +95,28 @@ const HeaderSummary = ()=>{
             </CardHolderTiny>
             </div>
 
-            <div className="w-[15%]">
+            
+
+            <div className="w-[20%]">
+            <CardHolderTiny>
+                <div className="flex flex-row">
+                <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
+                    <p className="text-[15px] font-semibold">Monthly Minimum Payments</p>
+                </div>
+                </div>
+                <div className="flex flex-row py-2">
+                <div className="w-full text-center text-[#31c4a2]">
+                    <Link className="text-[19px] font-semibold" href={'/member/debts'}>
+                    $ {Intl.NumberFormat('en-US').format(transactioData.total_monthly_minimum)}
+                    </Link>
+                </div>
+                </div>
+            </CardHolderTiny>
+            </div>
+
+           
+
+            {/* <div className="w-[15%]">
             <CardHolderTiny>
                 <div className="flex flex-row">
                 <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
@@ -120,6 +127,40 @@ const HeaderSummary = ()=>{
                 <div className="w-full text-center text-[#31c4a2]">
                     <Link className="text-[19px] font-semibold" href={'/member/debts'}>
                     {transactioData.active_debt_account}
+                    </Link>
+                </div>
+                </div>
+            </CardHolderTiny>
+            </div> */}
+
+            <div className="w-[20%]">
+            <CardHolderTiny>
+                <div className="flex flex-row">
+                <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
+                    <p className="text-[15px] font-semibold">Monthly Net Income</p>
+                </div>
+                </div>
+                <div className="flex flex-row py-2">
+                <div className="w-full text-center text-[#31c4a2]">
+                    <Link className="text-[19px] font-semibold" href={'/member/income'}>
+                    $ {Intl.NumberFormat('en-US').format(transactioData.total_monthly_bill_expese)}
+                    </Link>
+                </div>
+                </div>
+            </CardHolderTiny>
+            </div>
+
+            <div className="w-[20%]">
+            <CardHolderTiny>
+                <div className="flex flex-row">
+                <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
+                    <p className="text-[15px] font-semibold">Monthly Bill Expense</p>
+                </div>
+                </div>
+                <div className="flex flex-row py-2">
+                <div className="w-full text-center text-[#31c4a2]">
+                    <Link className="text-[19px] font-semibold" href={'/member/income'}>
+                    $ {Intl.NumberFormat('en-US').format(transactioData.total_monthly_net_income)}
                     </Link>
                 </div>
                 </div>

@@ -1,3 +1,4 @@
+import moment from "moment";
 import { object, string, number } from "yup";
 export const DataSchema = {
     
@@ -7,7 +8,7 @@ export const DataSchema = {
     monthly_gross_income:0,
     monthly_net_income:0,
    
-    pay_date:'',
+    pay_date:moment().format('YYYY-MM-DD'),
     
     
     repeat:{'label':'None','value':0},
@@ -17,16 +18,18 @@ export const DataSchema = {
 
     income_boost_source:{'label':'','value':''},
 
-    pay_date_boost:'',
+    pay_date_boost:moment().format('YYYY-MM-DD'),
 
     repeat_boost:{'label':'None','value':0},
+
+    note:''
       
 
 };
 
 export const DataLabel = {
   
-  income_source:'Type of Dept',
+  income_source:'Income Source',
   earner:'Earner',
   
   monthly_gross_income:'Monthly Gross Income',
@@ -44,6 +47,8 @@ export const DataLabel = {
   pay_date_boost:'Pay Day',
  
   repeat_boost:'Repeat Frequency',
+
+  note:'Note'
   
   
   

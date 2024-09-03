@@ -113,7 +113,7 @@ const Debt = ()=>{
           {
               accessorKey: 'name',
               header: 'Name',
-              cell: (info) => <p><Link className="text-[#0166FF]" href={`debts/cu/${info.row.getValue('_id')}`}>{info.getValue()}</Link></p>,
+              cell: (info) => <p><Link className="text-[#43ACD6]" href={`debts/cu/${info.row.getValue('_id')}`}>{info.getValue()}</Link></p>,
               footer:(props)=><p className=" capitalize">{total_paid_off.toFixed(2)}% Paid Off</p>
           },
 
@@ -370,7 +370,7 @@ const Debt = ()=>{
                     <div className="px-10">
                         <Link
                             href={'debts/cu'}
-                            className={`text-sm h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out   bg-[#0166FF] text-white`}
+                            className={`text-sm h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out   bg-[#43ACD6] text-white`}
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width={20} height={20} strokeWidth="1.5" stroke="currentColor" className="">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />

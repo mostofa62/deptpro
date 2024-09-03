@@ -27,7 +27,7 @@ per_page_list
 
 
               <div>
-              <button className={`w-[35px] h-[35px] border-[#0166FF] border-[1px] rounded-sm p-1 px-2 text-[#0166FF] bg-[#0166FF] bg-opacity-5 ${!table.getCanPreviousPage()? 'cursor-pointer':''}}`}
+              <button className={`w-[35px] h-[35px] border-[#43ACD6] border-[1px] rounded-sm p-1 px-2 text-[#43ACD6] bg-[#43ACD6] bg-opacity-5 ${!table.getCanPreviousPage()? 'cursor-pointer':''}}`}
                 onClick={() => table.firstPage()}
                 disabled={!table.getCanPreviousPage()}
               >
@@ -38,7 +38,7 @@ per_page_list
               </button>
               </div>
               <div>
-              <button className={`w-[35px] h-[35px] border-[#0166FF] border-[1px] rounded-sm p-1 px-2 text-[#0166FF] bg-[#0166FF] bg-opacity-5 ${!table.getCanPreviousPage()? 'cursor-pointer':''}}`}
+              <button className={`w-[35px] h-[35px] border-[#43ACD6] border-[1px] rounded-sm p-1 px-2 text-[#43ACD6] bg-[#43ACD6] bg-opacity-5 ${!table.getCanPreviousPage()? 'cursor-pointer':''}}`}
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
               >
@@ -53,9 +53,9 @@ per_page_list
               {pageNumbers.map((page:any,i:any) => (
                 <div key={i}>
                 <button
-                className={`w-[35px] h-[35px] border-[#0166FF] border-[1px] rounded-sm  
+                className={`w-[35px] h-[35px] border-[#43ACD6] border-[1px] rounded-sm  
                   ${!table.getCanPreviousPage()? 'cursor-pointer':''}}
-                  ${table.getState().pagination.pageIndex === page?'text-white bg-[#0166FF]':'text-[#0166FF] bg-[#0166FF] bg-opacity-5'}
+                  ${table.getState().pagination.pageIndex === page?'text-white bg-[#43ACD6]':'text-[#43ACD6] bg-[#43ACD6] bg-opacity-5'}
                   `}
                   key={page}
                   onClick={() => handlePageChange(page)}
@@ -66,7 +66,7 @@ per_page_list
                 </div>
               ))}
               <div>
-              <button className={`w-[35px] h-[35px] border-[#0166FF] border-[1px] rounded-sm p-1 px-2 text-[#0166FF] bg-[#0166FF] bg-opacity-5 ${!table.getCanPreviousPage()? 'cursor-pointer':''}}`}
+              <button className={`w-[35px] h-[35px] border-[#43ACD6] border-[1px] rounded-sm p-1 px-2 text-[#43ACD6] bg-[#43ACD6] bg-opacity-5 ${!table.getCanPreviousPage()? 'cursor-pointer':''}}`}
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}
               >
@@ -77,7 +77,7 @@ per_page_list
               </button>
               </div>
               <div>
-              <button className={`w-[35px] h-[35px] border-[#0166FF] border-[1px] rounded-sm p-1 px-2 text-[#0166FF] bg-[#0166FF] bg-opacity-5 ${!table.getCanPreviousPage()? 'cursor-pointer':''}}`}
+              <button className={`w-[35px] h-[35px] border-[#43ACD6] border-[1px] rounded-sm p-1 px-2 text-[#43ACD6] bg-[#43ACD6] bg-opacity-5 ${!table.getCanPreviousPage()? 'cursor-pointer':''}}`}
                 onClick={() => table.lastPage()}
                 disabled={!table.getCanNextPage()}
               >
@@ -91,7 +91,7 @@ per_page_list
               {per_page_list &&
               <div>
 
-              <select className="border-[#0166FF] border-[1px] rounded-sm p-1 px-2 text-sm h-[35px] w-[80px]"
+              <select className="border-[#43ACD6] border-[1px] rounded-sm p-1 px-2 text-sm h-[35px] w-[80px]"
                 value={table.getState().pagination.pageSize}
                 onChange={e => {
                   table.setPageSize(Number(e.target.value))
