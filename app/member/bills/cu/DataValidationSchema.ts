@@ -1,9 +1,10 @@
+import moment from "moment";
 import { object, string, number } from "yup";
 export const DataSchema = {
     name:'',
     bill_type:{'label':'','value':''},
     default_amount:0,    
-    next_due_date:'',
+    next_due_date:moment().format('YYYY-MM-DD'),
     notes:'',
     autopay:0,
     repeat:0,

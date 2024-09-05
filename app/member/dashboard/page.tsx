@@ -9,7 +9,7 @@ import Pie from "@/app/components/chart/Pie";
 
 import dynamic from "next/dynamic";
 import axios from "axios";
-import { generateRandomColor, generateRandomMixedColor } from "@/app/components/utils/Util";
+import { generateRandomColor, generateRandomMixedColor, getColorForValue } from "@/app/components/utils/Util";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -104,8 +104,9 @@ export default function DashBoard() {
 
   
 
-  
-  
+  const maxProgressLength = Math.max(...transactioData.debt_list.map((dp: any) => dp.progress.toString().length));
+  const minValue = Math.min(...transactioData.debt_list.map((d:any) => d.progress));
+  const maxValue = Math.max(...transactioData.debt_list.map((d:any) => d.progress));
   
 
     return(
@@ -157,15 +158,16 @@ export default function DashBoard() {
                     
           <div className="mt-2">
           <CardHolder title="Debt Payoff Progress">
-            { transactioData.debt_list.map((dp:any,i:number)=>{
-              let colorNumber = 39;
+            { transactioData.debt_list.map((dp:any,i:number)=>{              
+              
               return (
                 <>
                 <DataProgress 
                 title={dp.title} 
                 progress={dp.progress}
-                color={generateRandomMixedColor()}
+                color={getColorForValue(dp.progress,minValue,maxValue)}
                 amount={Intl.NumberFormat('en-US').format(dp.amount)}
+                maxProgressLength={maxProgressLength}
                 />
                 </>
               )
@@ -192,6 +194,7 @@ export default function DashBoard() {
                 progress={dp.progress}
                 color={dp.color}
                 amount={dp.amount}
+                maxProgressLength={maxProgressLength}
                 />
                 
               )

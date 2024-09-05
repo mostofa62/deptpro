@@ -1,5 +1,6 @@
 import CardHolder from "@/app/components/ui/CardHolder";
 import DataProgress from "@/app/components/ui/DataProgress";
+import { getColorForValue } from "@/app/components/utils/Util";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 
 // const data = [
@@ -18,14 +19,7 @@ interface TotalProps{
 }
 
 
-// Function to generate a color based on the value
-const getColorForValue = (value:number, min:number, max:number) => {
-    const ratio = (value - min) / (max - min);
-    const r = Math.floor(255 * (1 - ratio)); // Red decreases as value increases
-    const g = Math.floor(255 * ratio);       // Green increases as value increases
-    const b = 100; // Blue is constant
-    return `rgb(${r},${g},${b})`;
-};
+
 
 
 
@@ -54,6 +48,7 @@ const TotalAllocation = ({data}:TotalProps) => {
     // Get min and max values
     const minValue = Math.min(...data.map(d => d.value));
     const maxValue = Math.max(...data.map(d => d.value));
+    const maxProgressLength = Math.max(...data.map((dp: any) => dp.value.toString().length));
     return (
     <div className="flex flex-row min-h-75">
         <div className="w-[40%]">
@@ -85,7 +80,7 @@ const TotalAllocation = ({data}:TotalProps) => {
                 </div>
 
                 <div className="w-[55%]">
-                    <div className="p-8">
+                    <div className="ml-[5%]">
                     {                         
                         data.map((dp:any,i:number)=>{
                             
@@ -95,7 +90,7 @@ const TotalAllocation = ({data}:TotalProps) => {
                                 title={dp.name} 
                                 progress={dp.value}
                                 color={getColorForValue(dp.value, minValue, maxValue)}
-                                
+                                maxProgressLength={maxProgressLength}
                                 />
                                 </>
                             )

@@ -1,3 +1,4 @@
+import moment from "moment";
 import { object, string, number } from "yup";
 export const DataSchema = {
     name:'',
@@ -9,8 +10,8 @@ export const DataSchema = {
     monthly_payment:0,
     credit_limit:0,
     interest_rate:0, 
-    start_date:'',   
-    due_date:'',
+    start_date:moment().format('YYYY-MM-DD'),   
+    due_date:moment().format('YYYY-MM-DD'),
     notes:'',
     //Promotional Interest Rate
     promo_rate:0,

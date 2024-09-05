@@ -41,3 +41,13 @@ export const generateRandomMixedColor = (): string => {
     // Combine the components into a single hex color string
     return `#${redHex}${greenHex}${blueHex}`;
   };
+
+
+  // Function to generate a color based on the value
+ export const getColorForValue = (value:number, min:number, max:number) => {
+    const ratio = (value - min) / (max - min);
+    const r = Math.floor(255 * (1 - ratio)); // Red decreases as value increases
+    const g = Math.floor(255 * ratio);       // Green increases as value increases
+    const b = 100; // Blue is constant
+    return `rgb(${r},${g},${b})`;
+};

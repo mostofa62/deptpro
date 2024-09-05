@@ -1,7 +1,8 @@
+import moment from "moment";
 import { object, array, string, number, StringSchema } from "yup";
 export const DataSchema = {
     amount:0,    
-    due_date:'',
+    due_date:moment().format('YYYY-MM-DD'),
     autopay:0    
 
 };

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import './DataProgress.css';
 interface DataProgressType{
     title:string;
     progress:string;
     color:string;
     amount?:string;
+    maxProgressLength: number;
 }
 
-const DataProgress = ({title, progress,color,amount}:DataProgressType)=>{
+const DataProgress = ({title, progress,color,amount,maxProgressLength}:DataProgressType)=>{
 
     const [animatedProgress, setAnimatedProgress] = useState(0);
+    
 
     useEffect(() => {
         // Delay setting the animatedProgress to ensure transition occurs
@@ -20,20 +21,25 @@ const DataProgress = ({title, progress,color,amount}:DataProgressType)=>{
         return () => clearTimeout(timer);
     }, [progress]);
 
+    
+
 
     return (
-        <>
-        <div className="skill-name">{title}</div>
-        <div className="skill">
-            <div className="skill-percent-number">{animatedProgress}%</div>
-            
-            <div className="skill-level">
-                <div className="skill-percent transition-all duration-500" style={{ width:`${animatedProgress}%`, backgroundColor:color }}></div>
+        <div className='flex flex-col gap-1 mb-2'>
+            <div className="flex justify-start items-start">
+                <div className="w-auto font-semibold invisible" style={{ width: `${maxProgressLength}ch` }}>{animatedProgress}%</div>    
+                <div className="w-auto font-semibold" style={{ marginLeft: `${maxProgressLength}%` }}>{title}</div>
             </div>
-            {amount  && <div className="skill-amount">$ {amount}</div> }
-            
-        </div>
-        </>  
+            <div className="flex flex-row">
+                <div className={`w-auto font-semibold`} style={{ width: `${maxProgressLength}ch` }}>{animatedProgress}%</div>
+                
+                <div className="h-3 w-[80%] bg-[#eeeeee] rounded-[10px] overflow-hidden" style={{ marginLeft: `${maxProgressLength}%` }}>
+                    <div className="h-full transition-all duration-500" style={{ width:`${animatedProgress}%`, backgroundColor:color }}></div>
+                </div>
+                {amount  && <div className="w-auto font-semibold text-right ml-[2%]">$ {amount}</div> }
+                
+            </div>
+        </div>  
             
     
     )

@@ -12,6 +12,7 @@ import BillAccountUpdate from "./BillAccountUpdate";
 import BillTransactions from "./BillTransactions";
 import CurrentBillDashboard from "./CurrentBillDashboard";
 import BillPayment from "./payment/BillPayment";
+import moment from "moment";
 
 interface Tab {
   label: string;
@@ -36,13 +37,13 @@ export default function InsuranceCreate({
 
     const tdata = {
       'id':'',
-      'due_date':'',
+      'due_date':moment().format('YYYY-MM-DD'),
       'amount':0
     }
 
     const edata = {
       'id':'',
-      'due_date':'',
+      'due_date':moment().format('YYYY-MM-DD'),
       'amount':0,
       'autopay':0
     }

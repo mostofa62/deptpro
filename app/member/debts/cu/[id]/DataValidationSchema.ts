@@ -1,8 +1,9 @@
+import moment from "moment";
 import { object, array, string, number, StringSchema } from "yup";
 export const DataSchema = {
     type:{'label':'None','value':0},
     amount:0,    
-    trans_date:'',
+    trans_date:moment().format('YYYY-MM-DD'),
     month:'',
     year:'',
     autopay:0  
