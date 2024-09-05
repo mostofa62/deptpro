@@ -72,29 +72,35 @@ export default function InsuranceCreate() {
         <DefaultLayout>
         <div className="grid grid-flow-row">
 
-            
-
-            <div className="mt-[40px]">
-                <div className="flex flex-row h-[29px]">
-                    <div className="h-[21px] pt-[5px] pb-[3px]">
-                            <Link
-                                    href={'/member/debts'}
-                                    className={`text-[21px] capitalize group relative flex items-center gap-2 rounded-sm py-[3px] font-medium duration-300 ease-in-out   text-[#43ACD6]`}
-                                >
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" width={15} height={15} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-                                </svg>
-
-
-                                Back
-                            </Link>
+        <div className="mt-[20px] bg-[#43ACD6] text-white rounded-lg border-[#43ACD6]">
+              <div className="flex flex-row h-[70px] py-3 px-10">
+                    <div className="py-[10px] w-[40%]">                    
+                      <p className="text-[25px]  leading-[25px] uppercase  font-medium">
+                      ADD DEBT ACCOUNT
+                      </p>
                     </div>
-                    <div className="ml-[50px] pt-[5px]">
-                        <span className="text-[25px] font-medium capitalize text-[#4F4F4F]">ADD NEW DEBT ACCOUNT</span>
+
+                    
+
+                    <div className="px-10 flex justify-end w-[60%]">
+                        <div>
+                        <Link
+                            href={'/member/debts'}
+                            className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
+                        >                            
+
+                            <p className="text-[20px] font-semibold uppercase">DEBTS accounts</p>
+                        </Link>
+                        </div>
                     </div>
-                </div>
-            
+
+              </div>
+
             </div>
+
+            
+
+            
 
             <div className="mt-[32px]">
             <Formik

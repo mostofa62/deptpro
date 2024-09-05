@@ -40,9 +40,9 @@ const HeaderSummary = ()=>{
     return (
 
 
-        <div className="flex flex-row-reverse gap-1">
+        <div className="flex flex-row-reverse h-auto w-auto gap-1">
 
-            <div className="w-[15%]">
+            <div className="h-auto w-auto">
             <CardHolderTiny>
                 <div className="flex flex-row">
                 <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
@@ -51,7 +51,7 @@ const HeaderSummary = ()=>{
                 </div>
                 <div className="flex flex-row py-2">
                 <div className="w-full text-center text-[#31c4a2]">
-                    <Link className="text-[19px] font-semibold" href={'/member/debt/settings'}>
+                    <Link className="text-[19px] font-semibold" href={'settings'}>
                     {transactioData.total_paid_off.toFixed(2)} %
                     </Link>
                 </div>
@@ -59,7 +59,7 @@ const HeaderSummary = ()=>{
             </CardHolderTiny>
             </div>
 
-            <div className="w-[20%]">
+            <div className="h-auto w-auto">
             <CardHolderTiny>
                 <div className="flex flex-row">
                 <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
@@ -69,7 +69,7 @@ const HeaderSummary = ()=>{
                 </div>
                 <div className="flex flex-row py-2">
                 <div className="w-full text-center text-[#31c4a2]">
-                    <Link className="text-[19px] font-semibold" href={'/member/debt/settings'}>
+                    <Link className="text-[19px] font-semibold" href={'settings'}>
                     $ {Intl.NumberFormat('en-US').format(transactioData.snowball_amount)}
                     </Link>
                 </div>
@@ -78,7 +78,7 @@ const HeaderSummary = ()=>{
             </div>
 
 
-            <div className="w-[20%]">
+            <div className="h-auto w-auto">
             <CardHolderTiny>
                 <div className="flex flex-row">
                 <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
@@ -87,7 +87,7 @@ const HeaderSummary = ()=>{
                 </div>
                 <div className="flex flex-row py-2">
                 <div className="w-full text-center text-[#31c4a2]">
-                    <Link className="text-[19px] font-semibold" href={'/member/debt/settings'}>
+                    <Link className="text-[19px] font-semibold" href={'settings'}>
                     $ {Intl.NumberFormat('en-US').format(transactioData.monthly_budget)}
                     </Link>
                 </div>
@@ -97,7 +97,7 @@ const HeaderSummary = ()=>{
 
             
 
-            <div className="w-[20%]">
+            <div className="h-auto w-auto">
             <CardHolderTiny>
                 <div className="flex flex-row">
                 <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
@@ -133,7 +133,7 @@ const HeaderSummary = ()=>{
             </CardHolderTiny>
             </div> */}
 
-            <div className="w-[20%]">
+            <div className="h-auto w-auto">
             <CardHolderTiny>
                 <div className="flex flex-row">
                 <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">

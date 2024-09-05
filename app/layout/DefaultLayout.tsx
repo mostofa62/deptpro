@@ -8,7 +8,7 @@ import UseAuthRoute from '@/app/hooks/useAuthRoute';
 import { useRouter, usePathname } from "next/navigation";
 import { RouteChangeListener } from '../components/utils/RouteChangeListener';
 import { AppContextProvider } from '../context/app-context';
-import HeaderSummary from '../member/debts/HeaderSummary';
+import HeaderSummary from './HeaderSummary';
 
 
 

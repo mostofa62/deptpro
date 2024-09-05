@@ -10,6 +10,7 @@ import { confirmAlert } from "react-confirm-alert";
 import GridGlobalSearch from "@/app/components/grid/GridGlobalSearch";
 import GridActionLink from "@/app/components/grid/GridActionLink";
 import GridPaginationHolder from "@/app/components/grid/GridPaginationHolder";
+import TotalAllocation from "./TotalAllocation";
 
 const per_page_list = PerPageList();
 const per_page = per_page_list[0];
@@ -24,6 +25,7 @@ interface DataRow {
     monthly_payment:number;
     monthly_interest:number;
     next_due_date: string;
+    left_to_go:string;
 }
 interface ExtraPayloadProps{
   total_balance:number;
@@ -205,6 +207,12 @@ const Debt = ()=>{
             footer:(props)=><p><span>$</span><span className="px-2">{total_monthly_interest.toFixed(2)}</span></p>
           },
 
+          {
+            accessorKey:'left_to_go',
+            header: 'Left to Go',
+            cell: (info) => <p><span className="px-2">{info.getValue<number>()}</span><span>%</span></p>,
+          }
+
                   
           /*
           {
@@ -347,17 +355,54 @@ const Debt = ()=>{
         
         <DefaultLayout>
             <div className="grid grid-flow-row">
+
+
+            <div className="mt-[20px] bg-[#43ACD6] text-white rounded-lg border-[#43ACD6]">
+              <div className="flex flex-row h-[70px] py-3 px-10">
+                    <div className="py-[10px] w-[30%]">                    
+                      <p className="text-[25px]  leading-[25px] uppercase  font-medium">
+                      DEBTS accounts
+                        </p>
+                    </div>
+
+                    <div className="py-[15px] px-10 w-[20%]">
+                      <p className="text-[16px] leading-[15px]">{showingText}</p>
+                    </div>
+
+                    <div className="px-10 flex justify-end w-[50%]">
+                        <div>
+                        <Link
+                            href={'debts/cu'}
+                            className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
+                        >
+                            
+
+                            <p className="text-[18px] font-semibold uppercase">Add Debt</p>
+                        </Link>
+                        </div>
+
+                        <div>
+                        <Link
+                            href={'debts/settings'}
+                            className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
+                        >
+                            
+
+                            <p className="text-[18px] font-semibold uppercase">Debt settings</p>
+                        </Link>
+                        </div>
+                        
+                    </div>
+
+              </div>
+
+            </div>
+            
             
             <div className="mt-[40px]">
                   <div className="flex flex-row h-[45px]">
-                    <div className="py-[10px]">                    
-                      <p className="text-[25px]  leading-[25px] uppercase  font-medium text-[#000000]">
-                        Your DEBTS accounts
-                        </p>
-                    </div>
-                    <div className="py-[15px] px-10">
-                      <p className="text-[15px] leading-[15px] text-[#4F4F4F]">{showingText}</p>
-                    </div>
+                    
+                    
                     <div>
                        <GridGlobalSearch 
                       filterInput={filterInput}
@@ -367,19 +412,21 @@ const Debt = ()=>{
                       placeHolderText="Search here"
                       />
                     </div>
-                    <div className="px-10">
-                        <Link
-                            href={'debts/cu'}
-                            className={`text-sm h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out   bg-[#43ACD6] text-white`}
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width={20} height={20} strokeWidth="1.5" stroke="currentColor" className="">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                            </svg>
-
-                            <p className="text-[16px] font-medium">Add Debt</p>
-                        </Link>
-                    </div>
+                    
                 </div>
+            </div>
+
+            <div className="mt-10 p-2 mb-10">
+
+              <TotalAllocation data={
+                table.getRowModel().rows.length> 0 ?
+                table.getRowModel().rows.map(row => ({
+                  name: row.original.name,
+                  value: row.original.left_to_go
+                }))
+                :[]
+              }/>
+
             </div>
 
             <div className="mt-10 p-2">  

@@ -4,7 +4,7 @@ interface DataProgressType{
     title:string;
     progress:string;
     color:string;
-    amount:string;
+    amount?:string;
 }
 
 const DataProgress = ({title, progress,color,amount}:DataProgressType)=>{
@@ -30,7 +30,7 @@ const DataProgress = ({title, progress,color,amount}:DataProgressType)=>{
             <div className="skill-level">
                 <div className="skill-percent transition-all duration-500" style={{ width:`${animatedProgress}%`, backgroundColor:color }}></div>
             </div>
-            <div className="skill-amount">$ {amount}</div>
+            {amount  && <div className="skill-amount">$ {amount}</div> }
             
         </div>
         </>  
