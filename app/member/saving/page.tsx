@@ -16,34 +16,31 @@ const per_page = per_page_list[0];
 
 interface DataRow {
     _id:string;    
-    income_source:string;
-    earner:string;    
-    income_boost:number;
-    monthly_net_income:number;
-    monthly_gross_income:number;
-    pay_date: string;
-    pay_date_boost: string;
-    monthly_income_total:number;
-    next_pay_date:string;
-    next_boost_date:string;
+    category:string;
+    saver:string; 
+    nickname:string;    
+    saving_boost:number;
+    goal_amount:number;
+    interest:number;
+    starting_date: string;   
+    contribution:number;
+    repeat:string; 
 }
 interface ExtraPayloadProps{  
-  total_monthly_net_income:number;
-  total_monthly_gross_income:number;
-  total_income_boost:number;
-  total_monthly_income:number;
+  total_goal_amount:number;
+  total_starting_amount:number;
+  total_contribution:number;  
 
 }
-const Income = ()=>{
+const Saving = ()=>{
     
 
     const authCtx = useAuth();
 
     const [extraPayload, setExtraPayload] = useState<ExtraPayloadProps>({
-      total_monthly_net_income:0,
-      total_monthly_gross_income:0,
-      total_income_boost:0,
-      total_monthly_income:0
+      total_goal_amount:0,
+      total_starting_amount:0,
+      total_contribution:0      
      });
 
     const [data, setData] = useState<DataRow[]>([]);
@@ -87,7 +84,7 @@ const Income = ()=>{
   
   
       const {error,loading,totalRows,pageCount} = useFetchGridData({
-      urlSuffix:`income/${authCtx.userId}`,
+      urlSuffix:`saving/${authCtx.userId}`,
       pagination:pagination,
       sorting:sorting,
       globalFilter:globalFilter,
@@ -95,10 +92,9 @@ const Income = ()=>{
       setExtraPayload:setExtraPayloadHandler    
       })
 
-      const total_monthly_net_income =  extraPayload.total_monthly_net_income;
-      const total_monthly_gross_income = extraPayload.total_monthly_gross_income;
-      const total_income_boost = extraPayload.total_income_boost;  
-      const total_monthly_income = extraPayload.total_monthly_income;     
+      const total_goal_amount =  extraPayload.total_goal_amount;
+      const total_starting_amount = extraPayload.total_starting_amount;
+      const total_contribution = extraPayload.total_contribution;           
   
       const columns: ColumnDef<DataRow>[] = useMemo(() => [
       
@@ -114,53 +110,53 @@ const Income = ()=>{
           
 
           {
-            accessorKey: 'earner',
-            header: 'Earner',
+            accessorKey: 'saver',
+            header: 'Saver',
             
           },
 
           {
-            accessorKey: 'income_source',
-            header: 'Income Source',
+            accessorKey: 'nickname',
+            header: 'Nickname',
+            
+          },
+
+          {
+            accessorKey: 'category',
+            header: 'Category',
             
           },
           
 
           {
-            accessorKey: 'pay_date',
-            header: 'Pay Date',
+            accessorKey: 'starting_date',
+            header: 'Starting Date',
           },
-          
-          {
-            accessorKey: 'next_pay_date',
-            header: 'Next Date',
-          },  
-           
-          {
-            accessorKey: 'income_boost_source',
-            header: 'Income Boost Source',
-            
-          },
-
-          {
-            accessorKey: 'pay_date_boost',
-            header: 'Pay Boost Date',
-          },
-          
-          {
-            accessorKey: 'next_boost_date',
-            header: 'Next Boost Date',
-          }, 
-          
+                   
           {
             accessorKey: 'repeat.label',
             header: 'Repeat',
-          },  
+          },
+          
+          {
+            accessorKey: 'interest',
+            header: 'Interest',
+            cell: (info) => <p><span>{info.getValue<number>().toFixed(2)}</span><span className="px-2">%</span></p>,
+            /*
+            footer: (props) => {
+              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
+                return sum + row.original.monthly_payment;
+              }, 0);
+              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
+            },
+            */
+           //footer:(props)=><p><span>$</span><span className="px-2">{total_goal_amount.toFixed(2)}</span></p>
+          },
          
   
           {
-            accessorKey: 'income_boost',
-            header: 'Income Boost',
+            accessorKey: 'goal_amount',
+            header: 'Goal Amount',
             cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
             /*
             footer: (props) => {
@@ -170,12 +166,12 @@ const Income = ()=>{
               return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
             },
             */
-           footer:(props)=><p><span>$</span><span className="px-2">{total_income_boost.toFixed(2)}</span></p>
+           footer:(props)=><p><span>$</span><span className="px-2">{total_goal_amount.toFixed(2)}</span></p>
           },
 
           {
-            accessorKey: 'monthly_net_income',
-            header: 'Monthly Net Income',
+            accessorKey: 'starting_amount',
+            header: 'Starting Amount',
             cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
             /*
             footer: (props) => {
@@ -185,12 +181,12 @@ const Income = ()=>{
               return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
             },
             */
-           footer:(props)=><p><span>$</span><span className="px-2">{total_monthly_net_income.toFixed(2)}</span></p>
+           footer:(props)=><p><span>$</span><span className="px-2">{total_starting_amount.toFixed(2)}</span></p>
           },
 
           {
-            accessorKey: 'monthly_gross_income',
-            header: 'Monthly Gross Income',
+            accessorKey: 'contribution',
+            header: 'Total Contribution',
             cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
             /*
             footer: (props) => {
@@ -200,24 +196,11 @@ const Income = ()=>{
               return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
             },
             */
-           footer:(props)=><p><span>$</span><span className="px-2">{total_monthly_gross_income.toFixed(2)}</span></p>
+           footer:(props)=><p><span>$</span><span className="px-2">{total_contribution.toFixed(2)}</span></p>
           },
 
 
-          {
-            accessorKey: 'monthly_income_total',
-            header: 'Monthly Income Total',
-            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
-            /*
-            footer: (props) => {
-              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
-                return sum + row.original.monthly_payment;
-              }, 0);
-              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
-            },
-            */
-           footer:(props)=><p><span>$</span><span className="px-2">{total_monthly_income.toFixed(2)}</span></p>
-          },
+          
 
          
 
@@ -237,7 +220,7 @@ const Income = ()=>{
           },
           */
       
-          ], [/*hoveredRowId*/,total_monthly_net_income, total_monthly_gross_income, total_income_boost, total_monthly_income]);
+          ], [/*hoveredRowId*/,total_goal_amount,total_starting_amount,total_contribution]);
       
           const table = useReactTable({
               data,
@@ -305,7 +288,7 @@ const Income = ()=>{
                     onClick: async()=>{ 
         
                       DeleteActionGlobal({        
-                        action:'delete-income',        
+                        action:'delete-saving',        
                         data:{'id':id}
                       }).then((deletedData)=>{
                           //console.log(deletedData)
@@ -338,7 +321,7 @@ const Income = ()=>{
       {
         actionId:'edit',
         title:'Edit',
-        link:`income/cu/${row.getValue('_id')}`,                        
+        link:`saving/cu/${row.getValue('_id')}`,                        
         icon :<svg width={22} height={22} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
     </svg>
@@ -346,7 +329,7 @@ const Income = ()=>{
       {
         actionId:'delete',
         title:'Delete',
-        link:`delete-income`, 
+        link:`delete-saving`, 
         onClick:()=>{deleteAction(row.getValue('_id'))},                       
         icon :<svg width={18} height={20} viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M6.41406 1.54297L5.81641 2.5H11.6836L11.0859 1.54297C10.9727 1.35938 10.7695 1.25 10.5547 1.25H6.94141C6.72656 1.25 6.52734 1.35938 6.41016 1.54297H6.41406ZM12.1484 0.882812L13.1602 2.5H15H16.25H16.875C17.2188 2.5 17.5 2.78125 17.5 3.125C17.5 3.46875 17.2188 3.75 16.875 3.75H16.25V16.875C16.25 18.6016 14.8516 20 13.125 20H4.375C2.64844 20 1.25 18.6016 1.25 16.875V3.75H0.625C0.28125 3.75 0 3.46875 0 3.125C0 2.78125 0.28125 2.5 0.625 2.5H1.25H2.5H4.33984L5.35156 0.882812C5.69531 0.332031 6.29688 0 6.94141 0H10.5547C11.2031 0 11.8008 0.332031 12.1445 0.882812H12.1484ZM2.5 3.75V16.875C2.5 17.9102 3.33984 18.75 4.375 18.75H13.125C14.1602 18.75 15 17.9102 15 16.875V3.75H2.5ZM5.625 6.875V15.625C5.625 15.9688 5.34375 16.25 5 16.25C4.65625 16.25 4.375 15.9688 4.375 15.625V6.875C4.375 6.53125 4.65625 6.25 5 6.25C5.34375 6.25 5.625 6.53125 5.625 6.875ZM9.375 6.875V15.625C9.375 15.9688 9.09375 16.25 8.75 16.25C8.40625 16.25 8.125 15.9688 8.125 15.625V6.875C8.125 6.53125 8.40625 6.25 8.75 6.25C9.09375 6.25 9.375 6.53125 9.375 6.875ZM13.125 6.875V15.625C13.125 15.9688 12.8438 16.25 12.5 16.25C12.1562 16.25 11.875 15.9688 11.875 15.625V6.875C11.875 6.53125 12.1562 6.25 12.5 6.25C12.8438 6.25 13.125 6.53125 13.125 6.875Z" fill="currentColor"/>
@@ -371,7 +354,7 @@ const Income = ()=>{
               <div className="flex flex-row h-[70px] py-3 px-10">
                     <div className="py-[10px] w-[30%]">                    
                       <p className="text-[25px]  leading-[25px] uppercase  font-medium">
-                        Income Accounts
+                        Saving Accounts
                         </p>
                     </div>
 
@@ -381,12 +364,12 @@ const Income = ()=>{
 
                     <div className="px-10 flex justify-end w-[50%]">
                         <Link
-                            href={'income/cu'}
+                            href={'saving/cu'}
                             className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
                         >
                             
 
-                            <p className="text-[18px] font-semibold capitalize">Add Income</p>
+                            <p className="text-[18px] font-semibold capitalize">Add Saving</p>
                         </Link>
                     </div>
 
@@ -531,4 +514,4 @@ const Income = ()=>{
 
 }
 
-export default Income;
+export default Saving;
