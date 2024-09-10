@@ -1,12 +1,18 @@
 import React from 'react';
 
-function ProgressBarOne({ progress, title }:any) {
+interface propsProgs{
+  progress:number;
+  title:string;
+  progressColor?:string;
+}
+
+function ProgressBarOne({ progress, title,progressColor }:propsProgs) {
   return (
     <div className="w-full">
       {/* Progress Bar */}
       <div className="bg-gray rounded h-4">
         <div
-          className="bg-secondary h-4 rounded-full transition-all duration-500"
+          className={`${progressColor? `bg-[${progressColor}]`:'bg-secondary'}  h-4 rounded-full transition-all duration-500`}
           style={{ width: `${progress}%` }}
         ></div>
       </div>

@@ -63,7 +63,7 @@ export const DataLabelUpdate = {
   monthly_payment:'Monthly Payment',
   credit_limit:'Credit Limit',
   interest_rate:'Interest Rate (%)',  
-  due_date:'Next Due Date',
+  due_date:'Next Due Date',  
   notes:'Note',
 
   //not in form
@@ -75,6 +75,44 @@ export const DataLabelUpdate = {
   promo_interest_rate:'Promo Int. Rate',
   promo_good_through_month:'Promo Good Through',  
   promo_monthly_interest:'Promo Monthly Interest',
+  
+
+  //Account Settings
+  autopay:'Autopay?',
+  inlclude_payoff:'Include in Payoff Plan?',
+  payoff_order:'Payoff Order',
+  reminder_days:'Reminder Days (for sms/txt reminders)',
+
+  //Monthly Minimum Payment Adjustment
+  monthly_payment_option:'Monthly Payment Options',
+  percentage:'Percentage',
+  lowest_payment:'Lowest Payment'
+
+}
+
+
+export const DataLabelView= {
+  name:'Name',
+  debt_type:'Account Type',
+  balance:'Balance',
+  highest_balance:'Highest Balance',
+  minimum_payment:'Minimum Payment',   
+  monthly_payment:'Monthly Payment',
+  credit_limit:'Credit Limit',
+  interest_rate:'Interest Rate (%)',  
+  //due_date:'Next Due Date',
+  due_date_word:'Next Due Date',
+  notes:'Note',
+
+  //not in form
+  monthly_interest:'Monthly Interest',
+
+  //Promotional Interest Rate
+  //promo_rate:'Use Promo Rate?',
+  //deffered_interest:'Deferred Interest?',
+  //promo_interest_rate:'Promo Int. Rate',
+  //promo_good_through_month:'Promo Good Through',  
+  //promo_monthly_interest:'Promo Monthly Interest',
   
 
   //Account Settings

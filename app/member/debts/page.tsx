@@ -115,7 +115,7 @@ const Debt = ()=>{
           {
               accessorKey: 'name',
               header: 'Name',
-              cell: (info) => <p><Link className="text-[#43ACD6]" href={`debts/cu/${info.row.getValue('_id')}`}>{info.getValue()}</Link></p>,
+              cell: (info) => <p><Link className="text-[#43ACD6]" href={`debts/${info.row.getValue('_id')}`}>{info.getValue()}</Link></p>,
               footer:(props)=><p className=" capitalize">{total_paid_off.toFixed(2)}% Paid Off</p>
           },
 
