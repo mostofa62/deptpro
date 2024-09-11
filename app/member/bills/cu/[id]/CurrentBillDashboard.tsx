@@ -136,7 +136,7 @@ const CurrentBillDashboard = ({bill_acc_id, user_id}:BillProps)=>{
                                         
                                         <XAxis   dataKey="amount" tickLine={false} axisLine={false} tick={false} />
                                         <Bar   dataKey="amount" fill="#8884d8"  barSize={15} shape={<CustomBar />} />
-                                        <Tooltip content={<CustomTooltip />} />
+                                        <Tooltip content={<CustomTooltip />} cursor={{fill: 'transparent'}} />
                                         
                                         </BarChart>
 

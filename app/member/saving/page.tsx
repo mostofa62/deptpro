@@ -10,6 +10,7 @@ import { confirmAlert } from "react-confirm-alert";
 import GridGlobalSearch from "@/app/components/grid/GridGlobalSearch";
 import GridActionLink from "@/app/components/grid/GridActionLink";
 import GridPaginationHolder from "@/app/components/grid/GridPaginationHolder";
+import { DataLabel } from "./cu/DataValidationSchema";
 
 const per_page_list = PerPageList();
 const per_page = per_page_list[0];
@@ -136,6 +137,24 @@ const Saving = ()=>{
           {
             accessorKey: 'repeat.label',
             header: 'Repeat',
+          },
+
+          {
+            accessorKey: 'saving_boost_source',
+            header: DataLabel.saving_boost_source,
+            
+          },
+
+          {
+            accessorKey: 'pay_date_boost',
+            header: DataLabel.pay_date_boost,
+            
+          },
+
+          {
+            accessorKey: 'repeat_boost.label',
+            header: DataLabel.repeat_boost,
+            
           },
           
           {

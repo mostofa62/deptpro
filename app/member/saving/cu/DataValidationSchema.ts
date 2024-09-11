@@ -20,8 +20,19 @@ export const DataSchema = {
 
 
     saving_boost:0,
+
+
+    autopay:0,
+
+
+    saving_boost_source:{'label':'','value':''},
+
+    pay_date_boost:moment().format('YYYY-MM-DD'),
+
+    repeat_boost:{'label':'None','value':0},
+
     
-    
+    note:''
       
 
 };
@@ -45,10 +56,16 @@ export const DataLabel = {
 
   saving_boost:'Saving Boost',
 
+  autopay:'Autopay?',
 
+
+  saving_boost_source:'Saving Boost Source',
+
+  pay_date_boost:'Pay Day',
+
+  repeat_boost:'Repeat Frequency',
   
-  
-  
+  note:'Note'
   
 }
 

@@ -5,7 +5,7 @@ import { useState,useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import useAuth from '@/app/hooks/useAuth';
 import { useRouter } from "next/navigation";
-import {Formik} from 'formik';
+import {Field, Formik} from 'formik';
 import { DataSchema,DataLabel,ValidationSchema } from "../DataValidationSchema";
 
 import FormikFormHolder from "@/app/components/form/FormikFormHolder";
@@ -17,6 +17,7 @@ import toast from 'react-hot-toast';
 import useFetchDropDownData from "@/app/hooks/useFetchDropDownData";
 import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
+import FormikCheckInput from "@/app/components/form/FormikCheckInput";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -25,9 +26,9 @@ interface Options{
     label:string;
 }
 interface PayLoads{
-    category:Options[],
-    saving_boost_source:Options[],
+    category:Options[],    
     repeat_frequency:Options[],
+    saving_boost_source:Options[]    
 }
 
 export default function InsuranceCreate({
@@ -48,9 +49,10 @@ export default function InsuranceCreate({
     const id = params.id;
 
     const payload: PayLoads ={
-        category: [],
-        saving_boost_source: [],
+        category: [],        
         repeat_frequency: [],
+        saving_boost_source:[]        
+
     }
 
     const SavingCategoryData:any = useFetchDropDownObjects({
@@ -401,7 +403,136 @@ export default function InsuranceCreate({
 
     <div className="ml-[24px] w-[32%]">
         
-   
+    <FormikSelectCreatableInput
+            label={DataLabel.saving_boost_source}
+            defaultValue={fetchdata.saving_boost_source}
+            placeHolder={`Select ${DataLabel.saving_boost_source}`}
+            isSearchable={true}
+            isClearable={true}
+            name="fetchdata.saving_boost_source"
+            dataOptions={SavingCategoryData.saving_boost_source}
+            errorMessage={errors.fetchdata &&
+                errors.fetchdata.saving_boost_source &&
+                touched.fetchdata &&
+                touched.fetchdata.saving_boost_source &&
+                errors.fetchdata.saving_boost_source.label
+            }
+        />
+        
+        
+        
+    </div>
+
+
+    <div className="ml-[24px] w-[32%]">
+
+
+    <FormikSelectInput
+        label={DataLabel.repeat_boost}
+        defaultValue={fetchdata.repeat_boost}
+        placeHolder={``}
+        isSearchable={true}
+        isClearable={true}
+        name="fetchdata.repeat_boost"
+        dataOptions={SavingCategoryData.repeat_frequency}
+        errorMessage={errors.fetchdata &&
+            errors.fetchdata.repeat_boost &&
+            touched.fetchdata &&
+            touched.fetchdata.repeat_boost &&
+            errors.fetchdata.repeat_boost.label
+        }
+    />
+    
+
+    
+        
+        
+    </div>
+
+
+    
+    
+    
+</div>
+
+
+<div className="flex flex-row mt-[15px]">
+    <div className="w-[32%]">
+        
+        
+
+    <FormikFieldInput 
+        type="date"              
+        label={DataLabel.pay_date_boost} 
+        name={`fetchdata.pay_date_boost`}
+        placeHolder={`${DataLabel.pay_date_boost}`}
+        errorMessage ={ errors.fetchdata &&                                        
+            errors.fetchdata.pay_date_boost &&
+            touched.fetchdata &&            
+            touched.fetchdata.pay_date_boost &&  errors.fetchdata.pay_date_boost}
+                   
+        />
+        
+        
+        
+    </div>
+
+    <div className="ml-[24px] w-[32%]">
+
+        
+
+     
+    <Field 
+    component={FormikCheckInput}
+        name="fetchdata.autopay"
+        label={DataLabel.autopay}    
+        checked={values.fetchdata.autopay === 1}
+        errorClass={errors.fetchdata && 
+            errors.fetchdata.autopay && 
+            touched.fetchdata && 
+            touched.fetchdata.autopay &&
+            'font-semibold text-[#B45454]'
+        }                                        
+        onChange={(e:any) => {
+            const {checked, name} = e.target;                        
+                    
+            if (checked) {
+            setFieldTouched(name,true);
+
+            setFieldValue(
+                name,
+                1
+            );
+            
+            }else{
+                setFieldTouched(name,false);
+                setFieldValue(
+                    name,
+                    0
+                );
+
+            }
+        
+        }}
+        
+        />
+        
+    
+        
+    </div>
+
+    <div className="ml-[24px] w-[32%]">
+        
+    <FormikFieldInput 
+        label={DataLabel.note} 
+        name={`fetchdata.note`}
+        placeHolder={`${DataLabel.note}`}
+        errorMessage ={ errors.fetchdata &&                                        
+            errors.fetchdata.note &&
+            touched.fetchdata &&            
+            touched.fetchdata.note &&  errors.fetchdata.note}
+      
+        />
         
         
         

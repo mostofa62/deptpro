@@ -23,7 +23,8 @@ interface paymentProps{
 interface DebtProps{
     debt_acc_id:string;
     user_id:string;
-    tab_number:number;    
+    tab_number:number;
+    view_mode?:number;    
 }
 
 
@@ -39,7 +40,7 @@ interface DataRow {
     payment_status:number;   
 }
 
-const DebtTransactions = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
+const DebtTransactions = ({debt_acc_id, user_id,tab_number,view_mode}:DebtProps)=>{
 
     console.log('Loading transaction seciton...')
     const authCtx = useAuth();
@@ -340,7 +341,7 @@ const DebtTransactions = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
                           ))}
       
       {
-                          hoveredRowId == row.original._id &&
+                          hoveredRowId == row.original._id && !view_mode &&
                           <div className=" absolute">
                           <GridActionLink items={[
                             /*

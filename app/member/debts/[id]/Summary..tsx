@@ -113,7 +113,7 @@ const Summary = ({DebtWithTransactionData}:DebtTransProps)=>{
                                         
                                         <XAxis   dataKey="amount" tickLine={false} axisLine={false} tick={false} />
                                         <Bar   dataKey="amount" fill="#31c4a2"  barSize={15} shape={<CustomBar />} />
-                                        <Tooltip content={<CustomTooltip />} />
+                                        <Tooltip content={<CustomTooltip />} cursor={{fill: 'transparent'}}/>
                                         
                                         </BarChart>
 

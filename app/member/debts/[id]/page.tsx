@@ -9,6 +9,8 @@ import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import Summary from "./Summary.";
 import BasicCalendar from "@/app/components/BasicCalender";
 import { DataLabelUpdate, DataLabelView } from "../cu/DataValidationSchema";
+import DebtAmortization from "../cu/[id]/DebtAmortization";
+import DebtTransactions from "../cu/[id]/DebtTransactions";
 
 
 
@@ -69,19 +71,17 @@ export default function InsuranceCreate({
         
         <div className="mt-[20px] bg-[#43ACD6] text-white rounded-lg border-[#43ACD6]">
               <div className="flex flex-row h-[70px] py-3 px-10">
-                    <div className="py-[10px] w-[30%]">                    
+                    <div className="py-[10px] w-[20%]">                    
                       <p className="text-[25px]  leading-[25px] uppercase  font-medium">
                       DEBTS DETAILS
                         </p>
                     </div>
 
-                    <div className="py-[15px] px-10 w-[20%]">
-                      <p className="text-[16px] leading-[15px]"></p>
-                    </div>
+                    
 
-                    <div className="px-10 flex justify-end w-[50%]">
+                    <div className="flex justify-end items-end w-[80%]">
 
-                    <div>
+                      <div>
                         <Link
                             href={'/member/debts'}
                             className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
@@ -111,6 +111,17 @@ export default function InsuranceCreate({
                             <p className="text-[18px] font-semibold uppercase">Debt settings</p>
                         </Link>
                         </div>
+
+                        <div>
+                        <Link
+                            href={`/member/debts/cu/${id}`}
+                            className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
+                        >
+                            
+
+                            <p className="text-[18px] font-semibold uppercase">Update</p>
+                        </Link>
+                        </div>
                         
                     </div>
 
@@ -127,7 +138,7 @@ export default function InsuranceCreate({
 
             </div>
 
-            <div className="mt-[32px] bg-[#fafafa] flex p-5">
+            <div className="mt-[32px] bg-[#fafafa] rounded-lg flex p-5">
 
               <div className="w-[35%] h-[30%]">  
                 <BasicCalendar 
@@ -156,6 +167,13 @@ export default function InsuranceCreate({
 
             </div>
 
+            <div className="mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
+              <DebtTransactions debt_acc_id={id} user_id={user_id} tab_number={0} view_mode={1} />
+            </div>
+            
+            <div className="mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
+              <DebtAmortization debt_acc_id={id} user_id={user_id} tab_number={0} />
+            </div>
 
 
 
