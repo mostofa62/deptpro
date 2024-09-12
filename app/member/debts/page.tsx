@@ -427,14 +427,7 @@ const Debt = ()=>{
 
             <div className="mt-10 p-2 mb-10">
 
-              <TotalAllocation data={
-                table.getRowModel().rows.length> 0 ?
-                table.getRowModel().rows.map(row => ({
-                  name: row.original.name,
-                  value: row.original.left_to_go
-                }))
-                :[]
-              }/>
+              <TotalAllocation />
 
             </div>
 

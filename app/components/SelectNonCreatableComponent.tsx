@@ -1,5 +1,5 @@
 "use client";
-import Select from 'react-select';
+import Select , { components }from 'react-select';
 import React from 'react';
 
 
@@ -43,6 +43,24 @@ const customStyles = {
     ...provided,
     boxShadow: 'none', // Remove the outline from the input element
   }),
+
+  option: (provided:any, state:any) => ({
+    ...provided,
+    //fontSize: state.data.isChild ? '14px' : '16px', // Smaller font for children
+    marginLeft: state.data.isChild ? '10px' : '0px', // Indent children
+  }),
+};
+
+
+// Custom Option component to detect parent/child
+const CustomOption = (props:any) => {
+  return (
+    <components.Option {...props}>
+      <span style={{ fontWeight: props.data.isChild ? 'normal' : '500' }}>
+        {props.data.label}
+      </span>
+    </components.Option>
+  );
 };
 
 const SelectNonCreatableComponent = (props:SelectProps) => {
@@ -51,6 +69,7 @@ const SelectNonCreatableComponent = (props:SelectProps) => {
   return (
     <>
       <Select
+      components={{ Option: CustomOption }} // Use the custom Option component
       classNames={{
         /*
         control: ({ isFocused }) =>

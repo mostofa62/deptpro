@@ -146,7 +146,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 <li key={1}>
   <Link
     href={(Loguser && parseInt(Loguser) < 10 )?'/admin/dashboard':'/member/dashboard'}
-    className={`uppercase text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
+    className={`capitalize text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
       pathname.substring(1,pathname.length)=='dashboard' && 'bg-[#43ACD6] text-[#f5f5f8]'
     }`}
   >
@@ -186,7 +186,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         href="#"
                        
 
-                        className={`uppercase text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
+                        className={`capitalize text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
                           (pathname === '/income' ||
                             pathname.includes('income')) && 'bg-[#43ACD6] text-[#f5f5f8]'
                         }`}
@@ -200,7 +200,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       >
                         
                                               
-                        <span className=''>INCOME</span>
+                        <span className=''>income</span>
                         <svg
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
                             open && 'rotate-180'
@@ -240,7 +240,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
 </svg>
 
-      <p>Income Accounts</p>
+      <p>Income Dashboard</p>
   </Link>
 </li>
 
@@ -283,7 +283,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         href="#"
                        
 
-                        className={`uppercase text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
+                        className={`capitalize text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
                           (pathname === '/debts' ||
                             pathname.includes('debts')) && 'bg-[#43ACD6] text-[#f5f5f8]'
                         }`}
@@ -297,7 +297,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       >
                         
                                               
-                        <span className=''>DEBTS</span>
+                        <span className=''>Debt</span>
                         <svg
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
                             open && 'rotate-180'
@@ -337,7 +337,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
 </svg>
 
-      <p>DEBT Accounts</p>
+      <p>Debt Dashboard</p>
   </Link>
 </li>
 
@@ -390,7 +390,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 </svg>
 
 
-      <p>Settings</p>
+      <p>Set Debt Budget</p>
   </Link>
 </li>
 
@@ -407,7 +407,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
 </svg>
 
-      <p>Add Debts</p>
+      <p>Add a Debt</p>
   </Link>
 </li>
 
@@ -440,7 +440,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         href="#"
                        
 
-                        className={`uppercase text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
+                        className={`capitalize text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
                           (pathname === '/bills' ||
                             pathname.includes('bills')) && 'bg-[#43ACD6] text-[#f5f5f8]'
                         }`}
@@ -494,7 +494,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
 </svg>
 
-      <p>Bill Accounts</p>
+      <p>Bill Dashboard</p>
   </Link>
 </li>
 
@@ -513,7 +513,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
 </svg>
 
-      <p>Add Bill</p>
+      <p>Add a Bill</p>
   </Link>
 </li>
 
@@ -543,7 +543,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         href="#"
                        
 
-                        className={`uppercase text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
+                        className={`capitalize text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
                           (pathname === '/saving' ||
                             pathname.includes('saving')) && 'bg-[#43ACD6] text-[#f5f5f8]'
                         }`}
@@ -557,7 +557,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       >
                         
                                               
-                        <span className=''>SAVING</span>
+                        <span className=''>Savings</span>
                         <svg
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
                             open && 'rotate-180'
@@ -597,7 +597,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
 </svg>
 
-      <p>Saving Accounts</p>
+      <p>Savings Dashboard</p>
   </Link>
 </li>
 
@@ -614,7 +614,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
 </svg>
 
-      <p>Add Saving</p>
+      <p>Add a Savings</p>
   </Link>
 </li>
 

@@ -1,5 +1,5 @@
 "use client";
-import Select from 'react-select';
+import Select, { components } from 'react-select';
 import React from 'react';
 import CreatableSelect from 'react-select/creatable';
 
@@ -31,12 +31,47 @@ const menuStyles = "p-1 mt-0 border";
 const menuListStyle="dark:border-form-strokedark dark:bg-form-input";
 const optionStyle="dark:bg-form-input";
 
+
+const customStyles = {
+  control: (provided:any, state:any) => ({
+    ...provided,
+    boxShadow: 'none',    
+    borderColor: state.isFocused ? '#0a4a82' : '#DFDFDF', // Change the border color here
+    
+    '&:hover': {
+      borderColor: state.isFocused ? '#0a4a82' : '#DFDFDF', // Change the border color on hover
+    },
+  }),
+  input: (provided:any) => ({
+    ...provided,
+    boxShadow: 'none', // Remove the outline from the input element
+  }),
+
+  option: (provided:any, state:any) => ({
+    ...provided,
+    //fontSize: state.data.isChild ? '14px' : '16px', // Smaller font for children
+    marginLeft: state.data.isChild ? '10px' : '0px', // Indent children
+  }),
+};
+
+// Custom Option component to detect parent/child
+const CustomOption = (props:any) => {
+  return (
+    <components.Option {...props}>
+      <span style={{ fontWeight: props.data.isChild ? 'normal' : '500' }}>
+        {props.data.label}
+      </span>
+    </components.Option>
+  );
+};
+
 const SelectComponent = (props:SelectProps) => {
     const [field, state, { setValue, setTouched }] = useField(props.name);
 
   return (
     <>
       <CreatableSelect
+      components={{ Option: CustomOption }}
       classNames={{
         /*
         control: ({ isFocused }) =>
@@ -57,6 +92,7 @@ const SelectComponent = (props:SelectProps) => {
          
 
       }}
+      styles={customStyles}
       defaultValue={props.defaultValueArray}
       placeholder={props.placeholder||"Type to search"}      
       isMulti={props.isMulti || false}

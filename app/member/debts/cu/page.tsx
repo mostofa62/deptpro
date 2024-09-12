@@ -10,7 +10,7 @@ import { DataSchema,DataLabel,ValidationSchema } from "./DataValidationSchema";
 
 import FormikFormHolder from "@/app/components/form/FormikFormHolder";
 
-import FormikSelectInput from "@/app/components/form/FormikSelectInput";
+
 import FormikSelectCreatableInput from "@/app/components/form/FormikSelectCreatableInput";
 
 import toast from 'react-hot-toast';
@@ -24,12 +24,13 @@ export default function InsuranceCreate() {
     const formRef = useRef<any>(null);
 
     const [fetchFomrData,setFetchFormData] = useState(DataSchema);
-    
-    const DeptTypeData = useFetchDropDownData({urlSuffix:'debttype-dropdown'});
+        
 
     const fetchdata = fetchFomrData;
 
     const user_id = authCtx.userId;
+
+    const DeptTypeData = useFetchDropDownData({urlSuffix:`debttype-dropdown/${user_id}`});
 
     const handleFormSubmit = async(values:any,{ resetForm,setSubmitting }:any)=>{
         //alert(JSON.stringify(values));
@@ -163,7 +164,7 @@ export default function InsuranceCreate() {
     
     <div className="ml-[24px] w-[32%]">
 
-    <FormikSelectInput
+    <FormikSelectCreatableInput
             label={DataLabel.debt_type}
             defaultValue={fetchdata.debt_type}
             placeHolder={`Select ${DataLabel.debt_type}`}

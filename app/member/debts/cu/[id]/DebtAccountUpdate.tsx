@@ -12,6 +12,7 @@ import { confirmAlert } from "react-confirm-alert";
 import {  AlertBox, DeleteActionGlobal } from "@/app/components/grid/useFetchGridData";
 import { useRouter } from "next/navigation";
 import useApp from "@/app/hooks/useApp";
+import FormikSelectCreatableInput from "@/app/components/form/FormikSelectCreatableInput";
 interface DebtProps{
     debt_acc_id:string;
     user_id:string;
@@ -30,7 +31,7 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 
     const [monthlyInterest, setMonthlyInterest] = useState(0);
 
-    const debtTypeData = useFetchDropDownData({urlSuffix:'debttype-dropdown'});
+    const DeptTypeData = useFetchDropDownData({urlSuffix:`debttype-dropdown/${user_id}`});
     
 
     const fetchDataCallback=useCallback(async()=>{
@@ -180,21 +181,21 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 
 <div className="ml-[24px] w-[48%]">
 
-<FormikSelectInput
-        label={DataLabelUpdate.debt_type}
-        defaultValue={fetchdata.debt_type}
-        placeHolder={`Select ${DataLabelUpdate.debt_type}`}
-        isSearchable={true}
-        isClearable={true}
-        name="fetchdata.debt_type"
-        dataOptions={debtTypeData}
-        errorMessage={errors.fetchdata &&
-            errors.fetchdata.debt_type &&
-            touched.fetchdata &&
-            touched.fetchdata.debt_type &&
-            errors.fetchdata.debt_type.label
-        }
-    />
+<FormikSelectCreatableInput
+            label={DataLabelUpdate.debt_type}
+            defaultValue={fetchdata.debt_type}
+            placeHolder={`Select ${DataLabelUpdate.debt_type}`}
+            isSearchable={true}
+            isClearable={true}
+            name="fetchdata.debt_type"
+            dataOptions={DeptTypeData}
+            errorMessage={errors.fetchdata &&
+                errors.fetchdata.debt_type &&
+                touched.fetchdata &&
+                touched.fetchdata.debt_type &&
+                errors.fetchdata.debt_type.label
+            }
+        />
     
 
 

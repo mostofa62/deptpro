@@ -64,7 +64,7 @@ const HeaderSummary = ()=>{
             <CardHolderTiny>
                 <div className="flex flex-row">
                 <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
-                    <p className="text-[15px] font-semibold">Overall Progress</p>
+                    <p className="text-[15px] font-semibold capitalize">debt payoff progress</p>
                 </div>
                 </div>
                 <div className="flex flex-row py-2">
@@ -82,7 +82,7 @@ const HeaderSummary = ()=>{
                 <div className="flex flex-row">
                 <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
                     {/* <p className="text-[15px] font-semibold">Snowball Amounts</p> */}
-                    <p className="text-[15px] font-semibold">Monthly + Cashflow</p>
+                    <p className="text-[15px] font-semibold capitalize">monthly + cashflow</p>
                 </div>
                 </div>
                 <div className="flex flex-row py-2">
@@ -100,7 +100,7 @@ const HeaderSummary = ()=>{
             <CardHolderTiny>
                 <div className="flex flex-row">
                 <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
-                    <p className="text-[15px] font-semibold">Monthly Debt Budget</p>
+                    <p className="text-[15px] font-semibold capitalize">monthly debt budget</p>
                 </div>
                 </div>
                 <div className="flex flex-row py-2">
@@ -119,7 +119,7 @@ const HeaderSummary = ()=>{
             <CardHolderTiny>
                 <div className="flex flex-row">
                 <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
-                    <p className="text-[15px] font-semibold">Monthly Minimum Payments</p>
+                    <p className="text-[15px] font-semibold capitalize">minimum payments</p>
                 </div>
                 </div>
                 <div className="flex flex-row py-2">
@@ -155,7 +155,7 @@ const HeaderSummary = ()=>{
             <CardHolderTiny>
                 <div className="flex flex-row">
                 <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
-                    <p className="text-[15px] font-semibold">Monthly Net Income</p>
+                    <p className="text-[15px] font-semibold capitalize">monthly bill totals</p>
                 </div>
                 </div>
                 <div className="flex flex-row py-2">
@@ -172,7 +172,7 @@ const HeaderSummary = ()=>{
             <CardHolderTiny>
                 <div className="flex flex-row">
                 <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
-                    <p className="text-[15px] font-semibold">Monthly Bill Expense</p>
+                    <p className="text-[15px] font-semibold capitalize">monthly net income</p>
                 </div>
                 </div>
                 <div className="flex flex-row py-2">
