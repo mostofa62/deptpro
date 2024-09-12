@@ -44,10 +44,22 @@ export const generateRandomMixedColor = (): string => {
 
 
   // Function to generate a color based on the value
- export const getColorForValue = (value:number, min:number, max:number) => {
+ export const getColorForValue = (value:number, min:number, max:number, getHex:number=0) => {
     const ratio = (value - min) / (max - min);
     const r = Math.floor(255 * (1 - ratio)); // Red decreases as value increases
     const g = Math.floor(255 * ratio);       // Green increases as value increases
     const b = 100; // Blue is constant
-    return `rgb(${r},${g},${b})`;
+
+    if(getHex > 0){
+        return rgbToHex(r,g,b);
+    }else{
+        return `rgb(${r},${g},${b})`;
+    }
 };
+
+export function rgbToHex(r:number, g:number, b:number) {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b)
+        .toString(16)
+        .slice(1)
+        .toUpperCase();
+}

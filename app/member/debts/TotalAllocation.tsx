@@ -147,18 +147,44 @@ const TotalAllocation = () => {
         </div>
         <div className="w-[60%] py-2 px-1">
 
-        
-        <ResponsiveContainer width="100%" height={350}>
-          <LineChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="one" stroke="#8884d8" activeDot={{ r: 8 }} />
-            <Line type="monotone" dataKey="two" stroke="#82ca9d" />
-          </LineChart>
-        </ResponsiveContainer>
+        {/* {chartData.map((damort:any, index:number)=>{
+          const keys = Object.keys(damort);
+          return <p key={index}>{keys[1]} </p>
+
+        })} */}
+
+        {
+        chartData.length > 0 &&
+                  <ResponsiveContainer width="100%" height={350}>
+                    <LineChart data={chartData}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="month" />
+                      <YAxis/>
+                      <Tooltip />
+                      <Legend />
+                      {/* {chartData.map((damort:any, index:number)=>{
+
+                        const keys = Object.keys(damort);
+                        
+                        return(
+                        <Line key={index} 
+                        type="monotone" 
+                        dataKey={keys[0]} 
+                        stroke={getColorForValue(keys[0].length,5, 1000,1)} 
+                        activeDot={{ r: 8 }} />
+                        )
+                        
+                       
+
+                      })}  */}
+                      
+                      
+                      <Line type="monotone" dataKey="one" stroke="#8884d8" activeDot={{ r: 8 }} /> 
+                      <Line type="monotone" dataKey="two" stroke="#82ca9d" />
+                    </LineChart>
+                  </ResponsiveContainer>
+
+          }
     
             
         </div>            
