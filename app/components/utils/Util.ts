@@ -21,11 +21,34 @@ export function removeConfirmAlert(){
 }
 
 export const generateRandomColor = (): string => {
-    // Generate a random number between 0 and 0xFFFFFF and convert to hex
-    const randomColor: string = Math.floor(Math.random() * 0xFFFFFF).toString(16);
-    // Pad with leading zeros to ensure it's 6 digits
-    return `#${randomColor.padStart(6, '0')}`;
+// Generate a random number between 0 and 0xFFFFFF and convert to hex
+const randomColor: string = Math.floor(Math.random() * 0xFFFFFF).toString(16);
+// Pad with leading zeros to ensure it's 6 digits
+return `#${randomColor.padStart(6, '0')}`;
+};
+
+// Same hash function as before
+export const hashString = (str: string) => {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = (hash << 5) - hash + char;
+        hash = hash & hash;  // Convert to 32-bit integer
+    }
+    return hash;
+};
+
+ export const hslToHex = (h: number, s: number, l: number) => {
+    l /= 100;
+    const a = s * Math.min(l, 1 - l) / 100;
+    const f = (n: number) => {
+      const k = (n + h / 30) % 12;
+      const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+      return Math.round(255 * color).toString(16).padStart(2, '0'); // Convert to hex and pad with zeros if necessary
+    };
+    return `#${f(0)}${f(8)}${f(4)}`;
   };
+  
 
 export const generateRandomMixedColor = (): string => {
     // Generate random values for red, green, and blue components

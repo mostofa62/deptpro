@@ -1,7 +1,8 @@
 import CardHolder from "@/app/components/ui/CardHolder";
 import DataProgress from "@/app/components/ui/DataProgress";
-import { getColorForValue } from "@/app/components/utils/Util";
+import { getColorForValue, hashString, hslToHex } from "@/app/components/utils/Util";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
+import { useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Line } from "recharts";
 
 // const data = [
@@ -67,6 +68,17 @@ interface PayLoads{
 
 const TotalAllocation = () => {
 
+    const [highlightedKey, setHighlightedKey] = useState(null);
+
+    const handleLegendMouseEnter = (key:any, event:any) => {
+      //alert('o')
+      setHighlightedKey(key);
+    };
+
+    const handleLegendMouseLeave = () => {
+      setHighlightedKey(null);
+    };
+
 
     const payload: PayLoads ={
         debt_type_debt_counts:[],
@@ -116,7 +128,7 @@ const TotalAllocation = () => {
       return (
         <div className="flex gap-4 justify-center items-center text-sm">
           {payload.map((entry:any, index:number) => (
-            <span key={`legend-item-${index}`} style={{ color: entry.color }}>
+            <span onMouseEnter={(event)=>handleLegendMouseEnter(entry.value,event)} onMouseLeave={handleLegendMouseLeave} className="font-semibold" key={`legend-item-${index}`} style={{ color: entry.color }}>
               {debtTypeNameMap[entry.value]}
             </span>
           ))}
@@ -133,12 +145,14 @@ const TotalAllocation = () => {
     //console.log(minValue, maxValue, maxProgressLength)
 
     const getColorForDebtType = (key:string)=>{
-      const name:string = debtTypeNameMap[key];
+      const hue = Math.abs(hashString(key)) % 360;
+      return hslToHex(hue, 70, 50);
+      // const name:string = debtTypeNameMap[key];
       
 
-      const color:string =  getColorForValue(name.length*20+key.length, 300, 1000, 1)
-      console.log(color)
-      return color;
+      // const color:string =  getColorForValue(name.length*20+key.length, 300, 1000, 1)
+      // console.log(color)
+      // return color;
     } 
     return (
     <div className="flex flex-row min-h-75">
@@ -214,7 +228,10 @@ const TotalAllocation = () => {
               <YAxis tick={{ fontSize:12 }} />
               {/* <Tooltip content={<CustomTooltipLine />} /> */}
               <Tooltip content={<CustomTooltipLine />} />
-              <Legend content={<CustomLegendLine/>} />
+              <Legend 
+                content={<CustomLegendLine/>}
+                                 
+              />
 
               {/* Render Line components for each unique dataKey (e.g., BB, TEACHER_FEE, etc.) */}
               {Object.keys(chartData[0]).
@@ -223,6 +240,8 @@ const TotalAllocation = () => {
                   key={key}
                   type="monotone"
                   dataKey={key}
+                  dot={false}
+                  strokeWidth={highlightedKey === key ?3:1}
                   stroke={getColorForDebtType(key)} // Ensure this function is defined elsewhere
                   activeDot={{ r: 8 }}
                 />
