@@ -27,7 +27,7 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number}:BillProps)=>{
     const [repeatFrequency, setRepeatFrequency] = useState([]);
     const [reminderDays, setReminderDays] = useState([]);
 
-    const billTypeData = useFetchDropDownData({urlSuffix:'billtype-dropdown'});
+    const billTypeData = useFetchDropDownData({urlSuffix:`billtype-dropdown/${user_id}`});
     
 
     const fetchDataCallback=useCallback(async()=>{

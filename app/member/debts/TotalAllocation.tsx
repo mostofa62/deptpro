@@ -35,8 +35,8 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius,perc
       textAnchor={x > cx ? 'start' : 'end'}
       dominantBaseline="central"
     >
-      {/*`${(percent * 100).toFixed(0)}%`*/}
-      {`${((value/total_count) * 100).toFixed(0)}%`}
+      {`${(percent * 100).toFixed(0)}%`}
+      {/*`${((value*100) / total_count).toFixed(0)}%`*/}
     </text>
   );
 };
@@ -61,7 +61,8 @@ const CustomTooltip = ({ active, payload, label, total_count }:any) => {
 interface PayLoads{
     debt_type_debt_counts:{_id:string,count:number,label:string}[],
     total_dept_type:number,
-    debt_type_ammortization:any[]
+    debt_type_ammortization:any[],
+    debt_type_names:{[key:string]:string}
     
 }
 
@@ -83,7 +84,8 @@ const TotalAllocation = () => {
     const payload: PayLoads ={
         debt_type_debt_counts:[],
         total_dept_type:0,
-        debt_type_ammortization:[]
+        debt_type_ammortization:[],
+        debt_type_names:{}
     }
     
 
@@ -99,7 +101,10 @@ const TotalAllocation = () => {
 
     const chartData = DebtTypewiseInfo.debt_type_ammortization;
 
+    const debt_type_names = DebtTypewiseInfo.debt_type_names;
+
     // Create a mapping from debt_type_id to debt_type_name
+    /*
     const debtTypeNameMap = chartData.reduce((acc:any, data:any) => {
       data.debt_names.forEach((d:any) => {
         const [id, name] = Object.entries(d)[0];
@@ -107,6 +112,7 @@ const TotalAllocation = () => {
       });
       return acc;
     }, {});
+    */
 
     // Tooltip formatter function
     const CustomTooltipLine = ({ payload,label }:any) => {
@@ -116,7 +122,7 @@ const TotalAllocation = () => {
           <div><strong>Month:</strong> {label}</div>
           {payload.map((entry:any, index:number) => (
             <div key={`item-${index}`} style={{ color: entry.stroke }}>
-              <strong>{debtTypeNameMap[entry.dataKey]}:</strong> $ {entry.value}
+              <strong>{debt_type_names[entry.dataKey]}:</strong> $ {entry.value}
             </div>
           ))}
         </div>
@@ -129,7 +135,7 @@ const TotalAllocation = () => {
         <div className="flex gap-4 justify-center items-center text-sm">
           {payload.map((entry:any, index:number) => (
             <span onMouseEnter={(event)=>handleLegendMouseEnter(entry.value,event)} onMouseLeave={handleLegendMouseLeave} className="font-semibold" key={`legend-item-${index}`} style={{ color: entry.color }}>
-              {debtTypeNameMap[entry.value]}
+              {debt_type_names[entry.value]}
             </span>
           ))}
         </div>
@@ -139,8 +145,8 @@ const TotalAllocation = () => {
     
 
     // Get min and max values
-    const minValue = Math.min(...data.map((d:any) => d.count));
-    const maxValue = Math.max(...data.map((d:any) => d.count));
+    //const minValue = Math.min(...data.map((d:any) => d.count));
+    //const maxValue = Math.max(...data.map((d:any) => d.count));
     const maxProgressLength = Math.max(...data.map((d: any) => d.count.toString().length > 4?d.count.toString().length:4 ));
     //console.log(minValue, maxValue, maxProgressLength)
 
@@ -176,7 +182,7 @@ const TotalAllocation = () => {
                         >
                         {data.map((entry:any, index:number) => (
                             
-                            <Cell key={`cell-${index}`} fill={getColorForValue(entry.count, minValue, maxValue)} />
+                            <Cell key={`cell-${index}`} fill={getColorForDebtType(entry._id)} />
                         ))}
                         </Pie>
                         <Tooltip content={<CustomTooltip total_count={total_count}/>} />
@@ -195,7 +201,7 @@ const TotalAllocation = () => {
                                 key={dp._id} 
                                 title={dp.name} 
                                 progress={((dp.count/total_count) * 100).toFixed(0)}
-                                color={getColorForValue(dp.count, minValue, maxValue)}
+                                color={getColorForDebtType(dp._id)}
                                 maxProgressLength={maxProgressLength}
                                 />
                                 </>
@@ -235,13 +241,13 @@ const TotalAllocation = () => {
 
               {/* Render Line components for each unique dataKey (e.g., BB, TEACHER_FEE, etc.) */}
               {Object.keys(chartData[0]).
-              filter(key => key !== 'month' && key !== 'debt_names').map((key, index) => (
+              filter(key => key !== 'month' /*&& key !== 'debt_names'*/).map((key, index) => (
                 <Line
                   key={key}
                   type="monotone"
                   dataKey={key}
                   dot={false}
-                  strokeWidth={highlightedKey === key ?3:1}
+                  strokeWidth={highlightedKey!=null && highlightedKey === key ?3:1}
                   stroke={getColorForDebtType(key)} // Ensure this function is defined elsewhere
                   activeDot={{ r: 8 }}
                 />

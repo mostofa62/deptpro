@@ -9,7 +9,7 @@ import Pie from "@/app/components/chart/Pie";
 
 import dynamic from "next/dynamic";
 import axios from "axios";
-import { generateRandomColor, generateRandomMixedColor, getColorForValue } from "@/app/components/utils/Util";
+import { generateRandomColor, generateRandomMixedColor, getColorForValue, hashString, hslToHex } from "@/app/components/utils/Util";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -68,6 +68,12 @@ const GaugeData  = [
     color:'#EA4228'
   },
 ];
+
+const getColorForDebtType = (key:string)=>{
+  const hue = Math.abs(hashString(key)) % 360;
+  return hslToHex(hue, 70, 50);
+
+}
 
 
 //const ThermoMeterF = dynamic(()=>import('../components/chart/Thermometer'),{ssr:false});
@@ -165,7 +171,7 @@ export default function DashBoard() {
                 <DataProgress 
                 title={dp.title} 
                 progress={dp.progress}
-                color={getColorForValue(dp.progress,minValue,maxValue)}
+                color={getColorForDebtType(dp._id)}
                 amount={Intl.NumberFormat('en-US').format(dp.amount)}
                 maxProgressLength={maxProgressLength}
                 />

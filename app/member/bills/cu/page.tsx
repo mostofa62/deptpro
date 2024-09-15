@@ -25,11 +25,12 @@ export default function InsuranceCreate() {
 
     const [fetchFomrData,setFetchFormData] = useState(DataSchema);
 
-    const billTypeData = useFetchDropDownData({urlSuffix:'billtype-dropdown'});
+    const user_id = authCtx.userId;
+
+    const billTypeData = useFetchDropDownData({urlSuffix:`billtype-dropdown/${user_id}`});
 
     const fetchdata = fetchFomrData;
-
-    const user_id = authCtx.userId;
+    
 
     const handleFormSubmit = async(values:any,{ resetForm,setSubmitting }:any)=>{
         //alert(JSON.stringify(values));
