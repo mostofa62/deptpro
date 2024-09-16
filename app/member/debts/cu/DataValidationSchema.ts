@@ -62,7 +62,8 @@ export const DataLabelUpdate = {
   minimum_payment:'Minimum Payment',   
   monthly_payment:'Monthly Payment',
   credit_limit:'Credit Limit',
-  interest_rate:'Interest Rate (%)',  
+  interest_rate:'Interest Rate (%)',
+  start_date:'Start Date',    
   due_date:'Next Due Date',  
   notes:'Note',
 
@@ -100,7 +101,7 @@ export const DataLabelView= {
   monthly_payment:'Monthly Payment',
   credit_limit:'Credit Limit',
   interest_rate:'Interest Rate (%)',  
-  //due_date:'Next Due Date',
+  start_date_word:'Start Date',
   due_date_word:'Next Due Date',
   notes:'Note',
 

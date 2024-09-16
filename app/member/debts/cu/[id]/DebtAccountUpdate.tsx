@@ -262,7 +262,7 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 
 
 <div className="flex flex-row mt-[15px]">
-<div className="w-[50%]">
+<div className="w-[32%]">
 
 
 
@@ -284,7 +284,7 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 </div>
 
 
-<div className="ml-[24px] w-[50%]">
+<div className="ml-[24px] w-[32%]">
 
 
 <FormikFieldInput 
@@ -302,6 +302,23 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
     
     
 </div>
+
+<div className="ml-[24px] w-[32%]">
+
+<FormikFieldInput 
+    type="date"
+    label={DataLabelUpdate.start_date} 
+    name={`fetchdata.start_date`}
+    placeHolder={`${DataLabelUpdate.start_date}`}
+    errorMessage ={ errors.fetchdata &&                                        
+        errors.fetchdata.start_date &&
+        touched.fetchdata &&            
+        touched.fetchdata.start_date &&  errors.fetchdata.start_date}        
+    />
+    
+    
+</div>
+
 </div>
 
 

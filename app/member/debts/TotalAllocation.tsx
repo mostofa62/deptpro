@@ -22,7 +22,7 @@ import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, C
 
 
 const RADIAN = Math.PI / 180;
-const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius,percent, value, index, total_count }:any) => {
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius,percent, value, index, total_count, total_balance }:any) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
@@ -34,20 +34,21 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius,perc
       fill="white"
       textAnchor={x > cx ? 'start' : 'end'}
       dominantBaseline="central"
+      fontSize={percent < 0.10 ? 11 : 14}
     >
-      {`${(percent * 100).toFixed(0)}%`}
-      {/*`${((value*100) / total_count).toFixed(0)}%`*/}
+      {/*`${(percent * 100).toFixed(0)}%`*/}
+      {percent >= 0.02 ? `${((100/total_balance) * value).toFixed(0)}%`:''}
     </text>
   );
 };
 
 
 // Custom Tooltip Component
-const CustomTooltip = ({ active, payload, label, total_count }:any) => {
+const CustomTooltip = ({ active, payload, label, total_count, total_balance }:any) => {
     if (active && payload && payload.length) {
       return (
         <div className="custom-tooltip" style={{ backgroundColor: '#fff', padding: '3px', border: '1px solid #ccc' }}>
-          <p className="text-lg"><span className=" font-semibold">{`${payload[0].name}`}</span> : <span className=" font-semibold">{`${payload[0].value}`}</span> in <span className=" font-semibold">{`${total_count}`}</span></p>
+          <p className="text-lg"><span className=" font-semibold">{`${payload[0].name}`}</span> : <span className=" font-semibold">{`${payload[0].value.toFixed(2)}`}</span> in <span className=" font-semibold">{`${total_balance}`}</span></p>
         </div>
       );
     }
@@ -61,6 +62,7 @@ const CustomTooltip = ({ active, payload, label, total_count }:any) => {
 interface PayLoads{
     debt_type_debt_counts:{_id:string,count:number,label:string}[],
     total_dept_type:number,
+    total_balance:number,
     debt_type_ammortization:any[],
     debt_type_names:{[key:string]:string}
     
@@ -84,6 +86,7 @@ const TotalAllocation = () => {
     const payload: PayLoads ={
         debt_type_debt_counts:[],
         total_dept_type:0,
+        total_balance:0,
         debt_type_ammortization:[],
         debt_type_names:{}
     }
@@ -96,6 +99,8 @@ const TotalAllocation = () => {
     })
 
     const total_count = DebtTypewiseInfo.total_dept_type
+
+    const total_balance = DebtTypewiseInfo.total_balance;
 
     const data = DebtTypewiseInfo.debt_type_debt_counts;
 
@@ -122,7 +127,7 @@ const TotalAllocation = () => {
           <div><strong>Month:</strong> {label}</div>
           {payload.map((entry:any, index:number) => (
             <div key={`item-${index}`} style={{ color: entry.stroke }}>
-              <strong>{debt_type_names[entry.dataKey]}:</strong> $ {entry.value}
+              <strong>{debt_type_names[entry.dataKey]}:</strong> $ {entry.value.toFixed(2)}
             </div>
           ))}
         </div>
@@ -176,8 +181,8 @@ const TotalAllocation = () => {
                         outerRadius={100}
                         fill="#8884d8"
                         paddingAngle={0}
-                        dataKey="count"
-                        label={(props) => renderCustomizedLabel({ ...props, total_count })}
+                        dataKey="balance"
+                        label={(props) => renderCustomizedLabel({ ...props, total_count, total_balance })}
                         labelLine={false}
                         >
                         {data.map((entry:any, index:number) => (
@@ -185,7 +190,7 @@ const TotalAllocation = () => {
                             <Cell key={`cell-${index}`} fill={getColorForDebtType(entry._id)} />
                         ))}
                         </Pie>
-                        <Tooltip content={<CustomTooltip total_count={total_count}/>} />
+                        <Tooltip content={<CustomTooltip total_count={total_count} total_balance={total_balance}/>} />
                         {/*<Legend /> */}
                     </PieChart>
                 </div>
@@ -200,7 +205,7 @@ const TotalAllocation = () => {
                                 <DataProgress
                                 key={dp._id} 
                                 title={dp.name} 
-                                progress={((dp.count/total_count) * 100).toFixed(0)}
+                                progress={((100/total_balance) * dp.balance).toFixed(0)}
                                 color={getColorForDebtType(dp._id)}
                                 maxProgressLength={maxProgressLength}
                                 />
