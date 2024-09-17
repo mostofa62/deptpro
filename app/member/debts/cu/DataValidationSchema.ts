@@ -169,6 +169,16 @@ export const ValidationSchema =  object().shape({
               interest_rate: number().min(0,`${DataLabel.interest_rate} least 0`)              
               .required(`${DataLabel.interest_rate} is required`),
 
+
+              start_date: string()
+              .matches(/^\d{4}-\d{2}-\d{2}$/i, `provide valid ${DataLabel.start_date}`)
+              .required(`${DataLabel.start_date} is required`)
+              .test('is-less', `${DataLabel.start_date} must be earlier than ${DataLabel.due_date}`, function(value) {
+                const { due_date } = this.parent; // Get due_date value
+                // Use moment to compare dates
+                return moment(value, 'YYYY-MM-DD', true).isBefore(moment(due_date, 'YYYY-MM-DD', true));
+              }),
+
               due_date: string()
               .ensure()
               .matches(/^\d{4}-\d{2}-\d{2}$/i,`provide valid ${DataLabel.due_date}`)
@@ -217,6 +227,16 @@ export const ValidationSchemaUpdate =  object().shape({
 
               interest_rate: number().min(0,`${DataLabelUpdate.interest_rate} least 0`)              
               .required(`${DataLabelUpdate.interest_rate} is required`),
+
+
+              start_date: string()
+              .matches(/^\d{4}-\d{2}-\d{2}$/i, `provide valid ${DataLabelUpdate.start_date}`)
+              .required(`${DataLabelUpdate.start_date} is required`)
+              .test('is-less', `${DataLabelUpdate.start_date} must be earlier than ${DataLabelUpdate.due_date}`, function(value) {
+                const { due_date } = this.parent; // Get due_date value
+                // Use moment to compare dates
+                return moment(value, 'YYYY-MM-DD', true).isBefore(moment(due_date, 'YYYY-MM-DD', true));
+              }),
 
               due_date: string()
               .ensure()
