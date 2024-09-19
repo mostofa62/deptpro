@@ -10,6 +10,7 @@ import { confirmAlert } from "react-confirm-alert";
 import GridGlobalSearch from "@/app/components/grid/GridGlobalSearch";
 import GridActionLink from "@/app/components/grid/GridActionLink";
 import GridPaginationHolder from "@/app/components/grid/GridPaginationHolder";
+import TotalAllocation from "./TotalAllocation";
 
 const per_page_list = PerPageList();
 const per_page = per_page_list[0];
@@ -409,6 +410,13 @@ const Income = ()=>{
                     </div>
                     
                 </div>
+            </div>
+
+
+            <div className="mt-10 p-2 mb-10">
+
+              <TotalAllocation />
+
             </div>
 
             <div className="mt-10 p-2">  

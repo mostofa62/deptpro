@@ -113,6 +113,7 @@ export default function DashBoard() {
   const maxProgressLength = Math.max(...transactioData.debt_list.map((dp: any) => dp.progress.toString().length));
   const minValue = Math.min(...transactioData.debt_list.map((d:any) => d.progress));
   const maxValue = Math.max(...transactioData.debt_list.map((d:any) => d.progress));
+  const maxAmountLength = Math.max(...transactioData.debt_list.map((d: any) => d.amount.toString().length > 4?d.amount.toString().length:4 ));
   
 
     return(
@@ -174,6 +175,7 @@ export default function DashBoard() {
                 color={getColorForDebtType(dp._id)}
                 amount={Intl.NumberFormat('en-US').format(dp.amount)}
                 maxProgressLength={maxProgressLength}
+                maxAmountLength={maxAmountLength}
                 />
                 </>
               )

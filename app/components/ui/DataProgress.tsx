@@ -5,9 +5,10 @@ interface DataProgressType{
     color:string;
     amount?:string;
     maxProgressLength: number;
+    maxAmountLength?:number;
 }
 
-const DataProgress = ({title, progress,color,amount,maxProgressLength}:DataProgressType)=>{
+const DataProgress = ({title, progress,color,amount,maxProgressLength, maxAmountLength}:DataProgressType)=>{
 
     const [animatedProgress, setAnimatedProgress] = useState(0);
     
@@ -21,7 +22,7 @@ const DataProgress = ({title, progress,color,amount,maxProgressLength}:DataProgr
         return () => clearTimeout(timer);
     }, [progress]);
 
-    
+    const maxAmountLengthVar:number = maxAmountLength ?maxAmountLength:0;
 
 
     return (
@@ -33,7 +34,7 @@ const DataProgress = ({title, progress,color,amount,maxProgressLength}:DataProgr
             <div className="flex flex-row">
                 <div className={`w-auto font-semibold`} style={{ width: `${maxProgressLength}ch` }}>{animatedProgress}%</div>
                 
-                <div className="h-3 w-[80%] bg-[#eeeeee] rounded-[10px] overflow-hidden" style={{ marginLeft: `${maxProgressLength}%` }}>
+                <div className="h-3 bg-[#eeeeee] rounded-[10px] overflow-hidden" style={{ marginLeft: `${maxProgressLength}%` ,width: `calc(80% - ${maxAmountLengthVar+30}px)` }}>
                     <div className="h-full transition-all duration-500" style={{ width:`${animatedProgress}%`, backgroundColor:color }}></div>
                 </div>
                 {amount  && <div className="w-auto font-semibold text-right ml-[2%]">$ {amount}</div> }
