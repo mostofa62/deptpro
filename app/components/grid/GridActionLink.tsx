@@ -34,7 +34,7 @@ const GridActionLink = memo(({hoveredRowHeight,items}:GridLinkProps)=>{
                         
                         <div key={i} className={`flex flex-col items-center ${i > 0 && 'ml-[30px]'}`}> 
                             <div className="h-[50px]">
-                            {v.actionId == 'delete'?
+                            {v.actionId == 'delete' || v.actionId == 'internal'?
                             <button 
                             onClick={v.onClick}
                             onMouseOver={()=>{setHoverId(v.actionId)}}

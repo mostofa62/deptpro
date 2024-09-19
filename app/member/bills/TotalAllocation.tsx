@@ -60,11 +60,11 @@ const CustomTooltip = ({ active, payload, label, total_count, total_balance }:an
 
 
 interface PayLoads{
-    debt_type_debt_counts:{_id:string,count:number,label:string}[],
+    bill_type_bill_counts:{_id:string,count:number,label:string}[],
     total_dept_type:number,
     total_balance:number,
-    debt_type_ammortization:any[],
-    debt_type_names:{[key:string]:string}
+    bill_type_ammortization:any[],
+    bill_type_names:{[key:string]:string}
     
 }
 
@@ -84,17 +84,17 @@ const TotalAllocation = () => {
 
 
     const payload: PayLoads ={
-        debt_type_debt_counts:[],
+        bill_type_bill_counts:[],
         total_dept_type:0,
         total_balance:0,
-        debt_type_ammortization:[],
-        debt_type_names:{}
+        bill_type_ammortization:[],
+        bill_type_names:{}
     }
     
 
 
     const DebtTypewiseInfo:any = useFetchDropDownObjects({
-        urlSuffix:`debt-typewise-info`,
+        urlSuffix:`bill-typewise-info`,
         payLoads:payload
     })
 
@@ -102,16 +102,16 @@ const TotalAllocation = () => {
 
     const total_balance = DebtTypewiseInfo.total_balance;
 
-    const data = DebtTypewiseInfo.debt_type_debt_counts;
+    const data = DebtTypewiseInfo.bill_type_bill_counts;
 
-    const chartData = DebtTypewiseInfo.debt_type_ammortization;
+    const chartData = DebtTypewiseInfo.bill_type_ammortization;
 
-    const debt_type_names = DebtTypewiseInfo.debt_type_names;
+    const bill_type_names = DebtTypewiseInfo.bill_type_names;
 
-    // Create a mapping from debt_type_id to debt_type_name
+    // Create a mapping from bill_type_id to bill_type_name
     /*
-    const debtTypeNameMap = chartData.reduce((acc:any, data:any) => {
-      data.debt_names.forEach((d:any) => {
+    const billTypeNameMap = chartData.reduce((acc:any, data:any) => {
+      data.bill_names.forEach((d:any) => {
         const [id, name] = Object.entries(d)[0];
         acc[id] = name;
       });
@@ -120,32 +120,32 @@ const TotalAllocation = () => {
     */
 
     // Tooltip formatter function
-    const CustomTooltipLine = ({ payload,label }:any) => {
+    /* const CustomTooltipLine = ({ payload,label }:any) => {
       if (!payload || payload.length === 0) return null;
       return (
         <div className="bg-white border p-2 rounded shadow-lg text-sm">
           <div><strong>Month:</strong> {label}</div>
           {payload.map((entry:any, index:number) => (
             <div key={`item-${index}`} style={{ color: entry.stroke }}>
-              <strong>{debt_type_names[entry.dataKey]}:</strong> $ {entry.value.toFixed(2)}
+              <strong>{bill_type_names[entry.dataKey]}:</strong> $ {entry.value.toFixed(2)}
             </div>
           ))}
         </div>
       );
-    };
+    }; */
 
     // Legend formatter function
-    const CustomLegendLine = ({ payload }:any) => {
+    /* const CustomLegendLine = ({ payload }:any) => {
       return (
         <div className="flex gap-4 justify-center items-center text-sm">
           {payload.map((entry:any, index:number) => (
             <span onMouseEnter={(event)=>handleLegendMouseEnter(entry.value,event)} onMouseLeave={handleLegendMouseLeave} className="font-semibold" key={`legend-item-${index}`} style={{ color: entry.color }}>
-              {debt_type_names[entry.value]}
+              {bill_type_names[entry.value]}
             </span>
           ))}
         </div>
       );
-    };
+    }; */
 
     
 
@@ -158,7 +158,7 @@ const TotalAllocation = () => {
     const getColorForDebtType = (key:string)=>{
       const hue = Math.abs(hashString(key)) % 360;
       return hslToHex(hue, 70, 50);
-      // const name:string = debtTypeNameMap[key];
+      // const name:string = billTypeNameMap[key];
       
 
       // const color:string =  getColorForValue(name.length*20+key.length, 300, 1000, 1)
@@ -229,42 +229,7 @@ const TotalAllocation = () => {
 
         })} */}
 
-{chartData.length > 0 && (
-  <div className="w-full overflow-x-auto"> {/* Scrollable container */}
-      <div className={`w-[${chartData.length * 100}px]`}> {/* Dynamically adjust width */}
-          <ResponsiveContainer width="100%" height={350}>
-            <LineChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" tick={{ fontSize:12 }} />
-              <YAxis tick={{ fontSize:12 }} />
-              {/* <Tooltip content={<CustomTooltipLine />} /> */}
-              <Tooltip content={<CustomTooltipLine />} />
-              <Legend 
-                content={<CustomLegendLine/>}
-                                 
-              />
 
-              {/* Render Line components for each unique dataKey (e.g., BB, TEACHER_FEE, etc.) */}
-              {Object.keys(chartData[0]).
-              filter(key => key !== 'month' /*&& key !== 'debt_names'*/).map((key, index) => (
-                <Line
-                  key={key}
-                  type="monotone"
-                  dataKey={key}
-                  dot={false}
-                  strokeWidth={highlightedKey!=null && highlightedKey === key ?3:1}
-                  stroke={getColorForDebtType(key)} // Ensure this function is defined elsewhere
-                  activeDot={{ r: 5 }}
-                />
-              ))}
-            </LineChart>
-          </ResponsiveContainer>
-      </div>
-  </div>
-)
-
-
-}
 
     
             

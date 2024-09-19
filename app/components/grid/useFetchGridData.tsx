@@ -106,7 +106,8 @@ interface hookData{
   sorting?:any;
   globalFilter?:any;
   setTableData:(data:[])=>void,
-  setExtraPayload?:(payload_data:any)=>void
+  setExtraPayload?:(payload_data:any)=>void,
+  reloadGrid?:boolean;
 }
 
 const useFetchGridData = ({
@@ -115,7 +116,8 @@ const useFetchGridData = ({
     sorting,
     globalFilter,
     setTableData,
-    setExtraPayload
+    setExtraPayload,
+    reloadGrid
 }:hookData)=>{
 
     //const [data, setData] = useState<[]>([]);
@@ -155,7 +157,10 @@ const useFetchGridData = ({
     useEffect(() => {
         
         fetchData();
-    }, [fetchData]);
+
+        if(reloadGrid){ console.log(reloadGrid)}
+
+    }, [fetchData,reloadGrid]);
 
     return {
         //data,

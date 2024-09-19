@@ -19,7 +19,7 @@ const Gauge = ()=>{
         color: '#009900',
         showTick: true,
         tooltip: {
-          text: 'Ideal'
+          text: 'Perfect'
         },
         onClick: () => console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
         onMouseMove: () => console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"),
@@ -30,18 +30,18 @@ const Gauge = ()=>{
         limit: 50,
         color: '#00e64d',
         showTick: true,
-        /*
+        
         tooltip: {
-          text: ''
+          text: 'Moderate'
         }
-          */
+          
       },
       {
         limit: 70,
         color: '#ff9900',
         showTick: true,
         tooltip: {
-          text: 'Moderate'
+          text: 'High'
         }
       },
       /*
@@ -63,7 +63,7 @@ const Gauge = ()=>{
       {
         color: '#EA4228',
         tooltip: {
-          text: 'High'
+          text: 'Extreme'
         }
       }
     ]
@@ -75,7 +75,7 @@ const Gauge = ()=>{
     // elastic: true,
   }}
   labels={{
-    //valueLabel: { formatTextValue: value => value + 'ºC' },
+    valueLabel: { formatTextValue: value => value + 'ºC', hide:true },
     tickLabels: {
       type: 'outer',
       //valueConfig: { formatTextValue: (value:any) => value + 'ºC', fontSize: 10 },
@@ -89,6 +89,7 @@ const Gauge = ()=>{
   value={61.5}
   minValue={0}
   maxValue={100}
+  
 />
  
 )
