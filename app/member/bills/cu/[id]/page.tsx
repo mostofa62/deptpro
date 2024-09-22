@@ -57,6 +57,8 @@ export default function InsuranceCreate({
 
     const [prevEditId, setPrevEditId] = useState<string>('');
 
+    const [reloadGrid, setReloadGrid] = useState(false);
+
     useEffect(() => {
       setPrevTransId(transactionData.id);
     }, [transactionData]);
@@ -83,6 +85,12 @@ export default function InsuranceCreate({
     const cleanData =  ()=>{
       setTransactionData(tdata)
       setEditData(edata);
+
+      if(reloadGrid){
+        setReloadGrid(false);
+      }else{
+        setReloadGrid(true);
+      }
     }
     
     const id = params.id;
@@ -101,7 +109,7 @@ export default function InsuranceCreate({
 
         user_id={user_id} 
         bill_acc_id={id} 
-        tab_number={activeTab}
+        reloadGrid={reloadGrid}
         onPayment={onPaymentHandler}
         onEdit={onEditHandler}
         />
@@ -133,8 +141,9 @@ export default function InsuranceCreate({
                 
                 {transactionData.id !='' && prevTransId==transactionData.id &&
                 <div className="w-full mt-8">
-                  <BillPayment 
-                  trans_id={transactionData.id} 
+                  <BillPayment
+                  bill_acc_id={id}  
+                  trans_id={transactionData.id}                  
                   amount={transactionData.amount} 
                   pay_date={transactionData.due_date}
                   cleanData={cleanData}

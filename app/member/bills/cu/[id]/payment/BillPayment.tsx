@@ -9,6 +9,7 @@ import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 
 
 interface paymentProps{
+    bill_acc_id:string;
     trans_id:string;
     amount:number;
     pay_date:string;
@@ -16,7 +17,7 @@ interface paymentProps{
 }
 
 const url = process.env.NEXT_PUBLIC_API_URL;
-const BillPayment = ({trans_id,amount,pay_date,cleanData}:paymentProps)=>{
+const BillPayment = ({bill_acc_id,trans_id,amount,pay_date,cleanData}:paymentProps)=>{
 
     const [fetchFomrData,setFetchFormData] = useState({amount,pay_date});
 
@@ -27,7 +28,7 @@ const BillPayment = ({trans_id,amount,pay_date,cleanData}:paymentProps)=>{
     const handleFormSubmit = async(values:any,{ resetForm }:any)=>{
         //alert(JSON.stringify(values));
 
-        await axios.post(`${url}pay-bill`, 
+        await axios.post(`${url}pay-bill/${bill_acc_id}`, 
             {trans_id,...values.fetchdata}, {
             
             headers: {

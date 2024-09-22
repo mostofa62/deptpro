@@ -177,6 +177,11 @@ const TotalAllocation = () => {
       // console.log(color)
       // return color;
     }
+
+    const dataLabel = {
+      total_balance:'Monthly Net Balance',
+      total_balance_gross:'Montly Groos Balance'
+    }
     
     
     const CustomBar = (props: any) => {
@@ -218,10 +223,37 @@ const TotalAllocation = () => {
       }
     
       return null;
-    };  
+    };
+    
+    const CustomTooltipLine = ({ payload,label }:any) => {
+      if (!payload || payload.length === 0) return null;
+      return (
+        <div className="bg-white border p-2 rounded shadow-lg text-sm">
+          <div><strong>Month:</strong> {label}</div>
+          {payload.map((entry:any, index:number) => (
+            <div key={`item-${index}`} style={{ color: entry.stroke }}>
+              <strong>{dataLabel[entry.dataKey as keyof typeof dataLabel]}:</strong> $ {entry.value.toFixed(2)}
+            </div>
+          ))}
+        </div>
+      );
+    };
+
+    // Legend formatter function
+    const CustomLegendLine = ({ payload }:any) => {
+      return (
+        <div className="flex gap-4 justify-center items-center text-sm">
+          {payload.map((entry:any, index:number) => (
+            <span onMouseEnter={(event)=>handleLegendMouseEnter(entry.value,event)} onMouseLeave={handleLegendMouseLeave} className="font-semibold" key={`legend-item-${index}`} style={{ color: entry.color }}>
+              {dataLabel[entry.dataKey as keyof typeof dataLabel]}
+            </span>
+          ))}
+        </div>
+      );
+    };
     return (
     <div className="flex flex-row min-h-75">
-        <div className="w-[40%]">
+        <div className="w-[35%]">
         <CardHolder title="Total Allocation">
             <div className="flex flex-row">
                 {/* {JSON.stringify(data)} */}
@@ -277,7 +309,7 @@ const TotalAllocation = () => {
             </div>
         </CardHolder>
         </div>
-        <div className="w-[30%]">
+        <div className="w-[25%]">
 
         {/* {chartData.map((damort:any, index:number)=>{
           const keys = Object.keys(damort);
@@ -289,7 +321,7 @@ const TotalAllocation = () => {
 {barData.length > 0 &&
                 <div className="w-full flex justify-center items-center py-9">
                     
-                                <ResponsiveContainer width="30%" height={150}>
+                                <ResponsiveContainer width="20%" height={150}>
                                         <BarChart                                            
                                             data={barData}
                                             margin={{
@@ -318,6 +350,45 @@ const TotalAllocation = () => {
 
     
             
+        </div>
+
+        <div className="w-[40%]">
+        {barData.length > 0 && 
+
+          <div className="w-full overflow-x-auto">
+            <div className={`w-[${barData.length * 100}px]`}> {/* Dynamically adjust width */}
+              <ResponsiveContainer width="100%" height={350}>
+              <LineChart data={barData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="year_month_word" tick={{ fontSize:12 }} />
+              <YAxis tick={{ fontSize:12 }} />
+              {/* <Tooltip content={<CustomTooltipLine />} /> */}
+              <Tooltip content={<CustomTooltipLine />} />
+              <Legend 
+                content={<CustomLegendLine/>}
+                                 
+              />
+
+              {/* Render Line components for each unique dataKey (e.g., BB, TEACHER_FEE, etc.) */}
+              {Object.keys(barData[0]).
+              filter(key => key !== 'year_month_word' && key !== 'year_month').map((key, index) => (
+                <Line
+                  key={key}
+                  type="monotone"
+                  dataKey={key}
+                  dot={false}
+                  strokeWidth={highlightedKey!=null && highlightedKey === key ?3:1}
+                  stroke={getColorForDebtType(key)} // Ensure this function is defined elsewhere
+                  activeDot={{ r: 5 }}
+                />
+              ))}
+            </LineChart>
+          </ResponsiveContainer>
+
+          </div>
+        </div>
+
+        }
         </div>            
 
     </div>
