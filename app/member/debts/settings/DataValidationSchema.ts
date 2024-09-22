@@ -2,6 +2,7 @@ import { object, string, number } from "yup";
 export const DataSchema = {
     
     monthly_budget:0,
+    minimum_payments:0,
    
     debt_payoff_method:{'label':'None','value':0},
    
@@ -11,8 +12,9 @@ export const DataSchema = {
 
 export const DataLabel = {
   
-  monthly_budget:'Debt Budget',
-  debt_payoff_method:'Debt Payoff Method',
+  monthly_budget:'Total Monthly Debt Budget',
+  minimum_payments:'Total Minimum Debt Payments',
+  debt_payoff_method:'Debt Payoff Strategy',
   
   
   
@@ -29,6 +31,10 @@ export const ValidationSchema =  object().shape({
 
               monthly_budget: number().min(1,`${DataLabel.monthly_budget} least 1`)              
               .required(`${DataLabel.monthly_budget} is required`),
+
+
+              minimum_payments: number().min(1,`${DataLabel.minimum_payments} least 1`)              
+              .required(`${DataLabel.minimum_payments} is required`),
 
               
 

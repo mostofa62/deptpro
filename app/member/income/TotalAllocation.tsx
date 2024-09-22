@@ -3,7 +3,7 @@ import DataProgress from "@/app/components/ui/DataProgress";
 import { getColorForValue, hashString, hslToHex } from "@/app/components/utils/Util";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import { useState } from "react";
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Line } from "recharts";
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Line, BarChart, Bar } from "recharts";
 
 // const data = [
 //   { name: "Group A", value: 400 },
@@ -64,7 +64,10 @@ interface PayLoads{
     total_income_source_type:number,
     total_balance:number,
     bill_type_ammortization:any[],
-    income_source_type_names:{[key:string]:string}
+    income_source_type_names:{[key:string]:string},
+    year_month_wise_counts:{total_balance:number,year_month:string, year_month_word:string}[],
+    year_month_wise_balance:number
+    
     
 }
 
@@ -88,7 +91,10 @@ const TotalAllocation = () => {
         total_income_source_type:0,
         total_balance:0,
         bill_type_ammortization:[],
-        income_source_type_names:{}
+        income_source_type_names:{},
+        year_month_wise_counts:[],
+        year_month_wise_balance:0,
+        
     }
     
 
@@ -107,6 +113,11 @@ const TotalAllocation = () => {
     const chartData = IncomeTypewiseInfo.income_source_type_counts;
 
     const bill_type_names = IncomeTypewiseInfo.income_source_type_names;
+
+    const barData = IncomeTypewiseInfo.year_month_wise_counts;
+
+    const year_month_wise_tbalance = IncomeTypewiseInfo.year_month_wise_balance;
+
 
     // Create a mapping from bill_type_id to bill_type_name
     /*
@@ -165,7 +176,49 @@ const TotalAllocation = () => {
       // const color:string =  getColorForValue(name.length*20+key.length, 300, 1000, 1)
       // console.log(color)
       // return color;
-    } 
+    }
+    
+    
+    const CustomBar = (props: any) => {
+      const { fill, x, y, width, height, value } = props;
+      
+      return (
+        <rect
+          x={x}
+          y={y}
+          width={width}
+          height={height}
+          fill={fill}
+          tabIndex={-1} // Prevent focus
+          style={{
+            outline: 'none', // Remove any focus outline
+            transition: 'none', // Remove hover transition effect
+          }}
+        />
+      );
+    };
+
+    const CustomTooltipBar = ({ payload, label }: any) => {
+      if (payload && payload.length) {
+        const data = payload[0].payload;
+    
+        return (
+          <div style={{
+            color:'#ffffff',  
+            backgroundColor: '#ffb145',
+            border: '1px solid #4f4f4f',
+            borderRadius: '5px',
+            padding: '4px',
+            fontSize: '16px',
+            minWidth:'100px'                    
+          }}>          
+            <p style={{ margin: 0 }}>$ {Intl.NumberFormat('en-US').format(data.total_balance)} in <span>{data.year_month_word}</span></p>
+          </div>
+        );
+      }
+    
+      return null;
+    };  
     return (
     <div className="flex flex-row min-h-75">
         <div className="w-[40%]">
@@ -224,13 +277,42 @@ const TotalAllocation = () => {
             </div>
         </CardHolder>
         </div>
-        <div className="w-[60%] py-2 px-1">
+        <div className="w-[30%]">
 
         {/* {chartData.map((damort:any, index:number)=>{
           const keys = Object.keys(damort);
           return <p key={index}>{keys[1]} </p>
 
         })} */}
+
+
+{barData.length > 0 &&
+                <div className="w-full flex justify-center items-center py-9">
+                    
+                                <ResponsiveContainer width="30%" height={150}>
+                                        <BarChart                                            
+                                            data={barData}
+                                            margin={{
+                                            top: 0,
+                                            right: 0,
+                                            left: 0,
+                                            bottom: 0,
+                                            }}
+                                            
+                                            barCategoryGap={10}
+                                            
+                                        >
+
+                                        
+                                        <XAxis   dataKey="total_balance" tickLine={false} axisLine={false} tick={false} />
+                                        <Bar   dataKey="total_balance" fill="#ffb145"  barSize={20} shape={<CustomBar />} />
+                                        <Tooltip content={<CustomTooltipBar />} cursor={{fill: 'transparent'}}/>
+                                        
+                                        </BarChart>
+
+                                        </ResponsiveContainer>
+                </div>
+            }
 
 
 

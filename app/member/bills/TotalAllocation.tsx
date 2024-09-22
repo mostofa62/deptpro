@@ -205,7 +205,7 @@ const TotalAllocation = () => {
                                 <DataProgress
                                 key={dp._id} 
                                 title={dp.name} 
-                                progress={((100/total_balance) * dp.balance).toFixed(0)}
+                                progress={dp.balance > 0 ? ((100/total_balance) * dp.balance).toFixed(0):'0'}
                                 color={getColorForDebtType(dp._id)}
                                 maxProgressLength={maxProgressLength}
                                 />

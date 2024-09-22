@@ -18,6 +18,8 @@ import useFetchDropDownData from "@/app/hooks/useFetchDropDownData";
 import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 
 import {DeptPayOffMethod} from '@/app/data/DebtOptions.json'
+import DebtRocket from "@/app/images/icon/debtrocket";
+import DebtChain from "@/app/images/icon/debtchain";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 export default function Setting() {
@@ -92,10 +94,50 @@ export default function Setting() {
     return(
         <>
         <DefaultLayout>
+
+        <div className="flex flex-row mt-2">
+            <div className="p-9">
+                <DebtRocket width={110} height={92} />
+
+            </div>
+            <div className="flex flex-col">
+                <div className="py-2 mt-7">
+                    <p className="text-[#31c4a2] text-[25px] font-semibold">
+                        Blast Debt & Build Wealth
+                    </p>
+                </div>
+                <div className="mt-1">
+                    <p className="text-[17px] text-[#4f4f4f]">
+                        Ready to tackle your debts and unleash your financial power?
+                    </p>
+                </div>
+
+            </div>
+
+            <div className="py-2 mx-auto">
+
+                <DebtChain width={340} height={200} />
+                
+            </div>
+            
+        </div>
+
+        <div className="flex flex-col px-9">
+
+            <p className="text-[#31c4a2] text-[18px] font-semibold">
+                Set Your Monthly Debt Budget & Debt Strategy
+            </p>
+
+            <p className="text-[16px] text-[#4f4f4f] w-[70%] mt-1">
+            To set your monthly debt budget: Total your minimum payments  + any extra to accelerate paydown debt strategies. 
+            If you plan to pay minimum payments only, then re-enter the minimum only amount.  Fill in the total monthly debt budget amount.
+            </p>
+
+        </div>    
         <div className="grid grid-flow-row">
 
 
-        <div className="mt-[20px] bg-[#43ACD6] text-white rounded-lg border-[#43ACD6]">
+        {/* <div className="mt-[20px] bg-[#43ACD6] text-white rounded-lg border-[#43ACD6]">
               <div className="flex flex-row h-[70px] py-3 px-10">
                     <div className="py-[10px] w-[40%]">                    
                       <p className="text-[25px]  leading-[25px] uppercase  font-medium">
@@ -129,12 +171,13 @@ export default function Setting() {
 
               </div>
 
-            </div>
+            </div> */}
             
+
 
            
 
-            <div className="mt-[32px]">
+            <div className="mt-4">
             <Formik
             innerRef={formRef}
             
@@ -153,7 +196,7 @@ export default function Setting() {
 
     
     
-    <div className="w-[50%]">
+    <div className="w-[32%]">
 
     <FormikSelectInput
             label={DataLabel.debt_payoff_method}
@@ -177,7 +220,25 @@ export default function Setting() {
         
     </div>
 
-    <div className="ml-[24px] w-[50%]">
+    <div className="ml-[24px] w-[32%]">
+
+    <FormikFieldInput 
+        type="number"
+        step="any"
+        min={0}
+        label={DataLabel.minimum_payments} 
+        name={`fetchdata.minimum_payments`}
+        placeHolder={`${DataLabel.minimum_payments}`}
+        errorMessage ={ errors.fetchdata &&                                        
+            errors.fetchdata.minimum_payments &&
+            touched.fetchdata &&            
+            touched.fetchdata.minimum_payments &&  errors.fetchdata.minimum_payments}        
+        />
+        
+        
+    </div>
+
+    <div className="ml-[24px] w-[32%]">
 
     <FormikFieldInput 
         type="number"
