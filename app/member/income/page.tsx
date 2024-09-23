@@ -11,6 +11,7 @@ import GridGlobalSearch from "@/app/components/grid/GridGlobalSearch";
 import GridActionLink from "@/app/components/grid/GridActionLink";
 import GridPaginationHolder from "@/app/components/grid/GridPaginationHolder";
 import TotalAllocation from "./TotalAllocation";
+import { DataLabel } from "./cu/DataValidationSchema";
 
 const per_page_list = PerPageList();
 const per_page = per_page_list[0];
@@ -127,12 +128,9 @@ const Income = ()=>{
           },
           
 
-          {
-            accessorKey: 'pay_date',
-            header: 'Pay Date',
-          },
+         
           
-          {
+         /*  {
             accessorKey: 'next_pay_date',
             header: 'Next Date',
           },  
@@ -151,7 +149,43 @@ const Income = ()=>{
           {
             accessorKey: 'next_boost_date',
             header: 'Next Boost Date',
-          }, 
+          }, */
+
+          {
+            accessorKey: 'monthly_net_income',
+            header: DataLabel.monthly_net_income,
+            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
+            /*
+            footer: (props) => {
+              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
+                return sum + row.original.monthly_payment;
+              }, 0);
+              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
+            },
+            */
+           footer:(props)=><p><span>$</span><span className="px-2">{total_monthly_net_income.toFixed(2)}</span></p>
+          },
+
+          {
+            accessorKey: 'monthly_gross_income',
+            header: DataLabel.monthly_gross_income,
+            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
+            /*
+            footer: (props) => {
+              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
+                return sum + row.original.monthly_payment;
+              }, 0);
+              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
+            },
+            */
+           footer:(props)=><p><span>$</span><span className="px-2">{total_monthly_gross_income.toFixed(2)}</span></p>
+          },
+
+          
+          {
+            accessorKey: 'pay_date',
+            header: 'Pay Date',
+          },
           
           {
             accessorKey: 'repeat.label',
@@ -175,36 +209,13 @@ const Income = ()=>{
           },
 
           {
-            accessorKey: 'monthly_net_income',
-            header: 'Monthly Net Income',
-            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
-            /*
-            footer: (props) => {
-              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
-                return sum + row.original.monthly_payment;
-              }, 0);
-              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
-            },
-            */
-           footer:(props)=><p><span>$</span><span className="px-2">{total_monthly_net_income.toFixed(2)}</span></p>
+            accessorKey: 'income_boost_source',
+            header: 'Income Boost Source',
+            
           },
 
-          {
-            accessorKey: 'monthly_gross_income',
-            header: 'Monthly Gross Income',
-            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
-            /*
-            footer: (props) => {
-              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
-                return sum + row.original.monthly_payment;
-              }, 0);
-              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
-            },
-            */
-           footer:(props)=><p><span>$</span><span className="px-2">{total_monthly_gross_income.toFixed(2)}</span></p>
-          },
-
-
+          
+          /*
           {
             accessorKey: 'monthly_income_total',
             header: 'Monthly Income Total',
@@ -216,11 +227,23 @@ const Income = ()=>{
               }, 0);
               return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
             },
-            */
+            *//*
            footer:(props)=><p><span>$</span><span className="px-2">{total_monthly_income.toFixed(2)}</span></p>
+          },*/
+
+          {
+            accessorKey: 'total_gross_income',
+            header: DataLabel.total_gross_income,
+            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
+
           },
 
-         
+          {
+            accessorKey: 'total_net_income',
+            header: DataLabel.total_net_income,
+            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
+
+          }
 
 
          
@@ -238,7 +261,7 @@ const Income = ()=>{
           },
           */
       
-          ], [/*hoveredRowId*/,total_monthly_net_income, total_monthly_gross_income, total_income_boost, total_monthly_income]);
+          ], [/*hoveredRowId*/,total_monthly_net_income, total_monthly_gross_income, total_income_boost]);
       
           const table = useReactTable({
               data,
@@ -336,6 +359,15 @@ const Income = ()=>{
 
 
     const generateItems = useCallback((row) => [
+      {
+        actionId:'view',
+        title:'View',
+        link:`income/${row.getValue('_id')}`,                        
+        icon :<svg width={22} height={22} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+      </svg>      
+      },
       {
         actionId:'edit',
         title:'Edit',

@@ -60,11 +60,11 @@ const CustomTooltip = ({ active, payload, label, total_count, total_balance }:an
 
 
 interface PayLoads{
-    income_source_type_counts:{_id:string,count:number,label:string, balance:number}[],
-    total_income_source_type:number,
+    category_type_counts:{_id:string,count:number,label:string, balance:number}[],
+    total_saving_source_type:number,
     total_balance:number,
     bill_type_ammortization:any[],
-    income_source_type_names:{[key:string]:string},
+    category_type_names:{[key:string]:string},
     year_month_wise_counts:{total_balance:number,year_month:string, year_month_word:string}[],
     year_month_wise_balance:number
     
@@ -87,11 +87,11 @@ const TotalAllocation = () => {
 
 
     const payload: PayLoads ={
-        income_source_type_counts:[],
-        total_income_source_type:0,
+        category_type_counts:[],
+        total_saving_source_type:0,
         total_balance:0,
         bill_type_ammortization:[],
-        income_source_type_names:{},
+        category_type_names:{},
         year_month_wise_counts:[],
         year_month_wise_balance:0,
         
@@ -99,24 +99,24 @@ const TotalAllocation = () => {
     
 
 
-    const IncomeTypewiseInfo:any = useFetchDropDownObjects({
-        urlSuffix:`income-typewise-info`,
+    const SavingTypewiseInfo:any = useFetchDropDownObjects({
+        urlSuffix:`saving-typewise-info`,
         payLoads:payload
     })
 
-    const total_count = IncomeTypewiseInfo.total_income_source_type
+    const total_count = SavingTypewiseInfo.total_saving_source_type
 
-    const total_balance = IncomeTypewiseInfo.total_balance;
+    const total_balance = SavingTypewiseInfo.total_balance;
 
-    const data = IncomeTypewiseInfo.income_source_type_counts;
+    const data = SavingTypewiseInfo.category_type_counts;
 
-    const chartData = IncomeTypewiseInfo.income_source_type_counts;
+    const chartData = SavingTypewiseInfo.category_type_counts;
 
-    const bill_type_names = IncomeTypewiseInfo.income_source_type_names;
+    const bill_type_names = SavingTypewiseInfo.category_type_names;
 
-    const barData = IncomeTypewiseInfo.year_month_wise_counts;
+    const barData = SavingTypewiseInfo.year_month_wise_counts;
 
-    const year_month_wise_tbalance = IncomeTypewiseInfo.year_month_wise_balance;
+    const year_month_wise_tbalance = SavingTypewiseInfo.year_month_wise_balance;
 
 
     // Create a mapping from bill_type_id to bill_type_name
@@ -179,8 +179,8 @@ const TotalAllocation = () => {
     }
 
     const dataLabel = {
-      total_balance:'Net Earnings',
-      total_balance_gross:'Annual Gross Earnings'
+      total_balance:'Total Starting Amount',
+      total_goal_amount:'Total Goal Amount'
     }
     
     

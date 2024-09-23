@@ -3,6 +3,7 @@ import { object, string, number } from "yup";
 export const DataSchema = {
     name:'',
     bill_type:{'label':'','value':''},
+    payor:'',
     default_amount:0,    
     next_due_date:moment().format('YYYY-MM-DD'),
     notes:'',
@@ -16,15 +17,31 @@ export const DataSchema = {
 
 export const DataLabel = {
   name:'Bill Nickname/Description',
-  bill_type:'Type of Bill',
-  default_amount:'Default Amount',    
+  bill_type:'Bill Category',
+  payor:'Payor',
+  default_amount:'Monthly Payment',    
   next_due_date:'Next Due Date',
   notes:'Note',
   autopay:'Autopay?',
   repeat:'Repeat?',
   repeat_count:'Every',
-  repeat_frequency:'Repeat Frequency',
-  reminder_days:'Reminder Days (for sms/txt reminders)'
+  repeat_frequency:'Repeat',
+  reminder_days:'Reminder Notifications SMS-Email*'
+}
+
+
+export const DataLabelView = {
+  name:'Bill Nickname/Description',
+  bill_type:'Bill Category',
+  payor:'Payor',
+  default_amount:'Monthly Payment',    
+  next_due_date:'Next Due Date',
+  notes:'Note',
+  autopay:'Autopay?',
+  repeat:'Repeat?',
+  repeat_count:'Every',
+  repeat_frequency:'Repeat',
+  reminder_days:'Reminder Notifications SMS-Email*'
 }
 
 export const ValidationSchema =  object().shape({

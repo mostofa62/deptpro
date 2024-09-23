@@ -48,7 +48,41 @@ export const DataLabel = {
  
   repeat_boost:'Repeat Frequency',
 
-  note:'Note'
+  note:'Note',
+
+  total_gross_income:'Total Monthly Gross Income',
+  total_net_income:'Total Monthly Net Income'
+  
+  
+  
+}
+
+
+export const DataLabelView = {
+  
+  income_source:'Income Source',
+  earner:'Earner',
+  
+  monthly_gross_income:'Monthly Gross Income',
+  monthly_net_income:'Monthly Net Income',   
+  
+  pay_date_word:'Pay Day',
+ 
+  repeat:'Repeat Frequency',
+
+  income_boost:'Income Boost',
+
+  income_boost_source:'Income Boost Source',
+
+
+  pay_date_boost_word:'Pay Day Boost',
+ 
+  repeat_boost:'Repeat Frequency ( Boost)',
+
+  note:'Note',
+
+  total_gross_income:'Total Monthly Gross Income',
+  total_net_income:'Total Monthly Net Income'
   
   
   

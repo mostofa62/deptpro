@@ -70,6 +70,39 @@ export const DataLabel = {
 }
 
 
+export const DataLabelView = {
+  
+  category:'Category',
+  saver:'Saver',
+  nickname:'Nickname',
+  
+  goal_amount:'Goal Amount',
+  interest:'Interest',   
+  
+  starting_date_word:'Starting Date',
+
+  starting_amount:'Starting Amount',
+  
+  contribution:'Contribution',
+ 
+  repeat:'Repeat Frequency',
+
+  saving_boost:'Saving Boost',
+
+  autopay:'Autopay?',
+
+
+  saving_boost_source:'Saving Boost Source',
+
+  pay_date_boost_word:'Pay Day',
+
+  repeat_boost:'Repeat Frequency (Boost)',
+  
+  note:'Note'
+  
+}
+
+
 
 export const ValidationSchema =  object().shape({
   fetchdata:object().shape({

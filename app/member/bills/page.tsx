@@ -11,6 +11,7 @@ import GridPaginationHolder from "@/app/components/grid/GridPaginationHolder";
 import GridActionLink from "@/app/components/grid/GridActionLink";
 import { confirmAlert } from "react-confirm-alert";
 import TotalAllocation from "./TotalAllocation";
+import { DataLabel } from "./cu/DataValidationSchema";
 
 const per_page_list = PerPageList();
 const per_page = per_page_list[0];
@@ -84,18 +85,18 @@ export default function CareManagers() {
         
         {
             accessorKey: 'name',
-            header: 'Bill Name',
-            cell: (info) => <p><Link className="text-[#43ACD6]" href={`bills/cu/${info.row.getValue('_id')}`}>{info.getValue()}</Link></p>,
+            header: DataLabel.name,
+            cell: (info) => <p><Link className="text-[#43ACD6]" href={`bills/${info.row.getValue('_id')}`}>{info.getValue()}</Link></p>,
         },
 
         {
           accessorKey: 'bill_type',
-          header: 'Bill Type',
+          header: DataLabel.bill_type,
         },
         
         {
             accessorKey: 'default_amount',
-            header: 'Default Amount',
+            header: DataLabel.default_amount,
             cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>()}</span></p>,
             footer: (props) => {
               const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
@@ -365,6 +366,15 @@ export default function CareManagers() {
 {
                     hoveredRowId == row.original._id &&
                     <GridActionLink items={[
+                      {
+                        actionId:'view',
+                        title:'View',
+                        link:`bills/${row.getValue('_id')}`,                        
+                        icon :<svg width={22} height={22} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                      </svg>      
+                      },
                       {
                         actionId:'edit',
                         title:'Edit',
