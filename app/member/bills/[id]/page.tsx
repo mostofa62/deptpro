@@ -22,7 +22,7 @@ interface Tab {
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
-export default function DebtDetails({
+export default function BillDetails({
     params,
     searchParams    
   }:{
@@ -39,23 +39,21 @@ export default function DebtDetails({
     const user_id:any = authCtx.userId;
 
     const payload ={
-      debtaccounts:{},
-      debttrasactions: [],
-      left_to_go: 0,
-      paid_off_percentage:0,
+      billaccounts:{},
+      billpayments: [],      
     }
 
-    const DebtWithTransactionData:any = useFetchDropDownObjects({
-        urlSuffix:`debt-all/${id}`,
+    const BillWithPaymentData:any = useFetchDropDownObjects({
+        urlSuffix:`bill-all/${id}`,
         payLoads:payload
     })
 
     
     const description = ()=>(
         <div className="flex flex-col gap-1 text-[15px]">
-          <div><span>DUE DATE</span><span className="ml-4">{DebtWithTransactionData.debtaccounts.due_date}</span></div>
-          <div><span>Name</span><span className="ml-4">{DebtWithTransactionData.debtaccounts.name}</span></div>
-          <div><span>Balance</span><span className="ml-4">$</span><span className="ml-1">{Intl.NumberFormat('en-US').format(DebtWithTransactionData.debtaccounts.balance)}</span></div>
+          <div><span>DUE DATE</span><span className="ml-4">{BillWithPaymentData.billaccounts.next_due_date_word}</span></div>
+          <div><span>Name</span><span className="ml-4">{BillWithPaymentData.billaccounts.name}</span></div>
+          <div><span>CURRENT BILL</span><span className="ml-4">$</span><span className="ml-1">{Intl.NumberFormat('en-US').format(BillWithPaymentData.billaccounts.current_amount)}</span></div>
         </div>
       )
   
@@ -72,7 +70,7 @@ export default function DebtDetails({
               <div className="flex flex-row h-[70px] py-3 px-10">
                     <div className="py-[10px] w-[20%]">                    
                       <p className="text-[25px]  leading-[25px] uppercase  font-medium">
-                      DEBTS DETAILS
+                      BILL DETAILS
                         </p>
                     </div>
 
@@ -82,38 +80,28 @@ export default function DebtDetails({
 
                       <div>
                         <Link
-                            href={'/member/debts'}
+                            href={'/member/bills'}
                             className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
                         >                            
 
-                            <p className="text-[20px] font-semibold uppercase">DEBTS accounts</p>
+                            <p className="text-[20px] font-semibold uppercase">BILL accounts</p>
                         </Link>
                       </div>
                         <div>
                         <Link
-                            href={'/member/debts/cu'}
+                            href={'/member/bills/cu'}
                             className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
                         >
                             
 
-                            <p className="text-[18px] font-semibold uppercase">Add Debt</p>
+                            <p className="text-[18px] font-semibold uppercase">Add Bill</p>
                         </Link>
                         </div>
+                       
 
                         <div>
                         <Link
-                            href={'/member/debts/settings'}
-                            className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
-                        >
-                            
-
-                            <p className="text-[18px] font-semibold uppercase">Debt settings</p>
-                        </Link>
-                        </div>
-
-                        <div>
-                        <Link
-                            href={`/member/debts/cu/${id}`}
+                            href={`/member/bills/cu/${id}`}
                             className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
                         >
                             
@@ -133,7 +121,7 @@ export default function DebtDetails({
             <div className="mt-[32px]">
             
 
-              <Summary DebtWithTransactionData={DebtWithTransactionData} />
+              <Summary BillWithPaymentData={BillWithPaymentData} />
 
             </div>
 
@@ -141,8 +129,8 @@ export default function DebtDetails({
 
               <div className="w-[35%] h-[30%]">  
                 <BasicCalendar 
-                extraDayData={{[`${DebtWithTransactionData.debtaccounts.due_date}`]:{'title':`Next due date`,'description':description()}}} 
-                currentMonth={DebtWithTransactionData.debtaccounts.due_date}
+                extraDayData={{[`${BillWithPaymentData.billaccounts.next_due_date}`]:{'title':`Next due date`,'description':description()}}} 
+                currentMonth={BillWithPaymentData.billaccounts.next_due_date}
                 />
               </div>
 
@@ -154,8 +142,8 @@ export default function DebtDetails({
                   <div key={index} className="bg-white p-4 rounded shadow">
                     <strong>{datalabel[key]}</strong>
                     <p className="mt-1">
-                      {/*DebtWithTransactionData.debtAccount[key] !== undefined ? DebtWithTransactionData.debtAccount[key].toString() : '-'*/}
-                      {key in DebtWithTransactionData.debtaccounts ? DebtWithTransactionData.debtaccounts[key]?.toString() : '-'}
+                      {/*BillWithPaymentData.debtAccount[key] !== undefined ? BillWithPaymentData.debtAccount[key].toString() : '-'*/}
+                      {key in BillWithPaymentData.billaccounts ? BillWithPaymentData.billaccounts[key]?.toString() : '-'}
                     </p>
                   </div>
                 ))}

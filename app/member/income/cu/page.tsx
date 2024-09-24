@@ -17,6 +17,7 @@ import toast from 'react-hot-toast';
 import useFetchDropDownData from "@/app/hooks/useFetchDropDownData";
 import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
+import VideoComponent from "@/app/components/utils/VideoComponent";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -140,6 +141,25 @@ export default function InsuranceCreate() {
 
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
             <FormikFormHolder legend="INCOME Account Details">
+
+<div className="flex flex-row gap-2">
+
+<div className="w-[35%] flex justify-center items-center">
+        <div className="">
+                       
+            <VideoComponent
+                src="/animated/incomentry.mp4"
+                width={`350`}
+                controls={false} // Disable default video controls (optional)
+                autoplay={true}
+                loop={true}
+                showControls={false}
+            />
+        </div>
+        </div>
+
+
+<div className="w-[65%]">
 
 <div className="flex flex-row mt-[15px]">
     <div className="w-[32%]">
@@ -398,6 +418,10 @@ export default function InsuranceCreate() {
     {JSON.stringify(errors)}
 </div>
 */}
+
+</div>
+
+</div>
 
 </FormikFormHolder>
         )}

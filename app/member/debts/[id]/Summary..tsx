@@ -94,7 +94,13 @@ const Summary = ({DebtWithTransactionData}:DebtTransProps)=>{
             <div className="grid grid-cols-1 h-auto gap-4">
 
             {DebtWithTransactionData.debttrasactions.length > 0 &&
-                <div className="w-full flex justify-center items-center">
+                <div className="w-full flex gap-2">
+
+
+                    <div className="w-[30%] px-2">
+                      <p className="text-[#4f4f4f] font-medium">12 Month Debt Payment History</p>
+                    </div>
+                    <div className="w-[70%]">
                     
                                 <ResponsiveContainer width="10%" height={120}>
                                         <BarChart                                            
@@ -118,6 +124,8 @@ const Summary = ({DebtWithTransactionData}:DebtTransProps)=>{
                                         </BarChart>
 
                                         </ResponsiveContainer>
+
+                      </div>
                 </div>
             }
 

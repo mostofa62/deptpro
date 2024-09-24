@@ -39,8 +39,8 @@ export const DataLabelView = {
   notes:'Note',
   autopay:'Autopay?',
   repeat:'Repeat?',
-  repeat_count:'Every',
-  repeat_frequency:'Repeat',
+  //repeat_count:'Every',
+  repeat_frequency:'Repeat Frequency',
   reminder_days:'Reminder Notifications SMS-Email*'
 }
 

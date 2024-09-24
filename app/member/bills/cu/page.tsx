@@ -18,6 +18,7 @@ import useFetchDropDownData from "@/app/hooks/useFetchDropDownData";
 import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 import Image from "next/image";
 import FormikCheckInput from "@/app/components/form/FormikCheckInput";
+import VideoComponent from "@/app/components/utils/VideoComponent";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 export default function InsuranceCreate() {
@@ -137,12 +138,14 @@ export default function InsuranceCreate() {
 
         <div className="w-[35%] flex justify-center items-center">
         <div className="">
-            <Image 
-            width={350} 
-            height={350} 
-            src={`/animated/billentry.gif`} 
-            alt="Bill Entry" 
-            unoptimized={true}
+                       
+            <VideoComponent
+                src="/animated/billentry.mp4"
+                width={`350`}
+                controls={false} // Disable default video controls (optional)
+                autoplay={true}
+                loop={true}
+                showControls={false}
             />
         </div>
         </div>

@@ -50,12 +50,12 @@ const CustomTooltip = ({ payload, label }: any) => {
   };  
 
 interface DebtTransProps{
-    DebtWithTransactionData:any
+    BillWithPaymentData:any
 }
-const Summary = ({DebtWithTransactionData}:DebtTransProps)=>{
+const Summary = ({BillWithPaymentData}:DebtTransProps)=>{
 
     
-    const formattedAmount = new Intl.NumberFormat('en-US').format(DebtWithTransactionData?.debtaccounts?.balance);
+    const formattedAmount = new Intl.NumberFormat('en-US').format(BillWithPaymentData?.billaccounts?.current_amount);
 
 
     return(
@@ -64,28 +64,33 @@ const Summary = ({DebtWithTransactionData}:DebtTransProps)=>{
 
             <div className="w-[25%] text-left px-5 flex flex-col gap-9">
 
-                <div className="w-full">
-                    <p className='font-semibold text-[18px] uppercase text-[#4f4f4f]'><span>CURRENT BALANCE</span></p>
-                </div>
+                    <div className="w-full py-1">
+                        <p className='font-semibold text-[25px] uppercase text-[#4f4f4f]'><span>{BillWithPaymentData?.billaccounts?.name}</span></p>
+                    </div>
 
-                <div className="w-full">
-                <p className='text-[30px] font-semibold text-[#31c4a2]'><span>$</span><span className='ml-1'>{formattedAmount}</span></p>
-                </div>
+                    
             
                 
             </div>
 
             <div className="w-[35%] flex flex-col gap-6">
-                <div className="w-full">
+                    <div className="w-full">
+                        <p className='font-semibold text-[18px] uppercase text-[#4f4f4f]'><span>CURRENT BILL</span></p>
+                    </div>
+
+                    <div className="w-full">
+                    <p className='text-[30px] font-semibold text-[#31c4a2]'><span>$</span><span className='ml-1'>{formattedAmount}</span></p>
+                    </div>
+                {/* <div className="w-full">
                     <p className='font-semibold text-[18px] uppercase text-[#4f4f4f]'><span>PROGRESS</span></p>
                 </div>
                 <div className="w-full">
                     <ProgressBarOne 
                     title={`left to go`} 
-                    progress={DebtWithTransactionData?.left_to_go} 
+                    progress={BillWithPaymentData?.left_to_go} 
                     progressColor="#31c4a2"
                     />
-                </div>
+                </div> */}
                 
             </div>
 
@@ -93,12 +98,16 @@ const Summary = ({DebtWithTransactionData}:DebtTransProps)=>{
 
             <div className="grid grid-cols-1 h-auto gap-4">
 
-            {DebtWithTransactionData.debttrasactions.length > 0 &&
-                <div className="w-full flex justify-center items-center">
-                    
+            {BillWithPaymentData.billpayments.length > 0 &&
+                <div className="w-full flex gap-2">
+
+                  <div className="w-[30%]">
+                    <p className="text-[#4f4f4f] font-medium">12 Month Bill Payment History</p>
+                  </div>
+                    <div className="w-[70%]">
                                 <ResponsiveContainer width="10%" height={120}>
                                         <BarChart                                            
-                                            data={DebtWithTransactionData.debttrasactions}
+                                            data={BillWithPaymentData.billpayments}
                                             margin={{
                                             top: 0,
                                             right: 0,
@@ -118,6 +127,7 @@ const Summary = ({DebtWithTransactionData}:DebtTransProps)=>{
                                         </BarChart>
 
                                         </ResponsiveContainer>
+                                        </div>
                 </div>
             }
 

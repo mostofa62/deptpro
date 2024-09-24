@@ -19,6 +19,8 @@ import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import CheckComponent from "@/app/components/CheckComponent";
 import FormikCheckInput from "@/app/components/form/FormikCheckInput";
+import DebtRocket from "@/app/images/icon/debtrocket";
+import VideoComponent from "@/app/components/utils/VideoComponent";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -127,6 +129,49 @@ export default function InsuranceCreate() {
               </div>
 
             </div>
+
+
+
+            <div className="flex flex-row mt-2">
+            <div className="p-9">
+                <DebtRocket width={110} height={92} />
+
+            </div>
+            <div className="flex flex-col">
+                <div className="py-2 mt-7">
+                    <p className="text-[#31c4a2] text-[25px] font-semibold">
+                    Build Wealth
+                    </p>
+                </div>
+                <div className="mt-1">
+                    <p className="text-[17px] text-[#4f4f4f]">
+                    Begin saving and unleash your financial power. 
+                    Even small contributions can add quickly!
+                    </p>
+                </div>
+
+            </div>
+
+            <div className="py-2 mx-auto">
+
+
+                    <div className="">
+                       
+                       <VideoComponent
+                           src="/animated/savingentry.mp4"
+                           width={`380`}
+                           controls={false} // Disable default video controls (optional)
+                           autoplay={true}
+                           loop={true}
+                           showControls={false}
+                       />
+                   </div>
+
+                
+                
+            </div>
+            
+        </div>
 
             
 
