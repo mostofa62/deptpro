@@ -214,6 +214,11 @@ const Income = ()=>{
             
           },
 
+          {
+            accessorKey: 'repeat_boost.label',
+            header: 'Repeat ( Boost)',
+          },  
+
           
           /*
           {

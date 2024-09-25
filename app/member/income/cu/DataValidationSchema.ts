@@ -32,8 +32,8 @@ export const DataLabel = {
   income_source:'Income Source',
   earner:'Earner',
   
-  monthly_gross_income:'Monthly Gross Income',
-  monthly_net_income:'Monthly Net Income',   
+  monthly_gross_income:'Gross Income',
+  monthly_net_income:'Net Income',   
   
   pay_date:'Pay Day',
  
@@ -63,8 +63,8 @@ export const DataLabelView = {
   income_source:'Income Source',
   earner:'Earner',
   
-  monthly_gross_income:'Monthly Gross Income',
-  monthly_net_income:'Monthly Net Income',   
+  monthly_gross_income:'Gross Income',
+  monthly_net_income:'Net Income',   
   
   pay_date_word:'Pay Day',
  

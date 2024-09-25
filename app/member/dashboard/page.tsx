@@ -9,6 +9,7 @@ import Pie from "@/app/components/chart/Pie";
 
 import dynamic from "next/dynamic";
 import axios from "axios";
+import Image from 'next/image'
 import { generateRandomColor, generateRandomMixedColor, getColorForValue, hashString, hslToHex } from "@/app/components/utils/Util";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -120,6 +121,24 @@ export default function DashBoard() {
         <>
         <DefaultLayout>
         <div className="grid grid-flow-row">
+
+
+        <div className="mt-2">
+          <CardHolder title="Main Dashboard">
+            <div className="flex flex-row">
+
+              <div className="">
+              
+                <Image 
+                src="/animated/maindashboard.gif" 
+                width={200} 
+                height={200} 
+                alt="Focus" />
+              </div>
+
+            </div>
+          </CardHolder>
+        </div>
 
         <div className="mt-2">
           <div className="grid grid-cols-2 gap-1">
