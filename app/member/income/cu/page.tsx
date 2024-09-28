@@ -14,10 +14,11 @@ import FormikSelectInput from "@/app/components/form/FormikSelectInput";
 import FormikSelectCreatableInput from "@/app/components/form/FormikSelectCreatableInput";
 
 import toast from 'react-hot-toast';
-import useFetchDropDownData from "@/app/hooks/useFetchDropDownData";
+
 import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import VideoComponent from "@/app/components/utils/VideoComponent";
+import HolderOne from "@/app/layout/HolderOne";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -27,7 +28,6 @@ interface Options{
 }
 interface PayLoads{
     income_source:Options[],
-    income_boost_source:Options[],
     repeat_frequency:Options[],
 }
 
@@ -42,8 +42,7 @@ export default function InsuranceCreate() {
     
 
     const payload: PayLoads ={
-        income_source: [],
-        income_boost_source: [],
+        income_source: [],        
         repeat_frequency: [],
     }
 
@@ -100,35 +99,16 @@ export default function InsuranceCreate() {
         <div className="grid grid-flow-row">
 
 
-        <div className="mt-[20px] bg-[#43ACD6] text-white rounded-lg border-[#43ACD6]">
-              <div className="flex flex-row h-[70px] py-3 px-10">
-                    <div className="py-[10px] w-[40%]">                    
-                      <p className="text-[25px]  leading-[25px] uppercase  font-medium">
-                        ADD INCOME
-                      </p>
-                    </div>
+        <HolderOne
+            title="add income"            
+            linkItems={[
+              {
+                link:'/member/income',
+                title:'income dashboard'
+              }
+            ]}
+            />
 
-                    
-
-                    <div className="px-10 flex justify-end w-[60%]">
-                        <div>
-                        <Link
-                            href={'/member/income'}
-                            className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
-                        >                            
-
-                            <p className="text-[20px] font-semibold capitalize">Income Accounts</p>
-                        </Link>
-                        </div>
-                    </div>
-
-              </div>
-
-            </div>
-
-            
-
-            
 
             <div className="mt-[32px]">
             <Formik
@@ -140,7 +120,7 @@ export default function InsuranceCreate() {
         onSubmit={handleFormSubmit}
 
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
-            <FormikFormHolder legend="INCOME Account Details">
+            <FormikFormHolder legend="income account details">
 
 <div className="flex flex-row gap-2">
 
@@ -215,13 +195,13 @@ export default function InsuranceCreate() {
         type="number"
         step="any"
         min={0}
-        label={`${DataLabel.monthly_gross_income} $`} 
-        name={`fetchdata.monthly_gross_income`}
-        placeHolder={`${DataLabel.monthly_gross_income}`}
+        label={`${DataLabel.gross_income} $`} 
+        name={`fetchdata.gross_income`}
+        placeHolder={`${DataLabel.gross_income}`}
         errorMessage ={ errors.fetchdata &&                                        
-            errors.fetchdata.monthly_gross_income &&
+            errors.fetchdata.gross_income &&
             touched.fetchdata &&            
-            touched.fetchdata.monthly_gross_income &&  errors.fetchdata.monthly_gross_income}        
+            touched.fetchdata.gross_income &&  errors.fetchdata.gross_income}        
         />
         
 
@@ -241,13 +221,13 @@ export default function InsuranceCreate() {
         type="number"
         step="any"
         min={0}
-        label={`${DataLabel.monthly_net_income} $`} 
-        name={`fetchdata.monthly_net_income`}
-        placeHolder={`${DataLabel.monthly_net_income}`}
+        label={`${DataLabel.net_income} $`} 
+        name={`fetchdata.net_income`}
+        placeHolder={`${DataLabel.net_income}`}
         errorMessage ={ errors.fetchdata &&                                        
-            errors.fetchdata.monthly_net_income &&
+            errors.fetchdata.net_income &&
             touched.fetchdata &&            
-            touched.fetchdata.monthly_net_income &&  errors.fetchdata.monthly_net_income}        
+            touched.fetchdata.net_income &&  errors.fetchdata.net_income}        
         />
         
         
@@ -302,98 +282,7 @@ export default function InsuranceCreate() {
 
 
 
-<div className="flex flex-row mt-[15px]">
-    <div className="w-[50%]">
-        
-        
 
-    <FormikFieldInput 
-        type="number"
-        step="any"
-        min={0}
-        label={`${DataLabel.income_boost} $`} 
-        name={`fetchdata.income_boost`}
-        placeHolder={`${DataLabel.income_boost}`}
-        errorMessage ={ errors.fetchdata &&                                        
-            errors.fetchdata.income_boost &&
-            touched.fetchdata &&            
-            touched.fetchdata.income_boost &&  errors.fetchdata.income_boost}        
-        />
-        
-        
-         
-    </div>
-
-    <div className="ml-[24px] w-[50%]">
-        
-    <FormikSelectCreatableInput
-            label={DataLabel.income_boost_source}
-            defaultValue={fetchdata.income_boost_source}
-            placeHolder={`Select ${DataLabel.income_boost_source}`}
-            isSearchable={true}
-            isClearable={true}
-            name="fetchdata.income_boost_source"
-            dataOptions={IncomeSourceBoostData.income_boost_source}
-            errorMessage={errors.fetchdata &&
-                errors.fetchdata.income_boost_source &&
-                touched.fetchdata &&
-                touched.fetchdata.income_boost_source &&
-                errors.fetchdata.income_boost_source.label
-            }
-        />
-        
-        
-        
-    </div>
-    
-    
-</div>
-
-<div className="flex flex-row mt-[15px]">
-    <div className="w-[50%]">
-        
-        
-
-    <FormikFieldInput 
-        type="date"              
-        label={DataLabel.pay_date_boost} 
-        name={`fetchdata.pay_date_boost`}
-        placeHolder={`${DataLabel.pay_date_boost}`}
-        errorMessage ={ errors.fetchdata &&                                        
-            errors.fetchdata.pay_date_boost &&
-            touched.fetchdata &&            
-            touched.fetchdata.pay_date_boost &&  errors.fetchdata.pay_date_boost}
-                   
-        />
-        
-        
-        
-    </div>
-
-    <div className="ml-[24px] w-[50%]">
-        
-    <FormikSelectInput
-        label={DataLabel.repeat_boost}
-        defaultValue={fetchdata.repeat_boost}
-        placeHolder={``}
-        isSearchable={true}
-        isClearable={true}
-        name="fetchdata.repeat_boost"
-        dataOptions={IncomeSourceBoostData.repeat_frequency}
-        errorMessage={errors.fetchdata &&
-            errors.fetchdata.repeat_boost &&
-            touched.fetchdata &&
-            touched.fetchdata.repeat_boost &&
-            errors.fetchdata.repeat_boost.label
-        }
-    />
-        
-        
-        
-    </div>
-    
-    
-</div>
 
 <div className="flex flex-row mt-[15px]">
 <div className="w-[50%]">

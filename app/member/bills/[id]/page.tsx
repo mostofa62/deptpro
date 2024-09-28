@@ -9,6 +9,7 @@ import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import Summary from "./Summary.";
 import BasicCalendar from "@/app/components/BasicCalender";
 import { DataLabelView } from "../cu/DataValidationSchema";
+import HolderOne from "@/app/layout/HolderOne";
 
 
 
@@ -65,56 +66,25 @@ export default function BillDetails({
         <DefaultLayout>
         <div className="grid grid-flow-row">
 
-        
-        <div className="mt-[20px] bg-[#43ACD6] text-white rounded-lg border-[#43ACD6]">
-              <div className="flex flex-row h-[70px] py-3 px-10">
-                    <div className="py-[10px] w-[20%]">                    
-                      <p className="text-[25px]  leading-[25px] uppercase  font-medium">
-                      BILL DETAILS
-                        </p>
-                    </div>
 
-                    
+        <HolderOne
+            title="bill details"            
+            linkItems={[
+              {
+                link:'/member/bills/cu',
+                title:'add bill'
+              },
+              {
+                link:'/member/bills',
+                title:'your bill dashboard'
+              },
+              {
+                link:`/member/bills/cu/${id}`,
+                title:'update bill'
+              }
+            ]}
+            />
 
-                    <div className="flex justify-end items-end w-[80%]">
-
-                      <div>
-                        <Link
-                            href={'/member/bills'}
-                            className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
-                        >                            
-
-                            <p className="text-[20px] font-semibold uppercase">BILL accounts</p>
-                        </Link>
-                      </div>
-                        <div>
-                        <Link
-                            href={'/member/bills/cu'}
-                            className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
-                        >
-                            
-
-                            <p className="text-[18px] font-semibold uppercase">Add Bill</p>
-                        </Link>
-                        </div>
-                       
-
-                        <div>
-                        <Link
-                            href={`/member/bills/cu/${id}`}
-                            className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
-                        >
-                            
-
-                            <p className="text-[18px] font-semibold uppercase">Update</p>
-                        </Link>
-                        </div>
-                        
-                    </div>
-
-              </div>
-
-            </div>
 
 
 

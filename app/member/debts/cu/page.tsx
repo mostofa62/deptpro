@@ -16,6 +16,7 @@ import FormikSelectCreatableInput from "@/app/components/form/FormikSelectCreata
 import toast from 'react-hot-toast';
 import useFetchDropDownData from "@/app/hooks/useFetchDropDownData";
 import FormikFieldInput from "@/app/components/form/FormikFieldInput";
+import HolderOne from "@/app/layout/HolderOne";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 export default function InsuranceCreate() {
@@ -73,35 +74,22 @@ export default function InsuranceCreate() {
         <DefaultLayout>
         <div className="grid grid-flow-row">
 
-        <div className="mt-[20px] bg-[#43ACD6] text-white rounded-lg border-[#43ACD6]">
-              <div className="flex flex-row h-[70px] py-3 px-10">
-                    <div className="py-[10px] w-[40%]">                    
-                      <p className="text-[25px]  leading-[25px] uppercase  font-medium">
-                      ADD DEBT ACCOUNT
-                      </p>
-                    </div>
 
-                    
+        <HolderOne
+            title="add debt"            
+            linkItems={[
+                {
+                link:'/member/debts',
+                title:'your debt dashboard'
+                },
+                {
+                    link:'debts/settings',
+                    title:'set debt budget'
+                }
+            ]}
+            />
 
-                    <div className="px-10 flex justify-end w-[60%]">
-                        <div>
-                        <Link
-                            href={'/member/debts'}
-                            className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
-                        >                            
-
-                            <p className="text-[20px] font-semibold uppercase">DEBTS accounts</p>
-                        </Link>
-                        </div>
-                    </div>
-
-              </div>
-
-            </div>
-
-            
-
-            
+ 
 
             <div className="mt-[32px]">
             <Formik

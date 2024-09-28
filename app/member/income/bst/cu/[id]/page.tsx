@@ -27,6 +27,7 @@ interface Options{
 }
 interface PayLoads{
     income_source:Options[],
+    income_boost_source:Options[],
     repeat_frequency:Options[],
 }
 
@@ -49,6 +50,7 @@ export default function InsuranceCreate({
 
     const payload: PayLoads ={
         income_source: [],
+        income_boost_source: [],
         repeat_frequency: [],
     }
 
@@ -58,7 +60,7 @@ export default function InsuranceCreate({
     })
     const fetchDataCallback=useCallback(async()=>{
         //console.log(id);
-        const response = await axios.get(`${url}income/${id}`);
+        const response = await axios.get(`${url}income-boost/${id}`);
         //return response.data.user;
         setFetchFormData(response.data.income);
         
@@ -75,7 +77,7 @@ export default function InsuranceCreate({
     const handleFormSubmit = async(values:any,{ resetForm,setSubmitting }:any)=>{
         //alert(JSON.stringify(values));
 
-        await axios.post(`${url}save-income-account/${id}`, 
+        await axios.post(`${url}save-income-boost/${id}`, 
             {user_id,...values.fetchdata}, {
             
             headers: {
@@ -115,7 +117,7 @@ export default function InsuranceCreate({
 
 
         <HolderOne
-            title="update income"            
+            title="update income boost"            
             linkItems={[
               {
                 link:'/member/income',
@@ -126,14 +128,14 @@ export default function InsuranceCreate({
                 title:'add income'
               },
               {
-                link:`/member/income/${id}`,
-                title:'income details'
+                link:`/member/income/bst/${id}`,
+                title:'income boost details'
               },
+              
             ]}
             />
 
-
-        
+            
 
             
 
@@ -148,49 +150,52 @@ export default function InsuranceCreate({
         onSubmit={handleFormSubmit}
 
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
-            <FormikFormHolder legend="income Account update">
+            <FormikFormHolder legend="income boost Details">
+
+
+
+
+
+
+
 
 <div className="flex flex-row mt-[15px]">
-    <div className="w-[32%]">
+    <div className="w-[50%]">
         
         
 
-<FormikFieldInput 
-        label={DataLabel.earner} 
-        name={`fetchdata.earner`}
-        placeHolder={`${DataLabel.earner}`}
+    <FormikFieldInput 
+        type="number"
+        step="any"
+        min={0}
+        label={`${DataLabel.income_boost} $`} 
+        name={`fetchdata.income_boost`}
+        placeHolder={`${DataLabel.income_boost}`}
         errorMessage ={ errors.fetchdata &&                                        
-            errors.fetchdata.earner &&
+            errors.fetchdata.income_boost &&
             touched.fetchdata &&            
-            touched.fetchdata.earner &&  errors.fetchdata.earner}
-        onChangeField = {(e:any)=>{
-            const {value, name} = e.target;
-            setFieldValue(
-                name,
-                value
-              );
-        }}
+            touched.fetchdata.income_boost &&  errors.fetchdata.income_boost}        
         />
         
         
-        
+         
     </div>
 
-    <div className="ml-[24px] w-[32%]">
+    <div className="ml-[24px] w-[50%]">
         
     <FormikSelectCreatableInput
-            label={DataLabel.income_source}
-            defaultValue={fetchdata.income_source}
-            placeHolder={`Select ${DataLabel.income_source}`}
+            label={DataLabel.income_boost_source}
+            defaultValue={fetchdata.income_boost_source}
+            placeHolder={`Select ${DataLabel.income_boost_source}`}
             isSearchable={true}
             isClearable={true}
-            name="fetchdata.income_source"
-            dataOptions={IncomeSourceBoostData.income_source}
+            name="fetchdata.income_boost_source"
+            dataOptions={IncomeSourceBoostData.income_boost_source}
             errorMessage={errors.fetchdata &&
-                errors.fetchdata.income_source &&
+                errors.fetchdata.income_boost_source &&
                 touched.fetchdata &&
-                touched.fetchdata.income_source &&
-                errors.fetchdata.income_source.label
+                touched.fetchdata.income_boost_source &&
+                errors.fetchdata.income_boost_source.label
             }
         />
         
@@ -198,95 +203,54 @@ export default function InsuranceCreate({
         
     </div>
     
-    <div className="ml-[24px] w-[32%]">
-
-    <FormikFieldInput 
-        type="number"
-        step="any"
-        min={0}
-        label={`${DataLabel.gross_income} $`} 
-        name={`fetchdata.gross_income`}
-        placeHolder={`${DataLabel.gross_income}`}
-        errorMessage ={ errors.fetchdata &&                                        
-            errors.fetchdata.gross_income &&
-            touched.fetchdata &&            
-            touched.fetchdata.gross_income &&  errors.fetchdata.gross_income}        
-        />
-        
-
     
-        
-        
-    </div>
 </div>
 
-
-
-
 <div className="flex flex-row mt-[15px]">
-    <div className="w-[32%]">
+    <div className="w-[50%]">
+        
+        
 
     <FormikFieldInput 
-        type="number"
-        step="any"
-        min={0}
-        label={`${DataLabel.net_income} $`} 
-        name={`fetchdata.net_income`}
-        placeHolder={`${DataLabel.net_income}`}
+        type="date"              
+        label={DataLabel.pay_date_boost} 
+        name={`fetchdata.pay_date_boost`}
+        placeHolder={`${DataLabel.pay_date_boost}`}
         errorMessage ={ errors.fetchdata &&                                        
-            errors.fetchdata.net_income &&
+            errors.fetchdata.pay_date_boost &&
             touched.fetchdata &&            
-            touched.fetchdata.net_income &&  errors.fetchdata.net_income}        
+            touched.fetchdata.pay_date_boost &&  errors.fetchdata.pay_date_boost}
+                   
         />
+        
         
         
     </div>
 
-    <div className="ml-[24px] w-[32%]">
-
-    
-
-    <FormikFieldInput 
-        type="date"         
-        label={DataLabel.pay_date} 
-        name={`fetchdata.pay_date`}
-        placeHolder={`${DataLabel.pay_date}`}
-        errorMessage ={ errors.fetchdata &&                                        
-            errors.fetchdata.pay_date &&
-            touched.fetchdata &&            
-            touched.fetchdata.pay_date &&  errors.fetchdata.pay_date}               
-        />
+    <div className="ml-[24px] w-[50%]">
         
-        
-    </div>
-    
-    <div className="ml-[24px] w-[32%]">
-
-    
-
     <FormikSelectInput
-        label={DataLabel.repeat}
-        defaultValue={fetchdata.repeat}
+        label={DataLabel.repeat_boost}
+        defaultValue={fetchdata.repeat_boost}
         placeHolder={``}
         isSearchable={true}
         isClearable={true}
-        name="fetchdata.repeat"
+        name="fetchdata.repeat_boost"
         dataOptions={IncomeSourceBoostData.repeat_frequency}
         errorMessage={errors.fetchdata &&
-            errors.fetchdata.repeat &&
+            errors.fetchdata.repeat_boost &&
             touched.fetchdata &&
-            touched.fetchdata.repeat &&
-            errors.fetchdata.repeat.label
+            touched.fetchdata.repeat_boost &&
+            errors.fetchdata.repeat_boost.label
         }
     />
         
         
+        
     </div>
-
-   
+    
+    
 </div>
-
-
 
 <div className="flex flex-row mt-[15px]">
 <div className="w-[50%]">

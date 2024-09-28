@@ -19,6 +19,7 @@ import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 import Image from "next/image";
 import FormikCheckInput from "@/app/components/form/FormikCheckInput";
 import VideoComponent from "@/app/components/utils/VideoComponent";
+import HolderOne from "@/app/layout/HolderOne";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 export default function InsuranceCreate() {
@@ -94,31 +95,17 @@ export default function InsuranceCreate() {
         <DefaultLayout>
         <div className="grid grid-flow-row">
 
-        <div className="mt-[20px] bg-[#43ACD6] text-white rounded-lg border-[#43ACD6]">
-              <div className="flex flex-row h-[70px] py-3 px-10">
-                    <div className="py-[10px] w-[40%]">                    
-                      <p className="text-[25px]  leading-[25px] uppercase  font-medium">
-                      ADD Bill ACCOUNT
-                      </p>
-                    </div>
+        <HolderOne
+            title="add bill"            
+            linkItems={[
+              {
+                link:'/member/bills',
+                title:'your bill dashboard'
+              }
+            ]}
+            />
 
-                    
-
-                    <div className="px-10 flex justify-end w-[60%]">
-                        <div>
-                        <Link
-                            href={'/member/bills'}
-                            className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
-                        >                            
-
-                            <p className="text-[20px] font-semibold uppercase">Bill accounts</p>
-                        </Link>
-                        </div>
-                    </div>
-
-              </div>
-
-            </div>
+        
 
             
 

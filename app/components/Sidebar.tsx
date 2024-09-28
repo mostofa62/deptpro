@@ -233,7 +233,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   <Link
     href={'/member/income'}
     className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out   hover:text-[#43ACD6] ${
-      pathname.slice(-5) =='income' ?'text-[#43ACD6]':'text-[#4F4F4F]'
+      pathname.slice(-6) =='income' ?'text-[#43ACD6]':'text-[#4F4F4F]'
     }`}
   >
     <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} fill="currentColor" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
@@ -250,7 +250,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   <Link
     href={'/member/income/cu'}
     className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out  hover:text-[#43ACD6] ${
-      pathname.slice(-2) =='cu' ? 'text-[#43ACD6]':'text-[#4F4F4F]'
+      pathname.slice(-9) =='income/cu' ? 'text-[#43ACD6]':'text-[#4F4F4F]'
     }`}
   >
     <svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
@@ -258,6 +258,22 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 </svg>
 
       <p>Add Income</p>
+  </Link>
+</li>
+
+
+<li key={303}>
+  <Link
+    href={'/member/income/bst/cu'}
+    className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out  hover:text-[#43ACD6] ${
+      pathname.slice(-13) =='income/bst/cu' ? 'text-[#43ACD6]':'text-[#4F4F4F]'
+    }`}
+  >
+    <svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+</svg>
+
+      <p>Add Income Boost</p>
   </Link>
 </li>
 
@@ -400,7 +416,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   <Link
     href={'/member/debts/cu'}
     className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out  hover:text-[#43ACD6] ${
-      pathname.slice(-2) =='cu' ? 'text-[#43ACD6]':'text-[#4F4F4F]'
+      pathname.slice(-8) =='debts/cu' ? 'text-[#43ACD6]':'text-[#4F4F4F]'
     }`}
   >
     <svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
@@ -416,7 +432,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   <Link
     href={'/member/debts/paymentboost'}
     className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out  hover:text-[#43ACD6] ${
-      pathname.slice(-2) =='paymentboost' ? 'text-[#43ACD6]':'text-[#4F4F4F]'
+      pathname.slice(-12) =='paymentboost' ? 'text-[#43ACD6]':'text-[#4F4F4F]'
     }`}
   >
     <svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
@@ -522,7 +538,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   <Link
     href={'/member/bills/cu'}
     className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out  hover:text-[#43ACD6] ${
-      pathname.slice(-2) =='cu' ? 'text-[#43ACD6]':'text-[#4F4F4F]'
+      pathname.slice(-8) =='bills/cu' ? 'text-[#43ACD6]':'text-[#4F4F4F]'
     }`}
   >
     <svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
@@ -606,7 +622,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   <Link
     href={'/member/saving'}
     className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out   hover:text-[#43ACD6] ${
-      pathname.slice(-5) =='saving' ?'text-[#43ACD6]':'text-[#4F4F4F]'
+      pathname.slice(-6) =='saving' ?'text-[#43ACD6]':'text-[#4F4F4F]'
     }`}
   >
     <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} fill="currentColor" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
@@ -623,7 +639,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   <Link
     href={'/member/saving/cu'}
     className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out  hover:text-[#43ACD6] ${
-      pathname.slice(-2) =='cu' ? 'text-[#43ACD6]':'text-[#4F4F4F]'
+      pathname.slice(-9) =='saving/cu' ? 'text-[#43ACD6]':'text-[#4F4F4F]'
     }`}
   >
     <svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">

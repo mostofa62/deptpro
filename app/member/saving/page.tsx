@@ -12,6 +12,7 @@ import GridActionLink from "@/app/components/grid/GridActionLink";
 import GridPaginationHolder from "@/app/components/grid/GridPaginationHolder";
 import { DataLabel } from "./cu/DataValidationSchema";
 import TotalAllocation from "./TotalAllocation";
+import HolderOne from "@/app/layout/HolderOne";
 
 const per_page_list = PerPageList();
 const per_page = per_page_list[0];
@@ -379,49 +380,16 @@ const Saving = ()=>{
         <DefaultLayout>
             <div className="grid grid-flow-row">
 
-            <div className="mt-[20px] bg-[#43ACD6] text-white rounded-lg border-[#43ACD6]">
-              <div className="flex flex-row h-[70px] py-3 px-10">
-                    <div className="py-[10px] w-[30%]">                    
-                      <p className="text-[25px]  leading-[25px] uppercase  font-medium">
-                        Saving Accounts
-                        </p>
-                    </div>
 
-                    <div className="py-[15px] px-10 w-[20%]">
-                      <p className="text-[16px] leading-[15px]">{showingText}</p>
-                    </div>
-
-                    <div className="px-10 flex justify-end w-[50%]">
-                        <Link
-                            href={'saving/cu'}
-                            className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
-                        >
-                            
-
-                            <p className="text-[18px] font-semibold capitalize">Add Saving</p>
-                        </Link>
-                    </div>
-
-              </div>
-
-            </div>
-            
-            <div className="mt-[40px]">
-                  <div className="flex flex-row h-[45px]">
-                    
-                    
-                    <div>
-                       <GridGlobalSearch 
-                      filterInput={filterInput}
-                      handleFilterChange={handleFilterChange}
-                      applyFilter={applyFilter}
-                      searchButtonText="Search"
-                      placeHolderText="Search here"
-                      />
-                    </div>
-                    
-                </div>
-            </div>
+            <HolderOne
+            title="your savings dashboard"            
+            linkItems={[
+                {
+                link:'saving/cu',
+                title:'add savings'
+                }
+            ]}
+            />
 
 
             <div className="mt-10 p-2 mb-10">
@@ -430,7 +398,16 @@ const Saving = ()=>{
 
             </div>
 
-            <div className="mt-10 p-2">  
+            <div className="mt-10 p-2 flex flex-col gap-5"> 
+                  <div className="py-2">
+                       <GridGlobalSearch 
+                      filterInput={filterInput}
+                      handleFilterChange={handleFilterChange}
+                      applyFilter={applyFilter}
+                      searchButtonText="Search"
+                      placeHolderText="Search here"
+                      />
+                    </div> 
             
       <table className="tanstack-table table-auto w-full text-left">
         <thead>

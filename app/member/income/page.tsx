@@ -12,6 +12,9 @@ import GridActionLink from "@/app/components/grid/GridActionLink";
 import GridPaginationHolder from "@/app/components/grid/GridPaginationHolder";
 import TotalAllocation from "./TotalAllocation";
 import { DataLabel } from "./cu/DataValidationSchema";
+import HolderOne from "@/app/layout/HolderOne";
+import IncomeGrid from "./IncomeGrid";
+import IncomeBoostGrid from "./IncomeBoostGrid";
 
 const per_page_list = PerPageList();
 const per_page = per_page_list[0];
@@ -21,8 +24,8 @@ interface DataRow {
     income_source:string;
     earner:string;    
     income_boost:number;
-    monthly_net_income:number;
-    monthly_gross_income:number;
+    net_income:number;
+    gross_income:number;
     pay_date: string;
     pay_date_boost: string;
     monthly_income_total:number;
@@ -30,10 +33,9 @@ interface DataRow {
     next_boost_date:string;
 }
 interface ExtraPayloadProps{  
-  total_monthly_net_income:number;
-  total_monthly_gross_income:number;
-  total_income_boost:number;
-  total_monthly_income:number;
+  total_net_income:number;
+  total_gross_income:number;
+  
 
 }
 const Income = ()=>{
@@ -42,10 +44,9 @@ const Income = ()=>{
     const authCtx = useAuth();
 
     const [extraPayload, setExtraPayload] = useState<ExtraPayloadProps>({
-      total_monthly_net_income:0,
-      total_monthly_gross_income:0,
-      total_income_boost:0,
-      total_monthly_income:0
+      total_net_income:0,
+      total_gross_income:0,
+      
      });
 
     const [data, setData] = useState<DataRow[]>([]);
@@ -97,10 +98,9 @@ const Income = ()=>{
       setExtraPayload:setExtraPayloadHandler    
       })
 
-      const total_monthly_net_income =  extraPayload.total_monthly_net_income;
-      const total_monthly_gross_income = extraPayload.total_monthly_gross_income;
-      const total_income_boost = extraPayload.total_income_boost;  
-      const total_monthly_income = extraPayload.total_monthly_income;     
+      const total_net_income =  extraPayload.total_net_income;
+      const total_gross_income = extraPayload.total_gross_income;
+       
   
       const columns: ColumnDef<DataRow>[] = useMemo(() => [
       
@@ -152,8 +152,8 @@ const Income = ()=>{
           }, */
 
           {
-            accessorKey: 'monthly_net_income',
-            header: DataLabel.monthly_net_income,
+            accessorKey: 'net_income',
+            header: DataLabel.net_income,
             cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
             /*
             footer: (props) => {
@@ -163,12 +163,12 @@ const Income = ()=>{
               return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
             },
             */
-           footer:(props)=><p><span>$</span><span className="px-2">{total_monthly_net_income.toFixed(2)}</span></p>
+           footer:(props)=><p><span>$</span><span className="px-2">{total_net_income.toFixed(2)}</span></p>
           },
 
           {
-            accessorKey: 'monthly_gross_income',
-            header: DataLabel.monthly_gross_income,
+            accessorKey: 'gross_income',
+            header: DataLabel.gross_income,
             cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
             /*
             footer: (props) => {
@@ -178,7 +178,7 @@ const Income = ()=>{
               return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
             },
             */
-           footer:(props)=><p><span>$</span><span className="px-2">{total_monthly_gross_income.toFixed(2)}</span></p>
+           footer:(props)=><p><span>$</span><span className="px-2">{total_gross_income.toFixed(2)}</span></p>
           },
 
           
@@ -193,48 +193,11 @@ const Income = ()=>{
           },  
          
   
-          {
-            accessorKey: 'income_boost',
-            header: 'Income Boost',
-            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
-            /*
-            footer: (props) => {
-              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
-                return sum + row.original.monthly_payment;
-              }, 0);
-              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
-            },
-            */
-           footer:(props)=><p><span>$</span><span className="px-2">{total_income_boost.toFixed(2)}</span></p>
-          },
-
-          {
-            accessorKey: 'income_boost_source',
-            header: 'Income Boost Source',
-            
-          },
-
-          {
-            accessorKey: 'repeat_boost.label',
-            header: 'Repeat ( Boost)',
-          },  
+          
+          
 
           
-          /*
-          {
-            accessorKey: 'monthly_income_total',
-            header: 'Monthly Income Total',
-            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
-            /*
-            footer: (props) => {
-              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
-                return sum + row.original.monthly_payment;
-              }, 0);
-              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
-            },
-            *//*
-           footer:(props)=><p><span>$</span><span className="px-2">{total_monthly_income.toFixed(2)}</span></p>
-          },*/
+         
 
           {
             accessorKey: 'total_gross_income',
@@ -266,7 +229,7 @@ const Income = ()=>{
           },
           */
       
-          ], [/*hoveredRowId*/,total_monthly_net_income, total_monthly_gross_income, total_income_boost]);
+          ], [/*hoveredRowId*/,total_net_income, total_gross_income]);
       
           const table = useReactTable({
               data,
@@ -404,170 +367,41 @@ const Income = ()=>{
         
         <DefaultLayout>
             <div className="grid grid-flow-row">
+           
+            <HolderOne
+            title="your income dashboard"            
+            linkItems={[
+              {
+                link:'income/cu',
+                title:'add income'
+              },
 
-            <div className="mt-[20px] bg-[#43ACD6] text-white rounded-lg border-[#43ACD6]">
-              <div className="flex flex-row h-[70px] py-3 px-10">
-                    <div className="py-[10px] w-[30%]">                    
-                      <p className="text-[25px]  leading-[25px] uppercase  font-medium">
-                        Income Accounts
-                        </p>
-                    </div>
-
-                    <div className="py-[15px] px-10 w-[20%]">
-                      <p className="text-[16px] leading-[15px]">{showingText}</p>
-                    </div>
-
-                    <div className="px-10 flex justify-end w-[50%]">
-                        <Link
-                            href={'income/cu'}
-                            className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
-                        >
-                            
-
-                            <p className="text-[18px] font-semibold capitalize">Add Income</p>
-                        </Link>
-                    </div>
-
-              </div>
-
-            </div>
+              {
+                link:'income/bst/cu',
+                title:'add income boost'
+              }
+            ]}
+            />
             
-            <div className="mt-[40px]">
-                  <div className="flex flex-row h-[45px]">
-                    
-                    
-                    <div>
-                       <GridGlobalSearch 
-                      filterInput={filterInput}
-                      handleFilterChange={handleFilterChange}
-                      applyFilter={applyFilter}
-                      searchButtonText="Search"
-                      placeHolderText="Search here"
-                      />
-                    </div>
-                    
-                </div>
-            </div>
+            
 
 
-            <div className="mt-10 p-2 mb-10">
+            <div className="mt-5 p-2 mb-5">
 
               <TotalAllocation />
 
             </div>
 
-            <div className="mt-10 p-2">  
-            
-      <table className="tanstack-table table-auto w-full text-left">
-        <thead>
-          {table.getHeaderGroups().map(headerGroup => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
-                <th className={`font-medium
-                  ${header.column.getCanSort()
-                    ? 'cursor-pointer select-none'
-                    : ''}`
-                } key={header.id} onClick={header.column.getToggleSortingHandler()}>
-                  {flexRender(header.column.columnDef.header, header.getContext())}
-                  {{
-                          asc: ' 🔼',
-                          desc: ' 🔽',
-                        }[header.column.getIsSorted() as string] ?? null}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-       
-                <tbody>
-                {error &&
-                <>
-                <tr className="col-span-full row-span-full">
-                  <td className="text-center w-full p-2 font-normal">
-                    <span>{error}</span>
-                  </td>
-                </tr>
-                </>
-                }  
-                {loading ?  
-                <>
-                <tr className="col-span-full row-span-full">
-                  <td className="text-center w-full p-2 font-normal">
-                    <span>... Loading ...</span>
-                  </td>
-                </tr>
-                </>
-                :
-                <>   
-                 {tableRows.map((row:any) => (
-                                      
-                    
-                    <tr 
-                    ref={el => (rowRefs.current[row.original._id] = el)}
-                    onMouseEnter={() => handleMouseEnter(row.original._id)}
-                    onMouseLeave={handleMouseLeave}   
-                    key={row.id} className="border-t">
-                    {row.getVisibleCells().map((cell:any) => (
-                        <td className="font-normal" key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
-                    ))}
-
-{
-                    hoveredRowId == row.original._id &&
-                    <div className=" absolute">
-                     <GridActionLink
-            hoveredRowHeight={hoveredRowHeight} // Adjust or compute dynamically as needed
-            items={row.items}
-          />
-
-                    </div>
-                   
-                    }
-                                    
-                    </tr>
-
-                      
-                    
-                    
-                ))}
-                </> 
-                }
-                </tbody>
-
-                <tfoot>
-                  {table.getFooterGroups().map(footerGroup => (
-                    <tr key={footerGroup.id}>
-                      {footerGroup.headers.map(header => (
-                        <td key={header.id}>
-                          {flexRender(header.column.columnDef.footer, header.getContext())}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tfoot>
-                
-        
-      </table>
-      
+            <div className="mt-3 p-2 border-[#E6E6E6] shadow-2">
+              <IncomeGrid />
             </div>
 
-            {
-        !loading 
-        && 
-        !error 
-        &&
-        data.length > 0
-        &&
-        <div className="mt-[100px]">
-      <GridPaginationHolder 
-      table={table}
-      pageNumbers={pageNumbers}
-      handlePageChange={handlePageChange}
-      per_page_list={per_page_list}
-      />
-      </div>
 
-}
+            <div className="mt-5 p-2 border-[#E6E6E6] shadow-2">
+              <IncomeBoostGrid />
+            </div>
 
+            
 
             </div>
         </DefaultLayout>

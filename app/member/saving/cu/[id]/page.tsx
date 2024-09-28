@@ -18,6 +18,7 @@ import useFetchDropDownData from "@/app/hooks/useFetchDropDownData";
 import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import FormikCheckInput from "@/app/components/form/FormikCheckInput";
+import HolderOne from "@/app/layout/HolderOne";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -117,33 +118,24 @@ export default function InsuranceCreate({
         <div className="grid grid-flow-row">
 
 
-        <div className="mt-[20px] bg-[#43ACD6] text-white rounded-lg border-[#43ACD6]">
-              <div className="flex flex-row h-[70px] py-3 px-10">
-                    <div className="py-[10px] w-[40%]">                    
-                      <p className="text-[25px]  leading-[25px] uppercase  font-medium">
-                        ADD SAVING
-                      </p>
-                    </div>
 
-                    
-
-                    <div className="px-10 flex justify-end w-[60%]">
-                        <div>
-                        <Link
-                            href={'/member/saving'}
-                            className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
-                        >                            
-
-                            <p className="text-[20px] font-semibold capitalize">Saving Accounts</p>
-                        </Link>
-                        </div>
-                    </div>
-
-              </div>
-
-            </div>
-
-            
+        <HolderOne
+            title="update saving"            
+            linkItems={[
+                {
+                    link:'/member/saving/cu',
+                    title:'add savings'
+                },
+                {
+                link:'/member/saving',
+                title:'your savings dashboard'
+                },
+                {
+                    link:`/member/saving/${id}`,
+                    title:'saving  details'
+                }
+            ]}
+            />
 
             
 

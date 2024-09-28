@@ -9,6 +9,7 @@ import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 
 import BasicCalendar from "@/app/components/BasicCalender";
 import { DataLabelView } from "../cu/DataValidationSchema";
+import HolderOne from "@/app/layout/HolderOne";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -60,6 +61,25 @@ export default function SavingDetail({
         <DefaultLayout>
 
             <div className="grid grid-flow-row">
+
+
+            <HolderOne
+            title="saving details"            
+            linkItems={[
+                {
+                    link:'/member/saving/cu',
+                    title:'add savings'
+                },
+                {
+                link:'/member/saving',
+                title:'your savings dashboard'
+                },
+                {
+                link:`/member/saving/cu/${id}`,
+                title:'update savings'
+                }
+            ]}
+            />
 
 
             <div className="mt-[20px] bg-[#43ACD6] text-white rounded-lg border-[#43ACD6]">

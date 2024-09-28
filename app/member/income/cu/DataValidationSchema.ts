@@ -5,8 +5,8 @@ export const DataSchema = {
     income_source:{'label':'','value':''},
     earner:'',
     
-    monthly_gross_income:0,
-    monthly_net_income:0,
+    gross_income:0,
+    net_income:0,
    
     pay_date:moment().format('YYYY-MM-DD'),
     
@@ -14,15 +14,9 @@ export const DataSchema = {
     repeat:{'label':'None','value':0},
 
 
-    income_boost:0,
-
-    income_boost_source:{'label':'','value':''},
-
-    pay_date_boost:moment().format('YYYY-MM-DD'),
-
-    repeat_boost:{'label':'None','value':0},
-
-    note:''
+    note:'',
+    total_net_income:0,
+    total_gross_income:0
       
 
 };
@@ -32,21 +26,14 @@ export const DataLabel = {
   income_source:'Income Source',
   earner:'Earner',
   
-  monthly_gross_income:'Gross Income',
-  monthly_net_income:'Net Income',   
+  gross_income:'Gross Income',
+  net_income:'Net Income',   
   
   pay_date:'Pay Day',
  
   repeat:'Repeat Frequency',
 
-  income_boost:'Income Boost',
-
-  income_boost_source:'Income Boost Source',
-
-
-  pay_date_boost:'Pay Day',
- 
-  repeat_boost:'Repeat Frequency',
+  
 
   note:'Note',
 
@@ -63,22 +50,14 @@ export const DataLabelView = {
   income_source:'Income Source',
   earner:'Earner',
   
-  monthly_gross_income:'Gross Income',
-  monthly_net_income:'Net Income',   
+  gross_income:'Gross Income',
+  net_income:'Net Income',   
   
   pay_date_word:'Pay Day',
  
   repeat:'Repeat Frequency',
 
-  income_boost:'Income Boost',
-
-  income_boost_source:'Income Boost Source',
-
-
-  pay_date_boost_word:'Pay Day Boost',
- 
-  repeat_boost:'Repeat Frequency ( Boost)',
-
+  
   note:'Note',
 
   total_gross_income:'Total Monthly Gross Income',
@@ -106,11 +85,11 @@ export const ValidationSchema =  object().shape({
 
              
 
-              monthly_gross_income: number().min(0,`${DataLabel.monthly_gross_income} least 0`)              
-              .required(`${DataLabel.monthly_gross_income} is required`),
+              gross_income: number().min(0,`${DataLabel.gross_income} least 0`)              
+              .required(`${DataLabel.gross_income} is required`),
 
-              monthly_net_income: number().min(0,`${DataLabel.monthly_net_income} least 0`)              
-              .required(`${DataLabel.monthly_net_income} is required`),
+              net_income: number().min(0,`${DataLabel.net_income} least 0`)              
+              .required(`${DataLabel.net_income} is required`),
              
              
 

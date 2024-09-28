@@ -37,18 +37,17 @@ export default function IncomeDetail({
     }
 
     const IncomeWithTransactionData:any = useFetchDropDownObjects({
-        urlSuffix:`income-all/${id}`,
+        urlSuffix:`income-boost-all/${id}`,
         payLoads:payload
     })
 
-    const description = ()=>(
+   
+
+      const description_boost = ()=>(
         <div className="flex flex-col gap-1 text-[15px]">
-          <div><span>NEXT PAY DATE</span><span className="ml-4">{IncomeWithTransactionData.income.pay_date}</span></div>          
+          <div><span>NEXT BOOST DATE</span><span className="ml-4">{IncomeWithTransactionData.income.pay_date_boost}</span></div>          
         </div>
       )
-
-
-     
 
     const datalabel:any = DataLabelView;
 
@@ -60,7 +59,7 @@ export default function IncomeDetail({
 
 
             <HolderOne
-            title="income details"            
+            title="income boost details"            
             linkItems={[
               {
                 link:'/member/income',
@@ -71,8 +70,8 @@ export default function IncomeDetail({
                 title:'add income'
               },
               {
-                link:`/member/income/cu/${id}`,
-                title:'update income'
+                link:`/member/income/bst/cu/${id}`,
+                title:'update income boost'
               },
             ]}
             />
@@ -84,15 +83,17 @@ export default function IncomeDetail({
             <div className="mt-[32px] bg-[#fafafa] rounded-lg flex p-5">
 
                 <div className="w-[35%] h-[30%] flex flex-col">
-                    <div className="p-1">  
-                    <BasicCalendar 
-                    extraDayData={{[`${IncomeWithTransactionData.income.pay_date
-                    }`]:{'title':`Pay date`,'description':description()}}} 
-                    currentMonth={IncomeWithTransactionData.income.pay_date
-                    }
-                    />
-                    </div>
                     
+                    {IncomeWithTransactionData.income.pay_date_boost!=null &&
+                        <div className="p-1">
+                        <BasicCalendar 
+                        extraDayData={{[`${IncomeWithTransactionData.income.pay_date_boost
+                        }`]:{'title':`Pay date Boost`,'description':description_boost()}}} 
+                        currentMonth={IncomeWithTransactionData.income.pay_date_boost
+                        }
+                        />
+                        </div>
+                    }
                 </div>
             
 

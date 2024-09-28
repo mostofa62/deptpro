@@ -11,6 +11,7 @@ import BasicCalendar from "@/app/components/BasicCalender";
 import { DataLabelUpdate, DataLabelView } from "../cu/DataValidationSchema";
 import DebtAmortization from "../cu/[id]/DebtAmortization";
 import DebtTransactions from "../cu/[id]/DebtTransactions";
+import HolderOne from "@/app/layout/HolderOne";
 
 
 
@@ -68,69 +69,26 @@ export default function InsuranceCreate({
         <DefaultLayout>
         <div className="grid grid-flow-row">
 
-        
-        <div className="mt-[20px] bg-[#43ACD6] text-white rounded-lg border-[#43ACD6]">
-              <div className="flex flex-row h-[70px] py-3 px-10">
-                    <div className="py-[10px] w-[20%]">                    
-                      <p className="text-[25px]  leading-[25px] uppercase  font-medium">
-                      DEBTS DETAILS
-                        </p>
-                    </div>
 
-                    
+        <HolderOne
+            title="debt details"            
+            linkItems={[
+              {
+                link:'/member/debts/cu',
+                title:'add debt'
+              },
+              {
+                link:'/member/debts',
+                title:'your debt dashboard'
+              },
+              {
+                link:`/member/debts/cu/${id}`,
+                title:'update debt'
+              }
+            ]}
+            />
 
-                    <div className="flex justify-end items-end w-[80%]">
-
-                      <div>
-                        <Link
-                            href={'/member/debts'}
-                            className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
-                        >                            
-
-                            <p className="text-[20px] font-semibold uppercase">DEBTS accounts</p>
-                        </Link>
-                      </div>
-                        <div>
-                        <Link
-                            href={'/member/debts/cu'}
-                            className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
-                        >
-                            
-
-                            <p className="text-[18px] font-semibold uppercase">Add Debt</p>
-                        </Link>
-                        </div>
-
-                        <div>
-                        <Link
-                            href={'/member/debts/settings'}
-                            className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
-                        >
-                            
-
-                            <p className="text-[18px] font-semibold uppercase">Debt settings</p>
-                        </Link>
-                        </div>
-
-                        <div>
-                        <Link
-                            href={`/member/debts/cu/${id}`}
-                            className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
-                        >
-                            
-
-                            <p className="text-[18px] font-semibold uppercase">Update</p>
-                        </Link>
-                        </div>
-                        
-                    </div>
-
-              </div>
-
-            </div>
-
-
-
+ 
             <div className="mt-[32px]">
             
 
