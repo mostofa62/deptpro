@@ -51,11 +51,17 @@ const HeaderSummary = ()=>{
       const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
       const [maxHeight, setMaxHeight] = useState<number>(0);
 
+      const childRefs = useRef<(HTMLDivElement | null)[]>([]);
+      const [maxChildHeight, setMaxChildHeight] = useState<number>(0);
+
       useEffect(() => {
         // Calculate the height of the tallest element after component renders
         const heights = itemRefs.current.map(item => item?.getBoundingClientRect().height || 0);
         const tallestHeight = Math.max(...heights);
         setMaxHeight(tallestHeight);
+        const childHeights = childRefs.current.map(child => child?.getBoundingClientRect().height || 0);
+        const tallestChildHeight = Math.max(...childHeights);
+        setMaxChildHeight(tallestChildHeight);
       }, []); // Empty dependency array ensures it runs once after mount
 
 
@@ -70,7 +76,7 @@ const HeaderSummary = ()=>{
                 <div key={index} className="flex-1" >
                     <CardHolderTiny>
                         <div ref={el => (itemRefs.current[index] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }} className="flex flex-col justify-center items-center gap-2">
-                            <div className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
+                            <div ref={(el) => (childRefs.current[index] = el)} style={{ height: maxChildHeight ? `${maxChildHeight}px` : 'auto' }} className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
                                 <p className="font-semibold capitalize md:text-sm lg:text-sm">
                                 {transactioDataLabel[data as keyof typeof transactioDataLabel].label}
                                 </p>
