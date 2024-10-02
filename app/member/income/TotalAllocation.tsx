@@ -232,8 +232,9 @@ const TotalAllocation = () => {
         const tallestHeight = Math.max(...heights);
         if (lineData.length > 0 && tallestHeight < 350){
           setMaxHeight(350)
-        } 
-        setMaxHeight(tallestHeight);
+        }else{ 
+          setMaxHeight(tallestHeight);
+        }
       }
       
     }, [data, barData, lineData]); // Empty dependency array ensures it runs once after mount
