@@ -62,15 +62,18 @@ const CustomTooltip = ({ active, payload, label, total_count, total_balance }:an
 interface PayLoads{
     income_source_type_counts:{_id:string,count:number,label:string, balance:number}[],
     total_income_source_type:number,
-    total_balance:number,
-    bill_type_ammortization:any[],
-    income_source_type_names:{[key:string]:string},
-    year_month_wise_counts:{total_balance:number,year_month:string, year_month_word:string}[],
-    year_month_wise_balance:number
-    
-    
+    total_balance:number,    
+    income_source_type_names:{[key:string]:string}     
 }
 
+
+interface IncomePayload{
+  year_month_wise_counts:{total_balance_net:number,total_balance_gross:number, year_month_word:string}[],
+}
+
+interface FuturePayLoad{
+  projection_list:{base_gross_income:number, base_net_income:number, month:string, month_word:string}[]
+}
 
 const TotalAllocation = () => {
 
@@ -89,14 +92,19 @@ const TotalAllocation = () => {
     const payload: PayLoads ={
         income_source_type_counts:[],
         total_income_source_type:0,
-        total_balance:0,
-        bill_type_ammortization:[],
-        income_source_type_names:{},
-        year_month_wise_counts:[],
-        year_month_wise_balance:0,
+        total_balance:0,        
+        income_source_type_names:{},        
         
     }
+
+    const payloadIncome :IncomePayload = {
+      year_month_wise_counts:[]
+    }
     
+
+    const payloadFuture:FuturePayLoad={
+      projection_list:[]
+    }
 
 
     const IncomeTypewiseInfo:any = useFetchDropDownObjects({
@@ -104,19 +112,29 @@ const TotalAllocation = () => {
         payLoads:payload
     })
 
-    const total_count = IncomeTypewiseInfo.total_income_source_type
+    const IncomeTransaction:any = useFetchDropDownObjects({
+      urlSuffix:`income-transactions-previous`,
+      payLoads:payloadIncome
+    })
+
+    const IncomeFuture:any = useFetchDropDownObjects({
+      urlSuffix:`income-transactions-next`,
+      payLoads:payloadFuture
+    })
+
+    
 
     const total_balance = IncomeTypewiseInfo.total_balance;
 
     const data = IncomeTypewiseInfo.income_source_type_counts;
 
-    const chartData = IncomeTypewiseInfo.income_source_type_counts;
+    
 
-    const bill_type_names = IncomeTypewiseInfo.income_source_type_names;
+    const barData = IncomeTransaction.year_month_wise_counts;
 
-    const barData = IncomeTypewiseInfo.year_month_wise_counts;
+    const lineData = IncomeFuture.projection_list;
 
-    const year_month_wise_tbalance = IncomeTypewiseInfo.year_month_wise_balance;
+    
 
 
     // Create a mapping from bill_type_id to bill_type_name
@@ -217,7 +235,7 @@ const TotalAllocation = () => {
             fontSize: '16px',
             minWidth:'100px'                    
           }}>          
-            <p style={{ margin: 0 }}>$ {Intl.NumberFormat('en-US').format(data.total_balance)} in <span>{data.year_month_word}</span></p>
+            <p style={{ margin: 0 }}>$ {Intl.NumberFormat('en-US').format(data.total_balance_net)} in <span>{data.year_month_word}</span></p>
           </div>
         );
       }
@@ -319,9 +337,9 @@ const TotalAllocation = () => {
 
 
 {barData.length > 0 &&
-                <div className="w-full flex justify-center items-center py-9">
+                <div className="w-full flex justify-center items-center py-5">
                     
-                                <ResponsiveContainer width="20%" height={150}>
+                                <ResponsiveContainer width="25%" height={200}>
                                         <BarChart                                            
                                             data={barData}
                                             margin={{
@@ -331,13 +349,13 @@ const TotalAllocation = () => {
                                             bottom: 0,
                                             }}
                                             
-                                            barCategoryGap={10}
+                                            barCategoryGap={15}
                                             
                                         >
 
                                         
-                                        <XAxis   dataKey="total_balance" tickLine={false} axisLine={false} tick={false} />
-                                        <Bar   dataKey="total_balance" fill="#22bf6a"  barSize={20} shape={<CustomBar />} />
+                                        <XAxis   dataKey="total_balance_net" tickLine={false} axisLine={false} tick={false} />
+                                        <Bar   dataKey="total_balance_net" fill="#22bf6a"  barSize={20} shape={<CustomBar />} />
                                         <Tooltip content={<CustomTooltipBar />} cursor={{fill: 'transparent'}}/>
                                         
                                         </BarChart>
@@ -353,14 +371,14 @@ const TotalAllocation = () => {
         </div>
 
         <div className="w-[40%]">
-        {barData.length > 0 && 
+        {lineData.length > 0 && 
 
           <div className="w-full overflow-x-auto">
-            <div className={`w-[${barData.length * 100}px]`}> {/* Dynamically adjust width */}
+            <div className={`w-[${lineData.length * 100}px]`}> {/* Dynamically adjust width */}
               <ResponsiveContainer width="100%" height={350}>
-              <LineChart data={barData}>
+              <LineChart data={lineData}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="year_month_word" tick={{ fontSize:12 }} />
+              <XAxis dataKey="month_word" tick={{ fontSize:12 }} />
               <YAxis tick={{ fontSize:12 }} />
               {/* <Tooltip content={<CustomTooltipLine />} /> */}
               <Tooltip content={<CustomTooltipLine />} />
@@ -369,9 +387,25 @@ const TotalAllocation = () => {
                                  
               />
 
+              {lineData.map((d:any, index:number)=>{
+                
+                const key  = d.id;
+                return(
+                  <Line
+                  key={key}
+                  type="monotone"
+                  dataKey={'base_gross_income'}
+                  dot={false}
+                  
+                  stroke={getColorForDebtType(key)} // Ensure this function is defined elsewhere
+                  activeDot={{ r: 5 }}
+                />
+                )
+              })}
+
               {/* Render Line components for each unique dataKey (e.g., BB, TEACHER_FEE, etc.) */}
-              {Object.keys(barData[0]).
-              filter(key => key !== 'year_month_word' && key !== 'year_month').map((key, index) => (
+              {/* {Object.keys(barData[0]).
+              filter(key => key !== 'month_word' && key !== 'month' && key!='base_net_income').map((key, index) => (
                 <Line
                   key={key}
                   type="monotone"
@@ -381,7 +415,7 @@ const TotalAllocation = () => {
                   stroke={getColorForDebtType(key)} // Ensure this function is defined elsewhere
                   activeDot={{ r: 5 }}
                 />
-              ))}
+              ))} */}
             </LineChart>
           </ResponsiveContainer>
 

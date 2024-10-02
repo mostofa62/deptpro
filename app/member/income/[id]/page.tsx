@@ -10,6 +10,7 @@ import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import BasicCalendar from "@/app/components/BasicCalender";
 import { DataLabelView } from "../cu/DataValidationSchema";
 import HolderOne from "@/app/layout/HolderOne";
+import IncomeTransactions from "./IncomeTransactions";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -43,7 +44,14 @@ export default function IncomeDetail({
 
     const description = ()=>(
         <div className="flex flex-col gap-1 text-[15px]">
-          <div><span>NEXT PAY DATE</span><span className="ml-4">{IncomeWithTransactionData.income.pay_date}</span></div>          
+          <div className="mt-2"><span>{IncomeWithTransactionData.income.pay_date_word}</span></div>          
+        </div>
+      )
+
+
+      const descriptionNext = ()=>(
+        <div className="flex flex-col gap-1 text-[15px]">
+          <div className="mt-2"><span>{IncomeWithTransactionData.income.next_pay_date_word}</span></div>          
         </div>
       )
 
@@ -92,6 +100,16 @@ export default function IncomeDetail({
                     }
                     />
                     </div>
+
+
+                    <div className="p-1">  
+                    <BasicCalendar 
+                    extraDayData={{[`${IncomeWithTransactionData.income.next_pay_date
+                    }`]:{'title':`Next Pay date`,'description':descriptionNext()}}} 
+                    currentMonth={IncomeWithTransactionData.income.next_pay_date
+                    }
+                    />
+                    </div>
                     
                 </div>
             
@@ -105,7 +123,7 @@ export default function IncomeDetail({
                             <strong>{datalabel[key]}</strong>
                             <p className="mt-1">
                             {/*DebtWithTransactionData.debtAccount[key] !== undefined ? DebtWithTransactionData.debtAccount[key].toString() : '-'*/}
-                            {key in IncomeWithTransactionData.income ? IncomeWithTransactionData.income[key]?.toString() : '-'}
+                            {key in IncomeWithTransactionData.income ? typeof IncomeWithTransactionData.income[key] == 'number'? IncomeWithTransactionData.income[key]?.toFixed(2) :IncomeWithTransactionData.income[key]?.toString() : '-'}
                             </p>
                         </div>
                         ))}
@@ -114,6 +132,12 @@ export default function IncomeDetail({
 
                 </div>
 
+                
+
+            </div>
+
+            <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
+              <IncomeTransactions income_id={id}  />
             </div>
 
             
