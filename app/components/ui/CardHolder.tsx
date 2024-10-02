@@ -4,15 +4,16 @@ import './CardHolder.css';
 interface CardHolderType{
 
   title:string; 
-  children: ReactNode; 
+  children: ReactNode;
+  maxHeight?:number; 
 }
 
-const CardHolder = ({title, children}:CardHolderType)=>{
+const CardHolder = ({title, children, maxHeight}:CardHolderType)=>{
 
 
 return(    
-<div className="card-holder flex-grow">
-  <div className="header">{title}</div>
+<div className="card-holder flex-grow" style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
+  <div className="header capitalize">{title}</div>
   <div className="body h-full">
     {children}
   </div>

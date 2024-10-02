@@ -2,7 +2,7 @@ import CardHolder from "@/app/components/ui/CardHolder";
 import DataProgress from "@/app/components/ui/DataProgress";
 import { getColorForValue, hashString, hslToHex } from "@/app/components/utils/Util";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Line, BarChart, Bar } from "recharts";
 
 // const data = [
@@ -77,6 +77,8 @@ interface FuturePayLoad{
 
 const TotalAllocation = () => {
 
+    
+
     const [highlightedKey, setHighlightedKey] = useState(null);
 
     const handleLegendMouseEnter = (key:any, event:any) => {
@@ -128,59 +130,11 @@ const TotalAllocation = () => {
 
     const data = IncomeTypewiseInfo.income_source_type_counts;
 
-    
-
     const barData = IncomeTransaction.year_month_wise_counts;
 
     const lineData = IncomeFuture.projection_list;
 
-    
 
-
-    // Create a mapping from bill_type_id to bill_type_name
-    /*
-    const billTypeNameMap = chartData.reduce((acc:any, data:any) => {
-      data.bill_names.forEach((d:any) => {
-        const [id, name] = Object.entries(d)[0];
-        acc[id] = name;
-      });
-      return acc;
-    }, {});
-    */
-
-    // Tooltip formatter function
-    /* const CustomTooltipLine = ({ payload,label }:any) => {
-      if (!payload || payload.length === 0) return null;
-      return (
-        <div className="bg-white border p-2 rounded shadow-lg text-sm">
-          <div><strong>Month:</strong> {label}</div>
-          {payload.map((entry:any, index:number) => (
-            <div key={`item-${index}`} style={{ color: entry.stroke }}>
-              <strong>{bill_type_names[entry.dataKey]}:</strong> $ {entry.value.toFixed(2)}
-            </div>
-          ))}
-        </div>
-      );
-    }; */
-
-    // Legend formatter function
-    /* const CustomLegendLine = ({ payload }:any) => {
-      return (
-        <div className="flex gap-4 justify-center items-center text-sm">
-          {payload.map((entry:any, index:number) => (
-            <span onMouseEnter={(event)=>handleLegendMouseEnter(entry.value,event)} onMouseLeave={handleLegendMouseLeave} className="font-semibold" key={`legend-item-${index}`} style={{ color: entry.color }}>
-              {bill_type_names[entry.value]}
-            </span>
-          ))}
-        </div>
-      );
-    }; */
-
-    
-
-    // Get min and max values
-    //const minValue = Math.min(...data.map((d:any) => d.count));
-    //const maxValue = Math.max(...data.map((d:any) => d.count));
     const maxProgressLength = Math.max(...data.map((d: any) => d.count.toString().length > 4?d.count.toString().length:4 ));
     const maxAmountLength = Math.max(...data.map((d: any) => d.balance.toString().length > 4?d.balance.toString().length:4 ));
     //console.log(minValue, maxValue, maxProgressLength)
@@ -188,17 +142,12 @@ const TotalAllocation = () => {
     const getColorForDebtType = (key:string)=>{
       const hue = Math.abs(hashString(key)) % 360;
       return hslToHex(hue, 70, 50);
-      // const name:string = billTypeNameMap[key];
       
-
-      // const color:string =  getColorForValue(name.length*20+key.length, 300, 1000, 1)
-      // console.log(color)
-      // return color;
     }
 
     const dataLabel = {
-      total_balance:'Net Earnings',
-      total_balance_gross:'Annual Gross Earnings'
+      base_net_income:'Net Earnings',
+      base_gross_income:'Gross Earnings'
     }
     
     
@@ -248,6 +197,7 @@ const TotalAllocation = () => {
       return (
         <div className="bg-white border p-2 rounded shadow-lg text-sm">
           <div><strong>Month:</strong> {label}</div>
+          
           {payload.map((entry:any, index:number) => (
             <div key={`item-${index}`} style={{ color: entry.stroke }}>
               <strong>{dataLabel[entry.dataKey as keyof typeof dataLabel]}:</strong> $ {entry.value.toFixed(2)}
@@ -269,37 +219,30 @@ const TotalAllocation = () => {
         </div>
       );
     };
-    return (
-    <div className="flex flex-row min-h-75">
-        <div className="w-[35%]">
-        <CardHolder title="Total Allocation">
-            <div className="flex flex-row">
-                {/* {JSON.stringify(data)} */}
-                {/* <div className="w-[45%]">
-                    <PieChart width={250} height={250}>
-                        <Pie
-                        data={data}
-                        cx={`40%`}
-                        cy={`50%`}
-                        innerRadius={0}
-                        outerRadius={100}
-                        fill="#8884d8"
-                        paddingAngle={0}
-                        dataKey="balance"
-                        label={(props) => renderCustomizedLabel({ ...props, total_count, total_balance })}
-                        labelLine={false}
-                        >
-                        {data.map((entry:any, index:number) => (
-                            
-                            <Cell key={`cell-${index}`} fill={getColorForDebtType(entry._id)} />
-                        ))}
-                        </Pie>
-                        <Tooltip content={<CustomTooltip total_count={total_count} total_balance={total_balance}/>} />
-                        {/*<Legend /> */}
-                    {/* </PieChart>
-                </div>  */}
 
-                <div className="w-full">
+
+    const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const [maxHeight, setMaxHeight] = useState<number>(0);
+
+    useEffect(() => {
+      // Calculate the height of the tallest element after component renders
+      const total_length:number = data.length + barData.length + lineData.length;
+      if(total_length > 0){
+        const heights = itemRefs.current.map(item => item?.getBoundingClientRect().height || 0);
+        const tallestHeight = Math.max(...heights);
+        if (lineData.length > 0 && tallestHeight < 350){
+          setMaxHeight(350)
+        } 
+        setMaxHeight(tallestHeight);
+      }
+      
+    }, [data, barData, lineData]); // Empty dependency array ensures it runs once after mount
+
+    return (
+    <div className="flex flex-row gap-1">
+        <div className="w-[35%]" ref={el => (itemRefs.current[0] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
+        <CardHolder title="Total Allocation" maxHeight={maxHeight}>
+           
                     <div className="ml-[5px]">
                     {                         
                         data.map((dp:any,i:number)=>{
@@ -323,59 +266,60 @@ const TotalAllocation = () => {
 
                     }
                     </div>
-                </div>
-            </div>
+                
         </CardHolder>
         </div>
-        <div className="w-[25%]">
-
-        {/* {chartData.map((damort:any, index:number)=>{
-          const keys = Object.keys(damort);
-          return <p key={index}>{keys[1]} </p>
-
-        })} */}
-
+        <div className="w-[25%]" ref={el => (itemRefs.current[1] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
 
 {barData.length > 0 &&
-                <div className="w-full flex justify-center items-center py-5">
-                    
-                                <ResponsiveContainer width="25%" height={200}>
-                                        <BarChart                                            
-                                            data={barData}
-                                            margin={{
-                                            top: 0,
-                                            right: 0,
-                                            left: 0,
-                                            bottom: 0,
-                                            }}
-                                            
-                                            barCategoryGap={15}
-                                            
-                                        >
+  <CardHolder title={`12 months history`} maxHeight={maxHeight}>
+                <div className="flex flex-col justify-center items-center py-2">
 
-                                        
-                                        <XAxis   dataKey="total_balance_net" tickLine={false} axisLine={false} tick={false} />
-                                        <Bar   dataKey="total_balance_net" fill="#22bf6a"  barSize={20} shape={<CustomBar />} />
-                                        <Tooltip content={<CustomTooltipBar />} cursor={{fill: 'transparent'}}/>
-                                        
-                                        </BarChart>
+                <ResponsiveContainer width={'35%'} height={200}>
+                  <BarChart                                            
+                      data={barData}
+                      margin={{
+                      top: 0,
+                      right: 0,
+                      left: 0,
+                      bottom: 0,
+                      }}
+                      
+                      barCategoryGap={15}
+                      
+                  >
 
-                                        </ResponsiveContainer>
+
+                  <XAxis   dataKey="total_balance_net" tickLine={false} axisLine={false} tick={false} />
+                  <Bar   dataKey="total_balance_net" fill="#22bf6a"  barSize={20} shape={<CustomBar />} />
+                  <Tooltip content={<CustomTooltipBar />} cursor={{fill: 'transparent'}}/>
+
+                  </BarChart>
+
+                </ResponsiveContainer>
+                  
+
+                <div>
+                  <p className={`text-[13px] font-semibold text-[${getColorForDebtType(dataLabel.base_net_income)}]`}>
+                    {dataLabel.base_net_income}
+                  </p>
                 </div>
+                  
+                    
+
+                      
+                </div>
+                </CardHolder>
             }
 
-
-
-    
-            
         </div>
 
-        <div className="w-[40%]">
+        <div className="w-[40%]" ref={el => (itemRefs.current[2] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
         {lineData.length > 0 && 
-
+          <CardHolder title="12 Months Projection" maxHeight={maxHeight}>
           <div className="w-full overflow-x-auto">
             <div className={`w-[${lineData.length * 100}px]`}> {/* Dynamically adjust width */}
-              <ResponsiveContainer width="100%" height={350}>
+              <ResponsiveContainer width="100%" height={maxHeight >= 350 ? maxHeight - 80:maxHeight}>
               <LineChart data={lineData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month_word" tick={{ fontSize:12 }} />
@@ -387,25 +331,11 @@ const TotalAllocation = () => {
                                  
               />
 
-              {lineData.map((d:any, index:number)=>{
-                
-                const key  = d.id;
-                return(
-                  <Line
-                  key={key}
-                  type="monotone"
-                  dataKey={'base_gross_income'}
-                  dot={false}
-                  
-                  stroke={getColorForDebtType(key)} // Ensure this function is defined elsewhere
-                  activeDot={{ r: 5 }}
-                />
-                )
-              })}
+             
 
               {/* Render Line components for each unique dataKey (e.g., BB, TEACHER_FEE, etc.) */}
-              {/* {Object.keys(barData[0]).
-              filter(key => key !== 'month_word' && key !== 'month' && key!='base_net_income').map((key, index) => (
+              { Object.keys(lineData[0]).
+              filter(key => key !== 'month_word' && key !== 'month').map((key, index) => (
                 <Line
                   key={key}
                   type="monotone"
@@ -415,12 +345,13 @@ const TotalAllocation = () => {
                   stroke={getColorForDebtType(key)} // Ensure this function is defined elsewhere
                   activeDot={{ r: 5 }}
                 />
-              ))} */}
+              ))} 
             </LineChart>
           </ResponsiveContainer>
 
           </div>
         </div>
+        </CardHolder>
 
         }
         </div>            
