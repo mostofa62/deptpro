@@ -243,6 +243,7 @@ const TotalAllocation = () => {
     return (
     <div className="flex flex-row gap-2.5">
         <div className="w-[35%]" ref={el => (itemRefs.current[0] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
+        {data.length > 0 &&
         <CardHolder title="Total Allocation" maxHeight={maxHeight}>
            
                     <div className="ml-[5px]">
@@ -270,6 +271,7 @@ const TotalAllocation = () => {
                     </div>
                 
         </CardHolder>
+        }
         </div>
         <div className="w-[25%]" ref={el => (itemRefs.current[1] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
 

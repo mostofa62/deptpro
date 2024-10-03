@@ -212,7 +212,9 @@ export default function InsuranceCreate({
         
 
     <FormikFieldInput 
-        type="date"              
+        type="date"
+        readOnly
+        disabled              
         label={DataLabel.pay_date_boost} 
         name={`fetchdata.pay_date_boost`}
         placeHolder={`${DataLabel.pay_date_boost}`}

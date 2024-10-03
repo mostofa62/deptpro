@@ -26,11 +26,14 @@ export const DataLabel = {
 
 
   pay_date_boost:'Pay Day',
+
+  next_pay_date_boost:'Next Pay Day',
  
   repeat_boost:'Repeat Frequency',
 
   note:'Note',
   
+  total_income_boost:'Total Income Boost'
   
   
 }

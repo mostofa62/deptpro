@@ -201,11 +201,31 @@ const generateItems = useCallback((row) => [
             accessorKey: 'pay_date_boost',
             header: DataLabel.pay_date_boost,
           },
+
+          {
+            accessorKey: 'next_pay_date_boost',
+            header: DataLabel.next_pay_date_boost,
+          },
           
           {
             accessorKey: 'repeat_boost.label',
             header: DataLabel.repeat_boost,
-          },  
+          },
+          
+          {
+            accessorKey: 'total_income_boost',
+            header: DataLabel.total_income_boost,
+            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
+            /*
+            footer: (props) => {
+              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
+                return sum + row.original.monthly_payment;
+              }, 0);
+              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
+            },
+            */
+           //footer:(props)=><p><span>$</span><span className="px-2">{total_income_boost.toFixed(2)}</span></p>
+          },
          
   
           
