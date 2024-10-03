@@ -46,8 +46,11 @@ export const DataLabelView = {
 
 
   pay_date_boost_word:'Pay Day Boost',
+
+  next_pay_date_boost_word:'Next Pay Day Boost',
  
   repeat_boost:'Repeat Frequency ( Boost)',
+  
 
   note:'Note',
 

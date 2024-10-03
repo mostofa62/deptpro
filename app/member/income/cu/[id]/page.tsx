@@ -5,7 +5,7 @@ import { useState,useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import useAuth from '@/app/hooks/useAuth';
 import { useRouter } from "next/navigation";
-import {Formik} from 'formik';
+import {Field, Formik} from 'formik';
 import { DataSchema,DataLabel,ValidationSchema } from "../DataValidationSchema";
 
 import FormikFormHolder from "@/app/components/form/FormikFormHolder";
@@ -18,6 +18,8 @@ import useFetchDropDownData from "@/app/hooks/useFetchDropDownData";
 import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import HolderOne from "@/app/layout/HolderOne";
+import CheckComponent from "@/app/components/CheckComponent";
+import FormikCheckInput from "@/app/components/form/FormikCheckInput";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -247,7 +249,9 @@ export default function InsuranceCreate({
     
 
     <FormikFieldInput 
-        type="date"         
+        type="date"
+        readOnly
+        disabled        
         label={DataLabel.pay_date} 
         name={`fetchdata.pay_date`}
         placeHolder={`${DataLabel.pay_date}`}
@@ -289,7 +293,7 @@ export default function InsuranceCreate({
 
 
 <div className="flex flex-row mt-[15px]">
-<div className="w-[50%]">
+<div className="w-[48%]">
 <FormikFieldInput 
         label={DataLabel.note} 
         name={`fetchdata.note`}
@@ -301,6 +305,45 @@ export default function InsuranceCreate({
       
         />
 </div>
+
+{/* <div className="ml-[24px] w-[48%] items-end justify-end flex">
+
+
+<Field 
+    component={FormikCheckInput}
+        name="fetchdata.close"
+        label={DataLabel.close}    
+        checked={values.fetchdata.close === 1}
+        errorClass={errors.fetchdata && 
+            errors.fetchdata.close && 
+            touched.fetchdata && 
+            touched.fetchdata.close &&
+            'font-semibold text-[#B45454]'
+        }                                        
+        onChange={(e:any) => {
+            const {checked, name} = e.target;                        
+                    
+            if (checked) {
+            setFieldTouched(name,true);
+
+            setFieldValue(
+                name,
+                1
+            );
+            
+            }else{
+                setFieldTouched(name,false);
+                setFieldValue(
+                    name,
+                    0
+                );
+
+            }
+        
+        }}
+        
+        />
+</div> */}
 </div>
 
 

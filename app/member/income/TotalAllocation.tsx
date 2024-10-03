@@ -147,7 +147,8 @@ const TotalAllocation = () => {
 
     const dataLabel = {
       base_net_income:'Net Earnings',
-      base_gross_income:'Gross Earnings'
+      base_gross_income:'Gross Earnings',
+      base_input_boost:'Input Boost'
     }
     
     
@@ -240,7 +241,7 @@ const TotalAllocation = () => {
     }, [data, barData, lineData]); // Empty dependency array ensures it runs once after mount
 
     return (
-    <div className="flex flex-row gap-1">
+    <div className="flex flex-row gap-2.5">
         <div className="w-[35%]" ref={el => (itemRefs.current[0] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
         <CardHolder title="Total Allocation" maxHeight={maxHeight}>
            

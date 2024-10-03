@@ -227,6 +227,11 @@ const generateItems = useCallback((row) => [
             accessorKey: 'pay_date',
             header: 'Pay Date',
           },
+
+          {
+            accessorKey: 'next_pay_date',
+            header: 'Next Pay Date',
+          },
           
           {
             accessorKey: 'repeat.label',

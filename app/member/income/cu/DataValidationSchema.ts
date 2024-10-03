@@ -16,7 +16,9 @@ export const DataSchema = {
 
     note:'',
     total_net_income:0,
-    total_gross_income:0
+    total_gross_income:0,
+
+    //close:0,
       
 
 };
@@ -38,7 +40,9 @@ export const DataLabel = {
   note:'Note',
 
   total_gross_income:'Total Gross Income',
-  total_net_income:'Total Net Income'
+  total_net_income:'Total Net Income',
+
+  //close:'Close Account?'
   
   
   
@@ -102,6 +106,8 @@ export const ValidationSchema =  object().shape({
               .ensure()
               .matches(/^\d{4}-\d{2}-\d{2}$/i,`provide valid ${DataLabel.pay_date}`)
               .required(`${DataLabel.pay_date} is required`),
+
+              close: number()
 
               
               

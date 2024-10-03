@@ -10,6 +10,7 @@ import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import BasicCalendar from "@/app/components/BasicCalender";
 import { DataLabelView } from "../cu/DataValidationSchema";
 import HolderOne from "@/app/layout/HolderOne";
+import IncomeTransactions from "./IncomeTransactions";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -45,7 +46,13 @@ export default function IncomeDetail({
 
       const description_boost = ()=>(
         <div className="flex flex-col gap-1 text-[15px]">
-          <div><span>NEXT BOOST DATE</span><span className="ml-4">{IncomeWithTransactionData.income.pay_date_boost}</span></div>          
+          <div><span>PAY DATE</span><span className="ml-4">{IncomeWithTransactionData.income.pay_date_boost}</span></div>          
+        </div>
+      )
+
+      const description_boost_next = ()=>(
+        <div className="flex flex-col gap-1 text-[15px]">
+          <div><span>NEXT PAY DATE</span><span className="ml-4">{IncomeWithTransactionData.income.next_pay_date_boost}</span></div>          
         </div>
       )
 
@@ -94,6 +101,18 @@ export default function IncomeDetail({
                         />
                         </div>
                     }
+                  {IncomeWithTransactionData.income.next_pay_date_boost!=null &&
+                    <div className="p-1">  
+                    <BasicCalendar 
+                    extraDayData={{[`${IncomeWithTransactionData.income.next_pay_date_boost
+                    }`]:{'title':`Next Pay date Boost`,'description':description_boost_next()}}} 
+                    currentMonth={IncomeWithTransactionData.income.next_pay_date_boost
+                    }
+                    />
+                    </div>
+  }
+
+                    
                 </div>
             
 
@@ -118,7 +137,9 @@ export default function IncomeDetail({
             </div>
 
             
-            
+            <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
+              <IncomeTransactions income_id={id}  />
+            </div>
             
             
             
