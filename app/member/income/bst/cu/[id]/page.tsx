@@ -160,7 +160,29 @@ export default function InsuranceCreate({
 
 
 <div className="flex flex-row mt-[15px]">
-    <div className="w-[50%]">
+    
+<div className="w-[50%]">
+
+<FormikFieldInput 
+        label={DataLabel.earner} 
+        name={`fetchdata.earner`}
+        placeHolder={`${DataLabel.earner}`}
+        errorMessage ={ errors.fetchdata &&                                        
+            errors.fetchdata.earner &&
+            touched.fetchdata &&            
+            touched.fetchdata.earner &&  errors.fetchdata.earner}
+        onChangeField = {(e:any)=>{
+            const {value, name} = e.target;
+            setFieldValue(
+                name,
+                value
+              );
+        }}
+        />
+
+        </div>
+
+    <div className="ml-[24px] w-[50%]">
         
         
 
@@ -181,33 +203,35 @@ export default function InsuranceCreate({
          
     </div>
 
-    <div className="ml-[24px] w-[50%]">
-        
-    <FormikSelectCreatableInput
-            label={DataLabel.income_boost_source}
-            defaultValue={fetchdata.income_boost_source}
-            placeHolder={`Select ${DataLabel.income_boost_source}`}
-            isSearchable={true}
-            isClearable={true}
-            name="fetchdata.income_boost_source"
-            dataOptions={IncomeSourceBoostData.income_boost_source}
-            errorMessage={errors.fetchdata &&
-                errors.fetchdata.income_boost_source &&
-                touched.fetchdata &&
-                touched.fetchdata.income_boost_source &&
-                errors.fetchdata.income_boost_source.label
-            }
-        />
-        
-        
-        
-    </div>
+    
     
     
 </div>
 
 <div className="flex flex-row mt-[15px]">
-    <div className="w-[50%]">
+
+<div className="w-[50%]">
+        
+        <FormikSelectCreatableInput
+                label={DataLabel.income_boost_source}
+                defaultValue={fetchdata.income_boost_source}
+                placeHolder={`Select ${DataLabel.income_boost_source}`}
+                isSearchable={true}
+                isClearable={true}
+                name="fetchdata.income_boost_source"
+                dataOptions={IncomeSourceBoostData.income_boost_source}
+                errorMessage={errors.fetchdata &&
+                    errors.fetchdata.income_boost_source &&
+                    touched.fetchdata &&
+                    touched.fetchdata.income_boost_source &&
+                    errors.fetchdata.income_boost_source.label
+                }
+            />
+            
+            
+            
+        </div>
+    <div className="ml-[24px] w-[50%]">
         
         
 
@@ -229,33 +253,34 @@ export default function InsuranceCreate({
         
     </div>
 
-    <div className="ml-[24px] w-[50%]">
-        
-    <FormikSelectInput
-        label={DataLabel.repeat_boost}
-        defaultValue={fetchdata.repeat_boost}
-        placeHolder={``}
-        isSearchable={true}
-        isClearable={true}
-        name="fetchdata.repeat_boost"
-        dataOptions={IncomeSourceBoostData.repeat_frequency}
-        errorMessage={errors.fetchdata &&
-            errors.fetchdata.repeat_boost &&
-            touched.fetchdata &&
-            touched.fetchdata.repeat_boost &&
-            errors.fetchdata.repeat_boost.label
-        }
-    />
-        
-        
-        
-    </div>
+    
     
     
 </div>
 
 <div className="flex flex-row mt-[15px]">
 <div className="w-[50%]">
+        
+        <FormikSelectInput
+            label={DataLabel.repeat_boost}
+            defaultValue={fetchdata.repeat_boost}
+            placeHolder={``}
+            isSearchable={true}
+            isClearable={true}
+            name="fetchdata.repeat_boost"
+            dataOptions={IncomeSourceBoostData.repeat_frequency}
+            errorMessage={errors.fetchdata &&
+                errors.fetchdata.repeat_boost &&
+                touched.fetchdata &&
+                touched.fetchdata.repeat_boost &&
+                errors.fetchdata.repeat_boost.label
+            }
+        />
+            
+            
+            
+        </div>
+<div className="ml-[24px] w-[50%]">
 <FormikFieldInput 
         label={DataLabel.note} 
         name={`fetchdata.note`}

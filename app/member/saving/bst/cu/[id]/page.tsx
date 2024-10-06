@@ -1,12 +1,12 @@
 "use client";
 import DefaultLayout from "@/app/layout/DefaultLayout";
 import Link from "next/link";
-import { useState,useEffect, useRef } from "react";
+import { useState,useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import useAuth from '@/app/hooks/useAuth';
 import { useRouter } from "next/navigation";
-import {Formik} from 'formik';
-import { DataSchema,DataLabel,ValidationSchema } from "./DataValidationSchema";
+import {Field, Formik} from 'formik';
+import { DataSchema,DataLabel,ValidationSchema } from "../DataValidationSchema";
 
 import FormikFormHolder from "@/app/components/form/FormikFormHolder";
 
@@ -17,7 +17,7 @@ import toast from 'react-hot-toast';
 import useFetchDropDownData from "@/app/hooks/useFetchDropDownData";
 import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
-import VideoComponent from "@/app/components/utils/VideoComponent";
+import FormikCheckInput from "@/app/components/form/FormikCheckInput";
 import HolderOne from "@/app/layout/HolderOne";
 
 
@@ -27,12 +27,19 @@ interface Options{
     label:string;
 }
 interface PayLoads{
-    
-    income_boost_source:Options[],
+      
     repeat_frequency:Options[],
+    saving_boost_source:Options[]    
 }
 
-export default function InsuranceCreate() {
+export default function InsuranceCreate({
+    params,
+    searchParams
+  }:{
+    params: { id: string }
+    searchParams: { [key: string]: string | string[] | undefined }
+  
+  }) {
     const authCtx = useAuth();
     const user_id = authCtx.userId;
     const router = useRouter()
@@ -40,28 +47,39 @@ export default function InsuranceCreate() {
 
     const [fetchFomrData,setFetchFormData] = useState(DataSchema);
     
-    
+    const id = params.id;
 
     const payload: PayLoads ={
-        income_boost_source: [],
+           
         repeat_frequency: [],
+        saving_boost_source:[]        
+
     }
 
-    const IncomeSourceBoostData:any = useFetchDropDownObjects({
-        urlSuffix:`incomesourceboost-dropdown/${user_id}`,
+    const SavingCategoryData:any = useFetchDropDownObjects({
+        urlSuffix:`savingcategory-dropdown/${user_id}`,
         payLoads:payload
     })
-
+    const fetchDataCallback=useCallback(async()=>{
+        //console.log(id);
+        const response = await axios.get(`${url}saving-boost/${id}`);
+        //return response.data.user;
+        setFetchFormData(response.data.saving);
+        
+        
+    },[id]);
+    useEffect(()=>{
+        fetchDataCallback();
     
-
-    const fetchdata = fetchFomrData;
+    },[fetchDataCallback]);
+    const fetchdata = {...DataSchema,...fetchFomrData};
 
     
 
     const handleFormSubmit = async(values:any,{ resetForm,setSubmitting }:any)=>{
         //alert(JSON.stringify(values));
 
-        await axios.post(`${url}save-income-boost`, 
+        await axios.post(`${url}save-saving-boost-account/${id}`, 
             {user_id,...values.fetchdata}, {
             
             headers: {
@@ -75,7 +93,7 @@ export default function InsuranceCreate() {
             setSubmitting(false);
             toast.success(response.data.message);
             //resetForm();
-            router.push('/member/income');
+            router.push('/member/saving');
             
           }else{
             setSubmitting(true);
@@ -100,21 +118,24 @@ export default function InsuranceCreate() {
         <div className="grid grid-flow-row">
 
 
+
         <HolderOne
-            title="add income boost"            
+            title="update saving"            
             linkItems={[
-              {
-                link:'/member/income',
-                title:'your income dashboard'
-              }
+                {
+                    link:'/member/saving/cu',
+                    title:'add savings'
+                },
+                {
+                link:'/member/saving',
+                title:'your savings dashboard'
+                },
+                {
+                    link:`/member/saving/${id}`,
+                    title:'saving  details'
+                }
             ]}
             />
-
-
-
-      
-
-            
 
             
 
@@ -122,55 +143,28 @@ export default function InsuranceCreate() {
             <Formik
             innerRef={formRef}
         initialValues={{ fetchdata }}
+        enableReinitialize
         validationSchema={ValidationSchema}
         
 
         onSubmit={handleFormSubmit}
 
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
-            <FormikFormHolder legend="income boost Details">
-
-<div className="flex flex-row gap-2">
-
-<div className="w-[35%] flex justify-center items-center">
-        <div className="">
-                       
-            <VideoComponent
-                src="/animated/incomentry.mp4"
-                width={`350`}
-                controls={false} // Disable default video controls (optional)
-                autoplay={true}
-                loop={true}
-                showControls={false}
-            />
-        </div>
-        </div>
-
-
-<div className="w-[65%]">
-
-
-
-
-
-
-
-
-
-
+            <FormikFormHolder legend="SAVING Account Details">
 
 <div className="flex flex-row mt-[15px]">
-
-<div className="w-[50%]">
+    <div className="w-[32%]">
+        
+        
 
 <FormikFieldInput 
-        label={DataLabel.earner} 
-        name={`fetchdata.earner`}
-        placeHolder={`${DataLabel.earner}`}
+        label={DataLabel.saver} 
+        name={`fetchdata.saver`}
+        placeHolder={`${DataLabel.saver}`}
         errorMessage ={ errors.fetchdata &&                                        
-            errors.fetchdata.earner &&
+            errors.fetchdata.saver &&
             touched.fetchdata &&            
-            touched.fetchdata.earner &&  errors.fetchdata.earner}
+            touched.fetchdata.saver &&  errors.fetchdata.saver}
         onChangeField = {(e:any)=>{
             const {value, name} = e.target;
             setFieldValue(
@@ -179,58 +173,64 @@ export default function InsuranceCreate() {
               );
         }}
         />
+        
+        
+        
+    </div>
 
-        </div>
-    <div className="ml-[24px] w-[50%]">
-        
-        
+    <div className="ml-[24px] w-[32%]">
 
     <FormikFieldInput 
         type="number"
         step="any"
         min={0}
-        label={`${DataLabel.income_boost} $`} 
-        name={`fetchdata.income_boost`}
-        placeHolder={`${DataLabel.income_boost}`}
+        label={`${DataLabel.saving_boost} $`} 
+        name={`fetchdata.saving_boost`}
+        placeHolder={`${DataLabel.saving_boost}`}
         errorMessage ={ errors.fetchdata &&                                        
-            errors.fetchdata.income_boost &&
+            errors.fetchdata.saving_boost &&
             touched.fetchdata &&            
-            touched.fetchdata.income_boost &&  errors.fetchdata.income_boost}        
+            touched.fetchdata.saving_boost &&  errors.fetchdata.saving_boost}        
         />
+    
+        
+    
         
         
-         
+        
     </div>
+    
+    <div className="ml-[24px] w-[32%]">
+
 
     
+    <FormikSelectCreatableInput
+            label={DataLabel.saving_boost_source}
+            defaultValue={fetchdata.saving_boost_source}
+            placeHolder={`Select ${DataLabel.saving_boost_source}`}
+            isSearchable={true}
+            isClearable={true}
+            name="fetchdata.saving_boost_source"
+            dataOptions={SavingCategoryData.saving_boost_source}
+            errorMessage={errors.fetchdata &&
+                errors.fetchdata.saving_boost_source &&
+                touched.fetchdata &&
+                touched.fetchdata.saving_boost_source &&
+                errors.fetchdata.saving_boost_source.label
+            }
+        />
     
+        
+
     
+        
+        
+    </div>
 </div>
 
-<div className="flex flex-row mt-[15px]">
 
-<div className="w-[50%]">
-        
-        <FormikSelectCreatableInput
-                label={DataLabel.income_boost_source}
-                defaultValue={fetchdata.income_boost_source}
-                placeHolder={`Select ${DataLabel.income_boost_source}`}
-                isSearchable={true}
-                isClearable={true}
-                name="fetchdata.income_boost_source"
-                dataOptions={IncomeSourceBoostData.income_boost_source}
-                errorMessage={errors.fetchdata &&
-                    errors.fetchdata.income_boost_source &&
-                    touched.fetchdata &&
-                    touched.fetchdata.income_boost_source &&
-                    errors.fetchdata.income_boost_source.label
-                }
-            />
-            
-            
-            
-        </div>
-    <div className="ml-[24px]  w-[50%]">
+<div className="flex flex-row mt-[15px]">
+    <div className="w-[32%]">
         
         
 
@@ -250,16 +250,56 @@ export default function InsuranceCreate() {
         
     </div>
 
-    
-    
-    
-</div>
+    <div className="ml-[24px] w-[32%]">
 
-<div className="flex flex-row mt-[15px]">
-
-
-<div className="w-[50%]">
         
+
+     
+    <Field 
+    component={FormikCheckInput}
+        name="fetchdata.autopay"
+        label={DataLabel.autopay}    
+        checked={values.fetchdata.autopay === 1}
+        errorClass={errors.fetchdata && 
+            errors.fetchdata.autopay && 
+            touched.fetchdata && 
+            touched.fetchdata.autopay &&
+            'font-semibold text-[#B45454]'
+        }                                        
+        onChange={(e:any) => {
+            const {checked, name} = e.target;                        
+                    
+            if (checked) {
+            setFieldTouched(name,true);
+
+            setFieldValue(
+                name,
+                1
+            );
+            
+            }else{
+                setFieldTouched(name,false);
+                setFieldValue(
+                    name,
+                    0
+                );
+
+            }
+        
+        }}
+        
+        />
+        
+    
+        
+    </div>
+
+    
+
+
+    <div className="ml-[24px] w-[32%]">
+
+
         <FormikSelectInput
             label={DataLabel.repeat_boost}
             defaultValue={fetchdata.repeat_boost}
@@ -267,7 +307,7 @@ export default function InsuranceCreate() {
             isSearchable={true}
             isClearable={true}
             name="fetchdata.repeat_boost"
-            dataOptions={IncomeSourceBoostData.repeat_frequency}
+            dataOptions={SavingCategoryData.repeat_frequency}
             errorMessage={errors.fetchdata &&
                 errors.fetchdata.repeat_boost &&
                 touched.fetchdata &&
@@ -275,23 +315,43 @@ export default function InsuranceCreate() {
                 errors.fetchdata.repeat_boost.label
             }
         />
-            
+
+
+
             
             
         </div>
-<div className="ml-[24px]  w-[50%]">
-<FormikFieldInput 
-        label={DataLabel.note} 
-        name={`fetchdata.note`}
-        placeHolder={`${DataLabel.note}`}
-        errorMessage ={ errors.fetchdata &&                                        
-            errors.fetchdata.note &&
-            touched.fetchdata &&            
-            touched.fetchdata.note &&  errors.fetchdata.note}
-      
-        />
+
+    
+    
+    
 </div>
+
+
+<div className="flex flex-row mt-[15px]">
+
+<div className="w-[48%]">
+        
+        <FormikFieldInput 
+            label={DataLabel.note} 
+            name={`fetchdata.note`}
+            placeHolder={`${DataLabel.note}`}
+            errorMessage ={ errors.fetchdata &&                                        
+                errors.fetchdata.note &&
+                touched.fetchdata &&            
+                touched.fetchdata.note &&  errors.fetchdata.note}
+          
+            />
+    
+            
+            
+            
+            
 </div>
+
+</div>
+
+
 
 
 
@@ -302,10 +362,6 @@ export default function InsuranceCreate() {
 </div>
 */}
 
-</div>
-
-</div>
-
 </FormikFormHolder>
         )}
         />
@@ -315,14 +371,14 @@ export default function InsuranceCreate() {
             <div className="mt-10">
                 <div className="flex flex-row-reverse gap-4">
                     <div className="relative right-5 top-0">
-                        <button type="button" className="text-[15px] h-[40px] bg-[#43ACD6] rounded text-white px-4  capitalize text-center font-semibold" onClick={handleSubmit}>
+                        <button type="button" className="text-[15px] h-[40px] bg-[#0166FF] rounded text-white px-4  capitalize text-center font-semibold" onClick={handleSubmit}>
                             Save
                         </button>
                     </div>
                     <div className="relative right-[30px] top-[10px]">
                     <Link
-                                    href={'/member/income'}
-                                    className={`text-[15px] h-[40px] capitalize text-center px-4 py-2.5  font-semibold bg-[#43ACD6] rounded bg-opacity-5 text-[#43ACD6]`}
+                                    href={'/member/saving'}
+                                    className={`text-[15px] h-[40px] capitalize text-center px-4 py-2.5  font-semibold bg-[#0166FF] rounded bg-opacity-5 text-[#0166FF]`}
                                 >                               
 
 

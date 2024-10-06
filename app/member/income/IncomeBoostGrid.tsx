@@ -178,6 +178,11 @@ const generateItems = useCallback((row) => [
               visible: false
               
           },
+          {
+
+            accessorKey: 'earner',
+            header: DataLabel.earner,
+          },
           
           {
             accessorKey: 'income_boost',

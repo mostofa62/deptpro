@@ -24,7 +24,7 @@ const HeaderSummary = ()=>{
 
       const fetchDataCallback=useCallback(async()=>{
         //console.log(id);
-          const response = await axios.get(`${url}debt-header-data/${user_id}`);
+          const response = await axios.get(`${url}header-summary-data/${user_id}`);
           //return response.data.user;
           setTransactionData({...transactioData,...response.data});
                 

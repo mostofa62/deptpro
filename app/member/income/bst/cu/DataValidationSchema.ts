@@ -2,7 +2,7 @@ import moment from "moment";
 import { object, string, number } from "yup";
 export const DataSchema = {
     
-
+    earner:'',
     income_boost:0,
 
     income_boost_source:{'label':'','value':''},
@@ -18,7 +18,7 @@ export const DataSchema = {
 
 export const DataLabel = {
   
-  
+  earner:'Earner',
 
   income_boost:'Income Boost',
 
@@ -41,7 +41,7 @@ export const DataLabel = {
 
 export const DataLabelView = {
   
-  
+  earner:'Earner',
 
   income_boost:'Income Boost',
 

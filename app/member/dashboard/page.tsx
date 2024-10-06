@@ -93,7 +93,7 @@ export default function DashBoard() {
 
   const fetchDataCallback=useCallback(async()=>{
     //console.log(id);
-      const response = await axios.get(`${url}debt-dashboard-data/${user_id}`);
+      const response = await axios.get(`${url}dashboard-data/${user_id}`);
       //return response.data.user;
       setTransactionData(response.data);
             
