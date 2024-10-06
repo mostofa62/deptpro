@@ -1,9 +1,8 @@
 "use client";
-import DefaultLayout from "@/app/layout/DefaultLayout";
-import Link from "next/link";
+
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import useAuth from '@/app/hooks/useAuth';
-import CardHolder from "@/app/components/ui/CardHolder";
+
 import useFetchGridData, { AlertBox, DeleteActionGlobal, GetInVisibleColumn, getPageNumbers, GetShowingText, PerPageList } from "@/app/components/grid/useFetchGridData";
 import { ColumnDef, flexRender, getCoreRowModel, getPaginationRowModel, getSortedRowModel, PaginationState, SortingState, useReactTable } from "@tanstack/react-table";
 import { confirmAlert } from "react-confirm-alert";
@@ -11,10 +10,7 @@ import GridGlobalSearch from "@/app/components/grid/GridGlobalSearch";
 import GridActionLink from "@/app/components/grid/GridActionLink";
 import GridPaginationHolder from "@/app/components/grid/GridPaginationHolder";
 import { DataLabel } from "./cu/DataValidationSchema";
-import TotalAllocation from "./TotalAllocation";
-import HolderOne from "@/app/layout/HolderOne";
-import SavingGrid from "./SavingGrid";
-import SavingBoostGrid from "./SavingBoostGrid";
+
 
 const per_page_list = PerPageList();
 const per_page = per_page_list[0];
@@ -37,7 +33,7 @@ interface ExtraPayloadProps{
   total_contribution:number;  
 
 }
-const Saving = ()=>{
+const SavingGrid = ()=>{
     
 
     const authCtx = useAuth();
@@ -375,47 +371,136 @@ const Saving = ()=>{
 
     return(
         
-        <DefaultLayout>
-            <div className="grid grid-flow-row">
+        <div>
 
+            <div className="p-2 flex flex-col gap-5">
 
-            <HolderOne
-            title="your savings dashboard"            
-            linkItems={[
-                {
-                link:'saving/cu',
-                title:'add savings'
-                },
+                    <div className="py-2">
+                       <GridGlobalSearch 
+                      filterInput={filterInput}
+                      handleFilterChange={handleFilterChange}
+                      applyFilter={applyFilter}
+                      searchButtonText="Search"
+                      placeHolderText="Search here"
+                      />
+                    </div>  
+            
+      <table className="tanstack-table table-auto w-full text-left">
+        <thead>
+          {table.getHeaderGroups().map(headerGroup => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map(header => (
+                <th className={`font-medium
+                  ${header.column.getCanSort()
+                    ? 'cursor-pointer select-none'
+                    : ''}`
+                } key={header.id} onClick={header.column.getToggleSortingHandler()}>
+                  {flexRender(header.column.columnDef.header, header.getContext())}
+                  {{
+                          asc: ' 🔼',
+                          desc: ' 🔽',
+                        }[header.column.getIsSorted() as string] ?? null}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+       
+                <tbody>
+                {error &&
+                <>
+                <tr className="col-span-full row-span-full">
+                  <td className="text-center w-full p-2 font-normal">
+                    <span>{error}</span>
+                  </td>
+                </tr>
+                </>
+                }  
+                {loading ?  
+                <>
+                <tr className="col-span-full row-span-full">
+                  <td className="text-center w-full p-2 font-normal">
+                    <span>... Loading ...</span>
+                  </td>
+                </tr>
+                </>
+                :
+                <>   
+                 {tableRows.map((row:any) => (
+                                      
+                    
+                    <tr 
+                    ref={el => (rowRefs.current[row.original._id] = el)}
+                    onMouseEnter={() => handleMouseEnter(row.original._id)}
+                    onMouseLeave={handleMouseLeave}   
+                    key={row.id} className="border-t">
+                    {row.getVisibleCells().map((cell:any) => (
+                        <td className="font-normal" key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                    ))}
 
-                {
-                  link:'saving/bst/cu',
-                  title:'add saving boost'
-                  }
-            ]}
-            />
+{
+                    hoveredRowId == row.original._id &&
+                    <div className=" absolute">
+                     <GridActionLink
+            hoveredRowHeight={hoveredRowHeight} // Adjust or compute dynamically as needed
+            items={row.items}
+          />
 
+                    </div>
+                   
+                    }
+                                    
+                    </tr>
 
-            <div className="mt-10 p-2 mb-10">
+                      
+                    
+                    
+                ))}
+                </> 
+                }
+                </tbody>
 
-              <TotalAllocation />
-
+                <tfoot>
+                  {table.getFooterGroups().map(footerGroup => (
+                    <tr key={footerGroup.id}>
+                      {footerGroup.headers.map(header => (
+                        <td key={header.id}>
+                          {flexRender(header.column.columnDef.footer, header.getContext())}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tfoot>
+                
+        
+      </table>
+      
             </div>
 
-            <div className="mt-3 p-2 border-[#E6E6E6] shadow-2">
-              <SavingGrid />
+            {
+        !loading 
+        && 
+        !error 
+        &&
+        data.length > 0
+        &&
+        <div className="mt-[100px]">
+      <GridPaginationHolder 
+      table={table}
+      pageNumbers={pageNumbers}
+      handlePageChange={handlePageChange}
+      per_page_list={per_page_list}
+      />
+      </div>
+
+}
+
+
             </div>
-
-
-            <div className="mt-3 p-2 border-[#E6E6E6] shadow-2">
-              <SavingBoostGrid />
-            </div>
-
-
-            </div>
-        </DefaultLayout>
+        
         
     )
 
 }
 
-export default Saving;
+export default SavingGrid;

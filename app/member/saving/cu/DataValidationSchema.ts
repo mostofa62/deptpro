@@ -3,35 +3,27 @@ import { object, string, number } from "yup";
 export const DataSchema = {
     
     category:{'label':'','value':''},
+
+    savings_strategy:{'label':'None','value':''},
+
     saver:'',
     nickname:'',
     
     goal_amount:0,
     interest:0,
+
+    interest_type:{'label':'None','value':''},
    
     starting_date:moment().format('YYYY-MM-DD'),
 
     starting_amount:0,
 
     contribution:0,
-    
+
+    increase_contribution_by:'',
     
     repeat:{'label':'None','value':0},
 
-
-    saving_boost:0,
-
-
-    autopay:0,
-
-
-    saving_boost_source:{'label':'','value':''},
-
-    pay_date_boost:moment().format('YYYY-MM-DD'),
-
-    repeat_boost:{'label':'None','value':0},
-
-    
     note:''
       
 
@@ -40,30 +32,25 @@ export const DataSchema = {
 export const DataLabel = {
   
   category:'Category',
+
+  savings_strategy:'Savings Strategy',
   saver:'Saver',
-  nickname:'Nickname',
+  nickname:'Account Nickname',
   
   goal_amount:'Goal Amount',
   interest:'Interest',   
+
+  interest_type:'Interest Type',
   
   starting_date:'Starting Date',
 
   starting_amount:'Starting Amount',
   
-  contribution:'Contribution',
+  contribution:'Contribution Amount',
+
+  increase_contribution_by:'Increase Contribution By',
  
-  repeat:'Repeat Frequency',
-
-  saving_boost:'Saving Boost',
-
-  autopay:'Autopay?',
-
-
-  saving_boost_source:'Saving Boost Source',
-
-  pay_date_boost:'Pay Day',
-
-  repeat_boost:'Repeat Frequency',
+  repeat:'Repeat', 
   
   note:'Note'
   
@@ -73,30 +60,23 @@ export const DataLabel = {
 export const DataLabelView = {
   
   category:'Category',
+  savings_strategy:'Savings Strategy',
   saver:'Saver',
-  nickname:'Nickname',
+  nickname:'Account Nickname',
   
   goal_amount:'Goal Amount',
-  interest:'Interest',   
+  interest:'Interest',
+  interest_type:'Interest Type',   
   
   starting_date_word:'Starting Date',
 
   starting_amount:'Starting Amount',
   
   contribution:'Contribution',
+
+  increase_contribution_by:'Increase Contribution By',
  
-  repeat:'Repeat Frequency',
-
-  saving_boost:'Saving Boost',
-
-  autopay:'Autopay?',
-
-
-  saving_boost_source:'Saving Boost Source',
-
-  pay_date_boost_word:'Pay Day',
-
-  repeat_boost:'Repeat Frequency (Boost)',
+  repeat:'Repeat',  
   
   note:'Note'
   
@@ -116,6 +96,16 @@ export const ValidationSchema =  object().shape({
               category:object().shape({
                 value: string().required(),
                 label: string().required(`${DataLabel.category} is required`)
+              }),
+
+              savings_strategy:object().shape({
+                value: string().required(),
+                label: string().required(`${DataLabel.savings_strategy} is required`)
+              }),
+
+              interest_type:object().shape({
+                value: string().required(),
+                label: string().required(`${DataLabel.interest_type} is required`)
               }),
 
              

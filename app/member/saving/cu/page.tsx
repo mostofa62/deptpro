@@ -32,7 +32,8 @@ interface Options{
 interface PayLoads{
     category:Options[],    
     repeat_frequency:Options[],
-    saving_boost_source:Options[]    
+    saving_interest_type:Options[],
+    saving_strategy_type:Options[],    
 }
 
 export default function InsuranceCreate() {
@@ -48,7 +49,8 @@ export default function InsuranceCreate() {
     const payload: PayLoads ={
         category: [],        
         repeat_frequency: [],
-        saving_boost_source:[]        
+        saving_interest_type:[],
+        saving_strategy_type:[]        
 
     }
 
@@ -258,10 +260,55 @@ export default function InsuranceCreate() {
 </div>
 
 
-
-
 <div className="flex flex-row mt-[15px]">
     <div className="w-[32%]">
+
+    
+
+<FormikFieldInput 
+        type="number"
+        step="any"
+        min={0}
+        label={`${DataLabel.goal_amount} $`} 
+        name={`fetchdata.goal_amount`}
+        placeHolder={`${DataLabel.goal_amount}`}
+        errorMessage ={ errors.fetchdata &&                                        
+            errors.fetchdata.goal_amount &&
+            touched.fetchdata &&            
+            touched.fetchdata.goal_amount &&  errors.fetchdata.goal_amount}        
+        />
+        
+        
+    </div>
+
+    <div className="ml-[24px] w-[32%]">
+
+
+    <FormikSelectInput
+        label={DataLabel.savings_strategy}
+        defaultValue={fetchdata.savings_strategy}
+        placeHolder={``}
+        isSearchable={true}
+        isClearable={true}
+        name="fetchdata.savings_strategy"
+        dataOptions={SavingCategoryData.saving_strategy_type}
+        errorMessage={errors.fetchdata &&
+            errors.fetchdata.savings_strategy &&
+            touched.fetchdata &&
+            touched.fetchdata.savings_strategy &&
+            errors.fetchdata.savings_strategy.label
+        }
+    />
+
+    
+
+    
+        
+        
+    </div>
+    
+    <div className="ml-[24px] w-[32%]">
+
 
     <FormikFieldInput 
         type="number"
@@ -275,32 +322,41 @@ export default function InsuranceCreate() {
             touched.fetchdata &&            
             touched.fetchdata.interest &&  errors.fetchdata.interest}        
         />
+
         
         
     </div>
 
-    <div className="ml-[24px] w-[32%]">
+   
+</div>
 
-    <FormikFieldInput 
-        type="number"
-        step="any"
-        min={0}
-        label={`${DataLabel.goal_amount} $`} 
-        name={`fetchdata.goal_amount`}
-        placeHolder={`${DataLabel.goal_amount}`}
-        errorMessage ={ errors.fetchdata &&                                        
-            errors.fetchdata.goal_amount &&
-            touched.fetchdata &&            
-            touched.fetchdata.goal_amount &&  errors.fetchdata.goal_amount}        
-        />
+
+<div className="flex flex-row mt-[15px]">
+    <div className="w-[32%]">
+
+
+    <FormikSelectInput
+        label={DataLabel.interest_type}
+        defaultValue={fetchdata.interest_type}
+        placeHolder={``}
+        isSearchable={true}
+        isClearable={true}
+        name="fetchdata.interest_type"
+        dataOptions={SavingCategoryData.saving_interest_type}
+        errorMessage={errors.fetchdata &&
+            errors.fetchdata.interest_type &&
+            touched.fetchdata &&
+            touched.fetchdata.interest_type &&
+            errors.fetchdata.interest_type.label
+        }
+    />
 
     
         
         
     </div>
-    
-    <div className="ml-[24px] w-[32%]">
 
+    <div className="ml-[24px] w-[32%]">
 
     <FormikFieldInput 
         type="date"         
@@ -319,13 +375,8 @@ export default function InsuranceCreate() {
         
         
     </div>
-
-   
-</div>
-
-
-<div className="flex flex-row mt-[15px]">
-    <div className="w-[32%]">
+    
+    <div className="ml-[24px] w-[32%]">
 
     <FormikFieldInput 
         type="number"
@@ -339,12 +390,24 @@ export default function InsuranceCreate() {
             touched.fetchdata &&            
             touched.fetchdata.starting_amount &&  errors.fetchdata.starting_amount}        
         />
+
+
+    
+    
+
+    
         
         
     </div>
 
-    <div className="ml-[24px] w-[32%]">
+   
+</div>
 
+
+<div className="flex flex-row mt-[15px]">
+    <div className="w-[32%]">
+        
+        
     <FormikFieldInput 
         type="number"
         step="any"
@@ -357,14 +420,39 @@ export default function InsuranceCreate() {
             touched.fetchdata &&            
             touched.fetchdata.contribution &&  errors.fetchdata.contribution}        
         />
-
-    
+  
+        
         
         
     </div>
-    
+
     <div className="ml-[24px] w-[32%]">
 
+    <FormikFieldInput 
+        label={DataLabel.increase_contribution_by} 
+        name={`fetchdata.increase_contribution_by`}
+        placeHolder={`${DataLabel.increase_contribution_by}`}
+        errorMessage ={ errors.fetchdata &&                                        
+            errors.fetchdata.increase_contribution_by &&
+            touched.fetchdata &&            
+            touched.fetchdata.increase_contribution_by &&  errors.fetchdata.increase_contribution_by}
+        onChangeField = {(e:any)=>{
+            const {value, name} = e.target;
+            setFieldValue(
+                name,
+                value
+              );
+        }}
+        />
+
+     
+   
+        
+    
+        
+    </div>
+
+    <div className="ml-[24px] w-[32%]">
 
     <FormikSelectInput
         label={DataLabel.repeat}
@@ -381,166 +469,21 @@ export default function InsuranceCreate() {
             errors.fetchdata.repeat.label
         }
     />
+        
     
-
-    
-        
-        
-    </div>
-
-   
-</div>
-
-
-
-
-
-
-<div className="flex flex-row mt-[15px]">
-    <div className="w-[32%]">
-        
-        
-
-    <FormikFieldInput 
-        type="number"
-        step="any"
-        min={0}
-        label={`${DataLabel.saving_boost} $`} 
-        name={`fetchdata.saving_boost`}
-        placeHolder={`${DataLabel.saving_boost}`}
-        errorMessage ={ errors.fetchdata &&                                        
-            errors.fetchdata.saving_boost &&
-            touched.fetchdata &&            
-            touched.fetchdata.saving_boost &&  errors.fetchdata.saving_boost}        
-        />
-        
-        
-         
-    </div>
-
-    <div className="ml-[24px] w-[32%]">
-        
-    <FormikSelectCreatableInput
-            label={DataLabel.saving_boost_source}
-            defaultValue={fetchdata.saving_boost_source}
-            placeHolder={`Select ${DataLabel.saving_boost_source}`}
-            isSearchable={true}
-            isClearable={true}
-            name="fetchdata.saving_boost_source"
-            dataOptions={SavingCategoryData.saving_boost_source}
-            errorMessage={errors.fetchdata &&
-                errors.fetchdata.saving_boost_source &&
-                touched.fetchdata &&
-                touched.fetchdata.saving_boost_source &&
-                errors.fetchdata.saving_boost_source.label
-            }
-        />
         
         
         
     </div>
-
-
-    <div className="ml-[24px] w-[32%]">
-
-
-    <FormikSelectInput
-        label={DataLabel.repeat_boost}
-        defaultValue={fetchdata.repeat_boost}
-        placeHolder={``}
-        isSearchable={true}
-        isClearable={true}
-        name="fetchdata.repeat_boost"
-        dataOptions={SavingCategoryData.repeat_frequency}
-        errorMessage={errors.fetchdata &&
-            errors.fetchdata.repeat_boost &&
-            touched.fetchdata &&
-            touched.fetchdata.repeat_boost &&
-            errors.fetchdata.repeat_boost.label
-        }
-    />
-    
-
-    
-        
-        
-    </div>
-
-
-    
     
     
 </div>
 
 
 <div className="flex flex-row mt-[15px]">
-    <div className="w-[32%]">
-        
-        
 
-    <FormikFieldInput 
-        type="date"              
-        label={DataLabel.pay_date_boost} 
-        name={`fetchdata.pay_date_boost`}
-        placeHolder={`${DataLabel.pay_date_boost}`}
-        errorMessage ={ errors.fetchdata &&                                        
-            errors.fetchdata.pay_date_boost &&
-            touched.fetchdata &&            
-            touched.fetchdata.pay_date_boost &&  errors.fetchdata.pay_date_boost}
-                   
-        />
-        
-        
-        
-    </div>
-
-    <div className="ml-[24px] w-[32%]">
-
-        
-
-     
-    <Field 
-    component={FormikCheckInput}
-        name="fetchdata.autopay"
-        label={DataLabel.autopay}    
-        checked={values.fetchdata.autopay === 1}
-        errorClass={errors.fetchdata && 
-            errors.fetchdata.autopay && 
-            touched.fetchdata && 
-            touched.fetchdata.autopay &&
-            'font-semibold text-[#B45454]'
-        }                                        
-        onChange={(e:any) => {
-            const {checked, name} = e.target;                        
-                    
-            if (checked) {
-            setFieldTouched(name,true);
-
-            setFieldValue(
-                name,
-                1
-            );
-            
-            }else{
-                setFieldTouched(name,false);
-                setFieldValue(
-                    name,
-                    0
-                );
-
-            }
-        
-        }}
-        
-        />
-        
-    
-        
-    </div>
-
-    <div className="ml-[24px] w-[32%]">
-        
-    <FormikFieldInput 
+<div className="w-[32%]">
+<FormikFieldInput 
         label={DataLabel.note} 
         name={`fetchdata.note`}
         placeHolder={`${DataLabel.note}`}
@@ -550,17 +493,10 @@ export default function InsuranceCreate() {
             touched.fetchdata.note &&  errors.fetchdata.note}
       
         />
-        
-        
-        
-    </div>
-    
-    
+
 </div>
 
-
-
-
+</div>
 
 
 {/*

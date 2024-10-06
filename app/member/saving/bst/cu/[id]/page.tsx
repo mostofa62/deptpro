@@ -79,7 +79,7 @@ export default function InsuranceCreate({
     const handleFormSubmit = async(values:any,{ resetForm,setSubmitting }:any)=>{
         //alert(JSON.stringify(values));
 
-        await axios.post(`${url}save-saving-boost-account/${id}`, 
+        await axios.post(`${url}save-saving-boost/${id}`, 
             {user_id,...values.fetchdata}, {
             
             headers: {

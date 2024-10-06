@@ -254,6 +254,7 @@ const TotalAllocation = () => {
     return (
     <div className="flex flex-row min-h-75">
         <div className="w-[35%]">
+        {data.length > 0 &&
         <CardHolder title="Total Allocation">
             <div className="flex flex-row">
                 {/* {JSON.stringify(data)} */}
@@ -308,6 +309,7 @@ const TotalAllocation = () => {
                 </div>
             </div>
         </CardHolder>
+        }
         </div>
         <div className="w-[25%]">
 

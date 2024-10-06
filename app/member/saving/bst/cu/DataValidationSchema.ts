@@ -35,7 +35,7 @@ export const DataLabelView = {
   autopay:'Autopay?',
   saving_boost_source:'Saving Boost Source',
   pay_date_boost_word:'Pay Day Boost',
-  repeat_boost:'Repeat Frequency (Boost)',
+  repeat_boost:'Repeat',
   note:'Note'
   
 }
@@ -53,6 +53,11 @@ export const ValidationSchema =  object().shape({
 
               saving_boost: number().min(0,`${DataLabel.saving_boost} least 0`)              
               .required(`${DataLabel.saving_boost} is required`),
+
+              saving_boost_source:object().shape({
+                value: string().required(),
+                label: string().required(`${DataLabel.saving_boost_source} is required`)
+              }),
 
              
 

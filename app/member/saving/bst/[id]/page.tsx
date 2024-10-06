@@ -37,22 +37,18 @@ export default function SavingDetail({
     }
 
     const SavingWithTransactionData:any = useFetchDropDownObjects({
-        urlSuffix:`saving-all/${id}`,
+        urlSuffix:`saving-boost-all/${id}`,
         payLoads:payload
     })
 
     const description = ()=>(
         <div className="flex flex-col gap-1 text-[15px]">
-          <div><span>STARTING DATE</span><span className="ml-4">{SavingWithTransactionData.saving.starting_date_word}</span></div>          
+          <div><span>BOOST DATE</span><span className="ml-4">{SavingWithTransactionData.saving.pay_date_boost_word}</span></div>          
         </div>
       )
 
 
-      const description_boost = ()=>(
-        <div className="flex flex-col gap-1 text-[15px]">
-          <div><span>NEXT BOOST DATE</span><span className="ml-4">{SavingWithTransactionData.saving.pay_date_boost_word}</span></div>          
-        </div>
-      )
+      
 
     const datalabel:any = DataLabelView;
 
@@ -136,22 +132,13 @@ export default function SavingDetail({
                 <div className="w-[35%] h-[30%] flex flex-col">
                     <div className="p-1">  
                     <BasicCalendar 
-                    extraDayData={{[`${SavingWithTransactionData.saving.starting_date
+                    extraDayData={{[`${SavingWithTransactionData.saving.pay_date_boost
                     }`]:{'title':`Pay date`,'description':description()}}} 
-                    currentMonth={SavingWithTransactionData.saving.starting_date
+                    currentMonth={SavingWithTransactionData.saving.pay_date_boost
                     }
                     />
                     </div>
-                    {SavingWithTransactionData.saving.pay_date_boost!=null &&
-                        <div className="p-1">
-                        <BasicCalendar 
-                        extraDayData={{[`${SavingWithTransactionData.saving.pay_date_boost
-                        }`]:{'title':`Pay date Boost`,'description':description_boost()}}} 
-                        currentMonth={SavingWithTransactionData.saving.pay_date_boost
-                        }
-                        />
-                        </div>
-                    }
+                   
                 </div>
             
 

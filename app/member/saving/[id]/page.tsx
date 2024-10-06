@@ -164,7 +164,7 @@ export default function SavingDetail({
                             <strong>{datalabel[key]}</strong>
                             <p className="mt-1">
                             {/*DebtWithTransactionData.debtAccount[key] !== undefined ? DebtWithTransactionData.debtAccount[key].toString() : '-'*/}
-                            {key in SavingWithTransactionData.saving ? SavingWithTransactionData.saving[key]?.toString() : '-'}
+                            {key in SavingWithTransactionData.saving ? typeof SavingWithTransactionData.saving[key] == 'number'? SavingWithTransactionData.saving[key]?.toFixed(2) :SavingWithTransactionData.saving[key]?.toString() : '-'}
                             </p>
                         </div>
                         ))}
