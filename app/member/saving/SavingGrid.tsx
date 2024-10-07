@@ -214,6 +214,26 @@ const SavingGrid = ()=>{
            footer:(props)=><p><span>$</span><span className="px-2">{total_contribution.toFixed(2)}</span></p>
           },
 
+          {
+            accessorKey: 'progress',
+            header: DataLabel.progress,
+            cell: (info) => <p><span>{info.getValue<number>().toFixed(0)}</span><span className="px-2">%</span></p>,
+            /*
+            footer: (props) => {
+              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
+                return sum + row.original.monthly_payment;
+              }, 0);
+              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
+            },
+            */
+           //footer:(props)=><p><span>$</span><span className="px-2">{total_goal_amount.toFixed(2)}</span></p>
+          },
+
+          {
+            accessorKey: 'next_contribution_date',
+            header: DataLabel.next_contribution_date,
+          },
+
 
           
 
@@ -482,7 +502,7 @@ const SavingGrid = ()=>{
         && 
         !error 
         &&
-        data.length > 0
+        (pageCount * per_page) > per_page
         &&
         <div className="mt-[100px]">
       <GridPaginationHolder 

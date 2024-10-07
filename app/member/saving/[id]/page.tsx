@@ -8,8 +8,9 @@ import { useRouter } from "next/navigation";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 
 import BasicCalendar from "@/app/components/BasicCalender";
-import { DataLabelView } from "../cu/DataValidationSchema";
+import { DataLabel, DataLabelView } from "../cu/DataValidationSchema";
 import HolderOne from "@/app/layout/HolderOne";
+import SavingContributions from "./SavingContributions";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -41,6 +42,9 @@ export default function SavingDetail({
         payLoads:payload
     })
 
+    const datalabel:any = DataLabelView;
+
+
     const description = ()=>(
         <div className="flex flex-col gap-1 text-[15px]">
           <div><span>STARTING DATE</span><span className="ml-4">{SavingWithTransactionData.saving.starting_date_word}</span></div>          
@@ -50,12 +54,17 @@ export default function SavingDetail({
 
       const description_boost = ()=>(
         <div className="flex flex-col gap-1 text-[15px]">
-          <div><span>NEXT BOOST DATE</span><span className="ml-4">{SavingWithTransactionData.saving.pay_date_boost_word}</span></div>          
+          <div><span>GOAL COMPLETED</span><span className="ml-4">{SavingWithTransactionData.saving.goal_reached_word}</span></div>          
         </div>
       )
 
-    const datalabel:any = DataLabelView;
+      const description_next = ()=>(
+        <div className="flex flex-col gap-1 text-[15px]">
+          <div><span>{datalabel.next_contribution_date_word}</span><span className="ml-4">{SavingWithTransactionData.saving.next_contribution_date_word}</span></div>          
+        </div>
+      )
 
+    
     return(
         
         <DefaultLayout>
@@ -137,17 +146,28 @@ export default function SavingDetail({
                     <div className="p-1">  
                     <BasicCalendar 
                     extraDayData={{[`${SavingWithTransactionData.saving.starting_date
-                    }`]:{'title':`Pay date`,'description':description()}}} 
+                    }`]:{'title':datalabel.starting_date_word,'description':description()}}} 
                     currentMonth={SavingWithTransactionData.saving.starting_date
                     }
                     />
                     </div>
-                    {SavingWithTransactionData.saving.pay_date_boost!=null &&
+                    {SavingWithTransactionData.saving.goal_reached!=null &&
                         <div className="p-1">
                         <BasicCalendar 
-                        extraDayData={{[`${SavingWithTransactionData.saving.pay_date_boost
-                        }`]:{'title':`Pay date Boost`,'description':description_boost()}}} 
-                        currentMonth={SavingWithTransactionData.saving.pay_date_boost
+                        extraDayData={{[`${SavingWithTransactionData.saving.goal_reached
+                        }`]:{'title':datalabel.goal_reached_word,'description':description_boost()}}} 
+                        currentMonth={SavingWithTransactionData.saving.goal_reached
+                        }
+                        />
+                        </div>
+                    }
+
+{SavingWithTransactionData.saving.next_contribution_date!=null &&
+                        <div className="p-1">
+                        <BasicCalendar 
+                        extraDayData={{[`${SavingWithTransactionData.saving.next_contribution_date
+                        }`]:{'title':datalabel.next_contribution_date_word,'description':description_next()}}} 
+                        currentMonth={SavingWithTransactionData.saving.next_contribution_date
                         }
                         />
                         </div>
@@ -173,10 +193,15 @@ export default function SavingDetail({
 
                 </div>
 
+
+                
+
             </div>
 
             
-            
+            <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
+            <SavingContributions saving_id={id}  />
+            </div>
             
             
             

@@ -460,7 +460,7 @@ const generateItems = useCallback((row) => [
         && 
         !error 
         &&
-        data.length > 0
+        (pageCount * per_page) > per_page
         &&
         <div className="mt-3">
       <GridPaginationHolder 

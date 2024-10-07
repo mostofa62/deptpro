@@ -299,7 +299,7 @@ const IncomeTransactions = ({income_id}:IncomeProps)=>{
         && 
         !error 
         &&
-        data.length > per_page
+        (pageCount * per_page) > per_page
         &&
         <div className="mt-[100px]">
       <GridPaginationHolder 

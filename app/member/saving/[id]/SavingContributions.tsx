@@ -16,22 +16,24 @@ const per_page = per_page_list[0];
 
 
 
-interface IncomeProps{
-    income_id:string;    
+interface SavingProps{
+    saving_id:string;    
 }
 
 
 interface DataRow {
     _id:string;    
-    base_input_boost: number;
-    total_input_boost_for_period:number;
-    pay_date_word:string;
-    next_pay_date_word:string;    
+    contribution: number;
+    total_balance:number;
+    interest:number;
+    progress:number;
+    contribution_date_word:string;
+    next_contribution_date_word:string;    
     month_word:string;
     
 }
 
-const IncomeTransactions = ({income_id}:IncomeProps)=>{
+const SavingContributions = ({saving_id}:SavingProps)=>{
 
     
     const authCtx = useAuth();
@@ -73,7 +75,7 @@ const IncomeTransactions = ({income_id}:IncomeProps)=>{
     //const [globalFilter, setGlobalFilter] = useState('');    
 
     const {error,loading,totalRows,pageCount} = useFetchGridData({
-        urlSuffix:`income-boost-transactions/${income_id}`,
+        urlSuffix:`saving-contributions/${saving_id}`,
         pagination:pagination,
         //sorting:sorting,
         //globalFilter:globalFilter,
@@ -110,15 +112,15 @@ const IncomeTransactions = ({income_id}:IncomeProps)=>{
 
 
             {
-              accessorKey: 'pay_date_word',
-              header: 'Pay Date',
+              accessorKey: 'contribution_date_word',
+              header: 'Contribution Date',
             
             }, 
 
 
             {
-              accessorKey: 'next_pay_date_word',
-              header: 'Next Pay Date',
+              accessorKey: 'next_contribution_date_word',
+              header: 'Next Contribution Date',
             
             }, 
             
@@ -127,23 +129,29 @@ const IncomeTransactions = ({income_id}:IncomeProps)=>{
             
 
             {
-              accessorKey: 'base_input_boost',
-              header: 'Input Boost',
-              cell: info => <p><span>$</span><span>{info.row.original.base_input_boost.toFixed(2)}</span></p>
+              accessorKey: 'contribution',
+              header: 'Contribution',
+              cell: info => <p><span>$</span><span>{info.row.original.contribution.toFixed(2)}</span></p>
               
             },
 
-            
+            {
+              accessorKey: 'interest',
+              header: 'Interest',
+              cell: info => <p><span>$</span><span>{info.row.original.interest.toFixed(2)}</span></p>
+              
+            },
 
 
             {
-              accessorKey: 'total_input_boost_for_period',
-              header: 'Total Input Boost',
-              cell: info => <p><span>$</span><span>{info.row.original.total_input_boost_for_period.toFixed(2)}</span></p>
+              accessorKey: 'total_balance',
+              header: 'Total Balance',
+              cell: info => <p><span>$</span><span>{info.row.original.total_balance.toFixed(2)}</span></p>
               
             },
 
-            
+           
+
            
             
                       
@@ -196,7 +204,7 @@ const IncomeTransactions = ({income_id}:IncomeProps)=>{
 
                     <div className="grid grid-flow-row">
 
-                    <p className="text-[16px] uppercase font-medium mt-3">Boost Transaction History</p>
+                    <p className="text-[16px] uppercase font-medium mt-3">Saving Contribution History</p>
 
                     <hr className="mt-2 border-stroke"/>
 
@@ -289,6 +297,7 @@ const IncomeTransactions = ({income_id}:IncomeProps)=>{
         (pageCount * per_page) > per_page
         &&
         <div className="mt-[100px]">
+          
       <GridPaginationHolder 
       table={table}
       pageNumbers={pageNumbers}
@@ -307,4 +316,4 @@ const IncomeTransactions = ({income_id}:IncomeProps)=>{
 
 }
 
-export default IncomeTransactions;
+export default SavingContributions;

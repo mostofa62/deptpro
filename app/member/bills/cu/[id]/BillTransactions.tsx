@@ -271,7 +271,7 @@ const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:Bil
         && 
         !error 
         &&
-        data.length > per_page
+        (pageCount * per_page) > per_page
         &&
         <div className="mt-[100px]">
       <GridPaginationHolder 

@@ -52,7 +52,11 @@ export const DataLabel = {
  
   repeat:'Repeat', 
   
-  note:'Note'
+  note:'Note',
+
+  progress:'Progress',
+
+  next_contribution_date:'Next Contribution Date',
   
 }
 
@@ -70,13 +74,19 @@ export const DataLabelView = {
   
   starting_date_word:'Starting Date',
 
+  next_contribution_date_word:'Next Contribution Date',
+
+  goal_reached_word:'Goal Completed',
+
   starting_amount:'Starting Amount',
   
   contribution:'Contribution',
 
   increase_contribution_by:'Increase Contribution By',
  
-  repeat:'Repeat',  
+  repeat:'Repeat', 
+  
+  progress:'Progress',
   
   note:'Note'
   
