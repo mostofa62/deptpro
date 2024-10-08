@@ -2,7 +2,7 @@ import CardHolder from "@/app/components/ui/CardHolder";
 import DataProgress from "@/app/components/ui/DataProgress";
 import { getColorForValue, hashString, hslToHex } from "@/app/components/utils/Util";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Line, BarChart, Bar } from "recharts";
 
 // const data = [
@@ -275,11 +275,32 @@ const TotalAllocation = () => {
         </div>
       );
     };
+
+
+    const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const [maxHeight, setMaxHeight] = useState<number>(0);
+
+    useEffect(() => {
+      // Calculate the height of the tallest element after component renders
+      const total_length:number = data.length + barData.length + lineData.length;
+      if(total_length > 0){
+        const heights = itemRefs.current.map(item => item?.getBoundingClientRect().height || 0);
+        const tallestHeight = Math.max(...heights);
+        if (lineData.length > 0 && tallestHeight < 350){
+          setMaxHeight(350)
+        }else{ 
+          setMaxHeight(tallestHeight);
+        }
+      }
+      
+    }, [data, barData, lineData]);
+
+
     return (
-    <div className="flex flex-row min-h-75">
-        <div className="w-[35%]">
+    <div className="flex flex-row gap-2.5">
+        <div className="w-[35%]" ref={el => (itemRefs.current[0] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
         {data.length > 0 &&
-        <CardHolder title="Total Allocation">
+        <CardHolder title="Total Allocation" maxHeight={maxHeight}>
             <div className="flex flex-row">
                 {/* {JSON.stringify(data)} */}
                 {/* <div className="w-[45%]">
@@ -335,19 +356,13 @@ const TotalAllocation = () => {
         </CardHolder>
         }
         </div>
-        <div className="w-[25%]">
-
-        {/* {chartData.map((damort:any, index:number)=>{
-          const keys = Object.keys(damort);
-          return <p key={index}>{keys[1]} </p>
-
-        })} */}
-
+        <div className="w-[25%]" ref={el => (itemRefs.current[1] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
 
 {barData.length > 0 &&
-                <div className="w-full flex justify-center items-center py-9">
+  <CardHolder title={`12 months history`} maxHeight={maxHeight}>
+                <div className="w-full flex justify-center items-center py-2">
                     
-                                <ResponsiveContainer width="20%" height={150}>
+                                <ResponsiveContainer width="35%" height={200}>
                                         <BarChart                                            
                                             data={barData}
                                             margin={{
@@ -362,14 +377,15 @@ const TotalAllocation = () => {
                                         >
 
                                         
-                                        <XAxis   dataKey="total_contribution" tickLine={false} axisLine={false} tick={false} />
-                                        <Bar   dataKey="total_contribution" fill="#22bf6a"  barSize={20} shape={<CustomBar />} />
+                                        <XAxis   dataKey="total_balance" tickLine={false} axisLine={false} tick={false} />
+                                        <Bar   dataKey="total_balance" fill="#22bf6a"  barSize={20} shape={<CustomBar />} />
                                         <Tooltip content={<CustomTooltipBar />} cursor={{fill: 'transparent'}}/>
                                         
                                         </BarChart>
 
                                         </ResponsiveContainer>
                 </div>
+                </CardHolder>
             }
 
 
@@ -378,9 +394,9 @@ const TotalAllocation = () => {
             
         </div>
 
-        <div className="w-[40%]">
+        <div className="w-[40%]" ref={el => (itemRefs.current[2] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
         {lineData.length > 0 && 
-
+          <CardHolder title="12 Months Projection" maxHeight={maxHeight}>
           <div className="w-full overflow-x-auto">
             <div className={`w-[${lineData.length * 100}px]`}> {/* Dynamically adjust width */}
               <ResponsiveContainer width="100%" height={350}>
@@ -413,6 +429,8 @@ const TotalAllocation = () => {
 
           </div>
         </div>
+
+        </CardHolder>
 
         }
         </div>            
