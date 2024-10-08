@@ -71,6 +71,14 @@ interface PayLoads{
     
 }
 
+interface SavingPayload{
+  year_month_wise_counts:{total_balance:number,total_contribution:number, year_month_word:string}[],
+}
+
+interface FuturePayLoad{
+  projection_list:{total_balance:number, contribution:number, month:string, month_word:string}[]
+}
+
 
 const TotalAllocation = () => {
 
@@ -96,6 +104,14 @@ const TotalAllocation = () => {
         year_month_wise_balance:0,
         
     }
+
+    const payloadSaving :SavingPayload = {
+      year_month_wise_counts:[]
+    }
+
+    const payloadFuture:FuturePayLoad={
+      projection_list:[]
+    }
     
 
 
@@ -104,19 +120,27 @@ const TotalAllocation = () => {
         payLoads:payload
     })
 
-    const total_count = SavingTypewiseInfo.total_saving_source_type
+
+    const SavingContributions:any = useFetchDropDownObjects({
+      urlSuffix:`saving-contributions-previous`,
+      payLoads:payloadSaving
+    })
+
+    const SavingFuture:any = useFetchDropDownObjects({
+      urlSuffix:`saving-contributions-next`,
+      payLoads:payloadFuture
+    })
+
+    
 
     const total_balance = SavingTypewiseInfo.total_balance;
 
     const data = SavingTypewiseInfo.category_type_counts;
 
-    const chartData = SavingTypewiseInfo.category_type_counts;
 
-    const bill_type_names = SavingTypewiseInfo.category_type_names;
+    const barData = SavingContributions.year_month_wise_counts;
 
-    const barData = SavingTypewiseInfo.year_month_wise_counts;
-
-    const year_month_wise_tbalance = SavingTypewiseInfo.year_month_wise_balance;
+    const lineData = SavingFuture.projection_list;
 
 
     // Create a mapping from bill_type_id to bill_type_name
@@ -179,8 +203,8 @@ const TotalAllocation = () => {
     }
 
     const dataLabel = {
-      total_balance:'Total Starting Amount',
-      total_goal_amount:'Total Goal Amount'
+      total_balance:'Total Balances',
+      contribution:'Contribution'
     }
     
     
@@ -338,8 +362,8 @@ const TotalAllocation = () => {
                                         >
 
                                         
-                                        <XAxis   dataKey="total_balance" tickLine={false} axisLine={false} tick={false} />
-                                        <Bar   dataKey="total_balance" fill="#22bf6a"  barSize={20} shape={<CustomBar />} />
+                                        <XAxis   dataKey="total_contribution" tickLine={false} axisLine={false} tick={false} />
+                                        <Bar   dataKey="total_contribution" fill="#22bf6a"  barSize={20} shape={<CustomBar />} />
                                         <Tooltip content={<CustomTooltipBar />} cursor={{fill: 'transparent'}}/>
                                         
                                         </BarChart>
@@ -355,14 +379,14 @@ const TotalAllocation = () => {
         </div>
 
         <div className="w-[40%]">
-        {barData.length > 0 && 
+        {lineData.length > 0 && 
 
           <div className="w-full overflow-x-auto">
-            <div className={`w-[${barData.length * 100}px]`}> {/* Dynamically adjust width */}
+            <div className={`w-[${lineData.length * 100}px]`}> {/* Dynamically adjust width */}
               <ResponsiveContainer width="100%" height={350}>
-              <LineChart data={barData}>
+              <LineChart data={lineData}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="year_month_word" tick={{ fontSize:12 }} />
+              <XAxis dataKey="month_word" tick={{ fontSize:12 }} />
               <YAxis tick={{ fontSize:12 }} />
               {/* <Tooltip content={<CustomTooltipLine />} /> */}
               <Tooltip content={<CustomTooltipLine />} />
@@ -372,8 +396,8 @@ const TotalAllocation = () => {
               />
 
               {/* Render Line components for each unique dataKey (e.g., BB, TEACHER_FEE, etc.) */}
-              {Object.keys(barData[0]).
-              filter(key => key !== 'year_month_word' && key !== 'year_month').map((key, index) => (
+              {Object.keys(lineData[0]).
+              filter(key => key !== 'month_word' && key !== 'month').map((key, index) => (
                 <Line
                   key={key}
                   type="monotone"

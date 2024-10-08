@@ -86,7 +86,7 @@ export const DataLabelView = {
  
   repeat:'Repeat', 
   
-  progress:'Progress',
+  //progress:'Progress',
   
   note:'Note'
   

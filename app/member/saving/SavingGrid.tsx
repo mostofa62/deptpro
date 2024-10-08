@@ -10,7 +10,7 @@ import GridGlobalSearch from "@/app/components/grid/GridGlobalSearch";
 import GridActionLink from "@/app/components/grid/GridActionLink";
 import GridPaginationHolder from "@/app/components/grid/GridPaginationHolder";
 import { DataLabel } from "./cu/DataValidationSchema";
-
+import DataProgress from "@/app/components/ui/DataProgress";
 
 const per_page_list = PerPageList();
 const per_page = per_page_list[0];
@@ -217,7 +217,13 @@ const SavingGrid = ()=>{
           {
             accessorKey: 'progress',
             header: DataLabel.progress,
-            cell: (info) => <p><span>{info.getValue<number>().toFixed(0)}</span><span className="px-2">%</span></p>,
+            //cell: (info) => <p><span>{info.getValue<number>().toFixed(0)}</span><span className="px-2">%</span></p>,
+            cell:(info) => <DataProgress 
+            title={''} 
+            progress={info.getValue<number>().toFixed(0)}
+            color={'#31c4a2'}
+            maxProgressLength={DataLabel.progress.length}
+            />
             /*
             footer: (props) => {
               const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {

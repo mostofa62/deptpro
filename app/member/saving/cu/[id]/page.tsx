@@ -332,7 +332,9 @@ export default function InsuranceCreate({
     <div className="ml-[24px] w-[32%]">
 
     <FormikFieldInput 
-        type="date"         
+        type="date"
+        readOnly
+        disabled         
         label={DataLabel.starting_date} 
         name={`fetchdata.starting_date`}
         placeHolder={`${DataLabel.starting_date}`}

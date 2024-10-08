@@ -11,7 +11,7 @@ const HeaderSummary = ()=>{
     const user_id = authCtx.userId;
 
     const [transactioData, setTransactionData] = useState({
-        'saving_progress':25,
+        'saving_progress':0,
         'total_paid_off':0,
         'snowball_amount':0,
         'monthly_budget':0,

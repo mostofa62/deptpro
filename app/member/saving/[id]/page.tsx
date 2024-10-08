@@ -11,6 +11,7 @@ import BasicCalendar from "@/app/components/BasicCalender";
 import { DataLabel, DataLabelView } from "../cu/DataValidationSchema";
 import HolderOne from "@/app/layout/HolderOne";
 import SavingContributions from "./SavingContributions";
+import DataProgress from "@/app/components/ui/DataProgress";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -188,7 +189,16 @@ export default function SavingDetail({
                             </p>
                         </div>
                         ))}
+                      <div  className="bg-white p-4 rounded shadow">
+                      <DataProgress 
+                        title={DataLabel.progress} 
+                        progress={SavingWithTransactionData.saving.progress}
+                        color={'#31c4a2'}
+                        maxProgressLength={DataLabel.progress.length}
+                        />
+                        </div>
                     </div>
+                    
 
 
                 </div>

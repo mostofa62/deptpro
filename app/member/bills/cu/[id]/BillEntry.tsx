@@ -30,7 +30,7 @@ const BillEntry=({bill_acc_id, user_id,editData,cleanData}:BillProps)=>{
 
     const fetchdata = fetchFomrData;
 
-    const handleFormSubmit = async(values:any,{ resetForm }:any)=>{
+    const handleFormSubmit = async(values:any,{ resetForm,setSubmitting }:any)=>{
         //alert(JSON.stringify(values));
 
         const link:any = editData.id == ''? `${url}save-bill/${bill_acc_id}`:
@@ -48,10 +48,12 @@ const BillEntry=({bill_acc_id, user_id,editData,cleanData}:BillProps)=>{
           //console.log(response);
 
           if(response.data.result > 0){
+            setSubmitting(false);
             toast.success(response.data.message);
-            //resetForm();
+            resetForm();
             
           }else{
+            setSubmitting(true);
             toast.error(response.data.message);
           }         
           
