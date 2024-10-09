@@ -57,6 +57,8 @@ export const DataLabel = {
   progress:'Progress',
 
   next_contribution_date:'Next Contribution Date',
+
+  total_balance:'Total Balance'
   
 }
 
@@ -87,6 +89,8 @@ export const DataLabelView = {
   repeat:'Repeat', 
   
   //progress:'Progress',
+  
+  total_balance:'Total Balance',
   
   note:'Note'
   

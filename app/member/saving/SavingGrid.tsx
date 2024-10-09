@@ -146,7 +146,7 @@ const SavingGrid = ()=>{
           {
             accessorKey: 'interest',
             header: DataLabel.interest,
-            cell: (info) => <p><span>{info.getValue<number>().toFixed(2)}</span><span className="px-2">%</span></p>,
+            cell: (info) => <p><span>{info.getValue<number>().toFixed(2)}</span><span>%</span></p>,
             /*
             footer: (props) => {
               const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
@@ -167,7 +167,7 @@ const SavingGrid = ()=>{
           {
             accessorKey: 'goal_amount',
             header: DataLabel.goal_amount,
-            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
+            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
             /*
             footer: (props) => {
               const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
@@ -176,7 +176,7 @@ const SavingGrid = ()=>{
               return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
             },
             */
-           footer:(props)=><p><span>$</span><span className="px-2">{total_goal_amount.toFixed(2)}</span></p>
+           footer:(props)=><p><span>$</span><span>{total_goal_amount.toFixed(2)}</span></p>
           },
 
           {
@@ -187,7 +187,7 @@ const SavingGrid = ()=>{
           {
             accessorKey: 'starting_amount',
             header: 'Starting Amount',
-            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
+            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
             /*
             footer: (props) => {
               const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
@@ -196,13 +196,13 @@ const SavingGrid = ()=>{
               return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
             },
             */
-           footer:(props)=><p><span>$</span><span className="px-2">{total_starting_amount.toFixed(2)}</span></p>
+           footer:(props)=><p><span>$</span><span>{total_starting_amount.toFixed(2)}</span></p>
           },
 
           {
             accessorKey: 'contribution',
             header: DataLabel.contribution,
-            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
+            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
             /*
             footer: (props) => {
               const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
@@ -211,19 +211,25 @@ const SavingGrid = ()=>{
               return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
             },
             */
-           footer:(props)=><p><span>$</span><span className="px-2">{total_contribution.toFixed(2)}</span></p>
+           footer:(props)=><p><span>$</span><span>{total_contribution.toFixed(2)}</span></p>
+          },
+
+          {
+            accessorKey: 'total_balance',
+            header: DataLabel.total_balance,
+            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
           },
 
           {
             accessorKey: 'progress',
             header: DataLabel.progress,
-            //cell: (info) => <p><span>{info.getValue<number>().toFixed(0)}</span><span className="px-2">%</span></p>,
-            cell:(info) => <DataProgress 
-            title={''} 
-            progress={info.getValue<number>().toFixed(0)}
-            color={'#31c4a2'}
-            maxProgressLength={DataLabel.progress.length}
-            />
+            cell: (info) => <p><span>{info.getValue<number>().toFixed(0)}</span><span>%</span></p>,
+            // cell:(info) => <DataProgress 
+            // title={''} 
+            // progress={info.getValue<number>().toFixed(0)}
+            // color={'#31c4a2'}
+            // maxProgressLength={DataLabel.progress.length}
+            // />
             /*
             footer: (props) => {
               const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
@@ -235,10 +241,7 @@ const SavingGrid = ()=>{
            //footer:(props)=><p><span>$</span><span className="px-2">{total_goal_amount.toFixed(2)}</span></p>
           },
 
-          {
-            accessorKey: 'next_contribution_date',
-            header: DataLabel.next_contribution_date,
-          },
+          
 
 
           

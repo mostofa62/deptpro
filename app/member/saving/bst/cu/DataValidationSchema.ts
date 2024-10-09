@@ -1,7 +1,7 @@
 import moment from "moment";
 import { object, string, number } from "yup";
 export const DataSchema = {
-    
+    saving:{'label':'','value':''},
     saver:'',
     saving_boost:0,
     autopay:0,
@@ -14,7 +14,7 @@ export const DataSchema = {
 };
 
 export const DataLabel = {
-  
+  saving:'Saving Account',
   saver:'Saver',
   repeat:'Repeat Frequency',
   saving_boost:'Saving Boost',
@@ -29,7 +29,7 @@ export const DataLabel = {
 
 export const DataLabelView = {
   
-
+  saving:'Saving Account',
   saver:'Saver',
   saving_boost:'Saving Boost',
   autopay:'Autopay?',
@@ -45,7 +45,10 @@ export const DataLabelView = {
 export const ValidationSchema =  object().shape({
   fetchdata:object().shape({
             
-            
+              saving:object().shape({
+                value: string().required(),
+                label: string().required(`${DataLabel.saving} is required`)
+              }),
 
               saver: string()
               .ensure()
