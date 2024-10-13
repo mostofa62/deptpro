@@ -399,7 +399,7 @@ const TotalAllocation = () => {
           <CardHolder title="12 Months Projection" maxHeight={maxHeight}>
           <div className="w-full overflow-x-auto">
             <div className={`w-[${lineData.length * 100}px]`}> {/* Dynamically adjust width */}
-              <ResponsiveContainer width="100%" height={350}>
+              <ResponsiveContainer width="100%" height={maxHeight >= 350 ? maxHeight - 80:maxHeight}>
               <LineChart data={lineData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month_word" tick={{ fontSize:12 }} />

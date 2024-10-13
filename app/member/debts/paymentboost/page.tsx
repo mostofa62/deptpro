@@ -13,6 +13,7 @@ import TabView from "@/app/components/ui/TabView";
 import BoostEntry from "./BoostEntry";
 import BoostTransactions from "./BoostTransactions";
 import CardHolderDefault from "@/app/components/ui/CardHolderDefault";
+import { DataSchema } from "./DataValidationSchema";
 
 
 interface Tab {
@@ -32,8 +33,7 @@ export default function InsuranceCreate() {
     const edata = {
       'id':'',      
       'amount':0,
-      'month':'',
-      'year':'',
+      'pay_date_boost':DataSchema.pay_date_boost,      
       'comment':''
     }
 
@@ -67,29 +67,7 @@ export default function InsuranceCreate() {
     const user_id:any = authCtx.userId;
 
    
-    const [transactioData, setTransactionData] = useState({      
-      'transactionMonth':[],
-      'transactionYear':[]
-    })
     
-    const fetchDataCallback=useCallback(async()=>{
-        //console.log(id);
-        const response = await axios.get(`${url}debt-transaction-dropdown`);
-        //return response.data.user;
-        setTransactionData({          
-          'transactionMonth':response.data.transaction_month,
-          'transactionYear':response.data.transaction_year,
-        });
-               
-
-    },[]);
-    useEffect(()=>{
-        
-        fetchDataCallback();
-       
-        
-    
-    },[fetchDataCallback]);
 
 
    
@@ -109,7 +87,6 @@ export default function InsuranceCreate() {
                                    
                     <BoostEntry                    
                     user_id={user_id}
-                    transaction_data={transactioData}
                     editData={editData}
                     cleanData={cleanData}                                                          
                      />                                                         

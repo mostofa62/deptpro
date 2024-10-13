@@ -14,7 +14,8 @@ interface SelectProps{
     isSearchable?:boolean,
     options:Array<Object>,
     onParentChange:(value:any,name:any)=>void,
-    onBlur?:(e:any)=>void
+    onBlur?:(e:any)=>void,
+    disabled?:boolean
   }
 
 const containerStyle = "flex flex-col gap-4 w-full bg-white dark:bg-form-input";
@@ -69,6 +70,7 @@ const SelectNonCreatableComponent = (props:SelectProps) => {
   return (
     <>
       <Select
+      isDisabled={props.disabled}
       components={{ Option: CustomOption }} // Use the custom Option component
       classNames={{
         /*

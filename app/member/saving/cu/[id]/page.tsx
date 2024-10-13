@@ -269,7 +269,7 @@ export default function InsuranceCreate({
             errors.fetchdata.savings_strategy &&
             touched.fetchdata &&
             touched.fetchdata.savings_strategy &&
-            errors.fetchdata.savings_strategy.label
+            errors.fetchdata.savings_strategy.value
         }
     />
 
@@ -320,7 +320,7 @@ export default function InsuranceCreate({
             errors.fetchdata.interest_type &&
             touched.fetchdata &&
             touched.fetchdata.interest_type &&
-            errors.fetchdata.interest_type.label
+            errors.fetchdata.interest_type.value
         }
     />
 
@@ -441,7 +441,7 @@ export default function InsuranceCreate({
             errors.fetchdata.repeat &&
             touched.fetchdata &&
             touched.fetchdata.repeat &&
-            errors.fetchdata.repeat.label
+            errors.fetchdata.repeat.value
         }
     />
         

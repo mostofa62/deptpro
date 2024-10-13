@@ -2,8 +2,7 @@ import moment from "moment";
 import { object, array, string, number, StringSchema } from "yup";
 export const DataSchema = {    
     amount:0,        
-    month:'',
-    year:'',
+    pay_date_boost:moment().format('YYYY-MM-DD'),
     comment:''  
 
 };
@@ -11,8 +10,7 @@ export const DataSchema = {
 
 export const DataLabel = {    
     amount:'Boosting Amount',        
-    month:'Billing Month',
-    year:'Billing Year',
+    pay_date_boost:'Pay date',
     comment:'Comment'
     
   }
@@ -28,17 +26,10 @@ export const DataLabel = {
                 .required(`${DataLabel.amount} is required`),
                 
 
-                month:object().shape({
-                  value: number().required(`${DataLabel.month} is required`).min(1, `Please select one of ${DataLabel.month}`),
-                  label: string().required(`Please select one of ${DataLabel.month}`)                  
-                }),
-                
-
-                year:object().shape({
-                  value: number().required(`${DataLabel.year} is required`).min(1, `Please select one of ${DataLabel.year}`),
-                  label: string().required(`Please select one of ${DataLabel.year}`)                  
-                }),
-  
+                pay_date_boost: string()
+                .ensure()
+                .matches(/^\d{4}-\d{2}-\d{2}$/i,`provide valid ${DataLabel.pay_date_boost}`)
+                .required(`${DataLabel.pay_date_boost} is required`),
                 
 
                 

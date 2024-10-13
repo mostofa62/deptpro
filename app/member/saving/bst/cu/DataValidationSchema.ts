@@ -4,7 +4,7 @@ export const DataSchema = {
     saving:{'label':'','value':''},
     saver:'',
     saving_boost:0,
-    autopay:0,
+    
     saving_boost_source:{'label':'','value':''},
     pay_date_boost:moment().format('YYYY-MM-DD'),
     repeat_boost:{'label':'None','value':0},
@@ -18,7 +18,7 @@ export const DataLabel = {
   saver:'Saver',
   repeat:'Repeat Frequency',
   saving_boost:'Saving Boost',
-  autopay:'Autopay?',
+  
   saving_boost_source:'Saving Boost Source',
   pay_date_boost:'Pay Day Boost',
   repeat_boost:'Repeat Frequency',
@@ -32,7 +32,7 @@ export const DataLabelView = {
   saving:'Saving Account',
   saver:'Saver',
   saving_boost:'Saving Boost',
-  autopay:'Autopay?',
+  
   saving_boost_source:'Saving Boost Source',
   pay_date_boost_word:'Pay Day Boost',
   repeat_boost:'Repeat',

@@ -113,12 +113,12 @@ export const ValidationSchema =  object().shape({
               }),
 
               savings_strategy:object().shape({
-                value: string().required(),
+                value: string().required(`${DataLabel.savings_strategy} is required`),
                 label: string().required(`${DataLabel.savings_strategy} is required`)
               }),
 
               interest_type:object().shape({
-                value: string().required(),
+                value: string().required(`${DataLabel.interest_type} is required`),
                 label: string().required(`${DataLabel.interest_type} is required`)
               }),
 

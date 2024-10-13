@@ -15,15 +15,11 @@ const url = process.env.NEXT_PUBLIC_API_URL;
 
 interface BoostProps{    
     user_id:string;
-    transaction_data:{        
-        'transactionMonth':{}[],
-        'transactionYear':{}[]
-    },
     editData:any;
     cleanData:()=>void    
 }
 
-const BoostEntry=({user_id,transaction_data, editData,cleanData}:BoostProps)=>{
+const BoostEntry=({user_id, editData,cleanData}:BoostProps)=>{
 
     const appCtx = useApp();
     
@@ -96,47 +92,24 @@ const BoostEntry=({user_id,transaction_data, editData,cleanData}:BoostProps)=>{
            
             
             <div className="flex flex-row mt-[15px]">
-                <div className="w-[48%]">
+                <div className="w-full">
 
-                <FormikSelectInput
-                    label={DataLabel.month}
-                    defaultValue={fetchdata.month}
-                    placeHolder={``}
-                    isSearchable={true}
-                    isClearable={true}
-                    name="fetchdata.month"
-                    dataOptions={transaction_data.transactionMonth}
-                    errorMessage={errors.fetchdata &&
-                        errors.fetchdata.month &&
-                        touched.fetchdata &&
-                        touched.fetchdata.month &&
-                        errors.fetchdata.month.value
-                    }
-                />
+                <FormikFieldInput 
+        type="date"          
+        label={DataLabel.pay_date_boost} 
+        name={`fetchdata.pay_date_boost`}
+        placeHolder={`${DataLabel.pay_date_boost}`}
+        errorMessage ={ errors.fetchdata &&                                        
+            errors.fetchdata.pay_date_boost &&
+            touched.fetchdata &&            
+            touched.fetchdata.pay_date_boost &&  errors.fetchdata.pay_date_boost}
+                   
+        />
                     
                     
                 </div>
 
-                <div className="ml-[24px] w-[48%]">
-
-                <FormikSelectInput
-                    label={DataLabel.year}
-                    defaultValue={fetchdata.year}
-                    placeHolder={``}
-                    isSearchable={true}
-                    isClearable={true}
-                    name="fetchdata.year"
-                    dataOptions={transaction_data.transactionYear}
-                    errorMessage={errors.fetchdata &&
-                        errors.fetchdata.year &&
-                        touched.fetchdata &&
-                        touched.fetchdata.year &&
-                        errors.fetchdata.year.value
-                    }
-                />
-                    
-                    
-                </div>
+               
             </div>    
 
 

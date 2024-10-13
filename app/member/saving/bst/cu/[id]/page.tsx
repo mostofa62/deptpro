@@ -28,7 +28,7 @@ interface Options{
 }
 interface PayLoads{
     
-    repeat_frequency:Options[],
+    //repeat_frequency:Options[],
     saving_boost_source:Options[],
     saving_list:Options[]     
 }
@@ -47,12 +47,16 @@ export default function InsuranceCreate({
     const formRef = useRef<any>(null);
 
     const [fetchFomrData,setFetchFormData] = useState(DataSchema);
+
+    const [repeatFrequency, setRepeatFrequency] = useState([
+        DataSchema.repeat_boost
+    ])
     
     const id = params.id;
 
     const payload: PayLoads ={
           
-        repeat_frequency: [],
+        //repeat_frequency: [],
         saving_boost_source:[],
         saving_list:[]            
 
@@ -67,6 +71,7 @@ export default function InsuranceCreate({
         const response = await axios.get(`${url}saving-boost/${id}`);
         //return response.data.user;
         setFetchFormData(response.data.saving);
+        setRepeatFrequency([response.data.saving.repeat_boost, DataSchema.repeat_boost])
         
         
     },[id]);
@@ -158,8 +163,9 @@ export default function InsuranceCreate({
     <div className="w-[32%]">
 
 
-    <FormikSelectCreatableInput
+    <FormikSelectInput
             label={DataLabel.saving}
+            disabled={true}
             defaultValue={fetchdata.saving}
             placeHolder={``}
             isSearchable={true}
@@ -172,6 +178,14 @@ export default function InsuranceCreate({
                 touched.fetchdata.saving &&
                 errors.fetchdata.saving.label
             }
+
+            onParentChangeSelect ={(v:any,n:any)=>{ 
+                setRepeatFrequency([DataSchema.repeat_boost,v.repeat_boost])
+                setFieldValue('fetchdata.pay_date_boost',v.pay_date_boost)
+                setFieldValue('fetchdata.repeat_boost',v.repeat_boost)
+                
+                
+            }}
         />
     
         
@@ -269,7 +283,10 @@ export default function InsuranceCreate({
     <div className="ml-[24px] w-[32%]">
 
     <FormikFieldInput 
-        type="date"              
+        type="date"
+        readOnly
+        disabled
+
         label={DataLabel.pay_date_boost} 
         name={`fetchdata.pay_date_boost`}
         placeHolder={`${DataLabel.pay_date_boost}`}
@@ -294,41 +311,21 @@ export default function InsuranceCreate({
 
     <div className="ml-[24px] w-[32%]">
 
-    <Field 
-    component={FormikCheckInput}
-        name="fetchdata.autopay"
-        label={DataLabel.autopay}    
-        checked={values.fetchdata.autopay === 1}
-        errorClass={errors.fetchdata && 
-            errors.fetchdata.autopay && 
-            touched.fetchdata && 
-            touched.fetchdata.autopay &&
-            'font-semibold text-[#B45454]'
-        }                                        
-        onChange={(e:any) => {
-            const {checked, name} = e.target;                        
-                    
-            if (checked) {
-            setFieldTouched(name,true);
-
-            setFieldValue(
-                name,
-                1
-            );
-            
-            }else{
-                setFieldTouched(name,false);
-                setFieldValue(
-                    name,
-                    0
-                );
-
+    <FormikSelectInput
+            label={DataLabel.repeat_boost}
+            defaultValue={fetchdata.repeat_boost}
+            placeHolder={``}
+            isSearchable={true}
+            isClearable={true}
+            name="fetchdata.repeat_boost"
+            dataOptions={repeatFrequency}
+            errorMessage={errors.fetchdata &&
+                errors.fetchdata.repeat_boost &&
+                touched.fetchdata &&
+                touched.fetchdata.repeat_boost &&
+                errors.fetchdata.repeat_boost.label
             }
-        
-        }}
-        
         />
-
 
         
 
@@ -347,26 +344,8 @@ export default function InsuranceCreate({
 <div className="flex flex-row mt-[15px]">
 
 <div className="w-[32%]">
-<FormikSelectInput
-            label={DataLabel.repeat_boost}
-            defaultValue={fetchdata.repeat_boost}
-            placeHolder={``}
-            isSearchable={true}
-            isClearable={true}
-            name="fetchdata.repeat_boost"
-            dataOptions={SavingCategoryData.repeat_frequency}
-            errorMessage={errors.fetchdata &&
-                errors.fetchdata.repeat_boost &&
-                touched.fetchdata &&
-                touched.fetchdata.repeat_boost &&
-                errors.fetchdata.repeat_boost.label
-            }
-        />
-</div>
 
-<div className="ml-[24px] w-[32%]">
-        
-        <FormikFieldInput 
+<FormikFieldInput 
             label={DataLabel.note} 
             name={`fetchdata.note`}
             placeHolder={`${DataLabel.note}`}
@@ -376,12 +355,10 @@ export default function InsuranceCreate({
                 touched.fetchdata.note &&  errors.fetchdata.note}
           
             />
-    
-            
-            
-            
-            
+
 </div>
+
+
 
 </div>
 

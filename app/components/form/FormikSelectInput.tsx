@@ -10,6 +10,7 @@ interface FormHolderProps{
     dataOptions:{}[];
     isSearchable:boolean;
     isClearable:boolean;
+    disabled?:boolean;
     onParentChangeSelect?:(value:any, name:any)=>void;       
 }
 
@@ -23,6 +24,7 @@ export default function FormikSelectInput({
     isSearchable,
     isClearable,
     onParentChangeSelect,
+    disabled
     }:FormHolderProps){
         
 
@@ -33,7 +35,9 @@ export default function FormikSelectInput({
             </label>
             <div className="relative">
                 {onParentChangeSelect ?
-            <SelectNonCreatableComponent defaultValueArray={defaultValue}
+            <SelectNonCreatableComponent 
+            disabled={disabled}
+            defaultValueArray={defaultValue}
                                  placeholder={`Select ${placeHolder}`}
                                  isSearchable={isSearchable}
                                  isClearable={isClearable}                                 
@@ -41,7 +45,9 @@ export default function FormikSelectInput({
                                   options={dataOptions}
                                   onParentChange={onParentChangeSelect} 
                                   
-                      />: <SelectNonCreatableComponent defaultValueArray={defaultValue}
+                      />: <SelectNonCreatableComponent 
+                      disabled={disabled}
+                      defaultValueArray={defaultValue}
                       placeholder={`Select ${placeHolder}`}
                       isSearchable={isSearchable}
                       isClearable={isClearable}                                 
