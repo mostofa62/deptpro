@@ -13,6 +13,11 @@
         {"value":10 ,"label":"Highest monthly interest paid first" },
         {"value":12 ,"label":"Lowest interest rate paid first" }
 
+    ],
+
+    "PayOffSelectedMonth":[
+        {"value":1  ,"label":"Use Current Month" },
+        {"value":2 ,"label":"Start Next Month" }
     ]
 
 }

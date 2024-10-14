@@ -444,6 +444,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 </li>
 
 
+<li key={104}>
+  <Link
+    href={'/member/debts/payoffstrategy'}
+    className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out  hover:text-[#43ACD6] ${
+      pathname.slice(-12) =='paymentboost' ? 'text-[#43ACD6]':'text-[#4F4F4F]'
+    }`}
+  >
+    <svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+</svg>
+
+      <p>Payoff Strategy</p>
+  </Link>
+</li>
+
 
 
 
