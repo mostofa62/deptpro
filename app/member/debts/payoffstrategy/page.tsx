@@ -11,8 +11,28 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import FormikFormHolder from "@/app/components/form/FormikFormHolder";
 import {DeptPayOffMethod,PayOffSelectedMonth} from '@/app/data/DebtOptions.json'
+import Summary from "./Summary";
+import SortedAccount from "./SortedAccounts";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
+
+interface DebtRow {       
+    name:string;
+    total_payment_sum:number;       
+    total_interest_sum: number;    
+    months_to_payoff:number;    
+    month_debt_free_word:string;
+    
+}
+
+interface PayOffData{
+    total_paid:number;
+    total_interest:number;
+    paid_off:string;
+    max_months_to_payoff:number;
+    debt_accounts_list:DebtRow[],
+    sorted_month_wise:DebtRow[]
+}
 const PayoffStrategy =()=>{
 
     const authCtx = useAuth();
@@ -20,6 +40,20 @@ const PayoffStrategy =()=>{
     const formRef = useRef<any>(null);
 
     const [fetchFomrData,setFetchFormData] = useState(DataSchema);
+
+    const [reload, setReload] = useState(false);
+
+    const pay_off_data:PayOffData = {
+        total_paid:0,
+        total_interest:0,
+        paid_off:'',
+        max_months_to_payoff:0,
+        debt_accounts_list:[],
+        sorted_month_wise:[]
+    }
+
+    const[payoffData, setPayOffData] = useState(pay_off_data)
+    
 
     const user_id = authCtx.userId;
 
@@ -32,11 +66,32 @@ const PayoffStrategy =()=>{
             setFetchFormData(response.data.payoff_strategy);
         }
     },[user_id]);
+
+
+    const fetchDataPayoff=useCallback(async()=>{
+        //console.log(id);
+        const response = await axios.get(`${url}get-payoff-strategy-account/${user_id}`);
+        //return response.data.user;
+
+        setPayOffData(response.data)
+        setReload(false);
+                
+    },[user_id]);
+    
     
     useEffect(()=>{
         fetchDataCallback();
+        
     
     },[fetchDataCallback]);
+
+    useEffect(()=>{
+        if(reload || !reload){        
+            fetchDataPayoff();
+        }
+    },[reload])
+
+
 
     const fetchdata = fetchFomrData;
 
@@ -58,6 +113,7 @@ const PayoffStrategy =()=>{
             toast.success(response.data.message);
             //resetForm();
             //router.push('/member/debts');
+            setReload(true);
             
           }else{
             setSubmitting(true);
@@ -79,13 +135,11 @@ const PayoffStrategy =()=>{
 
     return(
         <DefaultLayout>
-            <div className="flex flex-col gap-1 mt-4">
+            
 
-                
+            <div className="flex flex-col">
 
-            </div>
-
-            <div className="mt-4">
+            <div className="mt-8">
             <Formik
             innerRef={formRef}
             
@@ -200,7 +254,46 @@ const PayoffStrategy =()=>{
 </FormikFormHolder>
         )}
         />
-            </div>            
+            </div>
+
+
+            <div className="bg-[#fafafa] rounded-lg flex flex-col gap-4 mt-6">
+
+                <div className="flex gap-2 mt-6">
+
+                        <div className="w-[35%]">
+
+                            <Summary 
+                            total_paid={`$${payoffData.total_paid}`} 
+                            total_interest={`$${payoffData.total_interest}`} 
+                            paid_off={payoffData.paid_off}
+                            max_months_to_payoff={payoffData.max_months_to_payoff}
+                            
+                            />
+                        </div>
+
+                        <div className="w-[65%]">
+
+                            <SortedAccount debt_accounts_list={payoffData.debt_accounts_list} />
+                        </div>
+                </div>
+
+                <div className="mt-6">
+
+
+
+                </div>
+                        
+
+
+            </div>
+
+
+            </div>
+
+
+
+
         </DefaultLayout>
     )
 

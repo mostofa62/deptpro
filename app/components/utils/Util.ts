@@ -86,3 +86,16 @@ export function rgbToHex(r:number, g:number, b:number) {
         .slice(1)
         .toUpperCase();
 }
+
+export function mapToInterface<T>(data: any, model: any): T {
+    const keys = Object.keys(model) as Array<keyof T>;
+    const filteredData = {} as T;
+  
+    keys.forEach((key) => {
+      if (key in data) {
+        filteredData[key] = data[key] as T[keyof T];
+      }
+    });
+  
+    return filteredData;
+  }
