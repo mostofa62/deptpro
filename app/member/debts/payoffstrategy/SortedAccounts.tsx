@@ -43,7 +43,7 @@ const SortedAccount = ({debt_accounts_list}:SortProps)=>{
             {debt_accounts_list.length > 0 &&
             
             <div className="flex items-center justify-center">
-                <table className="tanstack-table table-auto w-full text-left">
+                <table className="tanstack-table table-auto w-full">
                 <thead>
                     <tr>                    
                         {Object.keys(DataLabel).map((key, index) => (

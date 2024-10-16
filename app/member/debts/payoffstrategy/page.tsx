@@ -13,6 +13,7 @@ import FormikFormHolder from "@/app/components/form/FormikFormHolder";
 import {DeptPayOffMethod,PayOffSelectedMonth} from '@/app/data/DebtOptions.json'
 import Summary from "./Summary";
 import SortedAccount from "./SortedAccounts";
+import Projection from "./Projection";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -31,7 +32,8 @@ interface PayOffData{
     paid_off:string;
     max_months_to_payoff:number;
     debt_accounts_list:DebtRow[],
-    sorted_month_wise:DebtRow[]
+    debt_type_names:{[key:string]:string},
+    debt_type_ammortization:any[],
 }
 const PayoffStrategy =()=>{
 
@@ -41,7 +43,7 @@ const PayoffStrategy =()=>{
 
     const [fetchFomrData,setFetchFormData] = useState(DataSchema);
 
-    const [reload, setReload] = useState(false);
+    const [reload, setReload] = useState(true);
 
     const pay_off_data:PayOffData = {
         total_paid:0,
@@ -49,7 +51,8 @@ const PayoffStrategy =()=>{
         paid_off:'',
         max_months_to_payoff:0,
         debt_accounts_list:[],
-        sorted_month_wise:[]
+        debt_type_ammortization:[],
+        debt_type_names:{}
     }
 
     const[payoffData, setPayOffData] = useState(pay_off_data)
@@ -69,6 +72,7 @@ const PayoffStrategy =()=>{
 
 
     const fetchDataPayoff=useCallback(async()=>{
+        //setReload(false);
         //console.log(id);
         const response = await axios.get(`${url}get-payoff-strategy-account/${user_id}`);
         //return response.data.user;
@@ -86,7 +90,7 @@ const PayoffStrategy =()=>{
     },[fetchDataCallback]);
 
     useEffect(()=>{
-        if(reload || !reload){        
+        if(reload){        
             fetchDataPayoff();
         }
     },[reload])
@@ -131,15 +135,38 @@ const PayoffStrategy =()=>{
 
     const handleSubmit = ()=> {
         formRef.current?.handleSubmit();
-      }
+    }
+
+    const chartData = payoffData.debt_type_ammortization;
+    const debt_type_names = payoffData.debt_type_names;
+    const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const [maxHeight, setMaxHeight] = useState<number>(0);
+
+    useEffect(() => {
+        // Calculate the height of the tallest element after component renders
+        const total_length:number = chartData.length;
+        if(total_length > 0){
+          const heights = itemRefs.current.map(item => item?.getBoundingClientRect().height || 0);
+          const tallestHeight = Math.max(...heights);
+          if (chartData.length > 0 && tallestHeight < 350){
+            setMaxHeight(350)
+          }else{ 
+            setMaxHeight(tallestHeight);
+          }
+        }
+        
+      }, [chartData]);
 
     return(
         <DefaultLayout>
             
 
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-5 mt-8">
 
-            <div className="mt-8">
+            <div className="flex flex-row gap-1 items-center justify-center">
+
+
+            <div className="w-[25%]" ref={el => (itemRefs.current[0] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
             <Formik
             innerRef={formRef}
             
@@ -151,14 +178,30 @@ const PayoffStrategy =()=>{
         onSubmit={handleFormSubmit}
 
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
-            <FormikFormHolder legend="debt snowBall Table">
+            <FormikFormHolder>
 
-<div className="flex flex-row gap-1">
+<div className="flex flex-col gap-5">
   
+    <div className="">
 
+    <FormikFieldInput 
+        type="number"
+        step="any"
+        min={0}
+        label={DataLabel.monthly_budget} 
+        name={`fetchdata.monthly_budget`}
+        placeHolder={`${DataLabel.monthly_budget}`}
+        errorMessage ={ errors.fetchdata &&                                        
+            errors.fetchdata.monthly_budget &&
+            touched.fetchdata &&            
+            touched.fetchdata.monthly_budget &&  errors.fetchdata.monthly_budget}        
+        />
+        
+        
+    </div>
     
     
-    <div className="w-[30%]">
+    <div className="">
 
     <FormikSelectInput
             label={DataLabel.debt_payoff_method}
@@ -182,7 +225,7 @@ const PayoffStrategy =()=>{
         
     </div>
 
-    <div className="w-[30%]">
+    {/* <div className="w-[30%]">
 
     <FormikSelectInput
             label={DataLabel.selected_month}
@@ -201,28 +244,12 @@ const PayoffStrategy =()=>{
         />
         
         
-    </div>
+    </div> */}
 
-    <div className="w-[30%]">
+    
 
-    <FormikFieldInput 
-        type="number"
-        step="any"
-        min={0}
-        label={DataLabel.monthly_budget} 
-        name={`fetchdata.monthly_budget`}
-        placeHolder={`${DataLabel.monthly_budget}`}
-        errorMessage ={ errors.fetchdata &&                                        
-            errors.fetchdata.monthly_budget &&
-            touched.fetchdata &&            
-            touched.fetchdata.monthly_budget &&  errors.fetchdata.monthly_budget}        
-        />
-        
-        
-    </div>
-
-    <div className="w-[10%] flex items-center justify-center">
-            <div className=" relative top-5">
+    <div className="flex items-center justify-center">
+            <div className="mt-5">
                 <button type="submit" className="text-[15px] py-1 bg-[#43ACD6] rounded text-white px-4  capitalize text-center font-semibold">
                     apply
                 </button>
@@ -257,7 +284,20 @@ const PayoffStrategy =()=>{
             </div>
 
 
-            <div className="bg-[#fafafa] rounded-lg flex flex-col gap-4 mt-6">
+            <div className="w-[75%]" ref={el => (itemRefs.current[1] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
+                <Projection 
+                chartData={chartData} 
+                debt_type_names={debt_type_names}
+                />
+            </div>
+
+
+            </div>
+
+            
+
+
+            <div className="bg-[#fafafa] rounded-lg flex flex-col gap-4">
 
                 <div className="flex gap-2 mt-6">
 
