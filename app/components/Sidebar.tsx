@@ -147,7 +147,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   <Link
     href={(Loguser && parseInt(Loguser) < 10 )?'/admin/dashboard':'/member/dashboard'}
     className={`capitalize text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
-      pathname.substring(1,pathname.length)=='dashboard' && 'bg-[#43ACD6] text-[#f5f5f8]'
+      pathname.slice(-9)=='dashboard' && 'bg-[#43ACD6] text-[#f5f5f8]'
     }`}
   >
     
@@ -571,6 +571,22 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 </li>
 
 
+<li key={222}>
+  <Link
+    href={'/member/bills/billextra'}
+    className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out  hover:text-[#43ACD6] ${
+      pathname.slice(-15) =='bills/billextra' ? 'text-[#43ACD6]':'text-[#4F4F4F]'
+    }`}
+  >
+    <svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+</svg>
+
+      <p>Extra Bill Payment </p>
+  </Link>
+</li>
+
+
 
 
                           
@@ -696,7 +712,27 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 }}
 </SidebarLinkGroup>
 
+<li key={50}>
+  <Link
+    href={'/member/calender'}
+    className={`capitalize text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
+      pathname.slice(-8)=='calender' && 'bg-[#43ACD6] text-[#f5f5f8]'
+    }`}
+  >
+    Calender
+  </Link>
+</li>
 
+<li key={51}>
+  <Link
+    href={'/member/calculator'}
+    className={`capitalize text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
+      pathname.slice(-9)=='calculator' && 'bg-[#43ACD6] text-[#f5f5f8]'
+    }`}
+  >
+    Calculator
+  </Link>
+</li>
 </>
 }
 

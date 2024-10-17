@@ -14,6 +14,7 @@ import {DeptPayOffMethod,PayOffSelectedMonth} from '@/app/data/DebtOptions.json'
 import Summary from "./Summary";
 import SortedAccount from "./SortedAccounts";
 import Projection from "./Projection";
+import TypeWiseTable from "./TypeWiseTable";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -23,7 +24,7 @@ interface DebtRow {
     total_interest_sum: number;    
     months_to_payoff:number;    
     month_debt_free_word:string;
-    
+    dept_type_word:string;
 }
 
 interface PayOffData{
@@ -34,6 +35,7 @@ interface PayOffData{
     debt_accounts_list:DebtRow[],
     debt_type_names:{[key:string]:string},
     debt_type_ammortization:any[],
+    all_data:any[]
 }
 const PayoffStrategy =()=>{
 
@@ -52,7 +54,8 @@ const PayoffStrategy =()=>{
         max_months_to_payoff:0,
         debt_accounts_list:[],
         debt_type_ammortization:[],
-        debt_type_names:{}
+        debt_type_names:{},
+        all_data:[]
     }
 
     const[payoffData, setPayOffData] = useState(pay_off_data)
@@ -139,6 +142,7 @@ const PayoffStrategy =()=>{
 
     const chartData = payoffData.debt_type_ammortization;
     const debt_type_names = payoffData.debt_type_names;
+    const all_data = payoffData.all_data;
     const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [maxHeight, setMaxHeight] = useState<number>(0);
 
@@ -299,6 +303,15 @@ const PayoffStrategy =()=>{
 
             <div className="bg-[#fafafa] rounded-lg flex flex-col gap-4">
 
+                <div className="mt-8">
+
+                    <TypeWiseTable 
+                    all_data={all_data} 
+                    debt_type_names={debt_type_names}
+                    />
+
+                </div>
+
                 <div className="flex gap-2 mt-6">
 
                         <div className="w-[35%]">
@@ -318,11 +331,7 @@ const PayoffStrategy =()=>{
                         </div>
                 </div>
 
-                <div className="mt-6">
-
-
-
-                </div>
+                
                         
 
 

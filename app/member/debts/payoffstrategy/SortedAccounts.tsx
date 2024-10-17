@@ -6,7 +6,7 @@ interface DebtRow {
     total_interest_sum: number;    
     months_to_payoff:number;    
     month_debt_free_word:string;    
-    
+    dept_type_word:string;
     
 }
 const DataLabel = {
@@ -14,7 +14,8 @@ const DataLabel = {
     total_payment_sum:'Total Payments',
     total_interest_sum: 'Projected Interest',    
     months_to_payoff:'Months to Payoff',
-    month_debt_free_word:'Payoff Date'    
+    month_debt_free_word:'Payoff Date',
+    dept_type_word:'Debt Type'    
     
 }
 interface SortProps{
@@ -30,7 +31,8 @@ const SortedAccount = ({debt_accounts_list}:SortProps)=>{
         total_payment_sum: 0,
         total_interest_sum:0,
         months_to_payoff:0,
-        month_debt_free_word:''
+        month_debt_free_word:'',
+        dept_type_word:''
       };
 
       const filteredDebt = debt_accounts_list.map((item) =>
@@ -61,9 +63,9 @@ const SortedAccount = ({debt_accounts_list}:SortProps)=>{
                             <tr key={index}>
                                 {
                                     Object.keys(data).map((key, i) => (
-                                        <th key={i}>
+                                        <td key={i}>
                                             {data[key as keyof DebtRow]}
-                                        </th>   
+                                        </td>   
                                     ))
                                 }
                                  
