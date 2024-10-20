@@ -149,7 +149,8 @@ const ExtraEntry=({user_id, editData,extraType,cleanData}:ExtraProps)=>{
                     errorMessage ={ errors.fetchdata &&                                        
                         errors.fetchdata.amount &&
                         touched.fetchdata &&            
-                        touched.fetchdata.amount &&  errors.fetchdata.amount}        
+                        touched.fetchdata.amount &&  errors.fetchdata.amount} 
+                        inputPreix={`$`}        
                     />
                     
                     

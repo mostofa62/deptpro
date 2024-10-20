@@ -217,7 +217,8 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
     errorMessage ={ errors.fetchdata &&                                        
         errors.fetchdata.balance &&
         touched.fetchdata &&            
-        touched.fetchdata.balance &&  errors.fetchdata.balance}        
+        touched.fetchdata.balance &&  errors.fetchdata.balance}
+        inputPreix={`$`}         
     />
     
     
@@ -234,7 +235,8 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
     errorMessage ={ errors.fetchdata &&                                        
         errors.fetchdata.highest_balance &&
         touched.fetchdata &&            
-        touched.fetchdata.highest_balance &&  errors.fetchdata.highest_balance}        
+        touched.fetchdata.highest_balance &&  errors.fetchdata.highest_balance} 
+        inputPreix={`$`}        
     />
     
     
@@ -277,7 +279,8 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
     errorMessage ={ errors.fetchdata &&                                        
         errors.fetchdata.monthly_payment &&
         touched.fetchdata &&            
-        touched.fetchdata.monthly_payment &&  errors.fetchdata.monthly_payment}        
+        touched.fetchdata.monthly_payment &&  errors.fetchdata.monthly_payment} 
+        inputPreix={`$`}        
     />
 
     
@@ -315,7 +318,8 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
     errorMessage ={ errors.fetchdata &&                                        
         errors.fetchdata.interest_rate &&
         touched.fetchdata &&            
-        touched.fetchdata.interest_rate &&  errors.fetchdata.interest_rate}        
+        touched.fetchdata.interest_rate &&  errors.fetchdata.interest_rate} 
+        inputSuffix={`%`}       
     />
     
     
@@ -332,7 +336,8 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
     errorMessage ={ errors.fetchdata &&                                        
         errors.fetchdata.credit_limit &&
         touched.fetchdata &&            
-        touched.fetchdata.credit_limit &&  errors.fetchdata.credit_limit}        
+        touched.fetchdata.credit_limit &&  errors.fetchdata.credit_limit} 
+        inputPreix={`$`}        
     />
     
     

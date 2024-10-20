@@ -205,7 +205,8 @@ export default function Setting() {
     errorMessage ={ errors.fetchdata &&                                        
         errors.fetchdata.minimum_payments &&
         touched.fetchdata &&            
-        touched.fetchdata.minimum_payments &&  errors.fetchdata.minimum_payments}        
+        touched.fetchdata.minimum_payments &&  errors.fetchdata.minimum_payments}
+        inputPreix={`$`}         
     />
     
     
@@ -223,7 +224,8 @@ export default function Setting() {
         errorMessage ={ errors.fetchdata &&                                        
             errors.fetchdata.monthly_budget &&
             touched.fetchdata &&            
-            touched.fetchdata.monthly_budget &&  errors.fetchdata.monthly_budget}        
+            touched.fetchdata.monthly_budget &&  errors.fetchdata.monthly_budget}
+            inputPreix={`$`}         
         />
         
         

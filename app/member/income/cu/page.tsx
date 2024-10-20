@@ -201,7 +201,8 @@ export default function InsuranceCreate() {
         errorMessage ={ errors.fetchdata &&                                        
             errors.fetchdata.gross_income &&
             touched.fetchdata &&            
-            touched.fetchdata.gross_income &&  errors.fetchdata.gross_income}        
+            touched.fetchdata.gross_income &&  errors.fetchdata.gross_income} 
+            inputPreix={`$`}        
         />
         
 
@@ -227,7 +228,8 @@ export default function InsuranceCreate() {
         errorMessage ={ errors.fetchdata &&                                        
             errors.fetchdata.net_income &&
             touched.fetchdata &&            
-            touched.fetchdata.net_income &&  errors.fetchdata.net_income}        
+            touched.fetchdata.net_income &&  errors.fetchdata.net_income} 
+            inputPreix={`$`}        
         />
         
         

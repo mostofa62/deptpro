@@ -113,7 +113,9 @@ const BillEntry=({bill_acc_id, user_id,editData,cleanData}:BillProps)=>{
                     errorMessage ={ errors.fetchdata &&                                        
                         errors.fetchdata.amount &&
                         touched.fetchdata &&            
-                        touched.fetchdata.amount &&  errors.fetchdata.amount}        
+                        touched.fetchdata.amount &&  errors.fetchdata.amount}
+                        
+                        inputPreix={`$`} 
                     />
                     
                     

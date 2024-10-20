@@ -198,7 +198,8 @@ const PayoffStrategy =()=>{
         errorMessage ={ errors.fetchdata &&                                        
             errors.fetchdata.monthly_budget &&
             touched.fetchdata &&            
-            touched.fetchdata.monthly_budget &&  errors.fetchdata.monthly_budget}        
+            touched.fetchdata.monthly_budget &&  errors.fetchdata.monthly_budget} 
+            inputPreix={`$`}        
         />
         
         

@@ -37,14 +37,14 @@ export const DataSchema = {
 
 export const DataLabel = {
   name:'Debt Name',
-  debt_type:'Type of Dept',
+  debt_type:'Dept Categories',
   payor:'Payor',
   balance:'Current Balance',
   highest_balance:'Beginning / Highest Balance',
   minimum_payment:'Minimum Payment',   
   monthly_payment:'Minimum Monthly Payment',
   credit_limit:'Credit Limit',
-  interest_rate:'Interest Rate (%)',
+  interest_rate:'Interest Rate',
   start_date:'Start Date',  
   due_date:'Next Due Date',
   notes:'Note',

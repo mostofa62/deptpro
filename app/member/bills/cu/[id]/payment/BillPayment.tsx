@@ -105,7 +105,8 @@ const BillPayment = ({bill_acc_id,trans_id,amount,pay_date,cleanData}:paymentPro
                         touched.fetchdata.amount &&  errors.fetchdata.amount}
                         type="number"
                         max={values.fetchdata.amount}
-                        min={0} 
+                        min={0}
+                        inputPreix={`$`}  
                           
                     />
                     

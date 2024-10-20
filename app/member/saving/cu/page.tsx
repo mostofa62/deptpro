@@ -275,7 +275,8 @@ export default function InsuranceCreate() {
         errorMessage ={ errors.fetchdata &&                                        
             errors.fetchdata.goal_amount &&
             touched.fetchdata &&            
-            touched.fetchdata.goal_amount &&  errors.fetchdata.goal_amount}        
+            touched.fetchdata.goal_amount &&  errors.fetchdata.goal_amount}
+            inputPreix={`$`}         
         />
         
         
@@ -320,7 +321,8 @@ export default function InsuranceCreate() {
         errorMessage ={ errors.fetchdata &&                                        
             errors.fetchdata.interest &&
             touched.fetchdata &&            
-            touched.fetchdata.interest &&  errors.fetchdata.interest}        
+            touched.fetchdata.interest &&  errors.fetchdata.interest}
+            inputSuffix={`%`}        
         />
 
         
@@ -388,7 +390,8 @@ export default function InsuranceCreate() {
         errorMessage ={ errors.fetchdata &&                                        
             errors.fetchdata.starting_amount &&
             touched.fetchdata &&            
-            touched.fetchdata.starting_amount &&  errors.fetchdata.starting_amount}        
+            touched.fetchdata.starting_amount &&  errors.fetchdata.starting_amount}
+            inputPreix={`$`}         
         />
 
 
@@ -418,7 +421,8 @@ export default function InsuranceCreate() {
         errorMessage ={ errors.fetchdata &&                                        
             errors.fetchdata.contribution &&
             touched.fetchdata &&            
-            touched.fetchdata.contribution &&  errors.fetchdata.contribution}        
+            touched.fetchdata.contribution &&  errors.fetchdata.contribution}
+            inputPreix={`$`}         
         />
   
         

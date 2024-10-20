@@ -223,7 +223,9 @@ export default function InsuranceCreate() {
                     errorMessage ={ errors.fetchdata &&                                        
                         errors.fetchdata.default_amount &&
                         touched.fetchdata &&            
-                        touched.fetchdata.default_amount &&  errors.fetchdata.default_amount}        
+                        touched.fetchdata.default_amount &&  errors.fetchdata.default_amount}
+                        
+                        inputPreix={`$`} 
                     />
                     
                     

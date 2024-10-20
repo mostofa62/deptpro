@@ -101,7 +101,7 @@ export default function InsuranceCreate() {
         onSubmit={handleFormSubmit}
 
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
-            <FormikFormHolder legend="DEBT Account Details">
+            <FormikFormHolder>
 
 <div className="flex flex-row mt-[15px]">
     <div className="w-[32%]">
@@ -189,7 +189,8 @@ export default function InsuranceCreate() {
         errorMessage ={ errors.fetchdata &&                                        
             errors.fetchdata.balance &&
             touched.fetchdata &&            
-            touched.fetchdata.balance &&  errors.fetchdata.balance}        
+            touched.fetchdata.balance &&  errors.fetchdata.balance}
+            inputPreix={`$`}        
         />
         
         
@@ -209,7 +210,8 @@ export default function InsuranceCreate() {
         errorMessage ={ errors.fetchdata &&                                        
             errors.fetchdata.highest_balance &&
             touched.fetchdata &&            
-            touched.fetchdata.highest_balance &&  errors.fetchdata.highest_balance}        
+            touched.fetchdata.highest_balance &&  errors.fetchdata.highest_balance} 
+            inputPreix={`$`}          
         />
         
         
@@ -226,7 +228,8 @@ export default function InsuranceCreate() {
             errorMessage ={ errors.fetchdata &&                                        
                 errors.fetchdata.monthly_payment &&
                 touched.fetchdata &&            
-                touched.fetchdata.monthly_payment &&  errors.fetchdata.monthly_payment}        
+                touched.fetchdata.monthly_payment &&  errors.fetchdata.monthly_payment}
+                inputPreix={`$`}           
             />
 
     </div>
@@ -243,7 +246,8 @@ export default function InsuranceCreate() {
         errorMessage ={ errors.fetchdata &&                                        
             errors.fetchdata.credit_limit &&
             touched.fetchdata &&            
-            touched.fetchdata.credit_limit &&  errors.fetchdata.credit_limit}        
+            touched.fetchdata.credit_limit &&  errors.fetchdata.credit_limit} 
+            inputPreix={`$`}          
         />
 
     </div>
@@ -266,7 +270,8 @@ export default function InsuranceCreate() {
         errorMessage ={ errors.fetchdata &&                                        
             errors.fetchdata.interest_rate &&
             touched.fetchdata &&            
-            touched.fetchdata.interest_rate &&  errors.fetchdata.interest_rate}        
+            touched.fetchdata.interest_rate &&  errors.fetchdata.interest_rate}
+            inputSuffix={`%`}        
         />
         
         

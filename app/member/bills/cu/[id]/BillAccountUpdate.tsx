@@ -208,7 +208,8 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number}:BillProps)=>{
     errorMessage ={ errors.fetchdata &&                                        
         errors.fetchdata.default_amount &&
         touched.fetchdata &&            
-        touched.fetchdata.default_amount &&  errors.fetchdata.default_amount}        
+        touched.fetchdata.default_amount &&  errors.fetchdata.default_amount}
+        inputPreix={`$`}         
     />
     
     
