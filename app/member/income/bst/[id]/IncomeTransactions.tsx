@@ -128,7 +128,7 @@ const IncomeTransactions = ({income_id}:IncomeProps)=>{
 
             {
               accessorKey: 'base_input_boost',
-              header: 'Input Boost',
+              header: 'Income Boost',
               cell: info => <p><span>$</span><span>{info.row.original.base_input_boost.toFixed(2)}</span></p>
               
             },
@@ -138,7 +138,7 @@ const IncomeTransactions = ({income_id}:IncomeProps)=>{
 
             {
               accessorKey: 'total_input_boost_for_period',
-              header: 'Total Input Boost',
+              header: 'Total Income Boost',
               cell: info => <p><span>$</span><span>{info.row.original.total_input_boost_for_period.toFixed(2)}</span></p>
               
             },

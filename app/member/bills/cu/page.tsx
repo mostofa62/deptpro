@@ -140,7 +140,30 @@ export default function InsuranceCreate() {
         <div className="w-[65%]">
 
             <div className="flex flex-row">
-                <div className="w-[50%]">
+
+            <div className="w-[50%]">
+                    
+                    <FormikFieldInput 
+                    label={DataLabel.payor} 
+                    name={`fetchdata.payor`}
+                    placeHolder={`${DataLabel.payor}`}
+                    errorMessage ={ errors.fetchdata &&                                        
+                        errors.fetchdata.payor &&
+                        touched.fetchdata &&            
+                        touched.fetchdata.payor &&  errors.fetchdata.payor}
+                    onChangeField = {(e:any)=>{
+                        const {value, name} = e.target;
+                        setFieldValue(
+                            name,
+                            value
+                        );
+                    }}
+                    />
+                    
+                    
+                    
+                </div>
+                <div className="ml-[24px] w-[50%]">
                     
                     <FormikFieldInput 
                     label={DataLabel.name} 
@@ -163,33 +186,34 @@ export default function InsuranceCreate() {
                     
                 </div>
                 
-                <div className="ml-[24px] w-[50%]">
-
-                <FormikSelectInput
-                        label={DataLabel.bill_type}
-                        defaultValue={fetchdata.bill_type}
-                        placeHolder={`Select ${DataLabel.bill_type}`}
-                        isSearchable={true}
-                        isClearable={true}
-                        name="fetchdata.bill_type"
-                        dataOptions={billTypeData}
-                        errorMessage={errors.fetchdata &&
-                            errors.fetchdata.bill_type &&
-                            touched.fetchdata &&
-                            touched.fetchdata.bill_type &&
-                            errors.fetchdata.bill_type.label
-                        }
-                    />
-                    
-
                 
-                    
-                    
-                </div>
             </div>
 
             <div className="flex flex-row">
-                <div className="w-[50%]">
+            <div className="w-[50%]">
+
+<FormikSelectInput
+        label={DataLabel.bill_type}
+        defaultValue={fetchdata.bill_type}
+        placeHolder={`Select ${DataLabel.bill_type}`}
+        isSearchable={true}
+        isClearable={true}
+        name="fetchdata.bill_type"
+        dataOptions={billTypeData}
+        errorMessage={errors.fetchdata &&
+            errors.fetchdata.bill_type &&
+            touched.fetchdata &&
+            touched.fetchdata.bill_type &&
+            errors.fetchdata.bill_type.label
+        }
+    />
+    
+
+
+    
+    
+</div>
+                <div className="ml-[24px] w-[50%]">
 
                 <FormikFieldInput 
                     type="number"
@@ -205,48 +229,29 @@ export default function InsuranceCreate() {
                     
                 </div>
                 
-                <div className="ml-[24px] w-[50%]">
-
-                <FormikFieldInput 
-                    type="date"
-                    label={DataLabel.next_due_date} 
-                    name={`fetchdata.next_due_date`}
-                    placeHolder={`${DataLabel.next_due_date}`}
-                    errorMessage ={ errors.fetchdata &&                                        
-                        errors.fetchdata.next_due_date &&
-                        touched.fetchdata &&            
-                        touched.fetchdata.next_due_date &&  errors.fetchdata.next_due_date}        
-                    />
-                    
-                    
-                </div>
+                
 
             
             </div>
 
             <div className="flex flex-row">
-                <div className="w-[50%]">
-                    
-                    <FormikFieldInput 
-                    label={DataLabel.payor} 
-                    name={`fetchdata.payor`}
-                    placeHolder={`${DataLabel.payor}`}
-                    errorMessage ={ errors.fetchdata &&                                        
-                        errors.fetchdata.payor &&
-                        touched.fetchdata &&            
-                        touched.fetchdata.payor &&  errors.fetchdata.payor}
-                    onChangeField = {(e:any)=>{
-                        const {value, name} = e.target;
-                        setFieldValue(
-                            name,
-                            value
-                        );
-                    }}
-                    />
-                    
-                    
-                    
-                </div>
+
+            <div className="w-[50%]">
+
+<FormikFieldInput 
+    type="date"
+    label={DataLabel.next_due_date} 
+    name={`fetchdata.next_due_date`}
+    placeHolder={`${DataLabel.next_due_date}`}
+    errorMessage ={ errors.fetchdata &&                                        
+        errors.fetchdata.next_due_date &&
+        touched.fetchdata &&            
+        touched.fetchdata.next_due_date &&  errors.fetchdata.next_due_date}        
+    />
+    
+    
+</div>
+                
                 
                 <div className="ml-[24px] w-[50%]">
 

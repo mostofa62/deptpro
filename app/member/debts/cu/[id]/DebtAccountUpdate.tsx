@@ -262,29 +262,10 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 
 
 <div className="flex flex-row mt-[15px]">
+
+
+
 <div className="w-[32%]">
-
-
-
-
-<FormikFieldInput 
-        type="number"
-        step="any"
-        min={0}
-        label={DataLabelUpdate.minimum_payment} 
-        name={`fetchdata.minimum_payment`}
-        placeHolder={`${DataLabelUpdate.minimum_payment}`}
-        errorMessage ={ errors.fetchdata &&                                        
-            errors.fetchdata.minimum_payment &&
-            touched.fetchdata &&            
-            touched.fetchdata.minimum_payment &&  errors.fetchdata.minimum_payment}        
-        />
-    
-    
-</div>
-
-
-<div className="ml-[24px] w-[32%]">
 
 
 <FormikFieldInput 

@@ -203,13 +203,26 @@ const generateItems = useCallback((row) => [
             
           },
           
-
+          {
+            accessorKey: 'gross_income',
+            header: DataLabel.gross_income,
+            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
+            /*
+            footer: (props) => {
+              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
+                return sum + row.original.monthly_payment;
+              }, 0);
+              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
+            },
+            */
+           footer:(props)=><p><span>$</span><span>{total_gross_income.toFixed(2)}</span></p>
+          },
        
 
           {
             accessorKey: 'net_income',
             header: DataLabel.net_income,
-            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
+            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
             /*
             footer: (props) => {
               const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
@@ -218,23 +231,10 @@ const generateItems = useCallback((row) => [
               return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
             },
             */
-           footer:(props)=><p><span>$</span><span className="px-2">{total_net_income.toFixed(2)}</span></p>
+           footer:(props)=><p><span>$</span><span>{total_net_income.toFixed(2)}</span></p>
           },
 
-          {
-            accessorKey: 'gross_income',
-            header: DataLabel.gross_income,
-            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
-            /*
-            footer: (props) => {
-              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
-                return sum + row.original.monthly_payment;
-              }, 0);
-              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
-            },
-            */
-           footer:(props)=><p><span>$</span><span className="px-2">{total_gross_income.toFixed(2)}</span></p>
-          },
+          
 
           
           {
@@ -262,14 +262,14 @@ const generateItems = useCallback((row) => [
           {
             accessorKey: 'total_gross_income',
             header: DataLabel.total_gross_income,
-            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
+            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
 
           },
 
           {
             accessorKey: 'total_net_income',
             header: DataLabel.total_net_income,
-            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>().toFixed(2)}</span></p>,
+            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
 
           },
 

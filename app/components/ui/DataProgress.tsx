@@ -26,10 +26,10 @@ const DataProgress = ({title, progress,color,amount,maxProgressLength, maxAmount
 
 
     return (
-        <div className='flex flex-col gap-1 mb-2'>
+        <div className='flex flex-col gap-1 mb-2 text-[13px]'>
             <div className="flex justify-start items-start">
                 <div className="w-auto font-semibold invisible" style={{ width: `${maxProgressLength}ch` }}>{animatedProgress}%</div>    
-                <div className="w-auto font-semibold" style={{ marginLeft: `${maxProgressLength}%` }}>{title}</div>
+                <div className="w-auto font-semibold text-[13px]" style={{ marginLeft: `${maxProgressLength}%` }}>{title}</div>
             </div>
             <div className="flex flex-row">
                 <div className={`w-auto font-semibold`} style={{ width: `${maxProgressLength}ch` }}>{animatedProgress}%</div>
@@ -37,7 +37,7 @@ const DataProgress = ({title, progress,color,amount,maxProgressLength, maxAmount
                 <div className="h-3 bg-[#eeeeee] rounded-[10px] overflow-hidden" style={{ marginLeft: `${maxProgressLength}%` ,width: `calc(80% - ${maxAmountLengthVar+30}px)` }}>
                     <div className="h-full transition-all duration-500" style={{ width:`${animatedProgress}%`, backgroundColor:color }}></div>
                 </div>
-                {amount  && <div className="w-auto font-semibold text-right ml-[2%]">${amount}</div> }
+                {amount  && <div className="w-auto font-semibold text-right text-[13px] ml-[2%]">${amount}</div> }
                 
             </div>
         </div>  

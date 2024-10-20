@@ -148,7 +148,7 @@ const TotalAllocation = () => {
     const dataLabel = {
       base_net_income:'Net Earnings',
       base_gross_income:'Gross Earnings',
-      base_input_boost:'Input Boost'
+      base_input_boost:'Income Boost'
     }
     
     

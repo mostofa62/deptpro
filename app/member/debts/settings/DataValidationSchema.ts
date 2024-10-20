@@ -13,7 +13,7 @@ export const DataSchema = {
 export const DataLabel = {
   
   monthly_budget:'Total Monthly Debt Budget',
-  minimum_payments:'Total Minimum Debt Payments',
+  minimum_payments:'Current Total Minimum Payments',
   debt_payoff_method:'Debt Payoff Strategy',
   
   
@@ -33,8 +33,8 @@ export const ValidationSchema =  object().shape({
               .required(`${DataLabel.monthly_budget} is required`),
 
 
-              minimum_payments: number().min(1,`${DataLabel.minimum_payments} least 1`)              
-              .required(`${DataLabel.minimum_payments} is required`),
+              // minimum_payments: number().min(1,`${DataLabel.minimum_payments} least 1`)              
+              // .required(`${DataLabel.minimum_payments} is required`),
 
               
 

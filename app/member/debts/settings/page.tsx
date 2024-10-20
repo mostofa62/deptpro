@@ -193,10 +193,44 @@ export default function Setting() {
 
 <div className="flex flex-row">
   
+<div className="w-[32%]">
 
+<FormikFieldInput 
+    type="number"
+    step="any"
+    min={0}
+    label={DataLabel.minimum_payments} 
+    name={`fetchdata.minimum_payments`}
+    placeHolder={`${DataLabel.minimum_payments}`}
+    errorMessage ={ errors.fetchdata &&                                        
+        errors.fetchdata.minimum_payments &&
+        touched.fetchdata &&            
+        touched.fetchdata.minimum_payments &&  errors.fetchdata.minimum_payments}        
+    />
     
     
-    <div className="w-[32%]">
+</div>
+
+<div className="ml-[24px] w-[32%]">
+
+    <FormikFieldInput 
+        type="number"
+        step="any"
+        min={0}
+        label={DataLabel.monthly_budget} 
+        name={`fetchdata.monthly_budget`}
+        placeHolder={`${DataLabel.monthly_budget}`}
+        errorMessage ={ errors.fetchdata &&                                        
+            errors.fetchdata.monthly_budget &&
+            touched.fetchdata &&            
+            touched.fetchdata.monthly_budget &&  errors.fetchdata.monthly_budget}        
+        />
+        
+        
+    </div>
+    
+    
+    <div className="ml-[24px] w-[32%]">
 
     <FormikSelectInput
             label={DataLabel.debt_payoff_method}
@@ -220,41 +254,9 @@ export default function Setting() {
         
     </div>
 
-    <div className="ml-[24px] w-[32%]">
+    
 
-    <FormikFieldInput 
-        type="number"
-        step="any"
-        min={0}
-        label={DataLabel.minimum_payments} 
-        name={`fetchdata.minimum_payments`}
-        placeHolder={`${DataLabel.minimum_payments}`}
-        errorMessage ={ errors.fetchdata &&                                        
-            errors.fetchdata.minimum_payments &&
-            touched.fetchdata &&            
-            touched.fetchdata.minimum_payments &&  errors.fetchdata.minimum_payments}        
-        />
-        
-        
-    </div>
-
-    <div className="ml-[24px] w-[32%]">
-
-    <FormikFieldInput 
-        type="number"
-        step="any"
-        min={0}
-        label={DataLabel.monthly_budget} 
-        name={`fetchdata.monthly_budget`}
-        placeHolder={`${DataLabel.monthly_budget}`}
-        errorMessage ={ errors.fetchdata &&                                        
-            errors.fetchdata.monthly_budget &&
-            touched.fetchdata &&            
-            touched.fetchdata.monthly_budget &&  errors.fetchdata.monthly_budget}        
-        />
-        
-        
-    </div>
+    
     
     
 

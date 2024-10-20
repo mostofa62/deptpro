@@ -237,7 +237,31 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number}:BillProps)=>{
 
 <div className="flex flex-row">
 
-<div className="w-full">
+
+<div className="w-[50%]">
+                    
+                    <FormikFieldInput 
+                    label={DataLabel.payor} 
+                    name={`fetchdata.payor`}
+                    placeHolder={`${DataLabel.payor}`}
+                    errorMessage ={ errors.fetchdata &&                                        
+                        errors.fetchdata.payor &&
+                        touched.fetchdata &&            
+                        touched.fetchdata.payor &&  errors.fetchdata.payor}
+                    onChangeField = {(e:any)=>{
+                        const {value, name} = e.target;
+                        setFieldValue(
+                            name,
+                            value
+                        );
+                    }}
+                    />
+                    
+                    
+                    
+                </div>
+
+<div className="ml-[24px] w-[50%]">
     
     <FormikFieldInput 
     label={DataLabel.notes} 

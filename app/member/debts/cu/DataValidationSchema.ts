@@ -36,13 +36,13 @@ export const DataSchema = {
 };
 
 export const DataLabel = {
-  name:'Debt Account Name',
+  name:'Debt Name',
   debt_type:'Type of Dept',
   payor:'Payor',
   balance:'Current Balance',
   highest_balance:'Beginning / Highest Balance',
   minimum_payment:'Minimum Payment',   
-  monthly_payment:'Monthly Payment',
+  monthly_payment:'Minimum Monthly Payment',
   credit_limit:'Credit Limit',
   interest_rate:'Interest Rate (%)',
   start_date:'Start Date',  
@@ -55,12 +55,12 @@ export const DataLabel = {
 }
 
 export const DataLabelUpdate = {
-  name:'Name',
+  name:'Debt Name',
   debt_type:'Account Type',
   balance:'Balance',
   highest_balance:'Highest Balance',
   minimum_payment:'Minimum Payment',   
-  monthly_payment:'Monthly Payment',
+  monthly_payment:'Minimum Monthly Payment',
   credit_limit:'Credit Limit',
   interest_rate:'Interest Rate (%)',
   start_date:'Start Date',    
@@ -96,9 +96,8 @@ export const DataLabelView= {
   name:'Name',
   debt_type:'Account Type',
   balance:'Balance',
-  highest_balance:'Highest Balance',
-  minimum_payment:'Minimum Payment',   
-  monthly_payment:'Monthly Payment',
+  highest_balance:'Highest Balance',   
+  monthly_payment:'Minimum Monthly Payment',
   credit_limit:'Credit Limit',
   interest_rate:'Interest Rate (%)',  
   start_date_word:'Start Date',

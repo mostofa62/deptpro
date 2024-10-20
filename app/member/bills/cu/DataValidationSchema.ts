@@ -16,7 +16,7 @@ export const DataSchema = {
 };
 
 export const DataLabel = {
-  name:'Bill Nickname/Description',
+  name:'Bill Nickname',
   bill_type:'Bill Category',
   payor:'Payor',
   default_amount:'Monthly Payment',    
@@ -31,9 +31,9 @@ export const DataLabel = {
 
 
 export const DataLabelView = {
-  name:'Bill Nickname/Description',
-  bill_type:'Bill Category',
   payor:'Payor',
+  name:'Bill Nickname',
+  bill_type:'Bill Category',
   default_amount:'Monthly Payment',    
   next_due_date:'Next Due Date',
   notes:'Note',

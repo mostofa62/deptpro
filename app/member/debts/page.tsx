@@ -12,6 +12,7 @@ import GridActionLink from "@/app/components/grid/GridActionLink";
 import GridPaginationHolder from "@/app/components/grid/GridPaginationHolder";
 import TotalAllocation from "./TotalAllocation";
 import HolderOne from "@/app/layout/HolderOne";
+import { DataLabel } from "./cu/DataValidationSchema";
 
 const per_page_list = PerPageList();
 const per_page = per_page_list[0];
@@ -141,8 +142,8 @@ const Debt = ()=>{
           {
               accessorKey: 'balance',
               header: 'Balance',
-              cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>()}</span></p>,
-              footer:(props)=><p><span>$</span><span className="px-2">{total_balance.toFixed(2)}</span></p>
+              cell: (info) => <p><span>$</span><span>{info.getValue<number>()}</span></p>,
+              footer:(props)=><p><span>$</span><span>{total_balance.toFixed(2)}</span></p>
               /*
               footer: (props) => {
                 const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
@@ -155,25 +156,25 @@ const Debt = ()=>{
   
           
 
-          {
-            accessorKey: 'minimum_payment',
-            header: 'Mimimum Payment',
-            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>()}</span></p>,
-            /*
-            footer: (props) => {
-              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
-                return sum + row.original.monthly_payment;
-              }, 0);
-              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
-            },
-            */
-           footer:(props)=><p><span>$</span><span className="px-2">{total_minimum_payment.toFixed(2)}</span></p>
-          },
+          // {
+          //   accessorKey: 'minimum_payment',
+          //   header: 'Mimimum Payment',
+          //   cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>()}</span></p>,
+          //   /*
+          //   footer: (props) => {
+          //     const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
+          //       return sum + row.original.monthly_payment;
+          //     }, 0);
+          //     return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
+          //   },
+          //   */
+          //  footer:(props)=><p><span>$</span><span className="px-2">{total_minimum_payment.toFixed(2)}</span></p>
+          // },
 
           {
             accessorKey: 'monthly_payment',
-            header: 'Monthly Payment',
-            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>()}</span></p>,
+            header: DataLabel.monthly_payment,
+            cell: (info) => <p><span>$</span><span>{info.getValue<number>()}</span></p>,
             /*
             footer: (props) => {
               const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
@@ -182,13 +183,13 @@ const Debt = ()=>{
               return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
             },
             */
-           footer:(props)=><p><span>$</span><span className="px-2">{total_monthly_payment.toFixed(2)}</span></p>
+           footer:(props)=><p><span>$</span><span>{total_monthly_payment.toFixed(2)}</span></p>
           },
 
           {
             accessorKey: 'interest_rate',
             header: 'Interest Rate',
-            cell: (info) => <p><span className="px-2">{info.getValue<number>()}</span><span>%</span></p>,
+            cell: (info) => <p><span>{info.getValue<number>()}</span><span>%</span></p>,
             
           },
 
@@ -196,7 +197,7 @@ const Debt = ()=>{
           {
             accessorKey: 'monthly_interest',
             header: 'Monthly Interest',
-            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>()}</span></p>,
+            cell: (info) => <p><span>$</span><span>{info.getValue<number>()}</span></p>,
             /*
             footer: (props) => {
               const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
@@ -205,13 +206,13 @@ const Debt = ()=>{
               return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
             },
             */
-            footer:(props)=><p><span>$</span><span className="px-2">{total_monthly_interest.toFixed(2)}</span></p>
+            footer:(props)=><p><span>$</span><span>{total_monthly_interest.toFixed(2)}</span></p>
           },
 
           {
             accessorKey:'left_to_go',
             header: 'Left to Go',
-            cell: (info) => <p><span className="px-2">{info.getValue<number>()}</span><span>%</span></p>,
+            cell: (info) => <p><span>{info.getValue<number>()}</span><span>%</span></p>,
           }
 
                   
