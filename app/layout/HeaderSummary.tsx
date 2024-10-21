@@ -83,7 +83,7 @@ const HeaderSummary = ()=>{
                             </div>
                             <div className="text-[#31c4a2]">
                                 <Link className="font-semibold md:text-sm lg:text-lg" href={link}>
-                                {prefix!='' && prefix}    {transactioData[data as keyof typeof transactioDataLabel].toFixed(0)} {suffix!='' && suffix}
+                                {prefix!='' && prefix}{transactioData[data as keyof typeof transactioDataLabel].toFixed(0)}{suffix!='' && suffix}
                                 </Link>
                             </div>
                         </div>

@@ -23,7 +23,7 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number}:BillProps)=>{
 
     const formRef = useRef<any>(null);
     const [fetchFomrData,setFetchFormData] = useState(DataSchema);
-    const [repeatCount, setRepeatCount] = useState([]);
+    // const [repeatCount, setRepeatCount] = useState([]);
     const [repeatFrequency, setRepeatFrequency] = useState([]);
     const [reminderDays, setReminderDays] = useState([]);
 
@@ -35,7 +35,7 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number}:BillProps)=>{
         const response = await axios.get(`${url}bill/${bill_acc_id}`);
         //return response.data.user;
         setFetchFormData(response.data.billaccounts);
-        setRepeatCount(response.data.repeat_count);
+        // setRepeatCount(response.data.repeat_count);
         setRepeatFrequency(response.data.repeat_frequency);
         setReminderDays(response.data.reminder_days);
 
@@ -372,7 +372,7 @@ component={CheckComponent}
 </div>
 
 <div className="flex flex-row mt-4 gap-1">
-<div className="w-[30%]">
+{/* <div className="w-[30%]">
 
 <FormikSelectInput
         label={DataLabel.repeat_count}
@@ -390,10 +390,10 @@ component={CheckComponent}
         }
     />
 
-</div>
+</div> */}
 
 
-<div className="w-[35%]">
+<div className="w-[48%]">
 
 <FormikSelectInput
         label={DataLabel.repeat_frequency}
@@ -414,7 +414,7 @@ component={CheckComponent}
 </div>
 
 
-<div className="w-[35%]">
+<div className="w-[48%]">
 
 <FormikSelectInput
         label={DataLabel.reminder_days}

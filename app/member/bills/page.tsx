@@ -94,44 +94,56 @@ export default function CareManagers() {
           accessorKey: 'bill_type',
           header: DataLabel.bill_type,
         },
-        
-        {
-            accessorKey: 'default_amount',
-            header: DataLabel.default_amount,
-            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>()}</span></p>,
-            footer: (props) => {
-              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
-                return sum + row.original.default_amount;
-              }, 0);
-              return <p><span>$</span><span className="px-2">{total}</span></p>;
-            },
-        },
 
         {
-            accessorKey: 'current_amount',
-            header: 'Current Amount',
-            cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>()}</span></p>,
-            footer: (props) => {
-              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
-                return sum + row.original.current_amount;
-              }, 0);
-              return <p><span>$</span><span className="px-2">{total}</span></p>;
-            },
+          accessorKey: 'payor',
+          header: DataLabel.payor,
         },
         {
           accessorKey: 'next_due_date',
-          header: 'Next Due Date',
+          header: DataLabel.next_due_date,
         },
-        {
-          accessorKey: 'autopay',
-          header: 'Autopay',
-          cell: (info:any) =><p>{info.getValue() > 0? <span className="border rounded p-1 bg-secondary">YES</span>:<span className="border p-1 rounded bg-gray">NO</span>}</p>
-        },
+
         {
           accessorKey: 'repeat',
           header: 'Repeat',
           cell: (info:any) =><p>{info.getValue() > 0? <span className="border rounded p-1 border-secondary text-secondary">YES</span>:<span className="border p-1 rounded">NO</span>}</p>
         },
+        {
+          accessorKey: 'repeat_frequency',
+          header: DataLabel.repeat_frequency,
+        },
+        
+        {
+            accessorKey: 'default_amount',
+            header: DataLabel.default_amount,
+            cell: (info) => <p><span>$</span><span>{info.getValue<number>()}</span></p>,
+            footer: (props) => {
+              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
+                return sum + row.original.default_amount;
+              }, 0);
+              return <p><span>$</span><span>{total}</span></p>;
+            },
+        },
+
+        // {
+        //     accessorKey: 'current_amount',
+        //     header: 'Current Amount',
+        //     cell: (info) => <p><span>$</span><span className="px-2">{info.getValue<number>()}</span></p>,
+        //     footer: (props) => {
+        //       const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
+        //         return sum + row.original.current_amount;
+        //       }, 0);
+        //       return <p><span>$</span><span className="px-2">{total}</span></p>;
+        //     },
+        // },
+       
+        {
+          accessorKey: 'autopay',
+          header: 'Autopay',
+          cell: (info:any) =><p>{info.getValue() > 0? <span className="border rounded p-1 bg-secondary">YES</span>:<span className="border p-1 rounded bg-gray">NO</span>}</p>
+        },
+       
         /*
         {
             id: 'actions',

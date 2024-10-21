@@ -20,6 +20,8 @@ import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 import {DeptPayOffMethod} from '@/app/data/DebtOptions.json'
 import DebtRocket from "@/app/images/icon/debtrocket";
 import DebtChain from "@/app/images/icon/debtchain";
+import FormikFieldInputDP from "@/app/components/form/FormikFieldInputDP";
+import FormikSelectInputDP from "@/app/components/form/FormikSelectInputDP";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 export default function Setting() {
@@ -189,13 +191,15 @@ export default function Setting() {
         onSubmit={handleFormSubmit}
 
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
-            <FormikFormHolder legend="Debt Setting Details">
+            <FormikFormHolder>
 
 <div className="flex flex-row">
   
 <div className="w-[32%]">
 
-<FormikFieldInput 
+<FormikFieldInputDP
+disabled
+readOnly 
     type="number"
     step="any"
     min={0}
@@ -214,13 +218,13 @@ export default function Setting() {
 
 <div className="ml-[24px] w-[32%]">
 
-    <FormikFieldInput 
+    <FormikFieldInputDP 
         type="number"
         step="any"
         min={0}
         label={DataLabel.monthly_budget} 
         name={`fetchdata.monthly_budget`}
-        placeHolder={`${DataLabel.monthly_budget}`}
+        placeHolder={``}
         errorMessage ={ errors.fetchdata &&                                        
             errors.fetchdata.monthly_budget &&
             touched.fetchdata &&            
@@ -234,7 +238,7 @@ export default function Setting() {
     
     <div className="ml-[24px] w-[32%]">
 
-    <FormikSelectInput
+    <FormikSelectInputDP
             label={DataLabel.debt_payoff_method}
             defaultValue={fetchdata.debt_payoff_method}
             placeHolder={`Select ${DataLabel.debt_payoff_method}`}

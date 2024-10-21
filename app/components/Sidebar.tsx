@@ -730,7 +730,49 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       pathname.slice(-9)=='calculator' && 'bg-[#43ACD6] text-[#f5f5f8]'
     }`}
   >
-    Calculator
+    Calculators
+  </Link>
+</li>
+
+<li key={52}>
+  <Link
+    href={'/member/trainings'}
+    className={`capitalize text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
+      pathname.slice(-9)=='trainings' && 'bg-[#43ACD6] text-[#f5f5f8]'
+    }`}
+  >
+    Trainings
+  </Link>
+</li>
+
+<li key={53}>
+  <Link
+    href={'/member/faq'}
+    className={`capitalize text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
+      pathname.slice(-3)=='faq' && 'bg-[#43ACD6] text-[#f5f5f8]'
+    }`}
+  >
+    FAQ
+  </Link>
+</li>
+<li key={54}>
+  <Link
+    href={'/member/testimonials'}
+    className={`capitalize text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
+      pathname.slice(-12)=='testimonials' && 'bg-[#43ACD6] text-[#f5f5f8]'
+    }`}
+  >
+    Testimonials
+  </Link>
+</li>
+<li key={55}>
+  <Link
+    href={'/member/contactus'}
+    className={`capitalize text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
+      pathname.slice(-9)=='contactus' && 'bg-[#43ACD6] text-[#f5f5f8]'
+    }`}
+  >
+    contact us
   </Link>
 </li>
 </>

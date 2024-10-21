@@ -232,7 +232,7 @@ const Header = (props: {
     <div className="row-span-2 col-span-2 ml-[5px] mt-[8px]">
       <span className='text-[17px]  text-[#C1FF72] font-bold'>
         <span className="">$</span>
-        <span className='px-1'>{Intl.NumberFormat('en-US').format(transactioData.debt_total_balance)}</span>
+        <span>{Intl.NumberFormat('en-US').format(transactioData.debt_total_balance)}</span>
       </span>
     </div>
   </div>
@@ -366,7 +366,7 @@ const Header = (props: {
 
               <span className='text-[17px] text-[#C1FF72] font-bold'>
                 <span className="">$</span>                
-                <span className='px-1'>{data.financial_frdom_target}</span>
+                <span >{data.financial_frdom_target}</span>
               </span>
 
               </div> 

@@ -25,7 +25,7 @@ export const DataLabel = {
   autopay:'Autopay?',
   repeat:'Repeat?',
   repeat_count:'Every',
-  repeat_frequency:'Repeat',
+  repeat_frequency:'Frequency',
   reminder_days:'Reminder Notifications SMS-Email*'
 }
 
@@ -35,7 +35,7 @@ export const DataLabelView = {
   name:'Bill Nickname',
   bill_type:'Bill Category',
   default_amount:'Monthly Payment',    
-  next_due_date:'Next Due Date',
+  next_due_date_word:'Next Due Date',
   notes:'Note',
   autopay:'Autopay?',
   repeat:'Repeat?',
