@@ -99,7 +99,7 @@ export const DataLabelView= {
   highest_balance:'Highest Balance',   
   monthly_payment:'Minimum Monthly Payment',
   credit_limit:'Credit Limit',
-  interest_rate:'Interest Rate (%)',  
+  interest_rate:'Interest Rate',  
   start_date_word:'Start Date',
   due_date_word:'Next Due Date',
   notes:'Note',

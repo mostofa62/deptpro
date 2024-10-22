@@ -11,6 +11,8 @@ import dynamic from "next/dynamic";
 import axios from "axios";
 import Image from 'next/image'
 import { generateRandomColor, generateRandomMixedColor, getColorForValue, hashString, hslToHex } from "@/app/components/utils/Util";
+import DebtToWealthScore from "./DebtToWealthScore";
+import ProgressBarTwo from "@/app/components/ui/ProgressBarTwo";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -125,9 +127,9 @@ export default function DashBoard() {
 
         <div className="mt-2">
           <CardHolder title="Main Dashboard">
-            <div className="flex flex-row">
+            <div className="flex flex-row gap-4">
 
-              <div className="">
+              <div className="w-[15%]">
               
                 <Image 
                 src="/animated/maindashboard.gif" 
@@ -136,7 +138,42 @@ export default function DashBoard() {
                 alt="Focus" />
               </div>
 
+              <div className="w-[18%] flex items-center justify-center">
+                <ProgressBarTwo 
+                progress={50}
+                amount={50000}
+                title={`net income`}
+                progressColor="#43acd6"
+                />
+              </div>
+
+              <div className="w-[18%] ml-[1%] flex items-center justify-center">
+                <ProgressBarTwo 
+                progress={30}
+                amount={20000}
+                title={`debt`}
+                progressColor="#fe992c"
+                />
+              </div>
+
+              <div className="w-[18%] ml-[1%] flex items-center justify-center">
+                <ProgressBarTwo 
+                progress={30}
+                amount={100000}
+                title={`wealth`}
+                progressColor="#43acd6"
+                />
+              </div>
+
+              <div className="w-[30%] ml-[1%] flex items-center justify-center">
+                <DebtToWealthScore
+                title={`DEBT TO WEALTH SCORE`}
+                amount={50000} 
+                />
+              </div>
+
             </div>
+            
           </CardHolder>
         </div>
 

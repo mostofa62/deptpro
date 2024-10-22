@@ -12,6 +12,7 @@ import { DataLabel, DataLabelView } from "../cu/DataValidationSchema";
 import HolderOne from "@/app/layout/HolderOne";
 import SavingContributions from "./SavingContributions";
 import DataProgress from "@/app/components/ui/DataProgress";
+import Summary from "./Summary";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -92,6 +93,16 @@ export default function SavingDetail({
             />
 
 
+            <div className="mt-[32px] p-5">
+              <Summary saving_id={id}
+              ProgressData={ {title:DataLabel.progress,
+              progress:SavingWithTransactionData.saving.progress,
+              color:'#31c4a2',
+              maxProgressLength:DataLabel.progress.length}}
+        
+
+              />
+            </div>
           
 
             <div className="mt-[32px] bg-[#fafafa] rounded-lg flex p-5">
@@ -142,14 +153,14 @@ export default function SavingDetail({
                             </p>
                         </div>
                         ))}
-                      <div  className="bg-white p-4 rounded shadow">
+                      {/* <div  className="bg-white p-4 rounded shadow">
                       <DataProgress 
                         title={DataLabel.progress} 
                         progress={SavingWithTransactionData.saving.progress}
                         color={'#31c4a2'}
                         maxProgressLength={DataLabel.progress.length}
                         />
-                        </div>
+                        </div> */}
                     </div>
                     
 

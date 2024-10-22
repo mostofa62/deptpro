@@ -11,7 +11,19 @@ import BasicCalendar from "@/app/components/BasicCalender";
 import { DataLabelView } from "../cu/DataValidationSchema";
 import HolderOne from "@/app/layout/HolderOne";
 import IncomeTransactions from "./IncomeTransactions";
-
+interface DebtRow {
+ 
+  income_source:string,
+  earner:string,
+  gross_income:number,
+  net_income:number,   
+  pay_date:string,
+  repeat:string,
+  note:string,
+  total_gross_income:number,
+  total_net_income:number,
+  
+}
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 export default function IncomeDetail({
@@ -59,6 +71,18 @@ export default function IncomeDetail({
      
 
     const datalabel:any = DataLabelView;
+
+    const DataPrefix = {
+      income_source:'',
+      earner:'',
+      gross_income:'$',
+      net_income:'$',   
+      pay_date:'',
+      repeat:'',
+      note:'',
+      total_gross_income:'$',
+      total_net_income:'$',
+    }
 
     return(
         
@@ -123,7 +147,7 @@ export default function IncomeDetail({
                             <strong>{datalabel[key]}</strong>
                             <p className="mt-1">
                             {/*DebtWithTransactionData.debtAccount[key] !== undefined ? DebtWithTransactionData.debtAccount[key].toString() : '-'*/}
-                            {key in IncomeWithTransactionData.income ? typeof IncomeWithTransactionData.income[key] == 'number'? IncomeWithTransactionData.income[key]?.toFixed(2) :IncomeWithTransactionData.income[key]?.toString() : '-'}
+                            {DataPrefix[key as keyof DebtRow]}{key in IncomeWithTransactionData.income ? typeof IncomeWithTransactionData.income[key] == 'number'? IncomeWithTransactionData.income[key]?.toFixed(2) :IncomeWithTransactionData.income[key]?.toString() : '-'}
                             </p>
                         </div>
                         ))}

@@ -116,7 +116,7 @@ type ExtraDayDataItem = {
         >
           &lt;
         </button>
-        <h2 className="text-xl uppercase font-semibold">
+        <h2 className="text-xl capitalize font-semibold">
           {currentDate.format("MMMM YYYY")}
         </h2>
         <button

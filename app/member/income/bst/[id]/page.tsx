@@ -12,7 +12,17 @@ import { DataLabelView } from "../cu/DataValidationSchema";
 import HolderOne from "@/app/layout/HolderOne";
 import IncomeTransactions from "./IncomeTransactions";
 
-
+interface DebtRow {
+ 
+  earner:string;
+  income_boost:number;
+  income_boost_source:string;
+  pay_date_boost_word:string;
+  next_pay_date_boost_word:string;
+  repeat_boost:string;
+  note:string;
+  
+}
 const url = process.env.NEXT_PUBLIC_API_URL;
 export default function IncomeDetail({
     params,
@@ -57,6 +67,17 @@ export default function IncomeDetail({
       )
 
     const datalabel:any = DataLabelView;
+
+
+    const DataPrefix = {
+      earner:'',
+      income_boost:'$',
+      income_boost_source:'',
+      pay_date_boost_word:'',
+      next_pay_date_boost_word:'',
+      repeat_boost:'',
+      note:'',
+    }
 
     return(
         
@@ -125,7 +146,7 @@ export default function IncomeDetail({
                             <strong>{datalabel[key]}</strong>
                             <p className="mt-1">
                             {/*DebtWithTransactionData.debtAccount[key] !== undefined ? DebtWithTransactionData.debtAccount[key].toString() : '-'*/}
-                            {key in IncomeWithTransactionData.income ? IncomeWithTransactionData.income[key]?.toString() : '-'}
+                            {DataPrefix[key as keyof DebtRow]}{key in IncomeWithTransactionData.income ? IncomeWithTransactionData.income[key]?.toString() : '-'}
                             </p>
                         </div>
                         ))}

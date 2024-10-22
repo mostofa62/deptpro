@@ -21,7 +21,26 @@ interface Tab {
   content: React.ReactNode;
 }
 
-
+interface DebtRow{
+  name:string;
+  debt_type:string;
+  balance:number;
+  highest_balance:number;   
+  monthly_payment:number;
+  credit_limit:number;
+  interest_rate:string;  
+  start_date_word:string;
+  due_date_word:string;
+  notes:string;
+  monthly_interest:number;
+  autopay:string;
+  inlclude_payoff:string;
+  payoff_order:string;
+  reminder_days:string;
+  monthly_payment_option:string;
+  percentage:string;
+  lowest_payment:number;
+}
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 export default function InsuranceCreate({
@@ -63,6 +82,48 @@ export default function InsuranceCreate({
   
    
     const datalabel:any = DataLabelView;
+
+    const DataPrefix = {
+      name:'',
+      debt_type:'',
+      balance:'$',
+      highest_balance:'$',   
+      monthly_payment:'$',
+      credit_limit:'$',
+      interest_rate:'',  
+      start_date_word:'',
+      due_date_word:'',
+      notes:'',
+      monthly_interest:'$',
+      autopay:'',
+      inlclude_payoff:'',
+      payoff_order:'',
+      reminder_days:'',
+      monthly_payment_option:'',
+      percentage:'',
+      lowest_payment:'$'
+    }
+
+    const DataSuffix = {
+      name:'',
+      debt_type:'',
+      balance:'',
+      highest_balance:'',   
+      monthly_payment:'',
+      credit_limit:'',
+      interest_rate:'%',  
+      start_date_word:'',
+      due_date_word:'',
+      notes:'',
+      monthly_interest:'',
+      autopay:'',
+      inlclude_payoff:'',
+      payoff_order:'',
+      reminder_days:'',
+      monthly_payment_option:'',
+      percentage:'%',
+      lowest_payment:''
+    }
   
     return(
         <>
@@ -114,7 +175,7 @@ export default function InsuranceCreate({
                     <strong>{datalabel[key]}</strong>
                     <p className="mt-1">
                       {/*DebtWithTransactionData.debtAccount[key] !== undefined ? DebtWithTransactionData.debtAccount[key].toString() : '-'*/}
-                      {key in DebtWithTransactionData.debtaccounts ? DebtWithTransactionData.debtaccounts[key]?.toString() : '-'}
+                      {DataPrefix[key as keyof DebtRow]}{key in DebtWithTransactionData.debtaccounts ? DebtWithTransactionData.debtaccounts[key]?.toString() : '-'} {DataSuffix[key as keyof DebtRow]}
                     </p>
                   </div>
                 ))}
