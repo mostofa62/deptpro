@@ -97,7 +97,7 @@ type ExtraDayDataItem = {
               style={{ minWidth: '200px' }} // Adjust width as needed
             >
               <div className="p-2 text-xs text-[#4f4f4f]">
-                <div className="font-semibold uppercase text-sm">{extraData.title}</div>
+                <div className="font-semibold capitalize text-sm">{extraData.title}</div>
                 <div className="font-medium">{extraData.description}</div>
               </div>
             </div>

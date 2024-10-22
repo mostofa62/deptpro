@@ -92,66 +92,19 @@ export default function SavingDetail({
             />
 
 
-            <div className="mt-[20px] bg-[#43ACD6] text-white rounded-lg border-[#43ACD6]">
-              <div className="flex flex-row h-[70px] py-3 px-10">
-                    <div className="py-[10px] w-[40%]">                    
-                      <p className="text-[25px]  leading-[25px] uppercase  font-medium">
-                            SAVING DETails
-                      </p>
-                    </div>
-
-                    
-
-                    <div className="px-10 flex justify-end w-[60%]">
-                        <div>
-                        <Link
-                            href={'/member/saving'}
-                            className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
-                        >                            
-
-                            <p className="text-[20px] font-semibold uppercase">Saving Accounts</p>
-                        </Link>
-                        </div>
-
-                        <div>
-                        <Link
-                            href={'saving/cu'}
-                            className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
-                        >
-                            
-
-                            <p className="text-[18px] font-semibold uppercase">Add Saving</p>
-                        </Link>
-                        </div>
-
-                        <div>
-                        <Link
-                            href={`/member/saving/cu/${id}`}
-                            className={`text-[20px] h-[45px] capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
-                        >
-                            
-
-                            <p className="text-[18px] font-semibold uppercase">Update</p>
-                        </Link>
-                        </div>
-                    </div>
-
-              </div>
-
-            </div>
-
+          
 
             <div className="mt-[32px] bg-[#fafafa] rounded-lg flex p-5">
 
                 <div className="w-[35%] h-[30%] flex flex-col">
-                    <div className="p-1">  
+                    {/* <div className="p-1">  
                     <BasicCalendar 
                     extraDayData={{[`${SavingWithTransactionData.saving.starting_date
                     }`]:{'title':datalabel.starting_date_word,'description':description()}}} 
                     currentMonth={SavingWithTransactionData.saving.starting_date
                     }
                     />
-                    </div>
+                    </div> */}
                     {SavingWithTransactionData.saving.goal_reached!=null &&
                         <div className="p-1">
                         <BasicCalendar 
