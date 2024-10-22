@@ -147,7 +147,7 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number}:BillProps)=>{
 
 <hr className="mt-2 border-stroke"/>
 
-<div className="flex flex-row mt-2">
+<div className="flex flex-row mt-[15px]">
 <div className="w-[50%]">
     
     <FormikFieldInput 
@@ -197,7 +197,7 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number}:BillProps)=>{
 </div>
 
 
-<div className="flex flex-row">
+<div className="flex flex-row mt-[15px]">
 <div className="w-[50%]">
 
 <FormikFieldInput 
@@ -236,7 +236,7 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number}:BillProps)=>{
 </div>
 
 
-<div className="flex flex-row">
+<div className="flex flex-row mt-[15px]">
 
 
 <div className="w-[50%]">
@@ -286,8 +286,8 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number}:BillProps)=>{
 <hr className="mt-2 border-stroke"/>
 
 
-<div className="flex flex-row mt-4">
-<div className="w-[50%]">
+<div className="flex flex-row mt-[15px]">
+{/* <div className="w-[50%]">
 
     
 
@@ -327,8 +327,8 @@ component={CheckComponent}
     />
     
     
-</div>
-    <div className="ml-[10px] w-[50%]">
+</div> */}
+    <div className="w-[50%]">
 
     
 
@@ -371,7 +371,7 @@ component={CheckComponent}
     </div>
 </div>
 
-<div className="flex flex-row mt-4 gap-1">
+<div className="flex flex-row mt-[15px] gap-1">
 {/* <div className="w-[30%]">
 
 <FormikSelectInput

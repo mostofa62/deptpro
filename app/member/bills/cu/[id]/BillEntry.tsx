@@ -102,7 +102,7 @@ const BillEntry=({bill_acc_id, user_id,editData,cleanData}:BillProps)=>{
                     
                 </div>
             </div>
-            <div className="flex flex-row mt-2">
+            <div className="flex flex-row mt-[15px]">
                 <div className="w-full">
 
                 <FormikFieldInput 

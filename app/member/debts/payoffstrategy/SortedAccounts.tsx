@@ -18,6 +18,14 @@ const DataLabel = {
     dept_type_word:'Debt Type'    
     
 }
+const DataPrefix = {
+    name:'',
+    total_payment_sum:'$',
+    total_interest_sum:'$',
+    months_to_payoff:'',
+    month_debt_free_word:'',
+    dept_type_word:'' 
+}
 interface SortProps{
     debt_accounts_list:DebtRow[]
 }
@@ -64,7 +72,7 @@ const SortedAccount = ({debt_accounts_list}:SortProps)=>{
                                 {
                                     Object.keys(data).map((key, i) => (
                                         <td key={i}>
-                                            {data[key as keyof DebtRow]}
+                                            {DataPrefix[key as keyof DebtRow]}{data[key as keyof DebtRow]}
                                         </td>   
                                     ))
                                 }

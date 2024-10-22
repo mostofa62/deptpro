@@ -185,7 +185,7 @@ const TotalAllocation = () => {
             fontSize: '16px',
             minWidth:'100px'                    
           }}>          
-            <p style={{ margin: 0 }}>$ {Intl.NumberFormat('en-US').format(data.total_balance_net)} in <span>{data.year_month_word}</span></p>
+            <p style={{ margin: 0 }}>${Intl.NumberFormat('en-US').format(data.total_balance_net)} in <span>{data.year_month_word}</span></p>
           </div>
         );
       }
@@ -201,7 +201,7 @@ const TotalAllocation = () => {
           
           {payload.map((entry:any, index:number) => (
             <div key={`item-${index}`} style={{ color: entry.stroke }}>
-              <strong>{dataLabel[entry.dataKey as keyof typeof dataLabel]}:</strong> $ {entry.value.toFixed(2)}
+              <strong>{dataLabel[entry.dataKey as keyof typeof dataLabel]}:</strong> ${entry.value.toFixed(2)}
             </div>
           ))}
         </div>
@@ -327,7 +327,7 @@ const TotalAllocation = () => {
               <LineChart data={lineData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month_word" tick={{ fontSize:12 }} />
-              <YAxis tick={{ fontSize:12 }} />
+              <YAxis tick={{ fontSize:12 }} tickFormatter={(value) => `$${value}`} />
               {/* <Tooltip content={<CustomTooltipLine />} /> */}
               <Tooltip content={<CustomTooltipLine />} />
               <Legend 

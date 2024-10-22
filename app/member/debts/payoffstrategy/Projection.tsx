@@ -37,7 +37,7 @@ const Projection = ({chartData, debt_type_names}:ProjectionProps)=>{
             <div><strong>Month:</strong> {label}</div>
             {payload.map((entry:any, index:number) => (
               <div key={`item-${index}`} style={{ color: entry.stroke }}>
-                <strong>{datalabel[entry.dataKey as keyof typeof datalabel]?datalabel[entry.dataKey as keyof typeof datalabel]: debt_type_names[entry.dataKey]}:</strong> $ {entry.value.toFixed(2)}
+                <strong>{datalabel[entry.dataKey as keyof typeof datalabel]?datalabel[entry.dataKey as keyof typeof datalabel]: debt_type_names[entry.dataKey]}:</strong> ${entry.value.toFixed(2)}
               </div>
             ))}
           </div>
@@ -67,7 +67,7 @@ const Projection = ({chartData, debt_type_names}:ProjectionProps)=>{
             <LineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month" tick={{ fontSize:12 }} />
-              <YAxis tick={{ fontSize:12 }} />
+              <YAxis tick={{ fontSize:12 }} tickFormatter={(value) => `$${value}`}/>
               {/* <Tooltip content={<CustomTooltipLine />} /> */}
               <Tooltip content={<CustomTooltipLine />} />
               <Legend 

@@ -8,7 +8,7 @@ export const DataSchema = {
     next_due_date:moment().format('YYYY-MM-DD'),
     notes:'',
     autopay:0,
-    repeat:0,
+    // repeat:0,
     repeat_count:{'label':'None','value':0},
     repeat_frequency:{'label':'None','value':0},
     reminder_days:{'label':'Disabled','value':0}    
@@ -23,9 +23,9 @@ export const DataLabel = {
   next_due_date:'Next Due Date',
   notes:'Note',
   autopay:'Autopay?',
-  repeat:'Repeat?',
+  // repeat:'Repeat?',
   repeat_count:'Every',
-  repeat_frequency:'Frequency',
+  repeat_frequency:'Repeat',
   reminder_days:'Reminder Notifications SMS-Email*'
 }
 
@@ -33,14 +33,17 @@ export const DataLabel = {
 export const DataLabelView = {
   payor:'Payor',
   name:'Bill Nickname',
-  bill_type:'Bill Category',
+  bill_type:{
+    first:'Bill Category',
+    parent:'bill_type_parent'
+  },
   default_amount:'Monthly Payment',    
   next_due_date_word:'Next Due Date',
   notes:'Note',
   autopay:'Autopay?',
-  repeat:'Repeat?',
+  // repeat:'Repeat?',
   //repeat_count:'Every',
-  repeat_frequency:'Repeat Frequency',
+  repeat_frequency:'Repeat',
   reminder_days:'Reminder Notifications SMS-Email*'
 }
 

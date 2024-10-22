@@ -22,6 +22,7 @@ interface DataRow {
     _id:string;    
     name: string;
     bill_type:string;
+    bill_type_parent:string;
     default_amount:number;
     current_amount:number;
     next_due_date: string;
@@ -93,6 +94,7 @@ export default function CareManagers() {
         {
           accessorKey: 'bill_type',
           header: DataLabel.bill_type,
+          cell: (info) => <p>{info.row.original.bill_type_parent &&`${info.row.original.bill_type_parent} > `}{info.getValue()} </p>,
         },
 
         {
@@ -104,11 +106,11 @@ export default function CareManagers() {
           header: DataLabel.next_due_date,
         },
 
-        {
-          accessorKey: 'repeat',
-          header: 'Repeat',
-          cell: (info:any) =><p>{info.getValue() > 0? <span className="border rounded p-1 border-secondary text-secondary">YES</span>:<span className="border p-1 rounded">NO</span>}</p>
-        },
+        // {
+        //   accessorKey: 'repeat',
+        //   header: 'Repeat',
+        //   cell: (info:any) =><p>{info.getValue() > 0? <span className="border rounded p-1 border-secondary text-secondary">YES</span>:<span className="border p-1 rounded">NO</span>}</p>
+        // },
         {
           accessorKey: 'repeat_frequency',
           header: DataLabel.repeat_frequency,

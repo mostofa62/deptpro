@@ -119,7 +119,7 @@ export default function InsuranceCreate() {
         onSubmit={handleFormSubmit}
 
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
-            <FormikFormHolder legend="Bill Account Details">
+            <FormikFormHolder>
 
 <div className="flex flex-row">
 
@@ -139,7 +139,7 @@ export default function InsuranceCreate() {
 
         <div className="w-[65%]">
 
-            <div className="flex flex-row">
+            <div className="flex flex-row mt-[15px]">
 
             <div className="w-[50%]">
                     
@@ -189,7 +189,7 @@ export default function InsuranceCreate() {
                 
             </div>
 
-            <div className="flex flex-row">
+            <div className="flex flex-row mt-[15px]">
             <div className="w-[50%]">
 
 <FormikSelectInput
@@ -236,7 +236,7 @@ export default function InsuranceCreate() {
             
             </div>
 
-            <div className="flex flex-row">
+            <div className="flex flex-row mt-[15px]">
 
             <div className="w-[50%]">
 
@@ -281,7 +281,7 @@ export default function InsuranceCreate() {
             </div>
 
 
-            <div className="flex flex-row">
+            <div className="flex flex-row mt-[15px]">
                 <div className="w-[50%]">
                     
                 <Field 

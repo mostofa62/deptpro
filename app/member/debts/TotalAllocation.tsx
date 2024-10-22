@@ -48,7 +48,7 @@ const CustomTooltip = ({ active, payload, label, total_count, total_balance }:an
     if (active && payload && payload.length) {
       return (
         <div className="custom-tooltip" style={{ backgroundColor: '#fff', padding: '3px', border: '1px solid #ccc' }}>
-          <p className="text-lg"><span className=" font-semibold">{`${payload[0].name}`}</span> : <span className=" font-semibold">{`${payload[0].value.toFixed(2)}`}</span> in <span className=" font-semibold">{`${total_balance}`}</span></p>
+          <p className="text-lg"><span className=" font-semibold">{`${payload[0].name}`}</span> : <span className=" font-semibold">${`${payload[0].value.toFixed(2)}`}</span> in <span className=" font-semibold">${`${total_balance}`}</span></p>
         </div>
       );
     }
@@ -127,7 +127,7 @@ const TotalAllocation = () => {
           <div><strong>Month:</strong> {label}</div>
           {payload.map((entry:any, index:number) => (
             <div key={`item-${index}`} style={{ color: entry.stroke }}>
-              <strong>{debt_type_names[entry.dataKey]}:</strong> $ {entry.value.toFixed(2)}
+              <strong>{debt_type_names[entry.dataKey]}:</strong> ${entry.value.toFixed(2)}
             </div>
           ))}
         </div>
@@ -253,7 +253,7 @@ const TotalAllocation = () => {
             <LineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month" tick={{ fontSize:12 }} />
-              <YAxis tick={{ fontSize:12 }} />
+              <YAxis tick={{ fontSize:12 }} tickFormatter={(value) => `$${value}`} />
               {/* <Tooltip content={<CustomTooltipLine />} /> */}
               <Tooltip content={<CustomTooltipLine />} />
               <Legend 

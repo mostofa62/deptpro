@@ -110,10 +110,10 @@ export default function BillDetails({
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {Object.keys(datalabel).map((key, index) => (
                   <div key={index} className="bg-white p-4 rounded shadow">
-                    <strong>{datalabel[key]}</strong>
+                    <strong>{key == 'bill_type' ? datalabel[key]['first']:datalabel[key] }</strong>
                     <p className="mt-1">
                       {/*BillWithPaymentData.debtAccount[key] !== undefined ? BillWithPaymentData.debtAccount[key].toString() : '-'*/}
-                      {key in BillWithPaymentData.billaccounts ? BillWithPaymentData.billaccounts[key]?.toString() : '-'}
+                      {key in BillWithPaymentData.billaccounts ?   ( key == 'bill_type' ? `${BillWithPaymentData.billaccounts[datalabel[key]['parent']] &&  `${BillWithPaymentData.billaccounts[datalabel[key]['parent']]?.toString()} > `}${BillWithPaymentData.billaccounts[key]?.toString()} `: BillWithPaymentData.billaccounts[key]?.toString()) : '-'}
                     </p>
                   </div>
                 ))}
