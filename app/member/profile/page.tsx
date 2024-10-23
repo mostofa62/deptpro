@@ -144,7 +144,7 @@ type="password" name="user.password" placeholder="password" />
 <div className="w-full my-5">
 <button 
 disabled={isSubmitting} type="submit"
- className="flex w-full justify-center rounded border-primary bg-[#0a4a82] p-3 font-medium text-white">
+ className="flex w-full justify-center rounded border-primary bg-[#43acd6] p-3 font-medium text-white">
   Save
 </button>
                     </div>

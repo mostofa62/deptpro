@@ -74,8 +74,10 @@ interface IncomePayload{
 interface FuturePayLoad{
   projection_list:{base_gross_income:number, base_net_income:number, month:string, month_word:string}[]
 }
-
-const TotalAllocation = () => {
+interface TotalPros{
+  userid:string;
+}
+const TotalAllocation = ({userid}:TotalPros) => {
 
     
 
@@ -120,7 +122,7 @@ const TotalAllocation = () => {
     })
 
     const IncomeFuture:any = useFetchDropDownObjects({
-      urlSuffix:`income-transactions-next`,
+      urlSuffix:`income-transactions-next-all/${userid}`,
       payLoads:payloadFuture
     })
 

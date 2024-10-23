@@ -42,6 +42,7 @@ const Income = ()=>{
     
 
     const authCtx = useAuth();
+    const userid:any  = authCtx.userId;
 
     const [extraPayload, setExtraPayload] = useState<ExtraPayloadProps>({
       total_net_income:0,
@@ -388,7 +389,7 @@ const Income = ()=>{
 
             <div className="mt-5 p-2 mb-5">
 
-              <TotalAllocation />
+              <TotalAllocation userid={userid}/>
 
             </div>
 

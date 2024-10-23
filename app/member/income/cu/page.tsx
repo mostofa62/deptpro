@@ -120,7 +120,7 @@ export default function InsuranceCreate() {
         onSubmit={handleFormSubmit}
 
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
-            <FormikFormHolder legend="income account details">
+            <FormikFormHolder>
 
 <div className="flex flex-row gap-2">
 

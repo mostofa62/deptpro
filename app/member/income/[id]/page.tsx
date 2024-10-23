@@ -11,6 +11,7 @@ import BasicCalendar from "@/app/components/BasicCalender";
 import { DataLabelView } from "../cu/DataValidationSchema";
 import HolderOne from "@/app/layout/HolderOne";
 import IncomeTransactions from "./IncomeTransactions";
+import Summary from "./Summary";
 interface DebtRow {
  
   income_source:string,
@@ -109,21 +110,26 @@ export default function IncomeDetail({
             ]}
             />
 
+            <div className="mt-[32px] p-5">
+              <Summary income_id={id}              
+        
 
+              />
+            </div>
             
 
 
             <div className="mt-[32px] bg-[#fafafa] rounded-lg flex p-5">
 
                 <div className="w-[35%] h-[30%] flex flex-col">
-                    <div className="p-1">  
+                    {/* <div className="p-1">  
                     <BasicCalendar 
                     extraDayData={{[`${IncomeWithTransactionData.income.pay_date
                     }`]:{'title':`Pay date`,'description':description()}}} 
                     currentMonth={IncomeWithTransactionData.income.pay_date
                     }
                     />
-                    </div>
+                    </div> */}
 
 
                     <div className="p-1">  

@@ -112,7 +112,7 @@ export default function IncomeDetail({
 
                 <div className="w-[35%] h-[30%] flex flex-col">
                     
-                    {IncomeWithTransactionData.income.pay_date_boost!=null &&
+                    {/* {IncomeWithTransactionData.income.pay_date_boost!=null &&
                         <div className="p-1">
                         <BasicCalendar 
                         extraDayData={{[`${IncomeWithTransactionData.income.pay_date_boost
@@ -121,7 +121,7 @@ export default function IncomeDetail({
                         }
                         />
                         </div>
-                    }
+                    } */}
                   {IncomeWithTransactionData.income.next_pay_date_boost!=null &&
                     <div className="p-1">  
                     <BasicCalendar 

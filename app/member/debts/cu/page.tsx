@@ -106,7 +106,31 @@ export default function InsuranceCreate() {
 <div className="flex flex-row mt-[15px]">
     <div className="w-[32%]">
         
-        <FormikFieldInput 
+    <FormikSelectCreatableInput
+            label={DataLabel.debt_type}
+            defaultValue={fetchdata.debt_type}
+            placeHolder={`Select ${DataLabel.debt_type}`}
+            isSearchable={true}
+            isClearable={true}
+            name="fetchdata.debt_type"
+            dataOptions={DeptTypeData}
+            errorMessage={errors.fetchdata &&
+                errors.fetchdata.debt_type &&
+                touched.fetchdata &&
+                touched.fetchdata.debt_type &&
+                errors.fetchdata.debt_type.label
+            }
+        />
+        
+        
+        
+    </div>
+
+    <div className="ml-[24px] w-[32%]">
+        
+        
+
+<FormikFieldInput 
         label={DataLabel.name} 
         name={`fetchdata.name`}
         placeHolder={`${DataLabel.name}`}
@@ -126,10 +150,12 @@ export default function InsuranceCreate() {
         
         
     </div>
-
+    
     <div className="ml-[24px] w-[32%]">
-        
-        <FormikFieldInput 
+
+    
+
+    <FormikFieldInput 
         label={DataLabel.payor} 
         name={`fetchdata.payor`}
         placeHolder={`${DataLabel.payor}`}
@@ -144,28 +170,6 @@ export default function InsuranceCreate() {
                 value
               );
         }}
-        />
-        
-        
-        
-    </div>
-    
-    <div className="ml-[24px] w-[32%]">
-
-    <FormikSelectCreatableInput
-            label={DataLabel.debt_type}
-            defaultValue={fetchdata.debt_type}
-            placeHolder={`Select ${DataLabel.debt_type}`}
-            isSearchable={true}
-            isClearable={true}
-            name="fetchdata.debt_type"
-            dataOptions={DeptTypeData}
-            errorMessage={errors.fetchdata &&
-                errors.fetchdata.debt_type &&
-                touched.fetchdata &&
-                touched.fetchdata.debt_type &&
-                errors.fetchdata.debt_type.label
-            }
         />
         
 

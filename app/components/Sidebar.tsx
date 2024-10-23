@@ -9,6 +9,7 @@ import Logo from '@/app/images/logo/logo.svg';
 
 import useAuth from '@/app/hooks/useAuth';
 import SidebarLinkGroup from './SidebarLinkGroup';
+import axios from 'axios';
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -27,6 +28,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   
   const [callStatus, setCallStatus] =  useState(false);
   let Loguser:any = authCtx.role;
+  let urlSuffix = (Loguser && parseInt(Loguser) < 10 )?'admin-logout':'member-logout';
+  let redirect = (Loguser && parseInt(Loguser) < 10 )?'/admin':'/member';
 
   
 
@@ -84,6 +87,28 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
     // Force a reload by navigating to the current URL
     router.replace(href);
+  };
+
+  const logoutHandler = async()=>{
+    
+          await axios.post(`${url}${urlSuffix}`, 
+          {token:authCtx.token }, {
+          
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      ) .then(function (response) {
+            authCtx.logout();
+            router.push(redirect);
+          
+      })
+      .catch(function (error) {
+        //console.log(error);
+      });
+
+
+
   };
 
 
@@ -783,7 +808,30 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
           
 
- 
+            <ul className="flex space-x-4 absolute bottom-5 items-center justify-center pl-4">
+                <li key={1}>
+                    <Link
+                      href={'/'}
+                      className="flex items-center text-sm font-medium duration-300 ease-in-out   hover:text-[#43ACD6]"
+                    >                 
+                      Home
+                    </Link>
+                </li>
+                  
+                <li key={2}>
+                <Link
+                  href={(Loguser && parseInt(Loguser) < 10 )?'/admin/profile':'/member/profile'}
+                  className="flex items-center text-sm font-medium duration-300 ease-in-out   hover:text-[#43ACD6]"
+                >                 
+                  My Profile
+                </Link>
+              </li>
+              <li key={3}>
+                <button onClick={logoutHandler} className="flex items-center text-sm font-medium duration-300 ease-in-out hover:text-[#43ACD6]">          
+                  Log Out
+                </button>
+              </li>
+            </ul>
 
     
           </div>
