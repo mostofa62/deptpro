@@ -9,6 +9,13 @@ export default object().shape({
             name: string()
               .ensure()
               .required("Name is required"),
+
+              phone: string()
+              .matches(
+                /^(\+1[\s.-]?)?\(?([2-9][0-9]{2})\)?[\s.-]?([2-9][0-9]{2})[\s.-]?([0-9]{4})$/,
+                "Phone number is not valid"
+              )
+              .required("Phone number is required"),
               /*
               username: string()
               .ensure()

@@ -11,6 +11,7 @@ import BasicCalendar from "@/app/components/BasicCalender";
 import { DataLabelView } from "../cu/DataValidationSchema";
 import HolderOne from "@/app/layout/HolderOne";
 import IncomeTransactions from "./IncomeTransactions";
+import Summary from "./Summary";
 
 interface DebtRow {
  
@@ -104,7 +105,10 @@ export default function IncomeDetail({
             ]}
             />
 
-
+            <div className="mt-[32px] p-5">
+              <Summary income_id={id}                      
+              />
+            </div>
             
 
 

@@ -134,12 +134,12 @@ const Header = (props: {
         <path fill="#f5f5f8" d="M5 19h-4v-4h4v4zm6 0h-4v-8h4v8zm6 0h-4v-13h4v13zm6 0h-4v-19h4v19zm1 2h-24v2h24v-2z"/>
       </svg>
       */}
-      <ArrowGraph width={50} height={55} />
+      <ArrowGraph width={55} height={105} className="mt-[-30px]" />
     </div>
-    <div className="col-span-2 ml-[5px]">
+    <div className="col-span-2 ml-[8px]">
       <span className='text-[14px] text-white font-semibold'>DEBT BALANCE</span>
     </div>
-    <div className="row-span-2 col-span-2 ml-[5px] mt-[8px]">
+    <div className="row-span-2 col-span-2 ml-[8px] mt-[8px]">
       <span className='text-[17px]  text-[#C1FF72] font-bold'>
         <span className="">$</span>
         <span>{Intl.NumberFormat('en-US').format(transactioData.debt_total_balance)}</span>
@@ -239,7 +239,7 @@ const Header = (props: {
 
             <div className="row-span-3">
 
-              <CoinSvg width={50} height={55} />
+              <CoinSvg width={50} height={60} className="mt-[-5px]" />
 
             </div>
 

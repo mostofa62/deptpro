@@ -84,12 +84,12 @@ const Summary = ({income_id}:DebtTransProps)=>{
       }
 
     const IncomeContributions:any = useFetchDropDownObjects({
-      urlSuffix:`income-transactions-previous/${income_id}`,
+      urlSuffix:`income-boost-transactions-previous/${income_id}`,
       payLoads:payloadIncome
     })
 
     const IncomeFuture:any = useFetchDropDownObjects({
-      urlSuffix:`income-transactions-next/${income_id}`,
+      urlSuffix:`income-boost-transactions-next/${income_id}`,
       payLoads:payloadFuture
     })
 

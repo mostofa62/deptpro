@@ -8,6 +8,7 @@ import userSchema from "./userSchema";
 import { useRouter } from "next/navigation";
 import useAuth from "@/app/hooks/useAuth";
 import toast from "react-hot-toast";
+import HolderOne from "@/app/layout/HolderOne";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -20,6 +21,7 @@ const PdfProcessList=()=> {
   const [userdata,setUserdata] = useState({
     name:'',    
     email:'',
+    phone:'',
     password:'',
   });
 
@@ -67,6 +69,18 @@ const PdfProcessList=()=> {
  
   return (
     <DefaultLayout>
+<div className="flex flex-col">
+<HolderOne
+            title="profile"            
+            linkItems={[
+            //   {
+            //     link:'/',
+            //     title:''
+            //   },              
+            ]}
+            />
+
+<div className="mt-3 bg-[#fafafa] rounded-lg p-5">
         <Formik
         initialValues={{ user }}
         enableReinitialize
@@ -122,6 +136,27 @@ type="email" name="user.email" placeholder="email of person" />
                                             </span>   
                                         )}
 </div>
+
+<div className="my-3">
+                <label className="mb-3 block text-black dark:text-white">
+                  Phone
+                </label>
+<Field 
+                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+
+type="text" name="user.phone" placeholder="phone of person" />
+      {errors.user &&
+                                        
+                                        errors.user.phone &&
+                                        touched.user &&
+                                        
+                                        touched.user.phone && ( 
+                                            <span className="mb-3 font-semibold text-[#B45454]">
+                                                {errors.user.phone}
+                                            </span>   
+                                        )}
+</div>
+
 <div className="my-3">
                 <label className="mb-3 block text-black dark:text-white">
                   Password
@@ -160,6 +195,8 @@ disabled={isSubmitting} type="submit"
       </Form>
         )}
       />
+</div>
+</div>
     </DefaultLayout>
   )
 }

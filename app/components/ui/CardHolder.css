@@ -14,6 +14,14 @@
     font-size: 15px;
     font-weight:600;
   }
+
+  .header-blank {    
+    color: #4f4f4f;
+    padding: 10px;
+    text-align: center;
+    font-size: 15px;
+    font-weight:600;
+  }
   
   .body {
     padding: 20px;
