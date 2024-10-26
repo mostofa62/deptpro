@@ -8,6 +8,7 @@ export const DataSchema = {
     saving_boost_source:{'label':'','value':''},
     pay_date_boost:moment().format('YYYY-MM-DD'),
     repeat_boost:{'label':'None','value':0},
+    boost_operation_type:{'label':'None','value':0},
     note:''
       
 
@@ -22,6 +23,7 @@ export const DataLabel = {
   saving_boost_source:'Saving Boost Source',
   pay_date_boost:'Pay Day Boost',
   repeat_boost:'Repeat Frequency',
+  boost_operation_type:'Type',
   note:'Note'
   
 }
@@ -36,6 +38,7 @@ export const DataLabelView = {
   saving_boost_source:'Saving Boost Source',
   pay_date_boost_word:'Pay Day Boost',
   repeat_boost:'Repeat',
+  boost_operation_type:'Type',
   note:'Note'
   
 }
@@ -60,6 +63,11 @@ export const ValidationSchema =  object().shape({
               saving_boost_source:object().shape({
                 value: string().required(),
                 label: string().required(`${DataLabel.saving_boost_source} is required`)
+              }),
+
+              boost_operation_type:object().shape({
+                value: number().required().min(1,`${DataLabel.boost_operation_type} is required`),
+                label: string().required(`${DataLabel.boost_operation_type} is required`)
               }),
 
              

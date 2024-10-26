@@ -83,7 +83,7 @@ export default function InsuranceCreate() {
                 title:'your debt dashboard'
                 },
                 {
-                    link:'debts/settings',
+                    link:'/member/debts/settings',
                     title:'set debt budget'
                 }
             ]}

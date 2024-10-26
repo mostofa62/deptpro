@@ -396,8 +396,8 @@ const generateItems = useCallback((row) => [
             title="custom payoff strategy"            
             linkItems={[
               {
-                link:'debts',
-                title:'debt dashboard'
+                link:'/member/debts',
+                title:'your debt dashboard'
               }
             ]}
             />

@@ -14,11 +14,8 @@ import FormikSelectInput from "@/app/components/form/FormikSelectInput";
 import FormikSelectCreatableInput from "@/app/components/form/FormikSelectCreatableInput";
 
 import toast from 'react-hot-toast';
-import useFetchDropDownData from "@/app/hooks/useFetchDropDownData";
 import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
-import CheckComponent from "@/app/components/CheckComponent";
-import FormikCheckInput from "@/app/components/form/FormikCheckInput";
 import DebtRocket from "@/app/images/icon/debtrocket";
 import VideoComponent from "@/app/components/utils/VideoComponent";
 import HolderOne from "@/app/layout/HolderOne";
@@ -33,7 +30,8 @@ interface PayLoads{
     
     //repeat_frequency:Options[],
     saving_boost_source:Options[],
-    saving_list:Options[]     
+    saving_list:Options[]
+    boost_operation_type:Options[],     
 }
 
 export default function InsuranceCreate() {
@@ -47,14 +45,14 @@ export default function InsuranceCreate() {
     const [repeatFrequency, setRepeatFrequency] = useState([
         DataSchema.repeat_boost
     ])
-    
-    
+
 
     const payload: PayLoads ={
           
         //repeat_frequency: [],
         saving_boost_source:[],
-        saving_list:[]            
+        saving_list:[],
+        boost_operation_type:[]            
 
     }
 
@@ -114,7 +112,7 @@ export default function InsuranceCreate() {
 
 
         <HolderOne
-            title="add savings"            
+            title="add saving boost"            
             linkItems={[
                 {
                 link:'/member/saving',
@@ -369,6 +367,32 @@ export default function InsuranceCreate() {
 
 <div className="w-[32%]">
 
+   
+
+    <FormikSelectInput
+            label={DataLabel.boost_operation_type}
+            defaultValue={fetchdata.boost_operation_type}
+            placeHolder={``}
+            isSearchable={true}
+            isClearable={true}
+            name="fetchdata.boost_operation_type"
+            dataOptions={SavingCategoryData.boost_operation_type}
+            errorMessage={errors.fetchdata &&
+                errors.fetchdata.boost_operation_type &&
+                touched.fetchdata &&
+                touched.fetchdata.boost_operation_type &&
+                errors.fetchdata.boost_operation_type.value
+            }
+        />
+
+
+
+            
+            
+        </div>
+
+<div className="ml-[24px] w-[32%]">
+
 <FormikFieldInput 
             label={DataLabel.note} 
             name={`fetchdata.note`}
@@ -386,12 +410,12 @@ export default function InsuranceCreate() {
 
 </div>
 
-{/*
-<div className="flex flex-row">
+
+{/* <div className="flex flex-row">
     {JSON.stringify(values)}
     {JSON.stringify(errors)}
-</div>
-*/}
+</div> */}
+
 
 </FormikFormHolder>
         )}

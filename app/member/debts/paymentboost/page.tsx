@@ -14,6 +14,7 @@ import BoostEntry from "./BoostEntry";
 import BoostTransactions from "./BoostTransactions";
 import CardHolderDefault from "@/app/components/ui/CardHolderDefault";
 import { DataSchema } from "./DataValidationSchema";
+import HolderOne from "@/app/layout/HolderOne";
 
 
 interface Tab {
@@ -76,6 +77,24 @@ export default function InsuranceCreate() {
     return(
         <>
         <DefaultLayout>
+
+        <HolderOne
+            title="payment boost"            
+            linkItems={[
+              {
+                link:'/member/debts/cu',
+                title:'add debt'
+              },
+              {
+                link:'/member/debts',
+                title:'your debt dashboard'
+                },
+              {
+                link:'/member/debts/settings',
+                title:'set debt budget'
+              }
+            ]}
+            />
         
         <div className="grid grid-cols-3 gap-1 mt-4">
 

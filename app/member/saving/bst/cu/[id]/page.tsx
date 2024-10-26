@@ -71,7 +71,14 @@ export default function InsuranceCreate({
         const response = await axios.get(`${url}saving-boost/${id}`);
         //return response.data.user;
         setFetchFormData(response.data.saving);
-        setRepeatFrequency([response.data.saving.repeat_boost, DataSchema.repeat_boost])
+        const previous_repeat = [response.data.saving.repeat_boost, DataSchema.repeat_boost, response.data.saving.saving_repeat_frequncey];
+        // Flatten the array and filter out duplicates
+        const uniqueData = previous_repeat.flat().filter((item, index, self) =>
+            index === self.findIndex((t) => (
+                t.label === item.label && t.value === item.value
+            ))
+        );
+        setRepeatFrequency(uniqueData)
         
         
     },[id]);
@@ -127,7 +134,7 @@ export default function InsuranceCreate({
 
 
         <HolderOne
-            title="update saving"            
+            title="update saving boost"            
             linkItems={[
                 {
                     link:'/member/saving/cu',
@@ -345,6 +352,32 @@ export default function InsuranceCreate({
 <div className="flex flex-row mt-[15px]">
 
 <div className="w-[32%]">
+
+   
+
+    <FormikSelectInput
+            label={DataLabel.boost_operation_type}
+            defaultValue={fetchdata.boost_operation_type}
+            placeHolder={``}
+            isSearchable={true}
+            isClearable={true}
+            name="fetchdata.boost_operation_type"
+            dataOptions={SavingCategoryData.boost_operation_type}
+            errorMessage={errors.fetchdata &&
+                errors.fetchdata.boost_operation_type &&
+                touched.fetchdata &&
+                touched.fetchdata.boost_operation_type &&
+                errors.fetchdata.boost_operation_type.value
+            }
+        />
+
+
+
+            
+            
+        </div>
+
+<div className="ml-[24px] w-[32%]">
 
 <FormikFieldInput 
             label={DataLabel.note} 

@@ -26,12 +26,15 @@ interface DataRow {
     interest:number;
     starting_date: string;   
     contribution:number;
-    repeat:string; 
+    repeat:string;
+    goal_reached:string|null;
+    monthly_saving_boost:number; 
 }
 interface ExtraPayloadProps{  
   total_goal_amount:number;
   total_starting_amount:number;
-  total_contribution:number;  
+  total_contribution:number;
+  total_monthly_saving:number;  
 
 }
 const SavingGrid = ()=>{
@@ -42,7 +45,8 @@ const SavingGrid = ()=>{
     const [extraPayload, setExtraPayload] = useState<ExtraPayloadProps>({
       total_goal_amount:0,
       total_starting_amount:0,
-      total_contribution:0      
+      total_contribution:0,
+      total_monthly_saving:0      
      });
 
     const [data, setData] = useState<DataRow[]>([]);
@@ -97,6 +101,7 @@ const SavingGrid = ()=>{
       const total_goal_amount =  extraPayload.total_goal_amount;
       const total_starting_amount = extraPayload.total_starting_amount;
       const total_contribution = extraPayload.total_contribution;
+      const total_monthly_saving = extraPayload.total_monthly_saving;
       
       const deleteAction=useCallback(async(id:string, key:number=1)=>{
   
@@ -137,6 +142,18 @@ const SavingGrid = ()=>{
         
         
 },[data])
+
+const generateItemsRestricted = useCallback((row) => [
+
+  {
+    actionId:'view',
+    title:'View',
+    link:`saving/${row.getValue('_id')}`,                        
+    icon :<svg width={16} height={16} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+  </svg>      
+  }],[]);
 
 
 const generateItems = useCallback((row) => [
@@ -214,20 +231,14 @@ const generateItems = useCallback((row) => [
             header: 'Category',
             
           },
+
           
 
           {
-            accessorKey: 'starting_date',
-            header: 'Starting Date',
-          },
-                   
-          {
-            accessorKey: 'repeat.label',
-            header: 'Repeat',
+            accessorKey: 'savings_strategy.label',
+            header: DataLabel.savings_strategy,
           },
 
-          
-          
           {
             accessorKey: 'interest',
             header: DataLabel.interest,
@@ -244,12 +255,6 @@ const generateItems = useCallback((row) => [
           },
 
           {
-            accessorKey: 'interest_type.label',
-            header: DataLabel.interest_type,
-          },
-         
-  
-          {
             accessorKey: 'goal_amount',
             header: DataLabel.goal_amount,
             cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
@@ -265,8 +270,8 @@ const generateItems = useCallback((row) => [
           },
 
           {
-            accessorKey: 'savings_strategy.label',
-            header: DataLabel.savings_strategy,
+            accessorKey: 'starting_date',
+            header: 'Starting Date',
           },
 
           {
@@ -298,33 +303,74 @@ const generateItems = useCallback((row) => [
             */
            footer:(props)=><p><span>$</span><span>{total_contribution.toFixed(2)}</span></p>
           },
+                   
+          {
+            accessorKey: 'repeat.label',
+            header: 'Repeat',
+          },
+
+          
+          
+          
+          
+
+          
+
+          // {
+          //   accessorKey: 'interest_type.label',
+          //   header: DataLabel.interest_type,
+          // },
+         
+  
+          
+
+          
+
+          
+
+          
+
+          // {
+          //   accessorKey: 'total_balance',
+          //   header: DataLabel.total_balance,
+          //   cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
+          // },
 
           {
-            accessorKey: 'total_balance',
-            header: DataLabel.total_balance,
+            accessorKey: 'monthly_saving_boost',
+            header: DataLabel.monthly_saving_boost,
             cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
           },
-
+          
           {
-            accessorKey: 'progress',
-            header: DataLabel.progress,
-            cell: (info) => <p><span>{info.getValue<number>().toFixed(0)}</span><span>%</span></p>,
-            // cell:(info) => <DataProgress 
-            // title={''} 
-            // progress={info.getValue<number>().toFixed(0)}
-            // color={'#31c4a2'}
-            // maxProgressLength={DataLabel.progress.length}
-            // />
-            /*
-            footer: (props) => {
-              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
-                return sum + row.original.monthly_payment;
-              }, 0);
-              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
-            },
-            */
-           //footer:(props)=><p><span>$</span><span className="px-2">{total_goal_amount.toFixed(2)}</span></p>
+            accessorKey: 'monthly_saving',
+            header: DataLabel.monthly_saving,
+            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
+            footer:(props)=><p><span>$</span><span>{total_monthly_saving.toFixed(2)}</span></p>
           },
+
+          
+
+          // {
+          //   accessorKey: 'progress',
+          //   header: DataLabel.progress,
+          //   cell: (info) => <p><span>{info.getValue<number>().toFixed(0)}</span><span>%</span></p>,
+          //   // cell:(info) => <DataProgress 
+          //   // title={''} 
+          //   // progress={info.getValue<number>().toFixed(0)}
+          //   // color={'#31c4a2'}
+          //   // maxProgressLength={DataLabel.progress.length}
+          //   // />
+          //   /*
+          //   footer: (props) => {
+          //     const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
+          //       return sum + row.original.monthly_payment;
+          //     }, 0);
+          //     return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
+          //   },
+          //   */
+          //  //footer:(props)=><p><span>$</span><span className="px-2">{total_goal_amount.toFixed(2)}</span></p>
+          // },
 
           
 
@@ -332,10 +378,13 @@ const generateItems = useCallback((row) => [
           {
             id: 'actions',
             header: 'Actions',
-            cell:({row})=>(<GridActionLinkFixed
+            cell:({row})=>(<div className='flex'><GridActionLinkFixed
               hoveredRowHeight={hoveredRowHeight} // Adjust or compute dynamically as needed
-              items={generateItems(row)}
-            />)
+              items={row.original.goal_reached ==null ?generateItems(row):generateItemsRestricted(row)}
+            />{row.original.goal_reached!=null && <span className='ml-3'>
+              <svg className='text-[#31c4a2] font-bold' width={18} height={18} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+          </svg></span>}</div>)
 
           }
 
@@ -357,7 +406,7 @@ const generateItems = useCallback((row) => [
           },
           */
       
-          ], [/*hoveredRowId*/,total_goal_amount,total_starting_amount,total_contribution]);
+          ], [/*hoveredRowId*/,total_goal_amount,total_starting_amount,total_contribution,total_monthly_saving]);
       
           const table = useReactTable({
               data,

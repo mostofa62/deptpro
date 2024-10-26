@@ -269,7 +269,7 @@ export default function InsuranceCreate() {
         type="number"
         step="any"
         min={0}
-        label={`${DataLabel.goal_amount} $`} 
+        label={`${DataLabel.goal_amount}`} 
         name={`fetchdata.goal_amount`}
         placeHolder={`${DataLabel.goal_amount}`}
         errorMessage ={ errors.fetchdata &&                                        
@@ -315,7 +315,7 @@ export default function InsuranceCreate() {
         type="number"
         step="any"
         min={0}
-        label={`${DataLabel.interest} %`} 
+        label={`${DataLabel.interest}`} 
         name={`fetchdata.interest`}
         placeHolder={`${DataLabel.interest}`}
         errorMessage ={ errors.fetchdata &&                                        
@@ -384,7 +384,7 @@ export default function InsuranceCreate() {
         type="number"
         step="any"
         min={0}
-        label={`${DataLabel.starting_amount} $`} 
+        label={`${DataLabel.starting_amount}`} 
         name={`fetchdata.starting_amount`}
         placeHolder={`${DataLabel.starting_amount}`}
         errorMessage ={ errors.fetchdata &&                                        
@@ -415,7 +415,7 @@ export default function InsuranceCreate() {
         type="number"
         step="any"
         min={0}
-        label={`${DataLabel.contribution} $`} 
+        label={`${DataLabel.contribution}`} 
         name={`fetchdata.contribution`}
         placeHolder={`${DataLabel.contribution}`}
         errorMessage ={ errors.fetchdata &&                                        
@@ -433,20 +433,17 @@ export default function InsuranceCreate() {
     <div className="ml-[24px] w-[32%]">
 
     <FormikFieldInput 
-        label={DataLabel.increase_contribution_by} 
+        type="number"
+        step="any"
+        min={0}
+        label={`${DataLabel.increase_contribution_by}`} 
         name={`fetchdata.increase_contribution_by`}
         placeHolder={`${DataLabel.increase_contribution_by}`}
         errorMessage ={ errors.fetchdata &&                                        
             errors.fetchdata.increase_contribution_by &&
             touched.fetchdata &&            
             touched.fetchdata.increase_contribution_by &&  errors.fetchdata.increase_contribution_by}
-        onChangeField = {(e:any)=>{
-            const {value, name} = e.target;
-            setFieldValue(
-                name,
-                value
-              );
-        }}
+            inputPreix={`$`}         
         />
 
      

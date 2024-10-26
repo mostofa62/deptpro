@@ -13,6 +13,7 @@ import BillTransactions from "./BillTransactions";
 import CurrentBillDashboard from "./CurrentBillDashboard";
 import BillPayment from "./payment/BillPayment";
 import moment from "moment";
+import HolderOne from "@/app/layout/HolderOne";
 
 interface Tab {
   label: string;
@@ -118,10 +119,31 @@ export default function InsuranceCreate({
     return(
         <>
         <DefaultLayout>
+
+        <HolderOne
+            title="bill update"            
+            linkItems={[
+              {
+                link:'/member/bills/cu',
+                title:'add bill'
+              },
+              {
+                link:'/member/bills',
+                title:'your bill dashboard'
+              },
+              {
+                link:`/member/bills/${id}`,
+                title:'bill details'
+              }
+            ]}
+            />
         
         <div className="grid grid-cols-3 gap-1 mt-4">
 
+        
+
             <div className="w-full">
+              
 
               <div className="grid grid-row">
                 <div className="w-full">

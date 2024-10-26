@@ -10,6 +10,7 @@ import ExtraEntry from "./ExtraEntry";
 import CardHolderDefault from "@/app/components/ui/CardHolderDefault";
 import { DataSchema } from "./DataValidationSchema";
 import ExtraTransactions from "./ExtraTransactions";
+import HolderOne from "@/app/layout/HolderOne";
 
 
 interface Tab {
@@ -85,6 +86,20 @@ export default function BillExtra() {
     return(
         <>
         <DefaultLayout>
+
+        <HolderOne
+            title="extra bill"            
+            linkItems={[
+              {
+                link:'/member/bills/cu',
+                title:'add bill'
+              },
+              {
+                link:'/member/bills',
+                title:'your bill dashboard'
+              }
+            ]}
+            />
         
         <div className="grid grid-cols-3 gap-1 mt-4">
 

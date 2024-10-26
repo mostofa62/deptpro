@@ -13,7 +13,17 @@ import HolderOne from "@/app/layout/HolderOne";
 import SavingContributions from "./SavingContributions";
 import DataProgress from "@/app/components/ui/DataProgress";
 import Summary from "./Summary";
+import SavingBoostGrid from "../SavingBoostGrid";
+interface DebtSuffix{
+  goal_amount:number;
+  starting_amount:number;
+  contribution:number;
+  total_balance:number;
+}
 
+interface DebtPrefix{
+  interest:number;
+}
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 export default function SavingDetail({
@@ -47,6 +57,18 @@ export default function SavingDetail({
     const datalabel:any = DataLabelView;
 
 
+    const DataPrefix = {
+      goal_amount:'$',
+      starting_amount:'$',
+      contribution:'$',
+      total_balance:'$',
+    }
+
+    const DebtPrefix = {
+      interest:'%'
+    }
+
+
     const description = ()=>(
         <div className="flex flex-col gap-1 text-[15px]">
           <div><span>STARTING DATE</span><span className="ml-4">{SavingWithTransactionData.saving.starting_date_word}</span></div>          
@@ -66,6 +88,27 @@ export default function SavingDetail({
         </div>
       )
 
+
+    let linkItems =[
+      {
+          link:'/member/saving/cu',
+          title:'add savings'
+      },
+      {
+      link:'/member/saving',
+      title:'your savings dashboard'
+      },
+    ]
+
+    if(SavingWithTransactionData.saving.goal_reached==null){
+      linkItems.push(...[
+        {
+          link:`/member/saving/cu/${id}`,
+          title:'update savings'
+        }
+      ])
+    }
+
     
     return(
         
@@ -76,20 +119,7 @@ export default function SavingDetail({
 
             <HolderOne
             title="saving details"            
-            linkItems={[
-                {
-                    link:'/member/saving/cu',
-                    title:'add savings'
-                },
-                {
-                link:'/member/saving',
-                title:'your savings dashboard'
-                },
-                {
-                link:`/member/saving/cu/${id}`,
-                title:'update savings'
-                }
-            ]}
+            linkItems={linkItems}
             />
 
 
@@ -149,7 +179,7 @@ export default function SavingDetail({
                             <strong>{datalabel[key]}</strong>
                             <p className="mt-1">
                             {/*DebtWithTransactionData.debtAccount[key] !== undefined ? DebtWithTransactionData.debtAccount[key].toString() : '-'*/}
-                            {key in SavingWithTransactionData.saving ? typeof SavingWithTransactionData.saving[key] == 'number'? SavingWithTransactionData.saving[key]?.toFixed(2) :SavingWithTransactionData.saving[key]?.toString() : '-'}
+                            {DataPrefix[key as keyof DebtSuffix]}{key in SavingWithTransactionData.saving ? typeof SavingWithTransactionData.saving[key] == 'number'? SavingWithTransactionData.saving[key]?.toFixed(2) :SavingWithTransactionData.saving[key]?.toString() : '-'}{DebtPrefix[key as keyof DebtPrefix]}
                             </p>
                         </div>
                         ))}
@@ -175,6 +205,11 @@ export default function SavingDetail({
             
             <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
             <SavingContributions saving_id={id}  />
+            </div>
+
+
+            <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
+            <SavingBoostGrid saving_id={id}  />
             </div>
             
             

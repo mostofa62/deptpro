@@ -15,6 +15,7 @@ import Summary from "./Summary";
 import SortedAccount from "./SortedAccounts";
 import Projection from "./Projection";
 import TypeWiseTable from "./TypeWiseTable";
+import HolderOne from "@/app/layout/HolderOne";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -163,6 +164,25 @@ const PayoffStrategy =()=>{
 
     return(
         <DefaultLayout>
+
+
+<HolderOne
+            title="payment boost"            
+            linkItems={[
+              {
+                link:'/member/debts/cu',
+                title:'add debt'
+              },
+              {
+                link:'/member/debts',
+                title:'your debt dashboard'
+                },
+              {
+                link:'/member/debts/settings',
+                title:'set debt budget'
+              }
+            ]}
+            />
             
 
             <div className="flex flex-col gap-5 mt-8">

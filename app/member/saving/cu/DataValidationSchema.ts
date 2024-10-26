@@ -20,7 +20,7 @@ export const DataSchema = {
 
     contribution:0,
 
-    increase_contribution_by:'',
+    increase_contribution_by:0,
     
     repeat:{'label':'None','value':0},
 
@@ -58,7 +58,11 @@ export const DataLabel = {
 
   next_contribution_date:'Next Contribution Date',
 
-  total_balance:'Total Balance'
+  total_balance:'Total Balance',
+
+  monthly_saving_boost:'Savings Boost',
+  
+  monthly_saving:'Total Monthly Savings'
   
 }
 
