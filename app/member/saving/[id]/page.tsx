@@ -14,6 +14,14 @@ import SavingContributions from "./SavingContributions";
 import DataProgress from "@/app/components/ui/DataProgress";
 import Summary from "./Summary";
 import SavingBoostGrid from "../SavingBoostGrid";
+
+import TabView from "@/app/components/ui/TabView";
+
+interface Tab {
+  label: string;
+  content: React.ReactNode;
+}
+
 interface DebtSuffix{
   goal_amount:number;
   starting_amount:number;
@@ -38,7 +46,7 @@ export default function SavingDetail({
 
     const authCtx = useAuth();
     const router = useRouter()
-
+    const [activeTab, setActiveTab] = useState(0);
    
     
     const id = params.id;
@@ -108,6 +116,14 @@ export default function SavingDetail({
         }
       ])
     }
+
+    const tabs: Tab[] = [       
+      
+      { 
+        label: 'Accounts', 
+        content: <SavingBoostGrid saving_id={id}  />
+      } 
+    ];
 
     
     return(
@@ -209,7 +225,12 @@ export default function SavingDetail({
 
 
             <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
-            <SavingBoostGrid saving_id={id}  />
+            {/* <SavingBoostGrid saving_id={id}  /> */}
+            {
+              <TabView title={`Saving Boosts`} tabs={tabs} onChageTab={(index)=>{
+                setActiveTab(index)
+              }} />
+               }
             </div>
             
             
