@@ -16,6 +16,7 @@ import Summary from "./Summary";
 import SavingBoostGrid from "../SavingBoostGrid";
 
 import TabView from "@/app/components/ui/TabView";
+import SavingBoostContributions from "./SavingBoostContributions";
 
 interface Tab {
   label: string;
@@ -118,6 +119,11 @@ export default function SavingDetail({
     }
 
     const tabs: Tab[] = [       
+
+      { 
+        label: 'Transactions', 
+        content: <SavingBoostContributions saving_id={id}  />
+      },
       
       { 
         label: 'Accounts', 
