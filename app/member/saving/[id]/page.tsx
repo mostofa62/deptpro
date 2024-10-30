@@ -121,12 +121,12 @@ export default function SavingDetail({
     const tabs: Tab[] = [       
 
       { 
-        label: 'Transactions', 
+        label: 'Boost History', 
         content: <SavingBoostContributions saving_id={id}  />
       },
       
       { 
-        label: 'Accounts', 
+        label: 'Manage Boosts', 
         content: <SavingBoostGrid saving_id={id}  />
       } 
     ];
@@ -233,7 +233,7 @@ export default function SavingDetail({
             <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
             {/* <SavingBoostGrid saving_id={id}  /> */}
             {
-              <TabView title={`Saving Boosts`} tabs={tabs} onChageTab={(index)=>{
+              <TabView  tabs={tabs} onChageTab={(index)=>{
                 setActiveTab(index)
               }} />
                }

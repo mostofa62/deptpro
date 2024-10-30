@@ -8,7 +8,7 @@ interface Tab {
 
 interface TabProps{
   tabs:Tab[],
-  title:string;
+  title?:string;
   onChageTab:(index:number)=>void
 }
 
@@ -19,7 +19,7 @@ const TabView = ({tabs,title,onChageTab}:TabProps) => {
       <CardHolderDefault>
       <div className="w-full">
         
-        <span className='text-md uppercase font-medium'>{title}</span>
+        {title && <span className='text-md uppercase font-medium'>{title}</span>}
         <div className="flex flex-row-reverse border-b border-gray-200">
         
           

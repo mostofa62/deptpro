@@ -37,7 +37,11 @@ interface ExtraPayloadProps{
   total_monthly_saving:number;  
 
 }
-const SavingGrid = ()=>{
+
+interface SavingProps{
+  category?:string;
+}
+const SavingGrid = ({category}:SavingProps)=>{
     
 
     const authCtx = useAuth();
@@ -90,7 +94,7 @@ const SavingGrid = ()=>{
   
   
       const {error,loading,totalRows,pageCount} = useFetchGridData({
-      urlSuffix:`saving/${authCtx.userId}`,
+      urlSuffix:`saving/${authCtx.userId}${category ? `?action=${category}`:''}`,
       pagination:pagination,
       sorting:sorting,
       globalFilter:globalFilter,
