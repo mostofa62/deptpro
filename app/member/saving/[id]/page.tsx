@@ -109,7 +109,10 @@ export default function SavingDetail({
       },
     ]
 
-    if(SavingWithTransactionData.saving.goal_reached==null){
+    if(
+      SavingWithTransactionData.saving.goal_reached==null && 
+      SavingWithTransactionData.saving.closed_at==null
+    ){
       linkItems.push(...[
         {
           link:`/member/saving/cu/${id}`,
@@ -233,7 +236,7 @@ export default function SavingDetail({
             <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
             {/* <SavingBoostGrid saving_id={id}  /> */}
             {
-              <TabView  tabs={tabs} onChageTab={(index)=>{
+              <TabView align={`left`}  tabs={tabs} onChageTab={(index)=>{
                 setActiveTab(index)
               }} />
                }

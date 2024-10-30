@@ -9,18 +9,19 @@ interface Tab {
 interface TabProps{
   tabs:Tab[],
   title?:string;
+  align?:string;
   onChageTab:(index:number)=>void
 }
 
-const TabView = ({tabs,title,onChageTab}:TabProps) => {
+const TabView = ({tabs,title,onChageTab,align}:TabProps) => {
     const [activeTab, setActiveTab] = useState(0);
   
     return (
       <CardHolderDefault>
       <div className="w-full">
         
-        {title && <span className='text-md uppercase font-medium'>{title}</span>}
-        <div className="flex flex-row-reverse border-b border-gray-200">
+        {title && <span className='text-md capitalize font-medium'>{title}</span>}
+        <div className={`flex flex-row${align ? '':'-reverse'} border-b border-gray-200`}>
         
           
           {tabs.map((tab:any, index:any) => (

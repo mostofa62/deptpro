@@ -28,6 +28,7 @@ interface DataRow {
     contribution:number;
     repeat:string;
     goal_reached:string|null;
+    closed_at:string|null;
     monthly_saving_boost:number; 
 }
 interface ExtraPayloadProps{  
@@ -384,7 +385,7 @@ const generateItems = useCallback((row) => [
             header: 'Actions',
             cell:({row})=>(<div className='flex'><GridActionLinkFixed
               hoveredRowHeight={hoveredRowHeight} // Adjust or compute dynamically as needed
-              items={row.original.goal_reached ==null ?generateItems(row):generateItemsRestricted(row)}
+              items={row.original.goal_reached ==null && row.original.closed_at ==null  ?generateItems(row):generateItemsRestricted(row)}
             />{row.original.goal_reached!=null && <span className='ml-3'>
               <svg className='text-[#31c4a2] font-bold' width={18} height={18} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />

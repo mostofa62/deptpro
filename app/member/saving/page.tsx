@@ -32,14 +32,16 @@ const Saving = ()=>{
 
     const tabs: Tab[] = [
       { 
-        label: 'Active', 
+        label: 'Active Accounts', 
         content: <SavingGrid/>
-      } ,       
+      } ,   
 
       { 
-        label: 'Closed / Deleted', 
+        label: 'Closed Accounts', 
         content: <SavingGrid category={`closed_deleted`}/>
       },
+
+      
       
       
     ];
@@ -76,7 +78,7 @@ const Saving = ()=>{
             <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
             {/* <SavingBoostGrid saving_id={id}  /> */}
             {
-              <TabView title={`Saving Accounts`}  tabs={tabs} onChageTab={(index)=>{
+              <TabView  tabs={tabs} align={`left`} onChageTab={(index)=>{
                 setActiveTab(index)
               }} />
                }
