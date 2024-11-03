@@ -25,7 +25,10 @@ interface ExtraPayloadProps{
   
 
 }
-const IncomeBoostGrid = ()=>{
+interface IncomeProps{
+  income_id:string;
+}
+const IncomeBoostGrid = ({income_id}:IncomeProps)=>{
     
 
     const authCtx = useAuth();
@@ -76,7 +79,7 @@ const IncomeBoostGrid = ()=>{
   
   
       const {error,loading,totalRows,pageCount} = useFetchGridData({
-      urlSuffix:`income-boost/${authCtx.userId}`,
+      urlSuffix:`income-boost/${income_id}`,
       pagination:pagination,
       sorting:sorting,
       globalFilter:globalFilter,
@@ -230,20 +233,20 @@ const generateItems = useCallback((row) => [
             header: DataLabel.repeat_boost,
           },
           
-          {
-            accessorKey: 'total_income_boost',
-            header: DataLabel.total_income_boost,
-            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
-            /*
-            footer: (props) => {
-              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
-                return sum + row.original.monthly_payment;
-              }, 0);
-              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
-            },
-            */
-           //footer:(props)=><p><span>$</span><span className="px-2">{total_income_boost.toFixed(2)}</span></p>
-          },
+          // {
+          //   accessorKey: 'total_income_boost',
+          //   header: DataLabel.total_income_boost,
+          //   cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
+          //   /*
+          //   footer: (props) => {
+          //     const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
+          //       return sum + row.original.monthly_payment;
+          //     }, 0);
+          //     return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
+          //   },
+          //   */
+          //  //footer:(props)=><p><span>$</span><span className="px-2">{total_income_boost.toFixed(2)}</span></p>
+          // },
          
   
           

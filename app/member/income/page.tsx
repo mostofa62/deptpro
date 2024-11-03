@@ -398,9 +398,7 @@ const Income = ()=>{
             </div>
 
 
-            <div className="mt-5 p-2 border-[#E6E6E6] shadow-2">
-              <IncomeBoostGrid />
-            </div>
+            
 
             
 

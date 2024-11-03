@@ -128,19 +128,19 @@ const IncomeTransactions = ({income_id}:IncomeProps)=>{
             
             
 
-            {
-              accessorKey: 'base_gross_income',
-              header: 'Gross Income',
-              cell: info => <p><span>$</span><span>{info.row.original.base_gross_income.toFixed(2)}</span></p>
+            // {
+            //   accessorKey: 'base_gross_income',
+            //   header: 'Gross Income',
+            //   cell: info => <p><span>$</span><span>{info.row.original.base_gross_income.toFixed(2)}</span></p>
               
-            },
+            // },
 
-            {
-              accessorKey: 'base_net_income',
-              header: 'Net Income',
-              cell: info => <p><span>$</span><span>{info.row.original.base_net_income.toFixed(2)}</span></p>
+            // {
+            //   accessorKey: 'base_net_income',
+            //   header: 'Net Income',
+            //   cell: info => <p><span>$</span><span>{info.row.original.base_net_income.toFixed(2)}</span></p>
               
-            },
+            // },
 
 
             {

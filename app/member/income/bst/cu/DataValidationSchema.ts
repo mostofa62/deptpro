@@ -1,7 +1,7 @@
 import moment from "moment";
 import { object, string, number } from "yup";
 export const DataSchema = {
-    
+    income:{'label':'','value':''},
     earner:'',
     income_boost:0,
 
@@ -17,7 +17,7 @@ export const DataSchema = {
 };
 
 export const DataLabel = {
-  
+  income:'Income Account',
   earner:'Earner',
 
   income_boost:'Income Boost',
@@ -40,7 +40,7 @@ export const DataLabel = {
 
 
 export const DataLabelView = {
-  
+  income:'Income Account',
   earner:'Earner',
 
   income_boost:'Income Boost',
@@ -68,7 +68,10 @@ export const DataLabelView = {
 export const ValidationSchema =  object().shape({
   fetchdata:object().shape({
             
- 
+              income:object().shape({
+                value: string().required(),
+                label: string().required(`${DataLabel.income} is required`)
+              }),
 
               income_boost: number().min(0,`${DataLabel.income_boost} least 0`)              
               .required(`${DataLabel.income_boost} is required`),

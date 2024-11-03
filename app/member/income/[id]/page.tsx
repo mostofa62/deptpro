@@ -12,6 +12,15 @@ import { DataLabelView } from "../cu/DataValidationSchema";
 import HolderOne from "@/app/layout/HolderOne";
 import IncomeTransactions from "./IncomeTransactions";
 import Summary from "./Summary";
+import IncomeBoostGrid from "../IncomeBoostGrid";
+import TabView from "@/app/components/ui/TabView";
+
+interface Tab {
+  label: string;
+  content: React.ReactNode;
+}
+
+
 interface DebtRow {
  
   income_source:string,
@@ -39,7 +48,7 @@ export default function IncomeDetail({
 
     const authCtx = useAuth();
     const router = useRouter()
-
+    const [activeTab, setActiveTab] = useState(0);
    
     
     const id = params.id;
@@ -84,6 +93,19 @@ export default function IncomeDetail({
       total_gross_income:'$',
       total_net_income:'$',
     }
+
+    const tabs: Tab[] = [       
+
+      // { 
+      //   label: 'Boost History', 
+      //   content: <IncomeBoostContributions saving_id={id}  />
+      // },
+      
+      { 
+        label: 'Manage Boosts', 
+        content: <IncomeBoostGrid income_id={id}  />
+      } 
+    ];
 
     return(
         
@@ -168,6 +190,16 @@ export default function IncomeDetail({
 
             <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
               <IncomeTransactions income_id={id}  />
+            </div>
+
+
+            <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
+            {/* <SavingBoostGrid saving_id={id}  /> */}
+            {
+              <TabView align={`left`}  tabs={tabs} onChageTab={(index)=>{
+                setActiveTab(index)
+              }} />
+               }
             </div>
 
             
