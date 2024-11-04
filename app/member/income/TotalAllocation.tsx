@@ -122,7 +122,7 @@ const TotalAllocation = ({userid}:TotalPros) => {
     })
 
     const IncomeFuture:any = useFetchDropDownObjects({
-      urlSuffix:`income-transactions-next-all/${userid}`,
+      urlSuffix:`income-transactions-next`,
       payLoads:payloadFuture
     })
 
@@ -149,8 +149,7 @@ const TotalAllocation = ({userid}:TotalPros) => {
 
     const dataLabel = {
       base_net_income:'Net Earnings',
-      base_gross_income:'Gross Earnings',
-      base_input_boost:'Income Boost'
+      base_gross_income:'Gross Earnings',      
     }
     
     

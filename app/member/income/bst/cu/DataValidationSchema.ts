@@ -73,6 +73,10 @@ export const ValidationSchema =  object().shape({
                 label: string().required(`${DataLabel.income} is required`)
               }),
 
+              earner: string()
+              .ensure()
+              .required(`${DataLabel.earner} is required`),
+
               income_boost: number().min(0,`${DataLabel.income_boost} least 0`)              
               .required(`${DataLabel.income_boost} is required`),
 

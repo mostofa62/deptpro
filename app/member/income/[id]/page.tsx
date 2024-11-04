@@ -14,6 +14,7 @@ import IncomeTransactions from "./IncomeTransactions";
 import Summary from "./Summary";
 import IncomeBoostGrid from "../IncomeBoostGrid";
 import TabView from "@/app/components/ui/TabView";
+import IncomeBoostTransactions from "./IncomeBoostTransactions";
 
 interface Tab {
   label: string;
@@ -96,10 +97,10 @@ export default function IncomeDetail({
 
     const tabs: Tab[] = [       
 
-      // { 
-      //   label: 'Boost History', 
-      //   content: <IncomeBoostContributions saving_id={id}  />
-      // },
+      { 
+        label: 'Boost History', 
+        content: <IncomeBoostTransactions income_id={id}  />
+      },
       
       { 
         label: 'Manage Boosts', 
