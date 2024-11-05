@@ -19,6 +19,7 @@ import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import VideoComponent from "@/app/components/utils/VideoComponent";
 import HolderOne from "@/app/layout/HolderOne";
+import Tooltip from "@/app/components/ui/Tooltip";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -252,7 +253,8 @@ export default function InsuranceCreate() {
             
         </div>
     <div className="ml-[24px]  w-[50%]">
-        
+    <Tooltip text={<p className="flex flex-col items-center justify-center"><span>Bonus, Commissions, Tips, Treasures</span>
+        </p>}>    
     <FormikSelectCreatableInput
                 label={DataLabel.income_boost_source}
                 defaultValue={fetchdata.income_boost_source}
@@ -268,6 +270,8 @@ export default function InsuranceCreate() {
                     errors.fetchdata.income_boost_source.label
                 }
             />
+
+    </Tooltip>
 
     
         

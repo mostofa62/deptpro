@@ -22,6 +22,7 @@ import FormikCheckInput from "@/app/components/form/FormikCheckInput";
 import DebtRocket from "@/app/images/icon/debtrocket";
 import VideoComponent from "@/app/components/utils/VideoComponent";
 import HolderOne from "@/app/layout/HolderOne";
+import Tooltip from "@/app/components/ui/Tooltip";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -380,6 +381,12 @@ export default function InsuranceCreate() {
     
     <div className="ml-[24px] w-[32%]">
 
+    <Tooltip text={<p className="flex flex-col items-center justify-center">
+        <span>You may be jump starting your savings account</span>
+        <span>or</span> 
+        <span>currrently has funds</span>        
+        </p>}> 
+
     <FormikFieldInput 
         type="number"
         step="any"
@@ -393,7 +400,7 @@ export default function InsuranceCreate() {
             touched.fetchdata.starting_amount &&  errors.fetchdata.starting_amount}
             inputPreix={`$`}         
         />
-
+</Tooltip>
 
     
     
@@ -409,7 +416,16 @@ export default function InsuranceCreate() {
 
 <div className="flex flex-row mt-[15px]">
     <div className="w-[32%]">
-        
+    <Tooltip text={<div className="flex flex-col items-start justify-center gap-0">
+        <p className="whitespace-normal leading-normal">
+        This is an amount you choose to regularly fund your savings.
+        </p>
+        <p className="whitespace-normal leading-normal">The Savings Boost are for one time contributions.</p>
+        <p className="whitespace-normal leading-normal">You can add multiple one time contributions here.</p>
+        <p className="whitespace-normal leading-normal">IE: Putting your tips into savingsseveral times a month.</p>  
+        <p className="whitespace-normal leading-normal">A little adds up quickly!  </p>
+        </div>}>        
+   
         
     <FormikFieldInput 
         type="number"
@@ -424,13 +440,19 @@ export default function InsuranceCreate() {
             touched.fetchdata.contribution &&  errors.fetchdata.contribution}
             inputPreix={`$`}         
         />
-  
+        </Tooltip>
         
         
         
     </div>
 
     <div className="ml-[24px] w-[32%]">
+
+    <Tooltip text={<p className="flex flex-col items-center justify-center">
+        <span>ie: Add an increasing $1 each week.</span>
+        <span>ie: week 1 = $1.  Week 4 would be $4. </span>
+        <span>Incremental savings can add up quickly. </span>
+        </p>}>
 
     <FormikFieldInput 
         type="number"
@@ -447,7 +469,7 @@ export default function InsuranceCreate() {
         />
 
      
-   
+   </Tooltip>
         
     
         
