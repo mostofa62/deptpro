@@ -2,7 +2,6 @@
 import DefaultLayout from "@/app/layout/DefaultLayout";
 import Link from "next/link";
 import { useState,useEffect, useRef, useCallback } from "react";
-import axios from "axios";
 import useAuth from '@/app/hooks/useAuth';
 import { useRouter } from "next/navigation";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
@@ -10,15 +9,13 @@ import Summary from "./Summary.";
 import BasicCalendar from "@/app/components/BasicCalender";
 import { DataLabelView } from "../cu/DataValidationSchema";
 import HolderOne from "@/app/layout/HolderOne";
+import ExtraTransactions from "./ExtraTransactions";
 
 
 
 
 
-interface Tab {
-  label: string;
-  content: React.ReactNode;
-}
+
 
 
 
@@ -33,7 +30,7 @@ export default function BillDetails({
   }) {
     const authCtx = useAuth();
     const router = useRouter()
-
+    const [activeTab, setActiveTab] = useState(0);
    
     
     const id = params.id;
@@ -60,6 +57,8 @@ export default function BillDetails({
   
    
     const datalabel:any = DataLabelView;
+
+    
   
     return(
         <>
@@ -122,6 +121,10 @@ export default function BillDetails({
 
               </div>
 
+            </div>
+
+            <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg">
+              <ExtraTransactions bill_id={id}  />
             </div>
 
             

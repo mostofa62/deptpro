@@ -226,11 +226,7 @@ export default function CareManagers() {
         //     },
         // },
        
-        {
-          accessorKey: 'autopay',
-          header: 'Autopay',
-          cell: (info:any) =><p>{info.getValue() > 0? <span className="border rounded p-1 bg-secondary">YES</span>:<span className="border p-1 rounded bg-gray">NO</span>}</p>
-        },
+        
         {
           id: 'actions',
           header: 'Actions',

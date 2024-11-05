@@ -11,6 +11,7 @@ import CardHolderDefault from "@/app/components/ui/CardHolderDefault";
 import { DataSchema } from "./DataValidationSchema";
 import ExtraTransactions from "./ExtraTransactions";
 import HolderOne from "@/app/layout/HolderOne";
+import VideoComponent from "@/app/components/utils/VideoComponent";
 
 
 interface Tab {
@@ -25,12 +26,14 @@ export default function BillExtra() {
     const authCtx = useAuth();
   
     const [extraType, setExtraType] = useState([]);
+    const [billList, setBillList] = useState([]);
 
     const fetchDataCallback=useCallback(async()=>{
       //console.log(id);
       const response = await axios.get(`${url}bill-extra-dropdown`);
       //return response.data.user;
       setExtraType(response.data.extra_type)
+      setBillList(response.data.bill_accounts_list)
              
 
   },[]);
@@ -41,10 +44,11 @@ export default function BillExtra() {
 
     const edata = {
       'id':'',
+      'bill':DataSchema.bill,
       'type':DataSchema.type,      
       'amount':0,
       'pay_date_extra':DataSchema.pay_date_extra,      
-      'comment':''
+      //'comment':''
     }
 
     const [editData, setEditData] = useState(edata);
@@ -100,61 +104,37 @@ export default function BillExtra() {
               }
             ]}
             />
-        
-        <div className="grid grid-cols-3 gap-1 mt-4">
 
-            <div className="w-full">
+<div className="flex flex-row">
 
-              <div className="grid grid-row">                          
-               
-                <div className="w-full mt-8">
-                                   
-                    <ExtraEntry                    
+<div className="w-[35%] flex justify-center items-center">
+        <div className="">
+                       
+            <VideoComponent
+                src="/animated/billentry.mp4"
+                width={`350`}
+                controls={false} // Disable default video controls (optional)
+                autoplay={true}
+                loop={true}
+                showControls={false}
+            />
+        </div>
+        </div>
+
+        <div className="w-[65%]">
+
+        <ExtraEntry                    
                     user_id={user_id}
                     editData={editData}
                     extraType={extraType}
+                    billList={billList}
                     cleanData={cleanData}                                                          
-                     />                                                         
-                </div>
-
-                
-                
-                
-                {/*transactionData.id !='' && prevTransId==transactionData.id &&
-                <div className="w-full mt-8">
-                  <BillPayment 
-                  trans_id={transactionData.id} 
-                  amount={transactionData.amount} 
-                  pay_date={transactionData.due_date}
-                  cleanData={cleanData}
-                  />
-                </div>
-                */}
-              </div>
-
-            </div>
-            <div className="w-full col-span-2">
-
-              <div className="w-full mt-8">
-
-                  <CardHolderDefault>
-
-                    <ExtraTransactions
-                          user_id={user_id} 
-                          reloadGrid={reloadGrid}
-                          onEdit={onEditHandler}
-
-                          />
-
-                    </CardHolderDefault>
-                </div>            
-            </div>
-
-
-            
-            
+                     />     
 
         </div>
+</div>
+        
+        
 
        
 

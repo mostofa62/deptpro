@@ -1,18 +1,20 @@
 import moment from "moment";
 import { object, array, string, number, StringSchema } from "yup";
-export const DataSchema = {    
+export const DataSchema = {   
+    bill:{'label':'','value':''}, 
     amount:0,
     type:{'value':0, 'label':'None'},        
-    pay_date_extra:moment().format('YYYY-MM-DD'),
+    due_date:moment().format('YYYY-MM-DD'),
     //comment:''  
 
 };
 
 
-export const DataLabel = {    
+export const DataLabel = {  
+    bill:'Bill Account',  
     amount:'Amount',
     type:'Type',
-    pay_date_extra:'Date',
+    due_date:'Date',
     //comment:'Comment'
     
   }
@@ -20,7 +22,10 @@ export const DataLabel = {
   export const ValidationSchema =  object().shape({
     fetchdata:object().shape({
 
-
+                bill:object().shape({
+                  value: string().required(),
+                  label: string().required(`${DataLabel.bill} is required`)
+                }),
                 
                              
   
@@ -33,10 +38,10 @@ export const DataLabel = {
                 }),
                 
 
-                pay_date_extra: string()
+                due_date: string()
                 .ensure()
-                .matches(/^\d{4}-\d{2}-\d{2}$/i,`provide valid ${DataLabel.pay_date_extra}`)
-                .required(`${DataLabel.pay_date_extra} is required`),
+                .matches(/^\d{4}-\d{2}-\d{2}$/i,`provide valid ${DataLabel.due_date}`)
+                .required(`${DataLabel.due_date} is required`),
                 
 
                 

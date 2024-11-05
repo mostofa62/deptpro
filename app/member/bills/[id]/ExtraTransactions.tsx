@@ -1,15 +1,12 @@
 import { useReactTable, ColumnDef, flexRender, getCoreRowModel, getSortedRowModel, getPaginationRowModel, SortingState, PaginationState } from '@tanstack/react-table';
 import useFetchGridData,{getPageNumbers,GetInVisibleColumn, GetShowingText, PerPageList, DeleteActionGlobal, AlertBox} from "@/app/components/grid/useFetchGridData";
-import GridGlobalSearch from "@/app/components/grid/GridGlobalSearch";
+
 import GridPaginationHolder from "@/app/components/grid/GridPaginationHolder";
-import GridActionLink from "@/app/components/grid/GridActionLink";
 import { confirmAlert } from "react-confirm-alert";
 import useAuth from '@/app/hooks/useAuth';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import CardHolderDefault from '@/app/components/ui/CardHolderDefault';
-import Loading from '@/app/loading';
-import useApp from '@/app/hooks/useApp';
-import { DataLabel } from './DataValidationSchema';
+
+import { DataLabel } from '../billextra/DataValidationSchema'
 import GridActionLinkFixed from '@/app/components/grid/GridActionLinkFixed';
 
 
@@ -23,9 +20,9 @@ interface paymentProps{
   }
 
 interface DebtProps{
-  user_id:string;
-  reloadGrid:boolean;  
-  onEdit:(data:any)=>void   
+  bill_id:string;
+
+  
 }
 
 
@@ -38,11 +35,11 @@ interface DataRow {
     year:string;   
 }
 
-const ExtraTransactions = ({user_id,reloadGrid,onEdit}:DebtProps)=>{
+const ExtraTransactions = ({bill_id}:DebtProps)=>{
 
     console.log('Loading transaction seciton...')
     const authCtx = useAuth();
-    const appCtx = useApp();    
+   
 
     const [data, setData] = useState<DataRow[]>([]);
     
@@ -79,12 +76,11 @@ const ExtraTransactions = ({user_id,reloadGrid,onEdit}:DebtProps)=>{
     const [globalFilter, setGlobalFilter] = useState('');    
 
     const {error,loading,totalRows,pageCount} = useFetchGridData({
-        urlSuffix:`bill-extras/${user_id}`,
+        urlSuffix:`bill-extras/${bill_id}`,
         pagination:pagination,
         sorting:sorting,
         globalFilter:globalFilter,
-        setTableData:setTableData,
-        reloadGrid:reloadGrid      
+        setTableData:setTableData
         })
 
         const deleteAction=useCallback(async(id:string)=>{
@@ -151,7 +147,7 @@ const ExtraTransactions = ({user_id,reloadGrid,onEdit}:DebtProps)=>{
         </svg>
         
           }
-        ], [onEdit,deleteAction]);
+        ], [deleteAction]);
 
         const columns: ColumnDef<DataRow>[] = useMemo(() => [
     
@@ -162,21 +158,21 @@ const ExtraTransactions = ({user_id,reloadGrid,onEdit}:DebtProps)=>{
                 
             },
 
-            {
-              accessorKey: 'bill',
-              header: DataLabel.bill,
-            },
+            // {
+            //   accessorKey: 'bill',
+            //   header: DataLabel.bill,
+            // },
 
             {
-              accessorKey: 'type.label',
+              accessorKey: 'type',
               header: DataLabel.type,
             },
 
            
             
             {
-              accessorKey: 'pay_date_extra_word',
-              header: DataLabel.pay_date_extra,
+              accessorKey: 'due_date_word',
+              header: DataLabel.due_date,
             },
             
            
@@ -202,15 +198,15 @@ const ExtraTransactions = ({user_id,reloadGrid,onEdit}:DebtProps)=>{
                 
             },
 
-            {
-              id: 'actions',
-              header: 'Actions',
-              cell:({row})=>(<GridActionLinkFixed
-                hoveredRowHeight={hoveredRowHeight} // Adjust or compute dynamically as needed
-                items={generateItems(row)}
-              />)
+            // {
+            //   id: 'actions',
+            //   header: 'Actions',
+            //   cell:({row})=>(<GridActionLinkFixed
+            //     hoveredRowHeight={hoveredRowHeight} // Adjust or compute dynamically as needed
+            //     items={generateItems(row)}
+            //   />)
     
-            }
+            // }
 
             
 
@@ -266,11 +262,7 @@ const ExtraTransactions = ({user_id,reloadGrid,onEdit}:DebtProps)=>{
 
                     <div className="grid grid-flow-row">
 
-                    <p className="text-[16px] uppercase font-medium mt-3">Extra Bill Payment History</p>
-
-                    <hr className="mt-2 border-stroke"/>
-
-                    <div className="grid grid-cols-1 gap-1 mt-4">
+                    <div className="grid grid-cols-1 gap-1">
 
                     <div className="mt-10 p-2">  
             

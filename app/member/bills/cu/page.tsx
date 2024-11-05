@@ -282,48 +282,9 @@ export default function InsuranceCreate() {
 
 
             <div className="flex flex-row mt-[15px]">
-                <div className="w-[50%]">
-                    
-                <Field 
-    component={FormikCheckInput}
-        name="fetchdata.autopay"
-        label={DataLabel.autopay}    
-        checked={values.fetchdata.autopay === 1}
-        errorClass={errors.fetchdata && 
-            errors.fetchdata.autopay && 
-            touched.fetchdata && 
-            touched.fetchdata.autopay &&
-            'font-semibold text-[#B45454]'
-        }                                        
-        onChange={(e:any) => {
-            const {checked, name} = e.target;                        
-                    
-            if (checked) {
-            setFieldTouched(name,true);
-
-            setFieldValue(
-                name,
-                1
-            );
-            
-            }else{
-                setFieldTouched(name,false);
-                setFieldValue(
-                    name,
-                    0
-                );
-
-            }
-        
-        }}
-        
-        />
-                    
-                    
-                    
-                </div>
+               
                 
-                <div className="ml-[24px] w-[50%]">
+                <div className="w-[50%]">
 
                 <FormikSelectInput
         label={DataLabel.reminder_days}

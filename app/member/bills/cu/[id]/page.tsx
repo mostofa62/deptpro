@@ -149,7 +149,7 @@ export default function InsuranceCreate({
                 <div className="w-full">
                   <CurrentBillDashboard  bill_acc_id={id} user_id={user_id} />
                 </div>                
-                {transactionData.id =='' &&
+                {/* {transactionData.id =='' &&
                 <div className="w-full mt-8">
                                    
                     <BillEntry 
@@ -159,7 +159,7 @@ export default function InsuranceCreate({
                     cleanData={cleanData}                   
                      />                                      
                 </div>
-                }
+                } */}
                 
                 {transactionData.id !='' && prevTransId==transactionData.id &&
                 <div className="w-full mt-8">

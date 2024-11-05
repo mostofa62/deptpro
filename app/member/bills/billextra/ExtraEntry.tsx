@@ -1,7 +1,7 @@
 
 import CardHolderDefault from "@/app/components/ui/CardHolderDefault";
 import { Field, Form, Formik } from "formik";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { DataLabel, DataSchema, ValidationSchema } from "./DataValidationSchema";
 import axios from "axios";
@@ -10,22 +10,30 @@ import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 import CheckComponent from "@/app/components/CheckComponent";
 import FormikSelectInput from "@/app/components/form/FormikSelectInput";
 import useApp from "@/app/hooks/useApp";
+import Link from "next/link";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
+
+interface Options{
+    label:string;
+    value:string;
+}
 
 interface ExtraProps{    
     user_id:string;
     editData:any;
     extraType:any[];
+    billList:Options[];
     cleanData:()=>void    
 }
 
-const ExtraEntry=({user_id, editData,extraType,cleanData}:ExtraProps)=>{
+const ExtraEntry=({user_id, editData,extraType,billList,cleanData}:ExtraProps)=>{
 
     const appCtx = useApp();
-    
+    const router = useRouter();
 
-    const [fetchFomrData,setFetchFormData] = useState(DataSchema);    
+    const [fetchFomrData,setFetchFormData] = useState(DataSchema);
+    const formRef = useRef<any>(null);    
 
     useEffect(()=>{
         setFetchFormData(editData)
@@ -34,10 +42,11 @@ const ExtraEntry=({user_id, editData,extraType,cleanData}:ExtraProps)=>{
 
     const fetchdata = fetchFomrData;    
 
-    const handleFormSubmit = async(values:any,{ resetForm }:any)=>{
+    const handleFormSubmit = async(values:any,{ resetForm,setSubmitting }:any)=>{
         // alert(JSON.stringify(values));
 
-        const link:any = editData.id == ''?`${url}save-bill-extra`:`${url}update-bill-extra`;
+        //const link:any = editData.id == ''?`${url}save-bill-extra`:`${url}update-bill-extra`;
+        const link:any = `${url}save-bill-transaction`;
 
         
 
@@ -53,11 +62,14 @@ const ExtraEntry=({user_id, editData,extraType,cleanData}:ExtraProps)=>{
           //console.log(response);
 
           if(response.data.result > 0){
+            setSubmitting(false);
             toast.success(response.data.message);
-            resetForm();            
-            cleanData();
+            //resetForm();            
+            //cleanData();
+            router.push('/member/bills');
             
           }else{
+            setSubmitting(true);
             toast.error(response.data.message);
           }         
           
@@ -69,16 +81,16 @@ const ExtraEntry=({user_id, editData,extraType,cleanData}:ExtraProps)=>{
 
     }
 
+    const handleSubmit = ()=> {
+        formRef.current?.handleSubmit();
+      }
+
     return(
-        <CardHolderDefault>
 
-            <p className="text-[16px] uppercase font-medium">{editData.id!='' ?`update entry AMOUNT: $ ${editData.amount}`:`add extra bill payment`}</p>
-
-            <hr className="mt-2 border-stroke"/>
-
-            <div className="grid grid-flow-row">
+        <div className="">
+        <div className="mt-[32px]">
             <Formik
-            
+           innerRef={formRef} 
         initialValues={{ fetchdata }}
         enableReinitialize        
         validationSchema={ValidationSchema}
@@ -89,58 +101,69 @@ const ExtraEntry=({user_id, editData,extraType,cleanData}:ExtraProps)=>{
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched}:any)=>(
             <Form className="mt-5">
 
-    <div className="flex flex-row mt-[15px]">
-
-            <div className="w-full">
-                    <FormikSelectInput
-                        label={DataLabel.type}
-                        defaultValue={fetchdata.type}
-                        placeHolder={``}
-                        isSearchable={true}
-                        isClearable={true}
-                        name="fetchdata.type"
-                        dataOptions={extraType}
-                        errorMessage={errors.fetchdata &&
-                            errors.fetchdata.type &&
-                            touched.fetchdata &&
-                            touched.fetchdata.type &&
-                            errors.fetchdata.type.value
-                        }
-                    />
+            <div className="flex flex-row mt-[15px]">
+                    <div className="w-[50%]">
+                        <FormikSelectInput
+                            label={DataLabel.bill}
+                            defaultValue={fetchdata.bill}
+                            placeHolder={``}
+                            isSearchable={true}
+                            isClearable={true}
+                            name="fetchdata.bill"
+                            dataOptions={billList}
+                            errorMessage={errors.fetchdata &&
+                                errors.fetchdata.bill &&
+                                touched.fetchdata &&
+                                touched.fetchdata.bill &&
+                                errors.fetchdata.bill.label
+                            }
+                        />
                     </div>
+                    <div className="ml-6 w-[50%]">
 
+                        <FormikSelectInput
+                            label={DataLabel.type}
+                            defaultValue={fetchdata.type}
+                            placeHolder={``}
+                            isSearchable={true}
+                            isClearable={true}
+                            name="fetchdata.type"
+                            dataOptions={extraType}
+                            errorMessage={errors.fetchdata &&
+                                errors.fetchdata.type &&
+                                touched.fetchdata &&
+                                touched.fetchdata.type &&
+                                errors.fetchdata.type.value
+                            }
+                        />
 
+                    </div>
             </div>
+
+            
                 
             
             <div className="flex flex-row mt-[15px]">
-
-               
-                <div className="w-full">
+                <div className="w-[50%]">
 
                 <FormikFieldInput 
-        type="date"          
-        label={DataLabel.pay_date_extra} 
-        name={`fetchdata.pay_date_extra`}
-        placeHolder={`${DataLabel.pay_date_extra}`}
-        errorMessage ={ errors.fetchdata &&                                        
-            errors.fetchdata.pay_date_extra &&
-            touched.fetchdata &&            
-            touched.fetchdata.pay_date_extra &&  errors.fetchdata.pay_date_extra}
-                   
-        />
+                    type="date"          
+                    label={DataLabel.due_date} 
+                    name={`fetchdata.due_date`}
+                    placeHolder={`${DataLabel.due_date}`}
+                    errorMessage ={ errors.fetchdata &&                                        
+                        errors.fetchdata.due_date &&
+                        touched.fetchdata &&            
+                        touched.fetchdata.due_date &&  errors.fetchdata.due_date}
+                            
+                    />
                     
                     
-                </div>
+                </div> 
 
-               
-            </div>    
+                <div className="ml-6 w-[50%]">
 
-
-            <div className="flex flex-row mt-[15px]">
-                <div className="w-full">
-
-                <FormikFieldInput 
+                    <FormikFieldInput 
                     type="number"
                     step={"any"}
                     label={DataLabel.amount} 
@@ -153,11 +176,11 @@ const ExtraEntry=({user_id, editData,extraType,cleanData}:ExtraProps)=>{
                         inputPreix={`$`}        
                     />
                     
-                    
-                </div>
+                </div> 
+            </div>    
 
-                
-            </div>
+
+           
 
             {/* <div className="flex flex-row mt-[15px]">
 
@@ -182,22 +205,7 @@ const ExtraEntry=({user_id, editData,extraType,cleanData}:ExtraProps)=>{
             
            
 
-            <hr className="mt-8 border-stroke"/>
-
-            <div className="flex flex-row mt-4">
-                <div className="w-[40%]">
-                        <button  type="submit" className="text-[15px] h-[40px] bg-[#43ACD6] rounded text-white px-4  capitalize text-center font-semibold">
-                            Save
-                        </button>
-                </div>
-                {editData.id!='' &&
-                        <div className="w-[40%]">
-                                <button type="button" onClick={cleanData} className="text-[15px] h-[40px] bg-[#85878a] rounded text-white px-4  capitalize text-center font-semibold">
-                                    Cancel
-                                </button>
-                        </div>
-                }                
-            </div>
+            
 
             
             </Form>
@@ -205,7 +213,31 @@ const ExtraEntry=({user_id, editData,extraType,cleanData}:ExtraProps)=>{
         )}
         />
             </div>
-        </CardHolderDefault>
+
+<div className="mt-10">
+<div className="flex flex-row-reverse gap-4">
+    <div className="relative right-5 top-0">
+        <button type="button" className="text-[15px] h-[40px] bg-[#43ACD6] rounded text-white px-4  capitalize text-center font-semibold" onClick={handleSubmit}>
+            Save
+        </button>
+    </div>
+    <div className="relative right-[30px] top-[10px]">
+    <Link
+                    href={'/member/bills'}
+                    className={`text-[15px] h-[40px] capitalize text-center px-4 py-2.5  font-semibold bg-[#43ACD6] rounded bg-opacity-5 text-[#43ACD6]`}
+                >                               
+
+
+                Cancel
+            </Link>
+    </div>
+    
+    
+
+</div> 
+
+</div>
+</div>
     )
 
 }

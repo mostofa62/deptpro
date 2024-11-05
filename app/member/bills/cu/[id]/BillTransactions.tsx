@@ -221,7 +221,7 @@ const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:Bil
                                           
                                       </div>
                                       <div className="w-[50%] flex flex-row justify-end items-end">
-                                          <button 
+                                          {/* <button 
                                           onClick={()=>{ onEdit({'id':row.original._id, 'due_date':row.original.due_date,'amount':row.original.amount,'autopay':row.original.autopay}) }}
                                           title='Edit' className="text-[15px] h-[38px] border-[#56595e] border  rounded text-[#56595e] px-2  capitalize text-center font-semibold">
                                           <svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" >
@@ -229,7 +229,7 @@ const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:Bil
                                           </svg>
 
 
-                                          </button>
+                                          </button> */}
 
 
                                           <button onClick={()=>deleteAction(row.original._id)} title='Delete' className="ml-5 text-[15px] h-[38px] border-[#56595e] border  rounded text-[#56595e] px-2  capitalize text-center font-semibold">
