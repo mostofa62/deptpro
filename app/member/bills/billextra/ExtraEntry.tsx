@@ -21,23 +21,21 @@ interface Options{
 
 interface ExtraProps{    
     user_id:string;
-    editData:any;
+   
     extraType:any[];
     billList:Options[];
-    cleanData:()=>void    
+      
 }
 
-const ExtraEntry=({user_id, editData,extraType,billList,cleanData}:ExtraProps)=>{
+const ExtraEntry=({user_id, extraType,billList}:ExtraProps)=>{
 
-    const appCtx = useApp();
+    
     const router = useRouter();
 
     const [fetchFomrData,setFetchFormData] = useState(DataSchema);
     const formRef = useRef<any>(null);    
 
-    useEffect(()=>{
-        setFetchFormData(editData)
-    },[editData])
+    
     
 
     const fetchdata = fetchFomrData;    

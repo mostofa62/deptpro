@@ -9,7 +9,6 @@ import ExtraEntry from "./ExtraEntry";
  
 import CardHolderDefault from "@/app/components/ui/CardHolderDefault";
 import { DataSchema } from "./DataValidationSchema";
-import ExtraTransactions from "./ExtraTransactions";
 import HolderOne from "@/app/layout/HolderOne";
 import VideoComponent from "@/app/components/utils/VideoComponent";
 
@@ -42,40 +41,12 @@ export default function BillExtra() {
     fetchDataCallback();
   },[fetchDataCallback]);
 
-    const edata = {
-      'id':'',
-      'bill':DataSchema.bill,
-      'type':DataSchema.type,      
-      'amount':0,
-      'pay_date_extra':DataSchema.pay_date_extra,      
-      //'comment':''
-    }
+    
 
-    const [editData, setEditData] = useState(edata);
-
-    const [prevEditId, setPrevEditId] = useState<string>('');
-
-    const [reloadGrid, setReloadGrid] = useState(false);
-
-    useEffect(() => {
-      setPrevEditId(editData.id);
-    }, [editData]);
+    
 
 
-    const onEditHandler = (edData:any)=>{      
-      setEditData(edData);
-      
-    }
-
-    const cleanData =  ()=>{      
-      setEditData(edata);
-      if(reloadGrid){
-        setReloadGrid(false);
-      }else{
-        setReloadGrid(true);
-      }
-      
-    }
+    
     
         
     const user_id:any = authCtx.userId;
@@ -125,10 +96,10 @@ export default function BillExtra() {
 
         <ExtraEntry                    
                     user_id={user_id}
-                    editData={editData}
+                    
                     extraType={extraType}
                     billList={billList}
-                    cleanData={cleanData}                                                          
+                                                                           
                      />     
 
         </div>
