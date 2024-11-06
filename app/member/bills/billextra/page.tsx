@@ -76,25 +76,7 @@ export default function BillExtra() {
             ]}
             />
 
-<div className="flex flex-row">
-
-<div className="w-[35%] flex justify-center items-center">
-        <div className="">
-                       
-            <VideoComponent
-                src="/animated/billentry.mp4"
-                width={`350`}
-                controls={false} // Disable default video controls (optional)
-                autoplay={true}
-                loop={true}
-                showControls={false}
-            />
-        </div>
-        </div>
-
-        <div className="w-[65%]">
-
-        <ExtraEntry                    
+<ExtraEntry                    
                     user_id={user_id}
                     
                     extraType={extraType}
@@ -102,9 +84,7 @@ export default function BillExtra() {
                                                                            
                      />     
 
-        </div>
-</div>
-        
+
         
 
        

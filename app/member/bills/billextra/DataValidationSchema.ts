@@ -1,21 +1,26 @@
 import moment from "moment";
-import { object, array, string, number, StringSchema } from "yup";
-export const DataSchema = {   
+import { number, object, string } from "yup";
+export const DataSchema = {
+    payor:'',   
     bill:{'label':'','value':''}, 
     amount:0,
     type:{'value':0, 'label':'None'},        
     due_date:moment().format('YYYY-MM-DD'),
-    //comment:''  
+    //comment:''
+    note:'',
+      
 
 };
 
 
-export const DataLabel = {  
+export const DataLabel = {
+    payor:'Payor',  
     bill:'Bill Account',  
-    amount:'Amount',
+    amount:'Bill Amount',
     type:'Type',
-    due_date:'Date',
+    due_date:'Due Date',
     //comment:'Comment'
+    note:'Note',
     
   }
   

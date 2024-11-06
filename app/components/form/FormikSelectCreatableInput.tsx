@@ -1,5 +1,5 @@
-import {Field} from 'formik';
 import SelectComponent from '../SelectComponent';
+import TooltipOne from '../ui/TooltipOne';
 
 interface FormHolderProps{
     label:string;
@@ -10,7 +10,8 @@ interface FormHolderProps{
     dataOptions:{}[];
     isSearchable:boolean;
     isClearable:boolean;
-    onParentChangeSelect?:(value:any, name:any)=>void;       
+    onParentChangeSelect?:(value:any, name:any)=>void;
+    toolTipText?:React.ReactNode;       
 }
 
 export default function FormikSelectCreatableInput({
@@ -23,14 +24,18 @@ export default function FormikSelectCreatableInput({
     isSearchable,
     isClearable,
     onParentChangeSelect,
+    toolTipText
     }:FormHolderProps){
         
 
         return (
             <>
+            <div className='flex gap-2'>
             <label className="mb-[10px] block text-[16px] font-medium text-[#000000]">
                 {label}
             </label>
+            {toolTipText && <TooltipOne text={toolTipText} />}
+            </div>
             <div className="relative">
                 {onParentChangeSelect ?
             <SelectComponent defaultValueArray={defaultValue}

@@ -11,6 +11,8 @@ import CheckComponent from "@/app/components/CheckComponent";
 import FormikSelectInput from "@/app/components/form/FormikSelectInput";
 import useApp from "@/app/hooks/useApp";
 import Link from "next/link";
+import FormikFormHolder from "@/app/components/form/FormikFormHolder";
+import VideoComponent from "@/app/components/utils/VideoComponent";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -97,7 +99,26 @@ const ExtraEntry=({user_id, extraType,billList}:ExtraProps)=>{
         onSubmit={handleFormSubmit}
 
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched}:any)=>(
-            <Form className="mt-5">
+            <FormikFormHolder>
+
+
+<div className="flex flex-row">
+
+<div className="w-[35%] flex justify-center items-center">
+<div className="">
+               
+    <VideoComponent
+        src="/animated/billentry.mp4"
+        width={`350`}
+        controls={false} // Disable default video controls (optional)
+        autoplay={true}
+        loop={true}
+        showControls={false}
+    />
+</div>
+</div>
+
+<div className="w-[65%]">
 
             <div className="flex flex-row mt-[15px]">
                     <div className="w-[50%]">
@@ -119,7 +140,35 @@ const ExtraEntry=({user_id, extraType,billList}:ExtraProps)=>{
                     </div>
                     <div className="ml-6 w-[50%]">
 
-                        <FormikSelectInput
+                    <FormikFieldInput 
+                    label={DataLabel.payor} 
+                    name={`fetchdata.payor`}
+                    placeHolder={`${DataLabel.payor}`}
+                    errorMessage ={ errors.fetchdata &&                                        
+                        errors.fetchdata.payor &&
+                        touched.fetchdata &&            
+                        touched.fetchdata.payor &&  errors.fetchdata.payor}
+                    onChangeField = {(e:any)=>{
+                        const {value, name} = e.target;
+                        setFieldValue(
+                            name,
+                            value
+                        );
+                    }}
+                    />
+
+                        
+
+                    </div>
+            </div>
+
+            
+                
+            
+            <div className="flex flex-row mt-[15px]">
+                <div className="w-[50%]">
+
+                <FormikSelectInput
                             label={DataLabel.type}
                             defaultValue={fetchdata.type}
                             placeHolder={``}
@@ -135,14 +184,12 @@ const ExtraEntry=({user_id, extraType,billList}:ExtraProps)=>{
                             }
                         />
 
-                    </div>
-            </div>
-
-            
                 
-            
-            <div className="flex flex-row mt-[15px]">
-                <div className="w-[50%]">
+                    
+                    
+                </div> 
+
+                <div className="ml-6 w-[50%]">
 
                 <FormikFieldInput 
                     type="date"          
@@ -155,13 +202,16 @@ const ExtraEntry=({user_id, extraType,billList}:ExtraProps)=>{
                         touched.fetchdata.due_date &&  errors.fetchdata.due_date}
                             
                     />
+
                     
                     
                 </div> 
+            </div>    
 
-                <div className="ml-6 w-[50%]">
+            <div className="flex flex-row mt-[15px]">
+                <div className="w-[50%]">
 
-                    <FormikFieldInput 
+                <FormikFieldInput 
                     type="number"
                     step={"any"}
                     label={DataLabel.amount} 
@@ -174,10 +224,24 @@ const ExtraEntry=({user_id, extraType,billList}:ExtraProps)=>{
                         inputPreix={`$`}        
                     />
                     
-                </div> 
-            </div>    
+                </div>
 
+                <div className="ml-6 w-[50%]">
 
+                <FormikFieldInput 
+        label={DataLabel.note} 
+        name={`fetchdata.note`}
+        placeHolder={`${DataLabel.note}`}
+        errorMessage ={ errors.fetchdata &&                                        
+            errors.fetchdata.note &&
+            touched.fetchdata &&            
+            touched.fetchdata.note &&  errors.fetchdata.note}
+      
+        />
+
+                </div>
+
+            </div>
            
 
             {/* <div className="flex flex-row mt-[15px]">
@@ -203,10 +267,12 @@ const ExtraEntry=({user_id, extraType,billList}:ExtraProps)=>{
             
            
 
-            
+</div>
+
+</div>
 
             
-            </Form>
+</FormikFormHolder>
             
         )}
         />

@@ -293,9 +293,7 @@ export default function InsuranceCreate() {
     </div>
 
     <div className="ml-[24px] w-[32%]">
-    <Tooltip text={<p className="flex flex-col items-center justify-center">
-        <span>Bonus, Commissions, Tips, Treasures</span>
-        </p>}>
+    
     <FormikSelectCreatableInput
             label={DataLabel.saving_boost_source}
             defaultValue={fetchdata.saving_boost_source}
@@ -310,9 +308,13 @@ export default function InsuranceCreate() {
                 touched.fetchdata.saving_boost_source &&
                 errors.fetchdata.saving_boost_source.label
             }
+
+            toolTipText={<p className="flex flex-col whitespace-normal leading-normal">
+                <span>Bonus, Commissions, Tips, Treasures</span>
+                </p>}
         />
 
-    </Tooltip>
+    
         
     </div>
 

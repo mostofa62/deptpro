@@ -1,5 +1,6 @@
 import {Field} from 'formik';
 import { ReactNode } from 'react';
+import TooltipOne from '../ui/TooltipOne';
 
 interface FormHolderProps extends React.InputHTMLAttributes<HTMLInputElement>{
     label:string;
@@ -9,6 +10,7 @@ interface FormHolderProps extends React.InputHTMLAttributes<HTMLInputElement>{
     onChangeField?:(e:any)=>void,
     inputPreix?:string;
     inputSuffix?:string;
+    toolTipText?:React.ReactNode;
 
 }
 
@@ -19,16 +21,20 @@ export default function FormikFieldInput({
     errorMessage,
     onChangeField,
     inputPreix,
-    inputSuffix,    
+    inputSuffix,
+    toolTipText,    
     ...props
     }:FormHolderProps){
         
 
         return (
             <>
+            <div className='flex gap-2'>
             <label className="mb-[10px] block text-[16px] font-medium text-[#000000]">
                 {label}
             </label>
+            {toolTipText && <TooltipOne text={toolTipText} />}
+            </div>
             <div className="relative">
 
              {inputPreix && <span className=' absolute left-2 top-[9px]'>{inputPreix}</span>}   

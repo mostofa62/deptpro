@@ -26,12 +26,18 @@ interface BillProps{
     onEdit:(data:any)=>void
 }
 
-
+interface paymentRow{
+  _id:string;
+  amount: number;
+  pay_date_word:string;
+}
 interface DataRow {
     _id:string;    
     amount: number;
-    due_date:string;
-    payment_status:number;   
+    current_amount:number;
+    due_date_word:string;
+    payment_status:number;
+    payments:paymentRow[] 
 }
 
 const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:BillProps)=>{
@@ -185,7 +191,8 @@ const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:Bil
 
                                     <div className='flex'>
                                       <div className="w-[50%] text-left">
-                                          <p className='text-[20px] font-semibold'><span>$</span><span className='ml-1'>{row.original.amount}</span></p>
+                                          <p className='text-[15px] font-semibold'><span className='mx-1'>Balance</span><span>$</span><span>{row.original.current_amount } </span></p>
+                                          <p className='text-[14px] font-semibold'><span className='mx-1'>Amount</span><span>$</span><span>{row.original.amount}</span></p>
                                       </div>
                                       <div className="w-[50%] flex flex-row justify-end items-end">
                                      { row.original.payment_status > 0 ? 
@@ -214,7 +221,7 @@ const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:Bil
 
                                       <div className="w-[50%]">
                                          
-                                          <button onClick={()=>{ onPayment({'id':row.original._id, 'due_date':row.original.due_date,'amount':row.original.amount})  }} className="text-[15px] w-full h-[40px] bg-[#56595e] rounded text-white px-4  capitalize text-center font-semibold">
+                                          <button onClick={()=>{ onPayment({'id':row.original._id, 'due_date':row.original.due_date,'amount':row.original.current_amount < row.original.amount ? row.original.current_amount:row.original.amount})  }} className="text-[15px] w-full h-[40px] bg-[#56595e] rounded text-white px-4  capitalize text-center font-semibold">
                                           Add Payment
                                           </button>
                                           
@@ -235,7 +242,7 @@ const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:Bil
                                           <button onClick={()=>deleteAction(row.original._id)} title='Delete' className="ml-5 text-[15px] h-[38px] border-[#56595e] border  rounded text-[#56595e] px-2  capitalize text-center font-semibold">
                                           
 
-                                          <svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                                          <svg width={18} height={18} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                                               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                                           </svg>
 
@@ -243,6 +250,37 @@ const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:Bil
 
                                           </button>
                                       </div>
+
+                                    </div>
+                                    }
+
+                                    {row.original.payments.length > 0 &&
+
+                                    <div className='mt-5'>
+                                      <table className="tanstack-table table-auto w-full text-left">
+                                      <thead>
+
+                                        <tr>
+                                          <th>Amount</th>
+                                          <th>Pay Date</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                      {row.original.payments.map((data:paymentRow, index:number)=>{
+                                        return(
+
+                                          <tr key={index}>
+                                            <td>{data.amount}</td>
+                                            <td>{data.pay_date_word}</td>
+                                          </tr>
+
+                                        )
+
+                                      })}
+
+                                        </tbody>
+
+                                    </table>
 
                                     </div>
                                     }

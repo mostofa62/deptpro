@@ -1,28 +1,25 @@
 "use client";
-import DefaultLayout from "@/app/layout/DefaultLayout";
-import Link from "next/link";
-import { useState,useEffect, useRef } from "react";
-import axios from "axios";
 import useAuth from '@/app/hooks/useAuth';
+import DefaultLayout from "@/app/layout/DefaultLayout";
+import axios from "axios";
+import { Formik } from 'formik';
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {Field, Formik} from 'formik';
-import { DataSchema,DataLabel,ValidationSchema } from "./DataValidationSchema";
+import { useRef, useState } from "react";
+import { DataLabel, DataSchema, ValidationSchema } from "./DataValidationSchema";
 
 import FormikFormHolder from "@/app/components/form/FormikFormHolder";
 
-import FormikSelectInput from "@/app/components/form/FormikSelectInput";
 import FormikSelectCreatableInput from "@/app/components/form/FormikSelectCreatableInput";
+import FormikSelectInput from "@/app/components/form/FormikSelectInput";
 
-import toast from 'react-hot-toast';
-import useFetchDropDownData from "@/app/hooks/useFetchDropDownData";
 import FormikFieldInput from "@/app/components/form/FormikFieldInput";
-import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
-import CheckComponent from "@/app/components/CheckComponent";
-import FormikCheckInput from "@/app/components/form/FormikCheckInput";
-import DebtRocket from "@/app/images/icon/debtrocket";
 import VideoComponent from "@/app/components/utils/VideoComponent";
+import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
+import DebtRocket from "@/app/images/icon/debtrocket";
 import HolderOne from "@/app/layout/HolderOne";
-import Tooltip from "@/app/components/ui/Tooltip";
+import toast from 'react-hot-toast';
+
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -381,12 +378,7 @@ export default function InsuranceCreate() {
     
     <div className="ml-[24px] w-[32%]">
 
-    <Tooltip text={<p className="flex flex-col items-center justify-center">
-        <span>You may be jump starting your savings account</span>
-        <span>or</span> 
-        <span>currrently has funds</span>        
-        </p>}> 
-
+    
     <FormikFieldInput 
         type="number"
         step="any"
@@ -398,9 +390,19 @@ export default function InsuranceCreate() {
             errors.fetchdata.starting_amount &&
             touched.fetchdata &&            
             touched.fetchdata.starting_amount &&  errors.fetchdata.starting_amount}
-            inputPreix={`$`}         
+            inputPreix={`$`}
+            
+            
+            toolTipText=
+            {<p className="flex flex-col whitespace-normal leading-normal">
+                <span>You may be jump starting your savings account</span>
+                <span>or</span> 
+                <span>currrently has funds</span>        
+                </p>}
+            
+            
         />
-</Tooltip>
+
 
     
     
@@ -416,18 +418,11 @@ export default function InsuranceCreate() {
 
 <div className="flex flex-row mt-[15px]">
     <div className="w-[32%]">
-    <Tooltip text={<div className="flex flex-col items-start justify-center gap-0">
-        <p className="whitespace-normal leading-normal">
-        This is an amount you choose to regularly fund your savings.
-        </p>
-        <p className="whitespace-normal leading-normal">The Savings Boost are for one time contributions.</p>
-        <p className="whitespace-normal leading-normal">You can add multiple one time contributions here.</p>
-        <p className="whitespace-normal leading-normal">IE: Putting your tips into savingsseveral times a month.</p>  
-        <p className="whitespace-normal leading-normal">A little adds up quickly!  </p>
-        </div>}>        
+          
    
         
     <FormikFieldInput 
+    
         type="number"
         step="any"
         min={0}
@@ -438,9 +433,20 @@ export default function InsuranceCreate() {
             errors.fetchdata.contribution &&
             touched.fetchdata &&            
             touched.fetchdata.contribution &&  errors.fetchdata.contribution}
-            inputPreix={`$`}         
+            inputPreix={`$`} 
+            
+            
+            toolTipText={<div className="flex flex-col items-start justify-center gap-0">
+                <p className="whitespace-normal leading-normal">
+                This is an amount you choose to regularly fund your savings.
+                </p>
+                <p className="whitespace-normal leading-normal">The Savings Boost are for one time contributions.</p>
+                <p className="whitespace-normal leading-normal">You can add multiple one time contributions here.</p>
+                <p className="whitespace-normal leading-normal">IE: Putting your tips into savingsseveral times a month.</p>  
+                <p className="whitespace-normal leading-normal">A little adds up quickly!  </p>
+                </div>}
         />
-        </Tooltip>
+     
         
         
         
@@ -448,11 +454,6 @@ export default function InsuranceCreate() {
 
     <div className="ml-[24px] w-[32%]">
 
-    <Tooltip text={<p className="flex flex-col items-center justify-center">
-        <span>ie: Add an increasing $1 each week.</span>
-        <span>ie: week 1 = $1.  Week 4 would be $4. </span>
-        <span>Incremental savings can add up quickly. </span>
-        </p>}>
 
     <FormikFieldInput 
         type="number"
@@ -465,11 +466,17 @@ export default function InsuranceCreate() {
             errors.fetchdata.increase_contribution_by &&
             touched.fetchdata &&            
             touched.fetchdata.increase_contribution_by &&  errors.fetchdata.increase_contribution_by}
-            inputPreix={`$`}         
+            inputPreix={`$`}
+            
+            toolTipText={<p className="flex flex-col items-center justify-center gap-0">
+                <span className="whitespace-normal leading-normal">ie: Add an increasing $1 each week.</span>
+                <span className="whitespace-normal leading-normal">ie: week 1 = $1.  Week 4 would be $4. </span>
+                <span className="whitespace-normal leading-normal">Incremental savings can add up quickly. </span>
+                </p>}
         />
 
      
-   </Tooltip>
+ 
         
     
         

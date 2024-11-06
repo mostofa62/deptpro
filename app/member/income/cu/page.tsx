@@ -170,8 +170,7 @@ export default function InsuranceCreate() {
 
     <div className="ml-[24px] w-[32%]">
 
-    <Tooltip text={<p className="flex flex-col items-center justify-center"><span>ie: Job, 2nd job, side gig, rental,</span>
-        <span>pension, social security, annuity, investments</span></p>}>
+    
                 
     <FormikSelectCreatableInput
             label={DataLabel.income_source}
@@ -187,9 +186,12 @@ export default function InsuranceCreate() {
                 touched.fetchdata.income_source &&
                 errors.fetchdata.income_source.label
             }
+
+            toolTipText={<p className="flex flex-col whitespace-normal leading-tight"><span>ie: Job, 2nd job, side gig, rental,
+        pension, social security, annuity, investments</span></p>}
         />
 
-</Tooltip>
+
         
         
         
