@@ -270,7 +270,7 @@ const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:Bil
                                         return(
 
                                           <tr key={index}>
-                                            <td>{data.amount}</td>
+                                            <td>${data.amount}</td>
                                             <td>{data.pay_date_word}</td>
                                           </tr>
 

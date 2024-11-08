@@ -14,7 +14,9 @@ import ExtraTransactions from "./ExtraTransactions";
 
 
 
-
+interface DebtRow{
+  default_amount:number;
+}
 
 
 
@@ -58,7 +60,9 @@ export default function BillDetails({
    
     const datalabel:any = DataLabelView;
 
-    
+    const DataPrefix = {
+      default_amount:'$'
+    }
   
     return(
         <>
@@ -112,7 +116,7 @@ export default function BillDetails({
                     <strong>{key == 'bill_type' ? datalabel[key]['first']:datalabel[key] }</strong>
                     <p className="mt-1">
                       {/*BillWithPaymentData.debtAccount[key] !== undefined ? BillWithPaymentData.debtAccount[key].toString() : '-'*/}
-                      {key in BillWithPaymentData.billaccounts ?   ( key == 'bill_type' ? `${BillWithPaymentData.billaccounts[datalabel[key]['parent']] &&  `${BillWithPaymentData.billaccounts[datalabel[key]['parent']]?.toString()} > `}${BillWithPaymentData.billaccounts[key]?.toString()} `: BillWithPaymentData.billaccounts[key]?.toString()) : '-'}
+                      {DataPrefix[key as keyof DebtRow]}{key in BillWithPaymentData.billaccounts ?   ( key == 'bill_type' ? `${BillWithPaymentData.billaccounts[datalabel[key]['parent']] &&  `${BillWithPaymentData.billaccounts[datalabel[key]['parent']]?.toString()} > `}${BillWithPaymentData.billaccounts[key]?.toString()} `: BillWithPaymentData.billaccounts[key]?.toString()) : '-'}
                     </p>
                   </div>
                 ))}

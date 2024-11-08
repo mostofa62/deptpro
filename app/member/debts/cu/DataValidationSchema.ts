@@ -12,7 +12,7 @@ export const DataSchema = {
     interest_rate:0, 
     start_date:moment().format('YYYY-MM-DD'),   
     due_date:moment().format('YYYY-MM-DD'),
-    notes:'',
+    note:'',
     //Promotional Interest Rate
     promo_rate:0,
     deffered_interest:0,
@@ -47,7 +47,7 @@ export const DataLabel = {
   interest_rate:'Interest Rate',
   start_date:'Start Date',  
   due_date:'Next Due Date',
-  notes:'Note',
+  note:'Note',
 
   
   
@@ -65,7 +65,7 @@ export const DataLabelUpdate = {
   interest_rate:'Interest Rate (%)',
   start_date:'Start Date',    
   due_date:'Next Due Date',  
-  notes:'Note',
+  note:'Note',
 
   //not in form
   monthly_interest:'Monthly Interest',
@@ -102,7 +102,7 @@ export const DataLabelView= {
   interest_rate:'Interest Rate',  
   start_date_word:'Start Date',
   due_date_word:'Next Due Date',
-  notes:'Note',
+  note:'Note',
 
   //not in form
   monthly_interest:'Monthly Interest',

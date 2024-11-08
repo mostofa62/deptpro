@@ -265,13 +265,13 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number}:BillProps)=>{
 <div className="ml-[24px] w-[50%]">
     
     <FormikFieldInput 
-    label={DataLabel.notes} 
-    name={`fetchdata.notes`}
-    placeHolder={`${DataLabel.notes}`}
+    label={DataLabel.note} 
+    name={`fetchdata.note`}
+    placeHolder={`${DataLabel.note}`}
     errorMessage ={ errors.fetchdata &&                                        
-        errors.fetchdata.notes &&
+        errors.fetchdata.note &&
         touched.fetchdata &&            
-        touched.fetchdata.notes &&  errors.fetchdata.notes}   
+        touched.fetchdata.note &&  errors.fetchdata.note}   
     />
     
     

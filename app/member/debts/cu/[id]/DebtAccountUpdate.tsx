@@ -364,16 +364,16 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 
 <div className="flex flex-row mt-[15px]">
 
-<div className="w-full">
+<div className="w-[50%]">
     
     <FormikFieldInput 
-    label={DataLabelUpdate.notes} 
-    name={`fetchdata.notes`}
-    placeHolder={`${DataLabelUpdate.notes}`}
+    label={DataLabelUpdate.note} 
+    name={`fetchdata.note`}
+    placeHolder={`${DataLabelUpdate.note}`}
     errorMessage ={ errors.fetchdata &&                                        
-        errors.fetchdata.notes &&
+        errors.fetchdata.note &&
         touched.fetchdata &&            
-        touched.fetchdata.notes &&  errors.fetchdata.notes}   
+        touched.fetchdata.note &&  errors.fetchdata.note}   
     />
     
     

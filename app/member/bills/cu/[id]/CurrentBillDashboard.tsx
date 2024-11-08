@@ -60,7 +60,7 @@ const CustomTooltip = ({ payload, label }: any) => {
           padding: '2px',
           fontSize: '14px',          
         }}>          
-          <p style={{ margin: 0 }}>{data.amount}</p>
+          <p style={{ margin: 0 }}>${data.amount}</p>
         </div>
       );
     }

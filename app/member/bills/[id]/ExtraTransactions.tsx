@@ -28,11 +28,10 @@ interface DebtProps{
 
 interface DataRow {
     _id:string; 
-    bill_acc:string;   
     amount: number;       
-    pay_date_extra:string;
-    month:string;
-    year:string;   
+    due_date_word:string;
+    type:string;
+    type_number:number;   
 }
 
 const ExtraTransactions = ({bill_id}:DebtProps)=>{
@@ -194,7 +193,7 @@ const ExtraTransactions = ({bill_id}:DebtProps)=>{
                   );
                 },
                 */
-                cell: info => <p><span>$</span><span>{info.getValue()}</span></p>
+                cell: info => <p>{info.row.original.type_number>1 &&<span>-</span>}<span className='ml-1'>$</span><span>{info.getValue()}</span></p>
                 
             },
 

@@ -41,7 +41,7 @@ const CustomTooltip = ({ payload, label }: any) => {
           fontSize: '16px',
           minWidth:'100px'                    
         }}>          
-          <p style={{ margin: 0 }}>$ {Intl.NumberFormat('en-US').format(data.amount)}</p>
+          <p style={{ margin: 0 }}>${Intl.NumberFormat('en-US').format(data.amount)}</p>
         </div>
       );
     }

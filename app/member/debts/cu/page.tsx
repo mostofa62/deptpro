@@ -320,7 +320,21 @@ export default function InsuranceCreate() {
    
 </div>
 
+<div className="flex flex-row mt-[15px]">
 
+<div className="w-[32%]">
+                <FormikFieldInput 
+        label={DataLabel.note} 
+        name={`fetchdata.note`}
+        placeHolder={`${DataLabel.note}`}
+        errorMessage ={ errors.fetchdata &&                                        
+            errors.fetchdata.note &&
+            touched.fetchdata &&            
+            touched.fetchdata.note &&  errors.fetchdata.note}
+      
+        />
+                </div>
+</div>
 
 
 

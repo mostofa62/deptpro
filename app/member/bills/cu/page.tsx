@@ -307,6 +307,18 @@ export default function InsuranceCreate() {
                     
                     
                 </div>
+                <div className="ml-[24px] w-[50%]">
+                <FormikFieldInput 
+        label={DataLabel.note} 
+        name={`fetchdata.note`}
+        placeHolder={`${DataLabel.note}`}
+        errorMessage ={ errors.fetchdata &&                                        
+            errors.fetchdata.note &&
+            touched.fetchdata &&            
+            touched.fetchdata.note &&  errors.fetchdata.note}
+      
+        />
+                </div>
             </div>
 
 
