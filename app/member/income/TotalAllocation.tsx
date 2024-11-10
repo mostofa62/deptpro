@@ -233,7 +233,7 @@ const TotalAllocation = ({userid}:TotalPros) => {
         const heights = itemRefs.current.map(item => item?.getBoundingClientRect().height || 0);
         const tallestHeight = Math.max(...heights);
         if (lineData.length > 0 && tallestHeight < 350){
-          setMaxHeight(350)
+          setMaxHeight(450)
         }else{ 
           setMaxHeight(tallestHeight);
         }

@@ -300,6 +300,13 @@ export default function InsuranceCreate() {
             touched.fetchdata.reminder_days &&
             errors.fetchdata.reminder_days.label
         }
+
+        toolTipText={<div className="flex flex-col items-start justify-center gap-0">
+            <p className="whitespace-normal leading-normal">
+            Change email or phone numbers in profile section
+            </p>
+            
+            </div>}
     />
                     
 
