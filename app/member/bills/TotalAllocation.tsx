@@ -2,7 +2,7 @@ import CardHolder from "@/app/components/ui/CardHolder";
 import DataProgress from "@/app/components/ui/DataProgress";
 import { getColorForValue, hashString, hslToHex } from "@/app/components/utils/Util";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Line } from "recharts";
 
 // const data = [
@@ -63,11 +63,15 @@ interface PayLoads{
     bill_type_bill_counts:{_id:string,count:number,label:string}[],
     total_dept_type:number,
     total_balance:number,
-    bill_type_ammortization:any[],
-    bill_type_names:{[key:string]:string}
+    
+    
     
 }
+interface ProjectionPayload{
 
+    bill_type_ammortization:any[],
+    bill_type_names:{[key:string]:string}
+}
 
 const TotalAllocation = () => {
 
@@ -86,9 +90,12 @@ const TotalAllocation = () => {
     const payload: PayLoads ={
         bill_type_bill_counts:[],
         total_dept_type:0,
-        total_balance:0,
-        bill_type_ammortization:[],
-        bill_type_names:{}
+        total_balance:0,        
+    }
+
+    const projectPayload:ProjectionPayload={
+      bill_type_ammortization:[],
+      bill_type_names:{}
     }
     
 
@@ -98,13 +105,19 @@ const TotalAllocation = () => {
         payLoads:payload
     })
 
+
+    const BillProjection:any = useFetchDropDownObjects({
+      urlSuffix:`bill-projection`,
+      payLoads:projectPayload
+  })
+
     const total_count = DebtTypewiseInfo.total_dept_type
 
     const total_balance = DebtTypewiseInfo.total_balance;
 
     const data = DebtTypewiseInfo.bill_type_bill_counts;
 
-    const chartData = DebtTypewiseInfo.bill_type_ammortization;
+    const chartData = BillProjection.bill_type_ammortization;
 
     const bill_type_names = DebtTypewiseInfo.bill_type_names;
 
@@ -120,22 +133,22 @@ const TotalAllocation = () => {
     */
 
     // Tooltip formatter function
-    /* const CustomTooltipLine = ({ payload,label }:any) => {
+    const CustomTooltipLine = ({ payload,label }:any) => {
       if (!payload || payload.length === 0) return null;
       return (
         <div className="bg-white border p-2 rounded shadow-lg text-sm">
           <div><strong>Month:</strong> {label}</div>
           {payload.map((entry:any, index:number) => (
             <div key={`item-${index}`} style={{ color: entry.stroke }}>
-              <strong>{bill_type_names[entry.dataKey]}:</strong> $ {entry.value.toFixed(2)}
+              <strong>{bill_type_names[entry.dataKey]}:</strong> ${entry.value.toFixed(2)}
             </div>
           ))}
         </div>
       );
-    }; */
+    };
 
     // Legend formatter function
-    /* const CustomLegendLine = ({ payload }:any) => {
+    const CustomLegendLine = ({ payload }:any) => {
       return (
         <div className="flex gap-4 justify-center items-center text-sm">
           {payload.map((entry:any, index:number) => (
@@ -145,7 +158,7 @@ const TotalAllocation = () => {
           ))}
         </div>
       );
-    }; */
+    };
 
     
 
@@ -164,12 +177,30 @@ const TotalAllocation = () => {
       // const color:string =  getColorForValue(name.length*20+key.length, 300, 1000, 1)
       // console.log(color)
       // return color;
-    } 
+    }
+    
+    const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const [maxHeight, setMaxHeight] = useState<number>(0);
+
+    useEffect(() => {
+      // Calculate the height of the tallest element after component renders
+      const total_length:number = data.length + chartData.length;
+      if(total_length > 0){
+        const heights = itemRefs.current.map(item => item?.getBoundingClientRect().height || 0);
+        const tallestHeight = Math.max(...heights);
+        if (chartData.length > 0 && tallestHeight < 350){
+          setMaxHeight(350)
+        }else{ 
+          setMaxHeight(tallestHeight);
+        }
+      }
+      
+    }, [data, chartData]);
     return (
-    <div className="flex flex-row min-h-75">
-        <div className="w-[40%]">
+    <div className="flex flex-row gap-2.5">
+        <div className="w-[40%]" ref={el => (itemRefs.current[0] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
           {data.length > 0 &&
-        <CardHolder title="Total Allocation">
+        <CardHolder title="Total Allocation" maxHeight={maxHeight}>
             <div className="flex flex-row">
                 {/* {JSON.stringify(data)} */}
                 <div className="w-[45%]">
@@ -223,13 +254,47 @@ const TotalAllocation = () => {
         </CardHolder>
         }
         </div>
-        <div className="w-[60%] py-2 px-1">
+        <div className="w-[60%]" ref={el => (itemRefs.current[1] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
 
-        {/* {chartData.map((damort:any, index:number)=>{
-          const keys = Object.keys(damort);
-          return <p key={index}>{keys[1]} </p>
+        {chartData.length > 0 && (
+  <CardHolder title="12 Months Projection" maxHeight={maxHeight}>
+  <div className="w-full overflow-x-auto"> {/* Scrollable container */}
+      <div className={`w-[${chartData.length * 100}px]`}> {/* Dynamically adjust width */}
+          <ResponsiveContainer width="100%" height={350}>
+            <LineChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" tick={{ fontSize:12 }} />
+              <YAxis tick={{ fontSize:12 }} tickFormatter={(value) => `$${value}`} />
+              {/* <Tooltip content={<CustomTooltipLine />} /> */}
+              <Tooltip content={<CustomTooltipLine />} />
+              <Legend 
+                content={<CustomLegendLine/>}
+                                 
+              />
 
-        })} */}
+              {/* Render Line components for each unique dataKey (e.g., BB, TEACHER_FEE, etc.) */}
+              {Object.keys(chartData[0]).
+              filter(key => key !== 'month' /*&& key !== 'bill_names'*/).map((key, index) => (
+                <Line
+                  key={key}
+                  type="monotone"
+                  dataKey={key}
+                  dot={false}
+                  strokeWidth={highlightedKey!=null && highlightedKey === key ?3:1}
+                  stroke={getColorForDebtType(key)} // Ensure this function is defined elsewhere
+                  activeDot={{ r: 5 }}
+                />
+              ))}
+            </LineChart>
+          </ResponsiveContainer>
+      </div>
+  </div>
+  </CardHolder>
+)
+
+
+}
+
 
 
 

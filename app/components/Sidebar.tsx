@@ -496,7 +496,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   <Link
     href={'/member/debts/payoffcustom'}
     className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out  hover:text-[#43ACD6] ${
-      pathname.slice(-14) =='payoffstrategy' ? 'text-[#43ACD6]':'text-[#4F4F4F]'
+      pathname.slice(-12) =='payoffcustom' ? 'text-[#43ACD6]':'text-[#4F4F4F]'
     }`}
   >
     
