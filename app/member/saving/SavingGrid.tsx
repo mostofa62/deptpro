@@ -1,17 +1,15 @@
 "use client";
 
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import useAuth from '@/app/hooks/useAuth';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import GridActionLinkFixed from '@/app/components/grid/GridActionLinkFixed';
+import GridGlobalSearch from "@/app/components/grid/GridGlobalSearch";
+import GridPaginationHolder from "@/app/components/grid/GridPaginationHolder";
 import useFetchGridData, { AlertBox, DeleteActionGlobal, GetInVisibleColumn, getPageNumbers, GetShowingText, PerPageList } from "@/app/components/grid/useFetchGridData";
 import { ColumnDef, flexRender, getCoreRowModel, getPaginationRowModel, getSortedRowModel, PaginationState, SortingState, useReactTable } from "@tanstack/react-table";
 import { confirmAlert } from "react-confirm-alert";
-import GridGlobalSearch from "@/app/components/grid/GridGlobalSearch";
-import GridActionLink from "@/app/components/grid/GridActionLink";
-import GridPaginationHolder from "@/app/components/grid/GridPaginationHolder";
 import { DataLabel } from "./cu/DataValidationSchema";
-import DataProgress from "@/app/components/ui/DataProgress";
-import GridActionLinkFixed from '@/app/components/grid/GridActionLinkFixed';
 
 const per_page_list = PerPageList();
 const per_page = per_page_list[0];

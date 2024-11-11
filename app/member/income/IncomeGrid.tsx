@@ -1,13 +1,12 @@
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import useAuth from '@/app/hooks/useAuth';
-import useFetchGridData, { AlertBox, DeleteActionGlobal, GetInVisibleColumn, getPageNumbers, GetShowingText, PerPageList } from "@/app/components/grid/useFetchGridData";
-import { ColumnDef, flexRender, getCoreRowModel, getPaginationRowModel, getSortedRowModel, PaginationState, SortingState, useReactTable } from "@tanstack/react-table";
-import { confirmAlert } from "react-confirm-alert";
-import GridGlobalSearch from "@/app/components/grid/GridGlobalSearch";
-import GridActionLink from "@/app/components/grid/GridActionLink";
-import GridPaginationHolder from "@/app/components/grid/GridPaginationHolder";
-import { DataLabel } from "./cu/DataValidationSchema";
 import GridActionLinkFixed from '@/app/components/grid/GridActionLinkFixed';
+import GridGlobalSearch from "@/app/components/grid/GridGlobalSearch";
+import GridPaginationHolder from "@/app/components/grid/GridPaginationHolder";
+import useFetchGridData, { AlertBox, DeleteActionGlobal, GetInVisibleColumn, getPageNumbers, GetShowingText, PerPageList } from "@/app/components/grid/useFetchGridData";
+import useAuth from '@/app/hooks/useAuth';
+import { ColumnDef, flexRender, getCoreRowModel, getPaginationRowModel, getSortedRowModel, PaginationState, SortingState, useReactTable } from "@tanstack/react-table";
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { confirmAlert } from "react-confirm-alert";
+import { DataLabel } from "./cu/DataValidationSchema";
 
 
 const per_page_list = PerPageList();
@@ -28,7 +27,11 @@ interface ExtraPayloadProps{
   
 
 }
-const IncomeGrid = ()=>{
+
+interface IncomeProps{
+  category?:string;
+}
+const IncomeGrid = ({category}:IncomeProps)=>{
     
 
     const authCtx = useAuth();
@@ -80,7 +83,7 @@ const IncomeGrid = ()=>{
   
   
       const {error,loading,totalRows,pageCount} = useFetchGridData({
-      urlSuffix:`income/${authCtx.userId}`,
+      urlSuffix:`income/${authCtx.userId}${category ? `?action=${category}`:''}`,
       pagination:pagination,
       sorting:sorting,
       globalFilter:globalFilter,
@@ -109,7 +112,12 @@ const IncomeGrid = ()=>{
                 }).then((deletedData)=>{
                     //console.log(deletedData)
                     AlertBox(deletedData.message, deletedData.deleted_done);
-                    if(deletedData.deleted_done > 0 && key < 2){
+                    // if(deletedData.deleted_done > 0 && key < 2){
+                    //   const updatedData:any = data.filter((row:any) => row._id !== id);              
+                    //   setData(updatedData)
+                    // }
+
+                    if(deletedData.deleted_done > 0){
                       const updatedData:any = data.filter((row:any) => row._id !== id);              
                       setData(updatedData)
                     }
@@ -364,7 +372,12 @@ const generateItems = useCallback((row) => [
     //   items: generateItems(row),
     // })), [rows, generateItems]);
 
-    const tableRows = table.getRowModel().rows;
+    const rows = table.getRowModel().rows;
+
+    const tableRows = useMemo(() => rows.map((row) => ({
+      ...row,
+      items: generateItems(row),
+    })), [rows, generateItems]);
 
     return(
         
