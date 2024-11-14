@@ -3,22 +3,106 @@ import DefaultLayout from "@/app/layout/DefaultLayout";
 
 import Script from 'next/script';
 import useAuth from '@/app/hooks/useAuth';
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import HolderOne from "@/app/layout/HolderOne";
 import BasicCalendar from "@/app/components/BasicCalender";
 import moment from "moment";
+import AdvancedCalendar from "@/app/components/AdvancedCalender";
+import axios from "axios";
+import Link from "next/link";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
+
+type InputItem = {
+    _id: string;
+    event_date: string;
+    module_id: string;
+    module_name: string;
+    month: string;
+    month_word: string;
+    data: {
+      data_id: string;
+      description: string;
+      name: string;
+    };
+  };
+
+  type ExtraDayDataItem = {
+    date: string;
+    title: any;
+    description: any;
+  };
+
+const RouteModule:any = {
+    'bill':'/member/bills/',
+    'debt':'/member/debts/',
+    'income':'/member/income/',
+    'saving':'/member/saving/'
+}
+
 export default function CalenderPage() {
     const authCtx = useAuth();
 
-    const next_due_date = moment().format('YYYY-MM-DD');
+    
 
-    const description = ()=>(
-        <div className="flex flex-col gap-1 text-[15px]">
-          <div><span>DUE DATE</span><span className="ml-4">100</span></div>          
-        </div>
-      )
+    const currentDate = moment().format('YYYY-MM-DD');
+
+    const [currentMonth, setCurrentMonth] = useState(moment().format('YYYY-MM'));
+
+    const [monthData, setMonthData]= useState<ExtraDayDataItem[]>([]);
+
+    function formattedTitle(module_id:string,title:string, data_id:string){
+        let url:string = RouteModule[module_id];
+
+        return <Link className=" text-[#31c4a2]" href={`${url}${data_id}`}>{title}</Link>
+        
+    }
+
+    function formatData(inputArray: { 
+        event_date: string;
+        module_id:string;
+        module_name: string;
+        data: {
+          data_id:string
+          name: string;
+          description: string;
+        };
+        month_word: string;
+      }[]): { date: string; title: any; description: string }[] {
+
+        return inputArray.map(item => ({
+          date: item.event_date,
+          title: formattedTitle(item.module_id,`${item.module_name} : ${item.data.name}`,item.data.data_id),
+          description: `${item.data.description} at ${item.month_word}`
+        }));
+
+      }
+
+    const fetchDataCallback=useCallback(async()=>{
+
+        const urlSuffix = `calender-data/${currentMonth}`
+        //console.log(id);
+        const response = await axios.get(`${url}${urlSuffix}`);
+
+        const inputArray: InputItem[] = response.data.rows;
+
+        //console.log(inputArray)
+
+        const formattedArray = formatData(inputArray);
+        //console.log(response.data)
+        //return response.data.user;
+        setMonthData(formattedArray);
+    },[currentMonth]);
+
+    useEffect(()=>{
+        fetchDataCallback()
+    },[fetchDataCallback])
+
+    const onChangeMonth = (month:any)=>{
+        setCurrentMonth(month.format('YYYY-MM'))
+    }
+
+  
   
    
 
@@ -39,10 +123,10 @@ export default function CalenderPage() {
 
             <div className="mt-3 bg-[#fafafa] rounded-lg p-5">
 
-
-            <BasicCalendar 
-                extraDayData={{[`${next_due_date}`]:{'title':`Next due date`,'description':description()}}} 
-                currentMonth={next_due_date}
+            {/* {currentMonth} */}
+            <AdvancedCalendar 
+                extraDayData={monthData} 
+                onChangeMonth={onChangeMonth}
                 />
 
             

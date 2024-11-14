@@ -162,8 +162,21 @@ export const ValidationSchema =  object().shape({
               monthly_payment: number().min(0,`${DataLabel.monthly_payment} least 0`)              
               .required(`${DataLabel.monthly_payment} is required`),
 
-              credit_limit: number().min(0,`${DataLabel.credit_limit} least 0`)              
-              .required(`${DataLabel.credit_limit} is required`),
+              // credit_limit: number().min(0,`${DataLabel.credit_limit} least 0`)              
+              // .required(`${DataLabel.credit_limit} is required`),
+
+              credit_limit: 
+              number()
+              .min(0, `${DataLabel.credit_limit} must be at least 0`)
+              .required(`${DataLabel.credit_limit} is required`)
+              .test(
+                'credit-limit-check',
+                `${DataLabel.credit_limit} must be greater than or equal to ${DataLabel.highest_balance}`,
+                function (value) {
+                  const { highest_balance } = this.parent;
+                  return value >= highest_balance;
+                }
+              ),
 
               interest_rate: number().min(0,`${DataLabel.interest_rate} least 0`)              
               .required(`${DataLabel.interest_rate} is required`),
@@ -175,7 +188,7 @@ export const ValidationSchema =  object().shape({
               .test('is-less', `${DataLabel.start_date} must be earlier than ${DataLabel.due_date}`, function(value) {
                 const { due_date } = this.parent; // Get due_date value
                 // Use moment to compare dates
-                return moment(value, 'YYYY-MM-DD', true).isBefore(moment(due_date, 'YYYY-MM-DD', true));
+                return moment(value, 'YYYY-MM-DD', true).isSameOrBefore(moment(due_date, 'YYYY-MM-DD', true));
               }),
 
               due_date: string()
