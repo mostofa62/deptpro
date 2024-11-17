@@ -90,6 +90,8 @@ export default function DashBoard() {
 
   const [transactioData, setTransactionData] = useState({
     'debt_list':[],
+    'debt_total_balance':0,
+    'total_net_income':0
     
   })
 
@@ -141,7 +143,7 @@ export default function DashBoard() {
               <div className="w-[18%] flex items-center justify-center">
                 <ProgressBarTwo 
                 progress={50}
-                amount={50000}
+                amount={transactioData.total_net_income}
                 title={`net income`}
                 progressColor="#43acd6"
                 />
@@ -150,7 +152,7 @@ export default function DashBoard() {
               <div className="w-[18%] ml-[1%] flex items-center justify-center">
                 <ProgressBarTwo 
                 progress={30}
-                amount={20000}
+                amount={transactioData.debt_total_balance}
                 title={`debt`}
                 progressColor="#fe992c"
                 />
