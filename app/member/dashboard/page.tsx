@@ -91,7 +91,10 @@ export default function DashBoard() {
   const [transactioData, setTransactionData] = useState({
     'debt_list':[],
     'debt_total_balance':0,
-    'total_net_income':0
+    'total_net_income':0,
+    'saving_list':[],
+    'total_wealth':0,
+    'debt_to_wealth':0
     
   })
 
@@ -161,7 +164,7 @@ export default function DashBoard() {
               <div className="w-[18%] ml-[1%] flex items-center justify-center">
                 <ProgressBarTwo 
                 progress={30}
-                amount={100000}
+                amount={transactioData.total_wealth}
                 title={`wealth`}
                 progressColor="#43acd6"
                 />
@@ -170,7 +173,7 @@ export default function DashBoard() {
               <div className="w-[30%] ml-[1%] flex items-center justify-center">
                 <DebtToWealthScore
                 title={`DEBT TO WEALTH SCORE`}
-                amount={50000} 
+                amount={transactioData.debt_to_wealth} 
                 />
               </div>
 
@@ -250,19 +253,19 @@ export default function DashBoard() {
 {
           <div className="mt-3">
           <CardHolder title="Saving Progress">
-            { saving_progress.map((dp)=>{
-
+          { transactioData.saving_list.map((dp:any,i:number)=>{              
+              
               return (
-                
+                <>
                 <DataProgress 
-                key={dp.title}
                 title={dp.title} 
                 progress={dp.progress}
-                color={dp.color}
-                amount={dp.amount}
+                color={getColorForDebtType(dp._id)}
+                amount={Intl.NumberFormat('en-US').format(dp.amount)}
                 maxProgressLength={maxProgressLength}
+                maxAmountLength={maxAmountLength}
                 />
-                
+                </>
               )
 
             })

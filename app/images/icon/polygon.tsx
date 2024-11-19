@@ -68,7 +68,8 @@ const PolyGonSvg: React.FC<PolyGonSvgProps> = ({ title, amount, ...props }) => {
         fill="#fff"
         fontWeight="600"
       >
-        ${Intl.NumberFormat('en-US').format(amount)}
+        {/* {Intl.NumberFormat('en-US').format(amount)} */}
+        {amount}
       </text>
     </svg>
   );

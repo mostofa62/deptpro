@@ -43,7 +43,7 @@ const RouteModule:any = {
 export default function CalenderPage() {
     const authCtx = useAuth();
 
-    
+    const userid:any = authCtx.userId;
 
     const currentDate = moment().format('YYYY-MM-DD');
 
@@ -80,7 +80,7 @@ export default function CalenderPage() {
 
     const fetchDataCallback=useCallback(async()=>{
 
-        const urlSuffix = `calender-data/${currentMonth}`
+        const urlSuffix = `calender-data/${userid}/${currentMonth}`
         //console.log(id);
         const response = await axios.get(`${url}${urlSuffix}`);
 
@@ -92,7 +92,7 @@ export default function CalenderPage() {
         //console.log(response.data)
         //return response.data.user;
         setMonthData(formattedArray);
-    },[currentMonth]);
+    },[currentMonth,userid]);
 
     useEffect(()=>{
         fetchDataCallback()

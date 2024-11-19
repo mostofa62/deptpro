@@ -140,7 +140,7 @@ const TotalAllocation = () => {
           <div><strong>Month:</strong> {label}</div>
           {payload.map((entry:any, index:number) => (
             <div key={`item-${index}`} style={{ color: entry.stroke }}>
-              <strong>{bill_type_names[entry.dataKey]}:</strong> ${entry.value.toFixed(2)}
+              <strong>{bill_type_names && bill_type_names[entry.dataKey]}:</strong> ${entry.value.toFixed(2)}
             </div>
           ))}
         </div>
@@ -153,7 +153,7 @@ const TotalAllocation = () => {
         <div className="flex gap-4 justify-center items-center text-sm">
           {payload.map((entry:any, index:number) => (
             <span onMouseEnter={(event)=>handleLegendMouseEnter(entry.value,event)} onMouseLeave={handleLegendMouseLeave} className="font-semibold" key={`legend-item-${index}`} style={{ color: entry.color }}>
-              {bill_type_names[entry.value]}
+              {bill_type_names && bill_type_names[entry.value]}
             </span>
           ))}
         </div>
