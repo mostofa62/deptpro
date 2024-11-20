@@ -1,11 +1,29 @@
 import dynamic from "next/dynamic";
+
 const GaugeComponent = dynamic(() => import('react-gauge-component'), { ssr: false });
 
+interface GaugeProps{
+  direction_value:number;
+  tick_values?:[
+    {value:number}
+  ],
+}
 
-const Gauge = ()=>{
+const Gauge = ({direction_value,tick_values}:GaugeProps)=>{
 
+ 
   return (
-  
+
+    <div>
+    <style>
+      {`
+        .gauge-component-arc-tooltip {
+          z-index: 9999 !important;
+          position: absolute;
+        }
+      `}
+    </style>
+    
   <GaugeComponent
   type="semicircle"
   arc={{
@@ -21,9 +39,15 @@ const Gauge = ()=>{
         tooltip: {
           text: 'Perfect'
         },
-        onClick: () => console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
-        onMouseMove: () => console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"),
-        onMouseLeave: () => console.log("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"),
+        onClick: () => {
+          //console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+        },
+        onMouseMove: () =>{ 
+          //console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB")
+        },
+        onMouseLeave: () =>{ 
+          //console.log("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC")
+        },
       },
 
       {
@@ -79,18 +103,20 @@ const Gauge = ()=>{
     tickLabels: {
       type: 'outer',
       //valueConfig: { formatTextValue: (value:any) => value + 'ºC', fontSize: 10 },
-      ticks: [
+      ticks:tick_values ? tick_values:[] /*[
         { value: 13 },
         { value: 61.5 },
         //{ value: 32 }
-      ],
+      ],*/
+
     }
   }}
-  value={61.5}
+  value={direction_value}
   minValue={0}
   maxValue={100}
   
 />
+</div>
  
 )
 }

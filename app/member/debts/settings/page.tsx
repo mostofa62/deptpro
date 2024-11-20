@@ -22,6 +22,7 @@ import DebtRocket from "@/app/images/icon/debtrocket";
 import DebtChain from "@/app/images/icon/debtchain";
 import FormikFieldInputDP from "@/app/components/form/FormikFieldInputDP";
 import FormikSelectInputDP from "@/app/components/form/FormikSelectInputDP";
+import HolderOne from "@/app/layout/HolderOne";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 export default function Setting() {
@@ -96,6 +97,24 @@ export default function Setting() {
     return(
         <>
         <DefaultLayout>
+
+        <HolderOne
+            title="Debt Budget"            
+            linkItems={[
+              {
+                link:'/member/debts/cu',
+                title:'add debt'
+              },
+              {
+                link:'/member/debts',
+                title:'your debt dashboard'
+                },
+              {
+                link:'/member/paymentboost',
+                title:'payment boost'
+              }
+            ]}
+            />
 
         <div className="flex flex-row mt-2">
             <div className="p-9">

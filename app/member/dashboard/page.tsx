@@ -94,7 +94,8 @@ export default function DashBoard() {
     'total_net_income':0,
     'saving_list':[],
     'total_wealth':0,
-    'debt_to_wealth':0
+    'debt_to_wealth':0,
+    'credit_ratio':0
     
   })
 
@@ -192,8 +193,13 @@ export default function DashBoard() {
             </div>
             <div className="flex flex-col h-full">
               <CardHolder title="Credit Utilization">
-                <div className="grid grid-cols-2">                  
-                  <div className="w-[100%] h-[100%]"><GaugeComponentF/></div>
+                <div className="grid grid-cols-2">
+                  {/* {transactioData.credit_ratio}                   */}
+                  <div className="w-[100%] h-[100%]"><GaugeComponentF
+                  direction_value={transactioData.credit_ratio}
+                  tick_values={[
+                    {value:transactioData.credit_ratio}
+                  ]}/></div>
                   <div className="w-[100%] ml-3">
                   <div className="grid grid-flow-row mt-2 ml-3">
                     { GaugeData.map((gdata,i)=>{
