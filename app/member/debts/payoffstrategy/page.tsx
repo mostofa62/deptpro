@@ -167,7 +167,7 @@ const PayoffStrategy =()=>{
 
 
 <HolderOne
-            title="payment boost"            
+            title="payoff strategy"            
             linkItems={[
               {
                 link:'/member/debts/cu',

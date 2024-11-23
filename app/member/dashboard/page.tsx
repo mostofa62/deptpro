@@ -13,60 +13,33 @@ import Image from 'next/image'
 import { generateRandomColor, generateRandomMixedColor, getColorForValue, hashString, hslToHex } from "@/app/components/utils/Util";
 import DebtToWealthScore from "./DebtToWealthScore";
 import ProgressBarTwo from "@/app/components/ui/ProgressBarTwo";
+import IncomeProjection from "./IncomeProjection";
+import BillProjection from "./BillProjection";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
-
-const debt_payoff_progress = [
-{
-  title:'Visa',  
-  progress:'60.2',
-  amount:'10,753.74',
-  color:'#FF0000'
-}
-,
-{
-  title:'Mortage',  
-  progress:'30.5',
-  amount:'137,092.83',
-  color:'#37b75b'
-}
-
-]
-
-
-const saving_progress = [
-  {
-    title:'Financial Freedom Saving',  
-    progress:'20.2',
-    amount:'1000,353.74',
-    color:'#FF0000'
-  }
-  ,
-  {
-    title:'Emergency Savings',  
-    progress:'50.5',
-    amount:'137,092.83',
-    color:'#37b75b'
-  }
-  
-  ]
 
 
 const GaugeComponentF = dynamic(() => import('@/app/components/chart/Gauge'), { ssr: false });
 
 const GaugeData  = [
   {
-  name:'Ideal',
+  name:'Perfect',
   range:'0-30',
   color:'#009900'
   },
   {
     name:'Moderate',
-    range:'50-70',
-    color:'#ff9900'
+    range:'30-50',
+    color:'#00e64d'
   },
   {
     name:'High',
+    range:'50-70',
+    color:'#ff9900'
+  },
+
+  {
+    name:'Extreme',
     range:'70-100',
     color:'#EA4228'
   },
@@ -84,7 +57,7 @@ const getColorForDebtType = (key:string)=>{
 //const ThermoMeterF = dynamic(() => import('../components/chart/ThermoMeter'), { ssr: false });
 export default function DashBoard() {
   const authCtx = useAuth();
-  const user_id = authCtx.userId;
+  const user_id:any = authCtx.userId;
 
   //Pusher.logToConsole = true;
 
@@ -95,7 +68,8 @@ export default function DashBoard() {
     'saving_list':[],
     'total_wealth':0,
     'debt_to_wealth':0,
-    'credit_ratio':0
+    'credit_ratio':0,
+    'total_allocation_data':[]
     
   })
 
@@ -113,6 +87,9 @@ export default function DashBoard() {
       
 
   },[fetchDataCallback]);
+
+
+  
 
 
   
@@ -187,7 +164,7 @@ export default function DashBoard() {
           <div className="grid grid-cols-2 gap-1">
             <div className="flex flex-col h-full">
             <CardHolder title="Total Allocation">
-              <Pie/>
+              <Pie data={transactioData.total_allocation_data} />
             </CardHolder>
               
             </div>
@@ -201,14 +178,17 @@ export default function DashBoard() {
                     {value:transactioData.credit_ratio}
                   ]}/></div>
                   <div className="w-[100%] ml-3">
-                  <div className="grid grid-flow-row mt-2 ml-3">
+                  <div className="flex flex-col justify-center items-center mt-6 gap-0.5">
                     { GaugeData.map((gdata,i)=>{
                       return(
 
                         
-                        <div key={i} className={`bg-[${gdata.color}] text-white mt-[3px] text-center`}>
-                          <span>{gdata.name}</span>
-                          <span className="ml-[5px]">{gdata.range}</span>
+                        <div key={i} 
+                        style={{color:`${gdata.color}`}}
+                        className={`flex gap-2 w-[90%] font-semibold text-[14px]`}>
+                          <span className="w-[40%] text-right">{gdata.range}</span>
+                          <span className="w-[60%] text-left">{gdata.name}</span>
+                          
                         </div>
                       
 
@@ -229,8 +209,11 @@ export default function DashBoard() {
 
           </div>
           </div>
-                    
-          <div className="mt-2">
+                
+          <div className="mt-2 flex flex-row gap-2">
+
+          <div className="w-[50%]">
+          { transactioData.debt_list.length > 0 &&   
           <CardHolder title="Debt Payoff Progress">
             { transactioData.debt_list.map((dp:any,i:number)=>{              
               
@@ -253,35 +236,52 @@ export default function DashBoard() {
             }
 
           </CardHolder>
-          </div>
-
-
-{
-          <div className="mt-3">
-          <CardHolder title="Saving Progress">
-          { transactioData.saving_list.map((dp:any,i:number)=>{              
-              
-              return (
-                <>
-                <DataProgress 
-                title={dp.title} 
-                progress={dp.progress}
-                color={getColorForDebtType(dp._id)}
-                amount={Intl.NumberFormat('en-US').format(dp.amount)}
-                maxProgressLength={maxProgressLength}
-                maxAmountLength={maxAmountLength}
-                />
-                </>
-              )
-
-            })
-
-
-            }
-
-          </CardHolder>
-          </div>
 }
+          </div>
+
+          <div className="w-[50%]">
+              <IncomeProjection userid={user_id} />
+            </div>
+          
+          </div>
+
+
+
+          <div className="mt-3 flex flex-row gap-2">
+
+          <div className="w-[50%]">
+
+          {transactioData.saving_list.length > 0 &&
+                    <CardHolder title="Saving Progress">
+                    { transactioData.saving_list.map((dp:any,i:number)=>{              
+                        
+                        return (
+                          <>
+                          <DataProgress 
+                          title={dp.title} 
+                          progress={dp.progress}
+                          color={getColorForDebtType(dp._id)}
+                          amount={Intl.NumberFormat('en-US').format(dp.amount)}
+                          maxProgressLength={maxProgressLength}
+                          maxAmountLength={maxAmountLength}
+                          />
+                          </>
+                        )
+
+                      })
+
+
+                      }
+
+                    </CardHolder>
+                    }
+            </div>
+            <div className="w-[50%]">
+              <BillProjection userid={user_id} />
+            </div>
+
+          </div>
+
           
 
         </div>

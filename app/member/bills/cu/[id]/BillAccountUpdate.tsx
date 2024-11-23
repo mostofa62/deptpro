@@ -15,9 +15,10 @@ interface BillProps{
     bill_acc_id:string;
     user_id:string;
     tab_number:number;
+    setParentData?:(data:any)=>void;
 }
 
-const BillAccountUpdate = ({bill_acc_id, user_id,tab_number}:BillProps)=>{
+const BillAccountUpdate = ({bill_acc_id, user_id,tab_number,setParentData}:BillProps)=>{
 
     const router = useRouter();
 
@@ -39,7 +40,11 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number}:BillProps)=>{
         setRepeatFrequency(response.data.repeat_frequency);
         setReminderDays(response.data.reminder_days);
 
-    },[bill_acc_id]);
+        if(setParentData){
+            setParentData(response.data.billaccounts)
+        }
+
+    },[bill_acc_id, setParentData]);
     useEffect(()=>{
         //if(tab_number){
             fetchDataCallback();
@@ -52,6 +57,8 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number}:BillProps)=>{
     const handleFormSubmit = async(values:any,{ resetForm,setSubmitting }:any)=>{
         //alert(JSON.stringify(values));
 
+        
+
         await axios.post(`${url}update-bill-account/${bill_acc_id}`, 
             {user_id,...values.fetchdata}, {
             
@@ -61,6 +68,10 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number}:BillProps)=>{
           }
         ) .then(function (response) {
           //console.log(response);
+
+          if(setParentData){
+            setParentData(values.fetchdata)
+          }
 
           if(response.data.result > 0){
             setSubmitting(false);

@@ -20,7 +20,10 @@ interface Tab {
   content: React.ReactNode;
 }
 
-
+interface ParentData{
+  name:string;
+  payor:string;
+}
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 export default function InsuranceCreate({
@@ -60,6 +63,11 @@ export default function InsuranceCreate({
 
     const [reloadGrid, setReloadGrid] = useState(false);
 
+    const [parentDatas, setParentDatas] =useState<ParentData>({
+      name: "",
+      payor: "",
+    });
+
     useEffect(() => {
       setPrevTransId(transactionData.id);
     }, [transactionData]);
@@ -98,13 +106,16 @@ export default function InsuranceCreate({
     const user_id:any = authCtx.userId;
 
 
-   
+   const setParentData = (data:any)=>{
+    setParentDatas(data);
+   }
 
     const tabs: Tab[] = [
       { label: 'Settings and Info', content: <BillAccountUpdate 
         user_id={user_id} 
         bill_acc_id={id} 
         tab_number={activeTab}
+        setParentData={setParentData}
         /> },
       { label: 'Bill History', content: <BillTransactions 
 
@@ -121,7 +132,7 @@ export default function InsuranceCreate({
         <DefaultLayout>
 
         <HolderOne
-            title="bill update"            
+            title={`update bill: ${parentDatas.name } `}            
             linkItems={[
               {
                 link:'/member/bills/cu',
