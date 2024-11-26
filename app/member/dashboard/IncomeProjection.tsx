@@ -102,7 +102,7 @@ const IncomeProjection = ({userid}:TotalPros) => {
 
         <>
         {lineData.length > 0 && 
-          <CardHolder title="Income 12 Months Projection" maxHeight={maxHeight}>
+          <CardHolder title="12 Months Income Projections" maxHeight={maxHeight}>
           <div className="w-full overflow-x-auto">
             <div className={`w-[${lineData.length * 100}px]`}> {/* Dynamically adjust width */}
               <ResponsiveContainer width="100%" height={maxHeight >= 350 ? maxHeight - 80:maxHeight}>

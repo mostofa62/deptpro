@@ -101,7 +101,7 @@ const BillProjection = ({userid}:TotalPros) => {
         <>
 
         {chartData.length > 0 && (
-  <CardHolder title="Bill 12 Months Projection" maxHeight={maxHeight}>
+  <CardHolder title="12 Months Bill Projection" maxHeight={maxHeight}>
   <div className="w-full overflow-x-auto"> {/* Scrollable container */}
       <div className={`w-[${chartData.length * 100}px]`}> {/* Dynamically adjust width */}
           <ResponsiveContainer width="100%" height={350}>

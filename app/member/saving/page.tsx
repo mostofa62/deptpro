@@ -50,7 +50,7 @@ const Saving = ()=>{
     return(
         
         <DefaultLayout>
-            <div className="grid grid-flow-row">
+            <div className="flex flex-col">
 
 
             <HolderOne
@@ -75,7 +75,7 @@ const Saving = ()=>{
 
             </div>
 
-            <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
+            <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg">
             {/* <SavingBoostGrid saving_id={id}  /> */}
             {
               <TabView  tabs={tabs} align={`left`} onChageTab={(index)=>{

@@ -475,9 +475,6 @@ const generateItems = useCallback((row) => [
     })), [rows, generateItems]);
 
     return(
-        
-        <div>
-
             <div className="p-2 flex flex-col gap-5">
 
                     <div className="py-2">
@@ -489,7 +486,7 @@ const generateItems = useCallback((row) => [
                       placeHolderText="Search here"
                       />
                     </div>  
-            
+      <div className='overflow-x-auto'>
       <table className="tanstack-table table-auto w-full text-left">
         <thead>
           {table.getHeaderGroups().map(headerGroup => (
@@ -579,17 +576,16 @@ const generateItems = useCallback((row) => [
                 
         
       </table>
-      
-            </div>
+      </div>
 
-            {
+       {
         !loading 
         && 
         !error 
         &&
         (pageCount * per_page) > per_page
         &&
-        <div className="mt-[100px]">
+        <div className="mt-8">
       <GridPaginationHolder 
       table={table}
       pageNumbers={pageNumbers}
@@ -598,10 +594,14 @@ const generateItems = useCallback((row) => [
       />
       </div>
 
-}
-
-
+}      
+      
             </div>
+
+           
+
+
+            
         
         
     )

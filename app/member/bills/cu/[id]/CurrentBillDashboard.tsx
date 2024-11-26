@@ -16,6 +16,7 @@ import {
 interface BillProps{
     bill_acc_id:string;
     user_id:string;
+    bill_title:string;
    
 }
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -68,7 +69,7 @@ const CustomTooltip = ({ payload, label }: any) => {
     return null;
   };
 
-const CurrentBillDashboard = ({bill_acc_id, user_id}:BillProps)=>{
+const CurrentBillDashboard = ({bill_acc_id, user_id, bill_title}:BillProps)=>{
 
     const [fetchFomrData,setFetchFormData] = useState<fetchProps>({
         'currentBalance':0,
@@ -100,16 +101,13 @@ const CurrentBillDashboard = ({bill_acc_id, user_id}:BillProps)=>{
     return(
         <CardHolderDefault>
 
-                                <div className="grid grid-cols-2 gap-1">
+                                <div className="flex flex-col gap-2">
                                     <div className="w-full text-left">
-                                        <p className='text-[30px] font-semibold'><span>$</span><span className='ml-1'>{formattedAmount}</span></p>
+                                        <p className='text-[26px] font-semibold'>{bill_title}</p>
                                     </div>
-                                    <div className="w-full text-[#D3D3D3]">
-                                    <svg className='relative left-40 top-0' xmlns="http://www.w3.org/2000/svg" width={30} height={30} viewBox="0 0 24 24">
-                                        <path fill="currentColor" d="M5 19h-4v-4h4v4zm6 0h-4v-8h4v8zm6 0h-4v-13h4v13zm6 0h-4v-19h4v19zm1 2h-24v2h24v-2z"/>
-                                    </svg>
-
-                                    </div>
+                                    <div className="w-full text-left">
+                                        <p className='text-[22px] font-semibold text-[#768082]'><span>${formattedAmount}</span></p>
+                                    </div>                                  
 
                                     <div className="w-full col-span-2">
                                         <p className='font-semibold text-[15px] uppercase text-[#bdbbbb]'><span>CURRENT BILL</span></p>

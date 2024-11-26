@@ -129,7 +129,14 @@ export const ValidationSchema =  object().shape({
              
 
               goal_amount: number().min(0,`${DataLabel.goal_amount} least 0`)              
-              .required(`${DataLabel.goal_amount} is required`),
+              .required(`${DataLabel.goal_amount} is required`).test(
+                'is-greater-than-starting',
+                `${DataLabel.goal_amount} should greater than ${DataLabel.starting_amount}`,
+                function (value) {
+                  const { starting_amount } = this.parent;
+                  return value > starting_amount;
+                }
+              ),
 
               interest: number().min(0,`${DataLabel.interest} least 0`)              
               .required(`${DataLabel.interest} is required`),

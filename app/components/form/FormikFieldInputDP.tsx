@@ -68,7 +68,7 @@ export default function FormikFieldInputDP({
                     } 
                     {errorMessage &&
 
-                        <span className="font-semibold text-[#B45454] text-[14px] flex justify-center">
+                        <span className="bg-[#B45454] font-semibold text-white text-[14px] flex justify-center items-center text-center">
                             {errorMessage}
                         </span>  
                     }

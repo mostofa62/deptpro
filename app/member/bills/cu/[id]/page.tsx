@@ -132,7 +132,7 @@ export default function InsuranceCreate({
         <DefaultLayout>
 
         <HolderOne
-            title={`update bill: ${parentDatas.name } `}            
+            title={`bill update`}            
             linkItems={[
               {
                 link:'/member/bills/cu',
@@ -158,7 +158,7 @@ export default function InsuranceCreate({
 
               <div className="grid grid-row">
                 <div className="w-full">
-                  <CurrentBillDashboard  bill_acc_id={id} user_id={user_id} />
+                  <CurrentBillDashboard  bill_title={`${parentDatas.name }`}  bill_acc_id={id} user_id={user_id} />
                 </div>                
                 {/* {transactionData.id =='' &&
                 <div className="w-full mt-8">

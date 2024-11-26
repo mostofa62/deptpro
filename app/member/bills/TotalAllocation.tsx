@@ -73,7 +73,10 @@ interface ProjectionPayload{
     bill_type_names:{[key:string]:string}
 }
 
-const TotalAllocation = () => {
+interface TotapProps{
+  userid:string;
+}
+const TotalAllocation = ({userid}:TotapProps) => {
 
     const [highlightedKey, setHighlightedKey] = useState(null);
 
@@ -101,13 +104,13 @@ const TotalAllocation = () => {
 
 
     const DebtTypewiseInfo:any = useFetchDropDownObjects({
-        urlSuffix:`bill-typewise-info`,
+        urlSuffix:`bill-typewise-info/${userid}`,
         payLoads:payload
     })
 
 
     const BillProjection:any = useFetchDropDownObjects({
-      urlSuffix:`bill-projection`,
+      urlSuffix:`bill-projection/${userid}`,
       payLoads:projectPayload
   })
 

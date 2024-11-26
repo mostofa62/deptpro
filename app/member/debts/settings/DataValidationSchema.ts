@@ -30,7 +30,14 @@ export const ValidationSchema =  object().shape({
 
 
               monthly_budget: number().min(1,`${DataLabel.monthly_budget} least 1`)              
-              .required(`${DataLabel.monthly_budget} is required`),
+              .required(`${DataLabel.monthly_budget} is required`).test(
+                'is-greater-than-starting',
+                `${DataLabel.monthly_budget} should greater than ${DataLabel.minimum_payments}`,
+                function (value) {
+                  const { minimum_payments } = this.parent;
+                  return value > minimum_payments;
+                }
+              ),
 
 
               // minimum_payments: number().min(1,`${DataLabel.minimum_payments} least 1`)              

@@ -366,7 +366,7 @@ const SavingGrid = ({saving_id}:BoostProps)=>{
 
     return(
         
-        <div>
+    
 
             <div className="p-2 flex flex-col gap-5">
 
@@ -379,7 +379,7 @@ const SavingGrid = ({saving_id}:BoostProps)=>{
                       placeHolderText="Search here"
                       />
                     </div>  
-            
+                    <div className='overflow-x-auto'>     
       <table className="tanstack-table table-auto w-full text-left">
         <thead>
           {table.getHeaderGroups().map(headerGroup => (
@@ -469,17 +469,15 @@ const SavingGrid = ({saving_id}:BoostProps)=>{
                 
         
       </table>
-      
-            </div>
-
-            {
+      </div>
+      {
         !loading 
         && 
         !error 
         &&
         (pageCount * per_page) > per_page
         &&
-        <div className="mt-[100px]">
+        <div className="mt-8">
       <GridPaginationHolder 
       table={table}
       pageNumbers={pageNumbers}
@@ -489,9 +487,12 @@ const SavingGrid = ({saving_id}:BoostProps)=>{
       </div>
 
 }
-
-
             </div>
+
+           
+
+
+        
         
         
     )
