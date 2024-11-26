@@ -68,8 +68,12 @@ interface FuturePayLoad{
   projection_list:{total_balance:number, contribution:number, month:string, month_word:string}[]
 }
 
+interface TotalProps{
+  userid:string;
+}
 
-const TotalAllocation = () => {
+
+const TotalAllocation = ({userid}:TotalProps) => {
 
     const [highlightedKey, setHighlightedKey] = useState(null);
 
@@ -116,7 +120,7 @@ const TotalAllocation = () => {
     })
 
     const SavingFuture:any = useFetchDropDownObjects({
-      urlSuffix:`saving-contributions-next`,
+      urlSuffix:`saving-contributions-next/${userid}`,
       payLoads:payloadFuture
     })
 
