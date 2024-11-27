@@ -95,6 +95,8 @@ export const DataLabelView = {
   //progress:'Progress',
   
   total_balance:'Total Balance',
+
+  total_balance_xyz:'Total Balance With Boost',
   
   note:'Note'
   

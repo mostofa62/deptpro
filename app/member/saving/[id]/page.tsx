@@ -28,6 +28,7 @@ interface DebtSuffix{
   starting_amount:number;
   contribution:number;
   total_balance:number;
+  total_balance_xyz:number;
 }
 
 interface DebtPrefix{
@@ -71,6 +72,7 @@ export default function SavingDetail({
       starting_amount:'$',
       contribution:'$',
       total_balance:'$',
+      total_balance_xyz:'$',
     }
 
     const DebtPrefix = {
