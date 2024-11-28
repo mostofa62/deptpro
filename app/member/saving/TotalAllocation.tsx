@@ -72,7 +72,6 @@ interface TotalProps{
   userid:string;
 }
 
-
 const TotalAllocation = ({userid}:TotalProps) => {
 
     const [highlightedKey, setHighlightedKey] = useState(null);
@@ -109,13 +108,13 @@ const TotalAllocation = ({userid}:TotalProps) => {
 
 
     const SavingTypewiseInfo:any = useFetchDropDownObjects({
-        urlSuffix:`saving-typewise-info`,
+        urlSuffix:`saving-typewise-info/${userid}`,
         payLoads:payload
     })
 
 
     const SavingContributions:any = useFetchDropDownObjects({
-      urlSuffix:`saving-contributions-previous`,
+      urlSuffix:`saving-contributions-previous?userid=${userid}`,
       payLoads:payloadSaving
     })
 

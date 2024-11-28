@@ -24,8 +24,8 @@ interface SavingProps{
 interface DataRow {
     _id:string;    
     contribution: number;
-    total_balance:number;
-    interest:number;
+    total_balance_xyz:number;
+    interest_xyz:number;
     progress:number;
     contribution_date_word:string;
     next_contribution_date_word:string;    
@@ -136,17 +136,17 @@ const SavingContributions = ({saving_id}:SavingProps)=>{
             },
 
             {
-              accessorKey: 'interest',
+              accessorKey: 'interest_xyz',
               header: 'Interest',
-              cell: info => <p><span>$</span><span>{info.row.original.interest.toFixed(2)}</span></p>
+              cell: info => <p><span>$</span><span>{info.row.original.interest_xyz.toFixed(2)}</span></p>
               
             },
 
 
             {
-              accessorKey: 'total_balance',
+              accessorKey: 'total_balance_xyz',
               header: 'Total Balance',
-              cell: info => <p><span>$</span><span>{info.row.original.total_balance.toFixed(2)}</span></p>
+              cell: info => <p><span>$</span><span>{info.row.original.total_balance_xyz.toFixed(2)}</span></p>
               
             },
 

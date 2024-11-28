@@ -27,6 +27,7 @@ const Saving = ()=>{
     
 
     const authCtx = useAuth();
+    const userid:any = authCtx.userId;
     const [activeTab, setActiveTab] = useState(0);
 
 
@@ -71,7 +72,7 @@ const Saving = ()=>{
 
             <div className="mt-10 p-2 mb-10">
 
-              <TotalAllocation />
+              <TotalAllocation userid={userid} />
 
             </div>
 
