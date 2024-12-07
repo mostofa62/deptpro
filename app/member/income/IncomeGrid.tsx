@@ -20,6 +20,7 @@ interface DataRow {
     gross_income:number;
     pay_date: string;
     pay_date_boost: string;
+    total_yearly_net_income:number;
 }
 interface ExtraPayloadProps{  
   total_net_income:number;
@@ -280,6 +281,15 @@ const generateItems = useCallback((row) => [
             cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
 
           },
+
+          {
+            accessorKey: 'total_yearly_net_income',
+            header: DataLabel.total_yearly_net_income,
+            cell: (info) => <p><span>$</span><span>{info.getValue<number>()?.toFixed(2)}</span></p>,
+
+          },
+
+          
 
           {
             id: 'actions',
