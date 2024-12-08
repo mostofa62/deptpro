@@ -1,5 +1,5 @@
 "use client";
-import DefaultLayout from "@/app/layout/DefaultLayout";
+import AdminLayout from "@/app/layout/AdminLayout";
 //import Chat from "./components/Chat";
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
@@ -67,7 +67,7 @@ const PdfProcessList=()=> {
 }
  
   return (
-    <DefaultLayout>
+    <AdminLayout>
         <Formik
         initialValues={{ user }}
         enableReinitialize
@@ -161,7 +161,7 @@ disabled={isSubmitting} type="submit"
       </Form>
         )}
       />
-    </DefaultLayout>
+    </AdminLayout>
   )
 }
 

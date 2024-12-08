@@ -1,5 +1,5 @@
 "use client";
-import DefaultLayout from "@/app/layout/DefaultLayout";
+import AdminLayout from "@/app/layout/AdminLayout";
 import Link from "next/link";
 import {useEffect} from 'react';
 import useAuth from '@/app/hooks/useAuth';
@@ -10,7 +10,7 @@ export default function DashBoard() {
 
     return(
         <>
-        <DefaultLayout>
+        <AdminLayout>
         <div className="grid grid-flow-row">
 
           <div className="mt-2">
@@ -19,7 +19,7 @@ export default function DashBoard() {
           </CardHolder>
           </div>
         </div>
-        </DefaultLayout>
+        </AdminLayout>
         </>
     )
 

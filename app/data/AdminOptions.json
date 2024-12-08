@@ -1,0 +1,11 @@
+{
+
+    "UserRoles":[
+
+        {"value":13  ,"label":"Default Lead" },
+        {"value":10 ,"label":"Client" },
+        {"value":11 ,"label":"Client REFER" },
+        {"value":12 ,"label":"Web Hook" }
+
+    ]
+}

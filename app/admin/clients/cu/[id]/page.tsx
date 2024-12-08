@@ -1,15 +1,16 @@
 "use client";
-import DefaultLayout from "@/app/layout/DefaultLayout";
-import Link from "next/link";
-import { useState,useEffect, useRef, useCallback } from "react";
-import axios from "axios";
-import useAuth from '@/app/hooks/useAuth';
-import { useRouter } from "next/navigation";
-import {Formik} from 'formik';
-import { DataSchema,DataLabel,ValidationSchema } from "../DataValidationSchema";
-import FormikFormHolder from "@/app/components/form/FormikFormHolder";
 import FormikFieldInput from "@/app/components/form/FormikFieldInput";
+import FormikFormHolder from "@/app/components/form/FormikFormHolder";
+import useAuth from '@/app/hooks/useAuth';
+import AdminLayout from "@/app/layout/AdminLayout";
+import axios from "axios";
+import { Formik } from 'formik';
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
 import toast from 'react-hot-toast';
+import { DataLabel, DataSchema, ValidationSchema } from "../DataValidationSchema";
+import HolderOne from "@/app/layout/HolderOne";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 export default function InsuranceCreate({
@@ -91,32 +92,29 @@ export default function InsuranceCreate({
 
     return(
         <>
-        <DefaultLayout>
-        <div className="grid grid-flow-row">
+        <AdminLayout>
+        <div className="flex flex-col">
 
            
+        <HolderOne
+            title="clients"            
+            linkItems={[
+              {
+                link:'/admin/clients',
+                title:'list client'
+              },
 
-        <div className="mt-[40px]">
-                <div className="flex flex-row h-[29px]">
-                    <div className="h-[21px] pt-[5px] pb-[3px]">
-                            <Link
-                                    href={'/admin/clients'}
-                                    className={`text-[21px] capitalize group relative flex items-center gap-2 rounded-sm py-[3px] font-medium duration-300 ease-in-out   text-[#0166FF]`}
-                                >
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" width={15} height={15} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-                                </svg>
-
-
-                                Back
-                            </Link>
-                    </div>
-                    <div className="ml-[50px] pt-[5px]">
-                        <span className="text-[25px] font-medium capitalize text-[#4F4F4F]">Update Client</span>
-                    </div>
-                </div>
-            
-            </div>
+              {
+                link:'/admin/dashboard',
+                title:'dashboard'
+              },
+              {
+                link:'/admin/profile',
+                title:'profile'
+              }
+            ]}
+            /> 
+        
 
             <div className="mt-8">
             <Formik
@@ -130,7 +128,7 @@ export default function InsuranceCreate({
         onSubmit={handleFormSubmit}
 
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
-            <FormikFormHolder legend="Client Details">
+            <FormikFormHolder>
 
 <div className="flex flex-row">
     <div className="w-[50%]">
@@ -220,14 +218,14 @@ export default function InsuranceCreate({
             <div className="mt-10">
                 <div className="flex flex-row-reverse gap-4">
                     <div className="relative right-5 top-0">
-                        <button type="button" className="text-[15px] h-[40px] bg-[#0166FF] rounded text-white px-4  capitalize text-center font-semibold" onClick={handleSubmit}>
+                        <button type="button" className="text-[15px] h-[40px] bg-[#43ACD6] rounded text-white px-4  capitalize text-center font-semibold" onClick={handleSubmit}>
                             Save
                         </button>
                     </div>
                     <div className="relative right-[30px] top-[10px]">
                     <Link
                                     href={'/admin/clients'}
-                                    className={`text-[15px] h-[40px] capitalize text-center px-4 py-2.5  font-semibold bg-[#0166FF] rounded bg-opacity-5 text-[#0166FF]`}
+                                    className={`text-[15px] h-[40px] capitalize text-center px-4 py-2.5  font-semibold bg-[#43ACD6] rounded bg-opacity-5 text-[#43ACD6]`}
                                 >                               
 
 
@@ -242,7 +240,7 @@ export default function InsuranceCreate({
             </div>
 
         </div>
-        </DefaultLayout>
+        </AdminLayout>
         </>
 
     )
