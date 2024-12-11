@@ -10,10 +10,12 @@ export const DataSchema = {
 };
 
 export const DataLabel = {
+  id:'ID',
   name:'Name',
   email:'Email',
   phone:'Phone',
   password:'Password',
+  created_at:'Date added'
 }
 
 export const ValidationSchema =  object().shape({

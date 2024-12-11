@@ -20,7 +20,7 @@ const TooltipOne: React.FC<TooltipOneProps> = ({ text, children }) => {
       />
 
       {isVisible && (
-        <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 px-3 py-2 bg-[#43acd6] text-white text-[12px] rounded shadow-lg whitespace-nowrap font-medium min-w-[250px] max-w-[300px]">
+        <div className="z-9999 absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 px-3 py-2 bg-[#43acd6] text-white text-[12px] rounded shadow-lg whitespace-nowrap font-medium min-w-[250px] max-w-[300px]">
           {text}
           <div
             className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full"

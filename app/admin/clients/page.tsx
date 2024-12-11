@@ -28,16 +28,18 @@ export default function Clients() {
 
 
     const tabs: Tab[] = [
-      { 
-        label: 'default lead', 
-        content: <UserGrid role={UserRole[0].value} />
-      } ,   
+        
 
       { 
-        label: 'client', 
+        label: 'members', 
         content: <UserGrid role={UserRole[1].value} />
       },
 
+      { 
+        label: 'prospect list', 
+        content: <UserGrid role={UserRole[0].value} />
+      } , 
+      /*
       { 
         label: 'client refer', 
         content: <UserGrid role={UserRole[2].value} />
@@ -47,6 +49,7 @@ export default function Clients() {
         label: 'web hook', 
         content: <UserGrid role={UserRole[3].value} />
       },
+      */
 
       
       
