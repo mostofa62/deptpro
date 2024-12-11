@@ -19,16 +19,18 @@ export default function CalculatorPage() {
     const [activeTab, setActiveTab] = useState(0);
 
     const tabs: Tab[] = [
+
+       { 
+            label: 'Credit Card Payment Calculator', 
+            content: <CreditCardPaymentCalculator/>
+          } ,
         { 
           label: 'Mortgage Calculator', 
           content: <MortgageCalculator />
         } ,   
 
 
-        { 
-            label: 'Credit Card Payment Calculator', 
-            content: <CreditCardPaymentCalculator/>
-          } ,   
+          
   
         
   
