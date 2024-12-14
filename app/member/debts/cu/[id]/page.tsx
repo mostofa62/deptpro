@@ -14,6 +14,7 @@ import DebtTransactions from "./DebtTransactions";
 import DebtAccountUpdate from "./DebtAccountUpdate";
 import DebtEntry from "./DebtEntry";
 import DebtAmortization from "./DebtAmortization";
+import HolderOne from "@/app/layout/HolderOne";
 
 interface Tab {
   label: string;
@@ -104,6 +105,24 @@ export default function InsuranceCreate({
     return(
         <>
         <DefaultLayout>
+
+        <HolderOne
+            title="update debt"            
+            linkItems={[
+              {
+                link:'/member/debts/cu',
+                title:'add debt'
+              },
+              {
+                link:'/member/debts',
+                title:'your debt dashboard'
+                },
+              {
+                link:'/member/debts/settings',
+                title:'set debt budget'
+              }
+            ]}
+            /> 
         
         <div className="grid grid-cols-3 gap-1 mt-4">
 

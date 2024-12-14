@@ -71,7 +71,8 @@ const HeaderSummary = ()=>{
                 const prefix:string = transactioDataLabel[data as keyof typeof transactioDataLabel].prefix;
                 const suffix:string = transactioDataLabel[data as keyof typeof transactioDataLabel].suffix;
                 const link:string = transactioDataLabel[data as keyof typeof transactioDataLabel].href;
-
+                const amount:number = transactioData[data as keyof typeof transactioDataLabel];
+                const amountstring = prefix == '$'? Intl.NumberFormat('en-US').format(amount):amount.toFixed(0);
                 return(
                 <div key={index} className="flex-1" >
                     <CardHolderTiny>
@@ -82,8 +83,8 @@ const HeaderSummary = ()=>{
                                 </p>
                             </div>
                             <div className="text-[#31c4a2]">
-                                <Link className="font-semibold md:text-sm lg:text-lg" href={link}>
-                                {prefix!='' && prefix}{transactioData[data as keyof typeof transactioDataLabel].toFixed(0)}{suffix!='' && suffix}
+                                <Link className="font-semibold lg:text-[25px]" href={link}>
+                                {prefix!='' && prefix}{amountstring}{suffix!='' && suffix}
                                 </Link>
                             </div>
                         </div>

@@ -62,7 +62,8 @@ export const DataLabel = {
 
   monthly_saving_boost:'Savings Boost',
   
-  monthly_saving:'Total Monthly Savings'
+  monthly_saving:'Total Monthly Savings',
+  total_balance_xyz:'Total Savings',
   
 }
 

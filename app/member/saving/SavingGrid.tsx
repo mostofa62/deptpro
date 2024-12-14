@@ -28,6 +28,7 @@ interface DataRow {
     goal_reached:string|null;
     closed_at:string|null;
     monthly_saving_boost:number; 
+    total_balance_xyz:number;
 }
 interface ExtraPayloadProps{  
   total_goal_amount:number;
@@ -351,6 +352,14 @@ const generateItems = useCallback((row) => [
             cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
             footer:(props)=><p><span>$</span><span>{total_monthly_saving.toFixed(2)}</span></p>
           },
+
+          {
+            accessorKey: 'total_balance_xyz',
+            header: DataLabel.total_balance_xyz,
+            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
+          },
+
+          
 
           
 

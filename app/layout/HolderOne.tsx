@@ -20,8 +20,8 @@ const HolderOne = ({title, showingText, linkItems}:HolderProps)=>{
 
         <div className="mt-[20px] bg-[#43ACD6] text-white rounded-lg border-[#43ACD6]">
             <div className="flex flex-row h-[50px] px-2">
-                <div className="text-[15px] font-semibold w-[20%] flex items-center justify-center">                    
-                    <p className="capitalize text-center">
+                <div className="text-[15px] font-semibold w-[20%] flex items-center justify-start px-2">                    
+                    <p className="capitalize">
                     {title}
                     </p>
                     
@@ -39,7 +39,7 @@ const HolderOne = ({title, showingText, linkItems}:HolderProps)=>{
                             <Link
                                 key={index}
                                 href={item.link}
-                                className={`text-sm capitalize group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-semibold duration-300 ease-in-out`}
+                                className={`text-sm capitalize group relative flex items-center gap-2 rounded-sm py-2 px-3 font-semibold duration-300 ease-in-out`}
                             >                        
                                 <p className="font-semibold capitalize">
                                     {item.title}
