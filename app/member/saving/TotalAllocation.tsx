@@ -1,6 +1,6 @@
 import CardHolder from "@/app/components/ui/CardHolder";
 import DataProgress from "@/app/components/ui/DataProgress";
-import { getColorForValue, hashString, hslToHex } from "@/app/components/utils/Util";
+import { generateUniqueColors, getColorForValue, hashString, hslToHex } from "@/app/components/utils/Util";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import { useEffect, useRef, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Line, BarChart, Bar } from "recharts";
@@ -287,6 +287,14 @@ const TotalAllocation = ({userid}:TotalProps) => {
       
     }, [data, barData, lineData]);
 
+    const ids = data.map((item :any)=> item._id);
+
+    const uniquecolors = generateUniqueColors(ids);
+
+    const idsline = lineData.map((item :any)=> item._id);
+
+   // const uniquecolorsLine = generateUniqueColors(idsline);
+
 
     return (
     <div className="flex flex-row gap-2.5">
@@ -330,7 +338,7 @@ const TotalAllocation = ({userid}:TotalProps) => {
                                 key={dp._id} 
                                 title={dp.name} 
                                 progress={((100/total_balance) * dp.balance).toFixed(0)}
-                                color={getColorForDebtType(dp._id)}
+                                color={uniquecolors[dp._id]}
                                 maxProgressLength={maxProgressLength}
                                 amount={dp.balance}
                                 maxAmountLength={maxAmountLength}
@@ -390,6 +398,7 @@ const TotalAllocation = ({userid}:TotalProps) => {
         {lineData.length > 0 && 
           <CardHolder title="12 Months Projection" maxHeight={maxHeight}>
           <div className="w-full overflow-x-auto">
+            
             <div className={`w-[${lineData.length * 100}px]`}> {/* Dynamically adjust width */}
               <ResponsiveContainer width="100%" height={maxHeight >= 350 ? maxHeight - 80:maxHeight}>
               <LineChart data={lineData}>

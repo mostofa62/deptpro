@@ -259,19 +259,13 @@ const generateItems = useCallback((row) => [
           },
 
           {
-            accessorKey: 'goal_amount',
-            header: DataLabel.goal_amount,
+            accessorKey: 'total_balance_xyz',
+            header: DataLabel.total_balance_xyz,
             cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
-            /*
-            footer: (props) => {
-              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
-                return sum + row.original.monthly_payment;
-              }, 0);
-              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
-            },
-            */
-           footer:(props)=><p><span>$</span><span>{total_goal_amount.toFixed(2)}</span></p>
           },
+
+
+          
 
           {
             accessorKey: 'starting_date',
@@ -353,12 +347,23 @@ const generateItems = useCallback((row) => [
             footer:(props)=><p><span>$</span><span>{total_monthly_saving.toFixed(2)}</span></p>
           },
 
+
           {
-            accessorKey: 'total_balance_xyz',
-            header: DataLabel.total_balance_xyz,
+            accessorKey: 'goal_amount',
+            header: DataLabel.goal_amount,
             cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
+            /*
+            footer: (props) => {
+              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
+                return sum + row.original.monthly_payment;
+              }, 0);
+              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
+            },
+            */
+           footer:(props)=><p><span>$</span><span>{total_goal_amount.toFixed(2)}</span></p>
           },
 
+         
           
 
           

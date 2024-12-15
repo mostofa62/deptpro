@@ -37,7 +37,7 @@ export const hashString = (str: string) => {
     }
     return hash;
 };
-/*
+
  export const hslToHex = (h: number, s: number, l: number) => {
     l /= 100;
     const a = s * Math.min(l, 1 - l) / 100;
@@ -48,70 +48,46 @@ export const hashString = (str: string) => {
     };
     return `#${f(0)}${f(8)}${f(4)}`;
   };
+
+
+  export const generateUniqueColors = (ids: any[]) => {
+    // Predefined Colors (Red, Green, Blue, Orange, Purple) in RGB and hex values
+    const colors = [
+      { name: 'Tomato', rgb: { r: 255, g: 99, b: 71 }, hex: '#FF6347' },
+      { name: 'Purple', rgb: { r: 128, g: 0, b: 128 }, hex: '#800080' },
+      { name: 'Orange', rgb: { r: 255, g: 165, b: 0 }, hex: '#FFA500' },
+      { name: 'LimeGreen', rgb: { r: 50, g: 205, b: 50 }, hex: '#32CD32' },
+      { name: 'Red', rgb: { r: 255, g: 0, b: 0 }, hex: '#FF0000' },
+      { name: 'RoyalBlue', rgb: { r: 65, g: 105, b: 225 }, hex: '#4169E1' },
+      { name: 'DarkOrange', rgb: { r: 255, g: 140, b: 0 }, hex: '#FF8C00' },
+      { name: 'Blue', rgb: { r: 0, g: 0, b: 255 }, hex: '#0000FF' },
+      { name: 'ForestGreen', rgb: { r: 34, g: 139, b: 34 }, hex: '#228B22' },
+      { name: 'MediumBlue', rgb: { r: 0, g: 0, b: 205 }, hex: '#0000CD' },
+      { name: 'DarkRed', rgb: { r: 139, g: 0, b: 0 }, hex: '#8B0000' },
+      { name: 'LawnGreen', rgb: { r: 124, g: 252, b: 0 }, hex: '#7CFC00' },
+      { name: 'DarkSlateBlue', rgb: { r: 72, g: 61, b: 139 }, hex: '#483D8B' },
+      { name: 'DarkViolet', rgb: { r: 148, g: 0, b: 211 }, hex: '#9400D3' },
+      { name: 'OrangeRed', rgb: { r: 255, g: 69, b: 0 }, hex: '#FF4500' },
+      { name: 'LightSeaGreen', rgb: { r: 32, g: 178, b: 170 }, hex: '#20B2AA' },
+    ];
+    
+    // Track used colors to ensure uniqueness
+    const result = ids.reduce((acc: { [key: string]: string }, id: any, index: number) => {
+        // Calculate the color index by using modulo operator to cycle through the colors
+        const colorIndex = index % colors.length; // This will cycle through 0 to 15
+        const color = colors[colorIndex];
+        acc[String(id)] = color.hex; // Assign the color to the ID
+        return acc;
+    }, {});
   
-*/
-
-
-export const hslToHex = (h: number, s: number, l: number) => {
-  // Convert HSL to RGB
-  l /= 100;
-  const a = s * Math.min(l, 1 - l) / 100;
-  
-  const f = (n: number) => {
-    const k = (n + h / 30) % 12;
-    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-    return Math.round(255 * color);
-  };
-
-  const r = f(0);
-  const g = f(8);
-  const b = f(4);
-  
-  // Convert RGB to Hex
-  const rgbToHex = (r: number, g: number, b: number) => {
-    return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
-  };
-  
-  const hexColor = rgbToHex(r, g, b);
-
-  // Predefined Colors (Red, Green, Blue, Orange, Purple) in RGB
-  const colors = [
-    { name: 'Red', rgb: { r: 255, g: 0, b: 0 } },
-    { name: 'Green', rgb: { r: 0, g: 255, b: 0 } },
-    { name: 'Blue', rgb: { r: 0, g: 0, b: 255 } },
-    { name: 'Orange', rgb: { r: 255, g: 165, b: 0 } },
-    { name: 'Purple', rgb: { r: 128, g: 0, b: 128 } },
-  ];
-
-  // Function to calculate Euclidean distance between two RGB colors
-  const colorDistance = (color1: { r: number, g: number, b: number }, color2: { r: number, g: number, b: number }) => {
-    const rDiff = color1.r - color2.r;
-    const gDiff = color1.g - color2.g;
-    const bDiff = color1.b - color2.b;
-    return Math.sqrt(rDiff * rDiff + gDiff * gDiff + bDiff * bDiff); // Euclidean distance
-  };
-
-  // Find the nearest color
-  /*
-  let nearestColor = colors[0];
-  let minDistance = colorDistance({ r, g, b }, nearestColor.rgb);
-
-  for (let i = 1; i < colors.length; i++) {
-    const distance = colorDistance({ r, g, b }, colors[i].rgb);
-    if (distance < minDistance) {
-      nearestColor = colors[i];
-      minDistance = distance;
-    }
-  }
-  */
-
-  return hexColor
-
-  // return {
-  //   hex: hexColor,
-  //   nearestColor: nearestColor.name,
-  // };
+    return result;
 };
+
+  
+  
+
+
+
 
 // Example Usage:
 //const result = hslToHex(30, 100, 50); // HSL values for testing (Orange-like color)

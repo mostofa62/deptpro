@@ -1,6 +1,6 @@
 import CardHolder from "@/app/components/ui/CardHolder";
 import DataProgress from "@/app/components/ui/DataProgress";
-import { getColorForValue, hashString, hslToHex } from "@/app/components/utils/Util";
+import { generateUniqueColors, getColorForValue, hashString, hslToHex } from "@/app/components/utils/Util";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import { useEffect, useRef, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Line } from "recharts";
@@ -183,6 +183,10 @@ const TotalAllocation = () => {
       }
       
     }, [data, chartData]);
+
+    const ids = data.map((item :any)=> item._id);
+    
+    const uniquecolors = generateUniqueColors(ids);
     return (
     <div className="flex flex-row gap-2.5">
         <div className="w-[40%]" ref={el => (itemRefs.current[0] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
@@ -206,7 +210,7 @@ const TotalAllocation = () => {
                         >
                         {data.map((entry:any, index:number) => (
                             
-                            <Cell key={`cell-${index}`} fill={getColorForDebtType(entry._id)} />
+                            <Cell key={`cell-${index}`} fill={uniquecolors[entry._id]} />
                         ))}
                         </Pie>
                         <Tooltip content={<CustomTooltip total_count={total_count} total_balance={total_balance}/>} />
@@ -225,7 +229,7 @@ const TotalAllocation = () => {
                                 key={dp._id} 
                                 title={dp.name} 
                                 progress={((100/total_balance) * dp.balance).toFixed(0)}
-                                color={getColorForDebtType(dp._id)}
+                                color={uniquecolors[dp._id]}
                                 maxProgressLength={maxProgressLength}
                                 />
                                 </>
@@ -270,7 +274,7 @@ const TotalAllocation = () => {
                   dataKey={key}
                   dot={false}
                   strokeWidth={highlightedKey!=null && highlightedKey === key ?3:1}
-                  stroke={getColorForDebtType(key)} // Ensure this function is defined elsewhere
+                  stroke={uniquecolors[key]} // Ensure this function is defined elsewhere
                   activeDot={{ r: 5 }}
                 />
               ))}

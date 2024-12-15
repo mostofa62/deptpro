@@ -1,6 +1,6 @@
 import CardHolder from "@/app/components/ui/CardHolder";
 import DataProgress from "@/app/components/ui/DataProgress";
-import { getColorForValue, hashString, hslToHex } from "@/app/components/utils/Util";
+import { generateUniqueColors, getColorForValue, hashString, hslToHex } from "@/app/components/utils/Util";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import { useEffect, useRef, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Line, BarChart, Bar } from "recharts";
@@ -241,6 +241,10 @@ const TotalAllocation = ({userid}:TotalPros) => {
       
     }, [data, barData, lineData]); // Empty dependency array ensures it runs once after mount
 
+    const ids = data.map((item :any)=> item._id);
+    
+    const uniquecolors = generateUniqueColors(ids);
+
     return (
     <div className="flex flex-row gap-2.5">
         <div className="w-[35%]" ref={el => (itemRefs.current[0] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
@@ -257,7 +261,7 @@ const TotalAllocation = ({userid}:TotalPros) => {
                                 key={dp._id} 
                                 title={dp.name} 
                                 progress={((100/total_balance) * dp.balance).toFixed(0)}
-                                color={getColorForDebtType(dp._id)}
+                                color={uniquecolors[dp._id]}
                                 maxProgressLength={maxProgressLength}
                                 amount={dp.balance}
                                 maxAmountLength={maxAmountLength}
