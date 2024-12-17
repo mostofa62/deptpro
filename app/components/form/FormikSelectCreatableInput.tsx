@@ -11,7 +11,8 @@ interface FormHolderProps{
     isSearchable:boolean;
     isClearable:boolean;
     onParentChangeSelect?:(value:any, name:any)=>void;
-    toolTipText?:React.ReactNode;       
+    toolTipText?:React.ReactNode;
+    deleteSelectedOption?: (data: any) => void;     
 }
 
 export default function FormikSelectCreatableInput({
@@ -24,7 +25,9 @@ export default function FormikSelectCreatableInput({
     isSearchable,
     isClearable,
     onParentChangeSelect,
-    toolTipText
+    toolTipText,
+    deleteSelectedOption
+    
     }:FormHolderProps){
         
 
@@ -44,7 +47,8 @@ export default function FormikSelectCreatableInput({
                                  isClearable={isClearable}                                 
                                   name={name} 
                                   options={dataOptions}
-                                  onParentChange={onParentChangeSelect} 
+                                  onParentChange={onParentChangeSelect}
+                                  deleteSelectedOption={deleteSelectedOption} 
                                   
                       />: <SelectComponent defaultValueArray={defaultValue}
                       placeholder={`Select ${placeHolder}`}
@@ -52,7 +56,8 @@ export default function FormikSelectCreatableInput({
                       isClearable={isClearable}                                 
                        name={name} 
                        options={dataOptions}
-                       onParentChange={(v:any,n:any)=>{}} 
+                       onParentChange={(v:any,n:any)=>{}}
+                       deleteSelectedOption={deleteSelectedOption} 
                        
            />}
              

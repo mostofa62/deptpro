@@ -1,25 +1,24 @@
 "use client";
-import DefaultLayout from "@/app/layout/DefaultLayout";
-import Link from "next/link";
-import { useState,useEffect, useRef } from "react";
-import axios from "axios";
 import useAuth from '@/app/hooks/useAuth';
+import DefaultLayout from "@/app/layout/DefaultLayout";
+import axios from "axios";
+import { Formik } from 'formik';
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {Formik} from 'formik';
-import { DataSchema,DataLabel,ValidationSchema } from "./DataValidationSchema";
+import { useRef, useState } from "react";
+import { DataLabel, DataSchema, ValidationSchema } from "./DataValidationSchema";
 
 import FormikFormHolder from "@/app/components/form/FormikFormHolder";
 
-import FormikSelectInput from "@/app/components/form/FormikSelectInput";
 import FormikSelectCreatableInput from "@/app/components/form/FormikSelectCreatableInput";
+import FormikSelectInput from "@/app/components/form/FormikSelectInput";
 
 import toast from 'react-hot-toast';
 
 import FormikFieldInput from "@/app/components/form/FormikFieldInput";
-import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import VideoComponent from "@/app/components/utils/VideoComponent";
+import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import HolderOne from "@/app/layout/HolderOne";
-import Tooltip from "@/app/components/ui/Tooltip";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -189,6 +188,8 @@ export default function InsuranceCreate() {
 
             toolTipText={<p className="flex flex-col whitespace-normal leading-tight"><span>ie: Job, 2nd job, side gig, rental,
         pension, social security, annuity, investments</span></p>}
+
+deleteSelectedOption={(data) => console.log('Option deleted:', data)}
         />
 
 

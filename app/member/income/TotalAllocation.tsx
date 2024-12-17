@@ -4,7 +4,8 @@ import { generateUniqueColors, getColorForValue, hashString, hslToHex } from "@/
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import { useEffect, useRef, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Line, BarChart, Bar } from "recharts";
-
+import { ResponsiveBar } from '@nivo/bar';
+import HorizontalBarChartNivo from "@/app/components/chart/HorizontalBarChartNivo";
 // const data = [
 //   { name: "Group A", value: 400 },
 //   { name: "Group B", value: 300 },
@@ -282,9 +283,9 @@ const TotalAllocation = ({userid}:TotalPros) => {
 
 {barData.length > 0 &&
   <CardHolder title={`12 months history`} maxHeight={maxHeight}>
-                <div className="flex flex-col justify-center items-center py-2">
+                <div className="flex flex-col justify-center items-center">
 
-                <ResponsiveContainer width={'35%'} height={200}>
+                {/* <ResponsiveContainer width={'35%'} height={200}>
                   <BarChart                                            
                       data={barData}
                       margin={{
@@ -305,11 +306,18 @@ const TotalAllocation = ({userid}:TotalPros) => {
 
                   </BarChart>
 
-                </ResponsiveContainer>
-                  
+                </ResponsiveContainer> */}
+                  <HorizontalBarChartNivo 
+                  height={300}
+                  width={`100%`}
+                  data={barData}
+                  keys={['total_balance_net']}
+                  indexBy="year_month_word"
+                  colors={["#22bf6a"]}
+                  />
 
                 <div>
-                  <p className={`text-[13px] font-semibold text-[${getColorForDebtType(dataLabel.base_net_income)}]`}>
+                  <p className={`pt-5 text-[13px] font-semibold text-[${getColorForDebtType(dataLabel.base_net_income)}]`}>
                     {dataLabel.base_net_income}
                   </p>
                 </div>
