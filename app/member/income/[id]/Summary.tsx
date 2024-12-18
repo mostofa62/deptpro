@@ -1,4 +1,5 @@
 
+import RechartHorizentalBar from "@/app/components/chart/RechartHorizentalBar";
 import CardHolder from "@/app/components/ui/CardHolder";
 import CardHolderOne from "@/app/components/ui/CardHolderOne";
 import ProgressBarOne from "@/app/components/ui/ProgressBarOne";
@@ -175,8 +176,18 @@ const Summary = ({income_id}:DebtTransProps)=>{
             <div className="w-[45%]" ref={el => (itemRefs.current[1] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
             {barData.length > 0 &&
   <CardHolderOne title={`12 months history`} maxHeight={maxHeight}>
-                <div className="flex flex-col justify-center items-center py-2">   
-            <ResponsiveContainer width="35%" height={150}>
+                <div className="flex flex-col justify-center items-center">
+                   <RechartHorizentalBar
+                                      barData={barData}
+                                      axisData={ 
+                                        {XAxis:{dataKey:'year_month_word'}}
+                                      }
+                                      bar={
+                                        {dataKey:'total_balance_net'}
+                                      }
+                  
+                                    />   
+            {/* <ResponsiveContainer width="35%" height={150}>
                                         <BarChart                                            
                                             data={barData}
                                             margin={{
@@ -197,9 +208,9 @@ const Summary = ({income_id}:DebtTransProps)=>{
                                         
                                         </BarChart>
 
-                                        </ResponsiveContainer>
+                                        </ResponsiveContainer> */}
                                         <div>
-                  <p className={`text-[13px] font-semibold text-[${getColorForDebtType(dataLabel.base_net_income)}]`}>
+                  <p className={`pt-1 text-[13px] font-semibold text-[${getColorForDebtType(dataLabel.base_net_income)}]`}>
                     {dataLabel.base_net_income}
                   </p>
                 </div>

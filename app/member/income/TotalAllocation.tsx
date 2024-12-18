@@ -1,11 +1,11 @@
+import HorizontalBarChartWithLabels from "@/app/components/chart/HorizontalBarChartWithLabels";
+import RechartHorizentalBar from "@/app/components/chart/RechartHorizentalBar";
 import CardHolder from "@/app/components/ui/CardHolder";
 import DataProgress from "@/app/components/ui/DataProgress";
-import { generateUniqueColors, getColorForValue, hashString, hslToHex } from "@/app/components/utils/Util";
+import { generateUniqueColors, hashString, hslToHex } from "@/app/components/utils/Util";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import { useEffect, useRef, useState } from "react";
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Line, BarChart, Bar } from "recharts";
-import { ResponsiveBar } from '@nivo/bar';
-import HorizontalBarChartNivo from "@/app/components/chart/HorizontalBarChartNivo";
+import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 // const data = [
 //   { name: "Group A", value: 400 },
 //   { name: "Group B", value: 300 },
@@ -154,46 +154,8 @@ const TotalAllocation = ({userid}:TotalPros) => {
     }
     
     
-    const CustomBar = (props: any) => {
-      const { fill, x, y, width, height, value } = props;
-      
-      return (
-        <rect
-          x={x}
-          y={y}
-          width={width}
-          height={height}
-          fill={fill}
-          tabIndex={-1} // Prevent focus
-          style={{
-            outline: 'none', // Remove any focus outline
-            transition: 'none', // Remove hover transition effect
-          }}
-        />
-      );
-    };
-
-    const CustomTooltipBar = ({ payload, label }: any) => {
-      if (payload && payload.length) {
-        const data = payload[0].payload;
     
-        return (
-          <div style={{
-            color:'#ffffff',  
-            backgroundColor: '#22bf6a',
-            border: '1px solid #4f4f4f',
-            borderRadius: '5px',
-            padding: '4px',
-            fontSize: '16px',
-            minWidth:'100px'                    
-          }}>          
-            <p style={{ margin: 0 }}>${Intl.NumberFormat('en-US').format(data.total_balance_net)} in <span>{data.year_month_word}</span></p>
-          </div>
-        );
-      }
-    
-      return null;
-    };
+   
     
     const CustomTooltipLine = ({ payload,label }:any) => {
       if (!payload || payload.length === 0) return null;
@@ -223,6 +185,13 @@ const TotalAllocation = ({userid}:TotalPros) => {
       );
     };
 
+   
+    
+    
+    
+
+    
+
 
     const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [maxHeight, setMaxHeight] = useState<number>(0);
@@ -245,6 +214,8 @@ const TotalAllocation = ({userid}:TotalPros) => {
     const ids = data.map((item :any)=> item._id);
     
     const uniquecolors = generateUniqueColors(ids);
+
+    
 
     return (
     <div className="flex flex-row gap-2.5">
@@ -284,40 +255,35 @@ const TotalAllocation = ({userid}:TotalPros) => {
 {barData.length > 0 &&
   <CardHolder title={`12 months history`} maxHeight={maxHeight}>
                 <div className="flex flex-col justify-center items-center">
+                  {/*JSON.stringify(barData)*/}
+                  
+                  <RechartHorizentalBar
+                    barData={barData}
+                    axisData={ 
+                      {XAxis:{dataKey:'year_month_word'}}
+                    }
+                    bar={
+                      {dataKey:'total_balance_net'}
+                    }
 
-                {/* <ResponsiveContainer width={'35%'} height={200}>
-                  <BarChart                                            
-                      data={barData}
-                      margin={{
-                      top: 0,
-                      right: 0,
-                      left: 0,
-                      bottom: 0,
-                      }}
-                      
-                      barCategoryGap={15}
-                      
-                  >
-
-
-                  <XAxis   dataKey="total_balance_net" tickLine={false} axisLine={false} tick={false} />
-                  <Bar   dataKey="total_balance_net" fill="#22bf6a"  barSize={20} shape={<CustomBar />} />
-                  <Tooltip content={<CustomTooltipBar />} cursor={{fill: 'transparent'}}/>
-
-                  </BarChart>
-
-                </ResponsiveContainer> */}
-                  <HorizontalBarChartNivo 
-                  height={300}
-                  width={`100%`}
-                  data={barData}
-                  keys={['total_balance_net']}
-                  indexBy="year_month_word"
-                  colors={["#22bf6a"]}
                   />
 
+                  {/* <HorizontalBarChartWithLabels
+
+barData={barData}
+axisData={ 
+  {YAxis:{dataKey:'year_month_word'}}
+}
+bar={
+  {dataKey:'total_balance_net'}
+}
+
+/> */}
+
+                
+
                 <div>
-                  <p className={`pt-5 text-[13px] font-semibold text-[${getColorForDebtType(dataLabel.base_net_income)}]`}>
+                  <p className={`pt-1 text-[13px] font-semibold text-[${getColorForDebtType(dataLabel.base_net_income)}]`}>
                     {dataLabel.base_net_income}
                   </p>
                 </div>
