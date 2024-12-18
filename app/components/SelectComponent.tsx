@@ -49,7 +49,7 @@ const CustomOption = (props: any) => {
   const isBySystem = data.bysystem === 1;
 
   // Destructure the `deleteSelectedOption` from props
-  const { deleteSelectedOption } = innerProps;
+  const { deleteSelectedOption, setValue, onParentChange, fieldName } = innerProps;
 
   return (
     <components.Option {...props}>
@@ -64,11 +64,14 @@ const CustomOption = (props: any) => {
         {!isBySystem && isHovered && (
           <svg
             className="w-5 h-5 text-[#ff0000] cursor-pointer"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation()
               if (deleteSelectedOption) {
-                deleteSelectedOption(data);  // Call delete function if passed
+                deleteSelectedOption(data);
+                setValue(null);  // Call delete function if passed
+                onParentChange(null, fieldName)
               }
-              console.log(`Delete option: ${data.label}`);
+              //console.log(`Delete option: ${data.label}`);
             }}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -90,7 +93,7 @@ const CustomOption = (props: any) => {
 
 const SelectComponent = (props: SelectProps) => {
   const [field, state, { setValue, setTouched }] = useField(props.name);
-  const { deleteSelectedOption } = props;
+  const { deleteSelectedOption, onParentChange } = props;
 
   const [menuIsOpen, setMenuIsOpen] = useState(false); // State to control menu open/close
 
@@ -104,7 +107,14 @@ const SelectComponent = (props: SelectProps) => {
         Option: (props) => (
           <CustomOption
             {...props} // Ensure all props (including data) are passed
-            innerProps={{ ...props.innerProps, deleteSelectedOption }} // Pass deleteSelectedOption inside innerProps
+            innerProps={{ 
+              ...props.innerProps, 
+              deleteSelectedOption, 
+              setValue,
+              onParentChange,
+              fieldName:field.name
+               
+            }} // Pass deleteSelectedOption inside innerProps
           />
         ),
       }}

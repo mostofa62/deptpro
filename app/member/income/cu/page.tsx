@@ -5,7 +5,7 @@ import axios from "axios";
 import { Formik } from 'formik';
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { DataLabel, DataSchema, ValidationSchema } from "./DataValidationSchema";
 
 import FormikFormHolder from "@/app/components/form/FormikFormHolder";
@@ -19,6 +19,8 @@ import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 import VideoComponent from "@/app/components/utils/VideoComponent";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import HolderOne from "@/app/layout/HolderOne";
+import { confirmAlert } from 'react-confirm-alert';
+import { removeConfirmAlert } from '@/app/components/utils/Util';
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -31,6 +33,12 @@ interface PayLoads{
     repeat_frequency:Options[],
 }
 
+interface IncomeSrcProps{
+    label:string;
+    value:string;
+    bysystem:number;
+}
+
 export default function InsuranceCreate() {
     const authCtx = useAuth();
     const user_id = authCtx.userId;
@@ -39,7 +47,11 @@ export default function InsuranceCreate() {
 
     const [fetchFomrData,setFetchFormData] = useState(DataSchema);
     
-    
+    const [incomeSource, setIncomeSource] = useState<IncomeSrcProps[]>([{
+        label:'',
+        value:'',
+        bysystem:0
+    }]);
 
     const payload: PayLoads ={
         income_source: [],        
@@ -51,7 +63,12 @@ export default function InsuranceCreate() {
         payLoads:payload
     })
 
+    const IncomeSourceData:IncomeSrcProps[] = IncomeSourceBoostData.income_source;
     
+    useEffect(()=>{
+        setIncomeSource(IncomeSourceData)
+    },[IncomeSourceData])
+
 
     const fetchdata = fetchFomrData;
 
@@ -92,6 +109,60 @@ export default function InsuranceCreate() {
     const handleSubmit = ()=> {
         formRef.current?.handleSubmit();
       }
+
+    const deleteAction=useCallback(async(data:IncomeSrcProps)=>{
+        console.log(data)
+        const id = data.value;
+        const name = data.label;
+        const msg = `Do you want to delete this,${name}?`;
+
+        confirmAlert({
+                  title: msg,
+                  message: 'Are you sure to do this?',
+                  buttons: [
+                    {
+                      label: 'Yes',
+                      onClick: async()=>{ 
+
+                        const filterSource:IncomeSrcProps[] = incomeSource.filter((dt:IncomeSrcProps)=>dt.value!==id)
+                        //console.log('filter', filterSource,id)
+                        setIncomeSource(filterSource)
+
+                        removeConfirmAlert()
+                        /*
+                        DeleteActionGlobal({        
+                          action:'delete-income',        
+                          data:{'id':id, 'key':key}
+                        }).then((deletedData)=>{
+                            //console.log(deletedData)
+                            AlertBox(deletedData.message, deletedData.deleted_done);
+                            // if(deletedData.deleted_done > 0 && key < 2){
+                            //   const updatedData:any = data.filter((row:any) => row._id !== id);              
+                            //   setData(updatedData)
+                            // }
+        
+                            if(deletedData.deleted_done > 0){
+                              const updatedData:any = data.filter((row:any) => row._id !== id);              
+                              setData(updatedData)
+                            }
+                        })
+                        */
+                        
+                      }
+                    },
+                    {
+                      label: 'No',
+                      onClick: () => ()=>{                
+                        removeConfirmAlert()
+                      }
+                    }
+                  ],
+                  closeOnEscape: true,
+                  closeOnClickOutside: true,
+                
+                });
+
+    },[incomeSource])
 
     return(
         <>
@@ -174,11 +245,11 @@ export default function InsuranceCreate() {
     <FormikSelectCreatableInput
             label={DataLabel.income_source}
             defaultValue={fetchdata.income_source}
-            placeHolder={`Select ${DataLabel.income_source}`}
+            placeHolder={`${DataLabel.income_source}`}
             isSearchable={true}
             isClearable={true}
             name="fetchdata.income_source"
-            dataOptions={IncomeSourceBoostData.income_source}
+            dataOptions={incomeSource}
             errorMessage={errors.fetchdata &&
                 errors.fetchdata.income_source &&
                 touched.fetchdata &&
@@ -189,7 +260,7 @@ export default function InsuranceCreate() {
             toolTipText={<p className="flex flex-col whitespace-normal leading-tight"><span>ie: Job, 2nd job, side gig, rental,
         pension, social security, annuity, investments</span></p>}
 
-deleteSelectedOption={(data) => console.log('Option deleted:', data)}
+        deleteSelectedOption={(data:IncomeSrcProps) => deleteAction(data)}
         />
 
 
