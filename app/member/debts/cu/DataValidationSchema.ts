@@ -247,7 +247,7 @@ export const ValidationSchemaUpdate =  object().shape({
               .test('is-less', `${DataLabelUpdate.start_date} must be earlier than ${DataLabelUpdate.due_date}`, function(value) {
                 const { due_date } = this.parent; // Get due_date value
                 // Use moment to compare dates
-                return moment(value, 'YYYY-MM-DD', true).isBefore(moment(due_date, 'YYYY-MM-DD', true));
+                return moment(value, 'YYYY-MM-DD', true).isSameOrBefore(moment(due_date, 'YYYY-MM-DD', true));
               }),
 
               due_date: string()
