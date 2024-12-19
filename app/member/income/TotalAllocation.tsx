@@ -2,7 +2,7 @@ import HorizontalBarChartWithLabels from "@/app/components/chart/HorizontalBarCh
 import RechartHorizentalBar from "@/app/components/chart/RechartHorizentalBar";
 import CardHolder from "@/app/components/ui/CardHolder";
 import DataProgress from "@/app/components/ui/DataProgress";
-import { generateUniqueColors, hashString, hslToHex } from "@/app/components/utils/Util";
+import { formatLargeNumber, generateUniqueColors, hashString, hslToHex } from "@/app/components/utils/Util";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import { useEffect, useRef, useState } from "react";
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
@@ -150,7 +150,8 @@ const TotalAllocation = ({userid}:TotalPros) => {
 
     const dataLabel = {
       base_net_income:'Net Earnings',
-      base_gross_income:'Gross Earnings',      
+      base_gross_income:'Gross Earnings',
+      previous_net_history:'12 months net earning history'      
     }
     
     
@@ -165,7 +166,7 @@ const TotalAllocation = ({userid}:TotalPros) => {
           
           {payload.map((entry:any, index:number) => (
             <div key={`item-${index}`} style={{ color: entry.stroke }}>
-              <strong>{dataLabel[entry.dataKey as keyof typeof dataLabel]}:</strong> ${entry.value.toFixed(2)}
+              <strong>{dataLabel[entry.dataKey as keyof typeof dataLabel]}:</strong> ${Intl.NumberFormat('en-US').format(entry.value)}
             </div>
           ))}
         </div>
@@ -265,6 +266,10 @@ const TotalAllocation = ({userid}:TotalPros) => {
                     bar={
                       {dataKey:'total_balance_net'}
                     }
+                    paddingCof={0}
+                    valueHeightCof={1}
+                    barTopCof={0}
+                    barBottomCof={5}
 
                   />
 
@@ -283,8 +288,8 @@ bar={
                 
 
                 <div>
-                  <p className={`pt-1 text-[13px] font-semibold text-[${getColorForDebtType(dataLabel.base_net_income)}]`}>
-                    {dataLabel.base_net_income}
+                  <p className={`capitalize pt-1 text-[13px] font-semibold text-[${getColorForDebtType(dataLabel.base_net_income)}]`}>
+                    {dataLabel.previous_net_history}
                   </p>
                 </div>
                   
@@ -306,7 +311,7 @@ bar={
               <LineChart data={lineData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month_word" tick={{ fontSize:12 }} />
-              <YAxis tick={{ fontSize:12 }} tickFormatter={(value) => `$${value}`} />
+              <YAxis tick={{ fontSize:12 }} tickFormatter={(value) => `$${formatLargeNumber(value)}`} />
               {/* <Tooltip content={<CustomTooltipLine />} /> */}
               <Tooltip content={<CustomTooltipLine />} />
               <Legend 

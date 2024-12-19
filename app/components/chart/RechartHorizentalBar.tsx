@@ -1,6 +1,6 @@
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis } from "recharts";
 
-
+import {formatLargeNumber} from '@/app/components/utils/Util';
 
 
 
@@ -23,26 +23,43 @@ import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis } from "recharts";
         dataKey:string;
         barFill?:string;
         barSize?:number;
-    }
-
+    },
+    valueHeightCof?:number;
+    paddingCof?:number;
+    barTopCof?:number;
+    barBottomCof?:number;
+    barMinHeight?:number;
+    barMaxHeight?:number;
   }
 
   export default function RechartHorizentalBar({    
     barData = [],
     axisData = { XAxis: { dataKey: "xKey", customTickFill: "#000" } },
     bar = { dataKey: "value", barFill: "#22bf6a", barSize: 20 },
+    valueHeightCof= 10,
+    paddingCof = 10,
+    barTopCof = 7,
+    barBottomCof = 10,
+    barMinHeight = 10,
+    barMaxHeight = 80
   }: BarProps) {
 
 
     const maxBarValueLength = Math.max(
         ...barData.map((data) =>
-          `$${Intl.NumberFormat('en-US').format(data[bar.dataKey])}`.length
+          `$${formatLargeNumber(data[bar.dataKey])}`.length
+        )
+      );
+
+      const maxXkeyalueLength = Math.max(
+        ...barData.map((data) =>
+          `${data[axisData.XAxis.dataKey]}`.length
         )
       );
 
       const minBarValueLength = Math.min(
         ...barData.map((data) =>
-          `$${Intl.NumberFormat('en-US').format(data[bar.dataKey])}`.length
+          `$${formatLargeNumber(data[bar.dataKey])}`.length
         )
       );
 
@@ -50,19 +67,19 @@ import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis } from "recharts";
 
       // Calculate dynamic height
     const calculateHeight = () => {
-        const barCount = barData.length;
+        const barCount = barData.length < 5 ? 10:barData.length;
         const barHeight = bar.barSize || 20;
         //const gapBetweenBars = 15; // Default gap between bars
-        const valueHeight = maxBarValueLength * 10; // Approximate height per character (adjust multiplier as needed)
-        const padding = maxBarValueLength * 10; // Padding for axis labels, tooltips, etc.
+        const valueHeight = maxBarValueLength * valueHeightCof; // Approximate height per character (adjust multiplier as needed)
+        const padding = maxBarValueLength * paddingCof; // Padding for axis labels, tooltips, etc.
 
         // Overall height based on number of bars, their heights, and value label space
         return barCount * (barHeight) + valueHeight + padding;
     };
 
-    
+    let calcHeight =  calculateHeight();  
 
-    const dynamicHeight = calculateHeight();
+    const dynamicHeight = calcHeight < 200 ?calcHeight + barMaxHeight + barMinHeight:calcHeight;
 
     const calculateWidth = () => {
         const barCount = barData.length;
@@ -74,46 +91,54 @@ import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis } from "recharts";
 
 
     const CustomBar = (props: any) => {
-        const { fill, x, y, width, height, value } = props;
-
-        const valueString = `$${Intl.NumberFormat('en-US').format(value)}`;
-        // Define a minimum bar height
-        const minHeight = valueString.length + 15;
-
-        // Adjust the bar position if the height is less than the minimum
-        const adjustedHeight = Math.max(height, minHeight);
-        const adjustedY = height < minHeight ? y - (minHeight - height) : y;
-      
-        return (
+      const { fill, x, y, width, height, value } = props;
+  
+      const valueString = `$${formatLargeNumber(value)}`;
+      const labelPadding = 10; // Space between the bar and the label
+      const maxBarHeight = barMaxHeight; // Maximum bar height
+  
+      // Adjust the bar's height, capping it at maxBarHeight
+      const minHeight = barMinHeight;
+      const calculatedHeight = Math.max(height, minHeight); // Ensure height is at least minHeight
+      const adjustedHeight = Math.min(calculatedHeight, maxBarHeight); // Cap at maxBarHeight
+      const adjustedY = y + (height - adjustedHeight); // Adjust Y to keep the bar aligned at the bottom
+  
+      // Calculate the position for the rotated text
+      const adjustedTextX = x + width / 2; // Align horizontally with the bar's center
+      const adjustedTextY = adjustedY - labelPadding; // Position above the bar with padding
+  
+      return (
           <g>
-            {/* Draw the bar */}
-            <rect
-              x={x}
-              y={adjustedY}
-              width={width}
-              height={adjustedHeight}
-              fill={fill}
-              tabIndex={-1} // Prevent focus
-              style={{
-                outline: "none", // Remove any focus outline
-                transition: "none", // Remove hover transition effect
-              }}
-            />
-            {/* Add the value as a rotated label */}
-            <text
-              x={x + width + (minBarValueLength * 5)} // Center horizontally on the bar
-              y={y - 2} // Position slightly above the bar
-              textAnchor="top" // Center-align the text
-              fill="#FF8C00" // Text color
-              fontSize={12} // Font size
-              fontWeight="700" // Text styling
-              transform={`rotate(-90, ${x + width / 2}, ${y - 5})`} // Rotate -90 degrees around the text's position
-            >
-              {valueString}
-            </text>
+              {/* Draw the bar */}
+              <rect
+                  x={x}
+                  y={adjustedY}
+                  width={width}
+                  height={adjustedHeight}
+                  fill={fill}
+                  tabIndex={-1} // Prevent focus
+                  style={{
+                      outline: "none", // Remove any focus outline
+                      transition: "none", // Remove hover transition effect
+                  }}
+              />
+              {/* Add the rotated label above the bar */}
+              <text
+                  x={adjustedTextX}
+                  y={adjustedTextY + 2}
+                  textAnchor="top" // Center-align the text horizontally
+                  fill="#FF8C00" // Text color
+                  fontSize={12} // Font size
+                  fontWeight="700" // Text styling
+                  transform={`rotate(-90, ${adjustedTextX}, ${adjustedTextY})`} // Rotate around the label's position
+              >
+                  {valueString}
+              </text>
           </g>
-        );
-      };
+      );
+  };
+  
+  
 
 
     const CustomTooltipBar = ({ payload, label }: any) => {
@@ -173,10 +198,10 @@ import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis } from "recharts";
                           <BarChart                                            
                               data={barData}
                               margin={{
-                              top: maxBarValueLength * 10,
+                              top: maxBarValueLength * barTopCof ,
                               right: 0,
                               left: 0,
-                              bottom: maxBarValueLength * 10,
+                              bottom: maxXkeyalueLength * barBottomCof,
                               }}
                               
                             barCategoryGap={10}

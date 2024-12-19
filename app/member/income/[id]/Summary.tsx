@@ -35,46 +35,9 @@ const Summary = ({income_id}:DebtTransProps)=>{
       setHighlightedKey(null);
     };
 
-    const CustomBar = (props: any) => {
-        const { fill, x, y, width, height, value } = props;
-        
-        return (
-          <rect
-            x={x}
-            y={y}
-            width={width}
-            height={height}
-            fill={fill}
-            tabIndex={-1} // Prevent focus
-            style={{
-              outline: 'none', // Remove any focus outline
-              transition: 'none', // Remove hover transition effect
-            }}
-          />
-        );
-      };
+    
 
-    const CustomTooltipBar = ({ payload, label }: any) => {
-        if (payload && payload.length) {
-          const data = payload[0].payload;
-      
-          return (
-            <div style={{
-              color:'#ffffff',  
-              backgroundColor: '#22bf6a',
-              border: '1px solid #4f4f4f',
-              borderRadius: '5px',
-              padding: '4px',
-              fontSize: '16px',
-              minWidth:'100px'                    
-            }}>          
-              <p style={{ margin: 0 }}>${Intl.NumberFormat('en-US').format(data.total_balance_net)} in <span>{data.year_month_word}</span></p>
-            </div>
-          );
-        }
-      
-        return null;
-      };
+   
 
     const payloadIncome :IncomePayload = {
         year_month_wise_counts:[],
@@ -102,7 +65,8 @@ const Summary = ({income_id}:DebtTransProps)=>{
 
     const dataLabel = {
       base_net_income:'Net Earnings',
-      base_gross_income:'Gross Earnings',      
+      base_gross_income:'Gross Earnings',
+      previous_net_history:'12 months net earning history'         
     }
 
     const CustomTooltipLine = ({ payload,label }:any) => {
@@ -185,6 +149,11 @@ const Summary = ({income_id}:DebtTransProps)=>{
                                       bar={
                                         {dataKey:'total_balance_net'}
                                       }
+                                      barBottomCof={5}
+                                      barMaxHeight={70}
+                                      barTopCof={0}
+                                      paddingCof={0}
+                                      valueHeightCof={1}
                   
                                     />   
             {/* <ResponsiveContainer width="35%" height={150}>
@@ -210,8 +179,8 @@ const Summary = ({income_id}:DebtTransProps)=>{
 
                                         </ResponsiveContainer> */}
                                         <div>
-                  <p className={`pt-1 text-[13px] font-semibold text-[${getColorForDebtType(dataLabel.base_net_income)}]`}>
-                    {dataLabel.base_net_income}
+                  <p className={`capitalize pt-1 text-[13px] font-semibold text-[${getColorForDebtType(dataLabel.base_net_income)}]`}>
+                  {dataLabel.previous_net_history}
                   </p>
                 </div>
                   

@@ -154,7 +154,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
         {/* <!-- Sidebar Menu --> */}
-        <nav className="py-4 px-4 lg:px-6 min-h-screen">
+        <nav className="py-4 px-4 lg:px-6 lg:py-8 min-h-screen">
           {/* <!-- Menu Group --> */}
           <div>
             {/*
@@ -454,7 +454,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 </li>
 
 
-<li key={103}>
+<li key={109}>
   <Link
     href={'/member/debts/paymentboost'}
     className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out  hover:text-[#43ACD6] ${
@@ -616,7 +616,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 </li>
 
 
-<li key={222}>
+<li key={228}>
   <Link
     href={'/member/bills/billextra'}
     className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out  hover:text-[#43ACD6] ${

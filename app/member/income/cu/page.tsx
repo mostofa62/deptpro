@@ -21,6 +21,7 @@ import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import HolderOne from "@/app/layout/HolderOne";
 import { confirmAlert } from 'react-confirm-alert';
 import { removeConfirmAlert } from '@/app/components/utils/Util';
+import { AlertBox, DeleteActionGlobal } from '@/app/components/grid/useFetchGridData';
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -111,7 +112,7 @@ export default function InsuranceCreate() {
       }
 
     const deleteAction=useCallback(async(data:IncomeSrcProps)=>{
-        console.log(data)
+        //console.log(data)
         const id = data.value;
         const name = data.label;
         const msg = `Do you want to delete this,${name}?`;
@@ -124,29 +125,27 @@ export default function InsuranceCreate() {
                       label: 'Yes',
                       onClick: async()=>{ 
 
-                        const filterSource:IncomeSrcProps[] = incomeSource.filter((dt:IncomeSrcProps)=>dt.value!==id)
-                        //console.log('filter', filterSource,id)
-                        setIncomeSource(filterSource)
-
-                        removeConfirmAlert()
-                        /*
+                                                //console.log('filter', filterSource,id)
+                        
+                        
                         DeleteActionGlobal({        
-                          action:'delete-income',        
-                          data:{'id':id, 'key':key}
+                          action:'delete-income-source',        
+                          data:{'id':id, 'key':1}
                         }).then((deletedData)=>{
-                            //console.log(deletedData)
+                            
                             AlertBox(deletedData.message, deletedData.deleted_done);
-                            // if(deletedData.deleted_done > 0 && key < 2){
-                            //   const updatedData:any = data.filter((row:any) => row._id !== id);              
-                            //   setData(updatedData)
-                            // }
+                           
         
                             if(deletedData.deleted_done > 0){
-                              const updatedData:any = data.filter((row:any) => row._id !== id);              
-                              setData(updatedData)
+
+                                const filterSource:IncomeSrcProps[] = incomeSource.filter((dt:IncomeSrcProps)=>dt.value!==id)
+
+                                
+                                removeConfirmAlert()
+                                setIncomeSource(filterSource)
                             }
                         })
-                        */
+                        
                         
                       }
                     },

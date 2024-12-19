@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import {formatLargeNumber} from '@/app/components/utils/Util';
 interface DataProgressType{
     title:string;
     progress:string;
     color:string;
-    amount?:string;
+    amount?:number;
     maxProgressLength: number;
     maxAmountLength?:number;
 }
@@ -37,7 +38,7 @@ const DataProgress = ({title, progress,color,amount,maxProgressLength, maxAmount
                 <div className="h-3 bg-[#eeeeee] rounded-[10px] overflow-hidden" style={{ marginLeft: `${maxProgressLength}%` ,width: `calc(80% - ${maxAmountLengthVar+30}px)` }}>
                     <div className="h-full transition-all duration-500" style={{ width:`${animatedProgress}%`, backgroundColor:color }}></div>
                 </div>
-                {amount  && <div className="w-auto font-semibold text-right text-[13px] ml-[2%]">${amount}</div> }
+                {amount  && <div className="w-auto font-semibold text-right text-[13px] ml-[2%]">${formatLargeNumber(amount)}</div> }
                 
             </div>
         </div>  

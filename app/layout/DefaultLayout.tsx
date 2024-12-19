@@ -9,6 +9,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { RouteChangeListener } from '../components/utils/RouteChangeListener';
 import { AppContextProvider } from '../context/app-context';
 import HeaderSummary from './HeaderSummary';
+import HeaderOne from '../components/HeaderOne';
 
 
 
@@ -42,7 +43,7 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
         {/* <!-- ===== Content Area Start ===== --> */}
         <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
           {/* <!-- ===== Header Start ===== --> */}
-          <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          <HeaderOne sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           {/* <!-- ===== Header End ===== --> */}
 
           {/* <!-- ===== Main Content Start ===== --> */}

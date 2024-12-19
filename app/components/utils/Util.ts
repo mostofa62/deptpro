@@ -143,3 +143,29 @@ export function mapToInterface<T>(data: any, model: any): T {
   
     return filteredData;
   }
+
+
+  export function formatLargeNumber(number: number): string {
+    const UNITS = [
+        { value: 1_000_000_000_000, suffix: 'T' },  // Trillions
+        { value: 1_000_000_000, suffix: 'B' },      // Billions
+        { value: 1_000_000, suffix: 'M' },          // Millions
+        { value: 1_000, suffix: 'K' }               // Thousands
+    ];
+
+    // Handle numbers larger than trillions (e.g., quadrillions, quintillions)
+    const MAX_VALUE = 1e15; // Above 1 quadrillion
+    if (number >= MAX_VALUE) {
+        return (number / MAX_VALUE).toFixed(1) + 'Q+'; // Quadrillion and beyond
+    }
+
+    // Loop through UNITS to find the matching range
+    for (const unit of UNITS) {
+        if (number >= unit.value) {
+            return (number / unit.value).toFixed(1) + unit.suffix;
+        }
+    }
+
+    // For small numbers less than 1,000, format with Intl.NumberFormat
+    return new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(number);
+}

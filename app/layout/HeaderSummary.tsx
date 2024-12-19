@@ -3,7 +3,7 @@ import useAuth from "@/app/hooks/useAuth";
 import axios from "axios";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-
+import {formatLargeNumber} from '@/app/components/utils/Util';
 const url = process.env.NEXT_PUBLIC_API_URL;
 const HeaderSummary = ()=>{
 
@@ -72,13 +72,13 @@ const HeaderSummary = ()=>{
                 const suffix:string = transactioDataLabel[data as keyof typeof transactioDataLabel].suffix;
                 const link:string = transactioDataLabel[data as keyof typeof transactioDataLabel].href;
                 const amount:number = transactioData[data as keyof typeof transactioDataLabel];
-                const amountstring = prefix == '$'? Intl.NumberFormat('en-US').format(amount):amount.toFixed(0);
+                const amountstring = prefix == '$'? formatLargeNumber(amount):amount.toFixed(0);
                 return(
                 <div key={index} className="flex-1" >
                     <CardHolderTiny>
                         <div ref={el => (itemRefs.current[index] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }} className="flex flex-col justify-center items-center gap-2">
                             <div ref={(el) => (childRefs.current[index] = el)} style={{ height: maxChildHeight ? `${maxChildHeight}px` : 'auto' }} className="bg-[#f99f5c] border-[#06c3ef] border-2 w-full text-center text-white">
-                                <p className="font-semibold capitalize md:text-sm lg:text-sm">
+                                <p className="font-semibold capitalize md:text-sm lg:text-[16px] lg:py-1">
                                 {transactioDataLabel[data as keyof typeof transactioDataLabel].label}
                                 </p>
                             </div>

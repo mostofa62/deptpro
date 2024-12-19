@@ -223,7 +223,7 @@ export default function DashBoard() {
                 title={dp.title} 
                 progress={dp.progress}
                 color={getColorForDebtType(dp._id)}
-                amount={Intl.NumberFormat('en-US').format(dp.amount)}
+                amount={dp.amount}
                 maxProgressLength={maxProgressLength}
                 maxAmountLength={maxAmountLength}
                 />
@@ -261,7 +261,7 @@ export default function DashBoard() {
                           title={dp.title} 
                           progress={dp.progress}
                           color={getColorForDebtType(dp._id)}
-                          amount={Intl.NumberFormat('en-US').format(dp.amount)}
+                          amount={dp.amount}
                           maxProgressLength={maxProgressLength}
                           maxAmountLength={maxAmountLength}
                           />

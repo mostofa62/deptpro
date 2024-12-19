@@ -21,6 +21,9 @@ import HolderOne from "@/app/layout/HolderOne";
 import CheckComponent from "@/app/components/CheckComponent";
 import FormikCheckInput from "@/app/components/form/FormikCheckInput";
 import Tooltip from "@/app/components/ui/Tooltip";
+import { removeConfirmAlert } from "@/app/components/utils/Util";
+import { AlertBox, DeleteActionGlobal } from "@/app/components/grid/useFetchGridData";
+import { confirmAlert } from "react-confirm-alert";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -31,6 +34,12 @@ interface Options{
 interface PayLoads{
     income_source:Options[],
     repeat_frequency:Options[],
+}
+
+interface IncomeSrcProps{
+    label:string;
+    value:string;
+    bysystem:number;
 }
 
 export default function InsuranceCreate({
@@ -47,6 +56,12 @@ export default function InsuranceCreate({
     const formRef = useRef<any>(null);
 
     const [fetchFomrData,setFetchFormData] = useState(DataSchema);
+
+    const [incomeSource, setIncomeSource] = useState<IncomeSrcProps[]>([{
+            label:'',
+            value:'',
+            bysystem:0
+        }]);
     
     const id = params.id;
 
@@ -59,6 +74,9 @@ export default function InsuranceCreate({
         urlSuffix:`incomesourceboost-dropdown/${user_id}`,
         payLoads:payload
     })
+
+    const IncomeSourceData:IncomeSrcProps[] = IncomeSourceBoostData.income_source;
+
     const fetchDataCallback=useCallback(async()=>{
         //console.log(id);
         const response = await axios.get(`${url}income/${id}`);
@@ -69,8 +87,10 @@ export default function InsuranceCreate({
     },[id]);
     useEffect(()=>{
         fetchDataCallback();
+        setIncomeSource(IncomeSourceData)
     
-    },[fetchDataCallback]);
+    },[fetchDataCallback, IncomeSourceData]);
+
     const fetchdata = {...DataSchema,...fetchFomrData};
 
     
@@ -110,6 +130,59 @@ export default function InsuranceCreate({
     const handleSubmit = ()=> {
         formRef.current?.handleSubmit();
       }
+
+
+    const deleteAction=useCallback(async(data:IncomeSrcProps)=>{
+            //console.log(data)
+            const id = data.value;
+            const name = data.label;
+            const msg = `Do you want to delete this,${name}?`;
+    
+            confirmAlert({
+                      title: msg,
+                      message: 'Are you sure to do this?',
+                      buttons: [
+                        {
+                          label: 'Yes',
+                          onClick: async()=>{ 
+    
+                                                    //console.log('filter', filterSource,id)
+                            
+                            
+                            DeleteActionGlobal({        
+                              action:'delete-income-source',        
+                              data:{'id':id, 'key':1}
+                            }).then((deletedData)=>{
+                                
+                                AlertBox(deletedData.message, deletedData.deleted_done);
+                               
+            
+                                if(deletedData.deleted_done > 0){
+    
+                                    const filterSource:IncomeSrcProps[] = incomeSource.filter((dt:IncomeSrcProps)=>dt.value!==id)
+    
+                                    
+                                    removeConfirmAlert()
+                                    setIncomeSource(filterSource)
+                                }
+                            })
+                            
+                            
+                          }
+                        },
+                        {
+                          label: 'No',
+                          onClick: () => ()=>{                
+                            removeConfirmAlert()
+                          }
+                        }
+                      ],
+                      closeOnEscape: true,
+                      closeOnClickOutside: true,
+                    
+                    });
+    
+        },[incomeSource])
 
     return(
         <>
@@ -190,7 +263,7 @@ export default function InsuranceCreate({
             isSearchable={true}
             isClearable={true}
             name="fetchdata.income_source"
-            dataOptions={IncomeSourceBoostData.income_source}
+            dataOptions={incomeSource}
             errorMessage={errors.fetchdata &&
                 errors.fetchdata.income_source &&
                 touched.fetchdata &&
@@ -200,6 +273,8 @@ export default function InsuranceCreate({
 
             toolTipText={<p className="flex flex-col whitespace-normal leading-tight"><span>ie: Job, 2nd job, side gig, rental,
         pension, social security, annuity, investments</span></p>}
+
+deleteSelectedOption={(data:IncomeSrcProps) => deleteAction(data)}
         />
    
         
