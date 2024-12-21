@@ -1,6 +1,7 @@
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis } from "recharts";
 
 import {formatLargeNumber} from '@/app/components/utils/Util';
+import { useEffect, useState } from "react";
 
 
 
@@ -24,10 +25,7 @@ import {formatLargeNumber} from '@/app/components/utils/Util';
         barFill?:string;
         barSize?:number;
     },
-    valueHeightCof?:number;
-    paddingCof?:number;
-    barTopCof?:number;
-    barBottomCof?:number;
+    
     barMinHeight?:number;
     barMaxHeight?:number;
   }
@@ -36,50 +34,14 @@ import {formatLargeNumber} from '@/app/components/utils/Util';
     barData = [],
     axisData = { XAxis: { dataKey: "xKey", customTickFill: "#000" } },
     bar = { dataKey: "value", barFill: "#22bf6a", barSize: 20 },
-    valueHeightCof= 10,
-    paddingCof = 10,
-    barTopCof = 7,
-    barBottomCof = 10,
     barMinHeight = 10,
     barMaxHeight = 80
   }: BarProps) {
 
-
-    const maxBarValueLength = Math.max(
-        ...barData.map((data) =>
-          `$${formatLargeNumber(data[bar.dataKey])}`.length
-        )
-      );
-
-      const maxXkeyalueLength = Math.max(
-        ...barData.map((data) =>
-          `${data[axisData.XAxis.dataKey]}`.length
-        )
-      );
-
-      const minBarValueLength = Math.min(
-        ...barData.map((data) =>
-          `$${formatLargeNumber(data[bar.dataKey])}`.length
-        )
-      );
-
-      //console.log(maxBarValueLength)
-
-      // Calculate dynamic height
-    const calculateHeight = () => {
-        const barCount = barData.length < 5 ? 10:barData.length;
-        const barHeight = bar.barSize || 20;
-        //const gapBetweenBars = 15; // Default gap between bars
-        const valueHeight = maxBarValueLength * valueHeightCof; // Approximate height per character (adjust multiplier as needed)
-        const padding = maxBarValueLength * paddingCof; // Padding for axis labels, tooltips, etc.
-
-        // Overall height based on number of bars, their heights, and value label space
-        return barCount * (barHeight) + valueHeight + padding;
-    };
-
-    let calcHeight =  calculateHeight();  
-
-    const dynamicHeight = calcHeight < 200 ?calcHeight + barMaxHeight + barMinHeight:calcHeight;
+    const [topBarHeight, setTopBarHeight] = useState(1); // For bar + label.
+    const [bottomAxisHeight, setBottomAxisHeight] = useState(1); // For X-axis labels.
+    const [dynamicHeight, setDynamicHeight] = useState(150); // Default minimum height
+  
 
     const calculateWidth = () => {
         const barCount = barData.length;
@@ -106,6 +68,14 @@ import {formatLargeNumber} from '@/app/components/utils/Util';
       // Calculate the position for the rotated text
       const adjustedTextX = x + width / 2; // Align horizontally with the bar's center
       const adjustedTextY = adjustedY - labelPadding; // Position above the bar with padding
+      const labelWidth = valueString.length * 8; // Approximation of label width.
+
+      useEffect(() => {
+        // Update the topBarHeight to consider bar + label height.
+        setTopBarHeight((prevHeight) => Math.max(prevHeight, adjustedHeight + labelWidth + labelPadding));
+      }, [adjustedHeight, labelWidth]);
+    
+
   
       return (
           <g>
@@ -168,6 +138,12 @@ import {formatLargeNumber} from '@/app/components/utils/Util';
 
     const CustomXAxisTick = (props: any) => {
         const { x, y, payload } = props;
+        const labelWidth = payload.value.length * 8; // Approximation of X-axis label width.
+
+        useEffect(() => {
+          // Update the bottomAxisHeight to consider the label height.
+          setBottomAxisHeight((prevHeight) => Math.max(prevHeight, labelWidth + 10)); // Add some padding.
+        }, [labelWidth]);
       
         return (
           <g transform={`translate(${x},${y})`}>
@@ -188,6 +164,11 @@ import {formatLargeNumber} from '@/app/components/utils/Util';
         );
       };
 
+
+      useEffect(() => {
+        setDynamicHeight(topBarHeight + bottomAxisHeight); // Sum the two heights.
+      }, [topBarHeight, bottomAxisHeight]);
+      
       
 
 
@@ -198,10 +179,10 @@ import {formatLargeNumber} from '@/app/components/utils/Util';
                           <BarChart                                            
                               data={barData}
                               margin={{
-                              top: maxBarValueLength * barTopCof ,
+                              top: topBarHeight / 8 ,
                               right: 0,
                               left: 0,
-                              bottom: maxXkeyalueLength * barBottomCof,
+                              bottom: bottomAxisHeight /2,
                               }}
                               
                             barCategoryGap={10}

@@ -149,11 +149,7 @@ const Summary = ({income_id}:DebtTransProps)=>{
                                       bar={
                                         {dataKey:'total_balance_net'}
                                       }
-                                      barBottomCof={5}
-                                      barMaxHeight={70}
-                                      barTopCof={0}
-                                      paddingCof={0}
-                                      valueHeightCof={1}
+                                      
                   
                                     />   
             {/* <ResponsiveContainer width="35%" height={150}>

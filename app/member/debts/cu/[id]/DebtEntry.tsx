@@ -1,15 +1,15 @@
 
-import CardHolderDefault from "@/app/components/ui/CardHolderDefault";
-import { Field, Form, Formik } from "formik";
-import { useRouter } from "next/router";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { DataLabel, DataSchema, ValidationSchema } from "./DataValidationSchema";
-import axios from "axios";
-import toast from "react-hot-toast";
-import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 import CheckComponent from "@/app/components/CheckComponent";
+import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 import FormikSelectInput from "@/app/components/form/FormikSelectInput";
+import CardHolderDefault from "@/app/components/ui/CardHolderDefault";
 import useApp from "@/app/hooks/useApp";
+import axios from "axios";
+import { Field, Form, Formik } from "formik";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { DataLabel, DataSchema, ValidationSchema } from "./DataValidationSchema";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -27,6 +27,7 @@ interface DebtProps{
 const DebtEntry=({debt_acc_id, user_id,transaction_data,currentDate}:DebtProps)=>{
 
     const appCtx = useApp();
+    const router = useRouter()
     const debtsAccountsScreen = appCtx.debtsAccountsScreen;
 
     const [fetchFomrData,setFetchFormData] = useState(DataSchema);    
@@ -54,8 +55,12 @@ const DebtEntry=({debt_acc_id, user_id,transaction_data,currentDate}:DebtProps)=
 
           if(response.data.result > 0){
             toast.success(response.data.message);
-            resetForm();
-            appCtx.setDebtsAccountsScreen(debtsAccountsScreen < 1? 1:debtsAccountsScreen+1);
+            if(response.data.closed_at!=null){
+                router.push('/member/debts');
+            }else{
+                resetForm();
+                appCtx.setDebtsAccountsScreen(debtsAccountsScreen < 1? 1:debtsAccountsScreen+1);
+            }
             
           }else{
             toast.error(response.data.message);

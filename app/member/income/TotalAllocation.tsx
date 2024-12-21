@@ -266,10 +266,7 @@ const TotalAllocation = ({userid}:TotalPros) => {
                     bar={
                       {dataKey:'total_balance_net'}
                     }
-                    paddingCof={0}
-                    valueHeightCof={1}
-                    barTopCof={0}
-                    barBottomCof={5}
+                   
 
                   />
 
