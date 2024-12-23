@@ -241,6 +241,7 @@ module.exports = {
       dropShadow: {
         1: '0px 1px 0px #E2E8F0',
         2: '0px 1px 4px rgba(0, 0, 0, 0.12)',
+        'custom': '1px 1px 1px rgba(0, 0, 0, 0.8)',
       },
       keyframes: {
         rotating: {

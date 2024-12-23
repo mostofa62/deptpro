@@ -153,6 +153,12 @@ const TotalAllocation = ({userid}:TotalPros) => {
       base_gross_income:'Gross Earnings',
       previous_net_history:'12 months net earning history'      
     }
+
+    const EarnerDataLabel={
+      earner:'Earner',
+      gross_income:'Gross Earnings',
+      net_income:'Net Earnings'
+    }
     
     
     
@@ -160,8 +166,11 @@ const TotalAllocation = ({userid}:TotalPros) => {
     
     const CustomTooltipLine = ({ payload,label }:any) => {
       if (!payload || payload.length === 0) return null;
+      // Find the 'earners' data for the current label
+      const currentData = lineData.find((d:any) => d.month_word === label);
+      const earners = currentData?.earners || [];
       return (
-        <div className="bg-white border p-2 rounded shadow-lg text-sm">
+        <div className="bg-white border p-2 rounded shadow-lg text-sm z-9999 max-h-screen">
           <div><strong>Month:</strong> {label}</div>
           
           {payload.map((entry:any, index:number) => (
@@ -169,6 +178,35 @@ const TotalAllocation = ({userid}:TotalPros) => {
               <strong>{dataLabel[entry.dataKey as keyof typeof dataLabel]}:</strong> ${Intl.NumberFormat('en-US').format(entry.value)}
             </div>
           ))}
+
+          {/* Display earners array as a list */}
+          {earners.length > 0 && (
+            <div className="mt-1">
+              <div><strong>Earners</strong></div>
+              <div className="overflow-y-scroll max-h-25">
+              {earners.map((earner: any, index: number) => (
+                <div className="border p-1 my-1" key={`earner-${index}`} style={{ color: getColorForDebtType(earner.earner_id) }}>
+                  {/* Iterate over keys in the earner object */}
+                  {Object.keys(earner)
+                  .filter((key) => key !== "earner_id") // Filter out 'earner_id'
+                  .map((key) => (
+                    <div key={key}>
+                      <strong>{EarnerDataLabel[key as keyof typeof EarnerDataLabel] || key}:</strong>
+                      <span className="px-1">{typeof earner[key] === "number" ? (
+                        `$${new Intl.NumberFormat('en-US').format(earner[key])}`
+                      ) : (
+                        earner[key]
+                      )}
+                      </span>
+                    </div>
+                  ))}
+
+
+                </div>
+              ))}
+              </div>
+            </div>
+          )}
         </div>
       );
     };
@@ -284,11 +322,11 @@ bar={
 
                 
 
-                <div>
+                {/* <div>
                   <p className={`capitalize pt-1 text-[13px] font-semibold text-[${getColorForDebtType(dataLabel.base_net_income)}]`}>
                     {dataLabel.previous_net_history}
                   </p>
-                </div>
+                </div> */}
                   
                     
 
@@ -320,7 +358,7 @@ bar={
 
               {/* Render Line components for each unique dataKey (e.g., BB, TEACHER_FEE, etc.) */}
               { Object.keys(lineData[0]).
-              filter(key => key !== 'month_word' && key !== 'month').map((key, index) => (
+              filter(key => key !== 'month_word' && key !== 'month' && key!='earners').map((key, index) => (
                 <Line
                   key={key}
                   type="monotone"

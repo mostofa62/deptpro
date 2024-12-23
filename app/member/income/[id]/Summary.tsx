@@ -175,9 +175,9 @@ const Summary = ({income_id}:DebtTransProps)=>{
 
                                         </ResponsiveContainer> */}
                                         <div>
-                  <p className={`capitalize pt-1 text-[13px] font-semibold text-[${getColorForDebtType(dataLabel.base_net_income)}]`}>
+                  {/* <p className={`capitalize pt-1 text-[13px] font-semibold text-[${getColorForDebtType(dataLabel.base_net_income)}]`}>
                   {dataLabel.previous_net_history}
-                  </p>
+                  </p> */}
                 </div>
                   
                     
