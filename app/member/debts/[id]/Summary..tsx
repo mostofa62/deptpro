@@ -41,7 +41,8 @@ const CustomTooltip = ({ payload, label }: any) => {
           fontSize: '16px',
           minWidth:'100px'                    
         }}>          
-          <p style={{ margin: 0 }}>$ {Intl.NumberFormat('en-US').format(data.amount)}</p>
+          <p style={{ margin: 0 }}>$ {Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(data.amount)}</p>
         </div>
       );
     }
@@ -55,7 +56,8 @@ interface DebtTransProps{
 const Summary = ({DebtWithTransactionData}:DebtTransProps)=>{
 
     
-    const formattedAmount = new Intl.NumberFormat('en-US').format(DebtWithTransactionData?.debtaccounts?.balance);
+    const formattedAmount = Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(DebtWithTransactionData?.debtaccounts?.balance);
 
 
     return(

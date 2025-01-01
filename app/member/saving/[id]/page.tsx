@@ -206,7 +206,8 @@ export default function SavingDetail({
                             <strong>{datalabel[key]}</strong>
                             <p className="mt-1">
                             {/*DebtWithTransactionData.debtAccount[key] !== undefined ? DebtWithTransactionData.debtAccount[key].toString() : '-'*/}
-                            {DataPrefix[key as keyof DebtSuffix]}{key in SavingWithTransactionData.saving ? typeof SavingWithTransactionData.saving[key] == 'number'? SavingWithTransactionData.saving[key]?.toFixed(2) :SavingWithTransactionData.saving[key]?.toString() : '-'}{DebtPrefix[key as keyof DebtPrefix]}
+                            {DataPrefix[key as keyof DebtSuffix]}{key in SavingWithTransactionData.saving ? typeof SavingWithTransactionData.saving[key] == 'number'? Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(SavingWithTransactionData.saving[key]) :SavingWithTransactionData.saving[key]?.toString() : '-'}{DebtPrefix[key as keyof DebtPrefix]}
                             </p>
                         </div>
                         ))}

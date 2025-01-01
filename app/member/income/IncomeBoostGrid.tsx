@@ -194,7 +194,8 @@ const generateItems = useCallback((row) => [
           {
             accessorKey: 'income_boost',
             header: DataLabel.income_boost,
-            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
+            cell: (info) => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+              minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>,
             /*
             footer: (props) => {
               const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
@@ -203,7 +204,8 @@ const generateItems = useCallback((row) => [
               return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
             },
             */
-           footer:(props)=><p><span>$</span><span>{total_income_boost.toFixed(2)}</span></p>
+           footer:(props)=><p><span>$</span><span>{Intl.NumberFormat('en-US', {
+            minimumFractionDigits: 2,maximumFractionDigits: 2}).format(total_income_boost)}</span></p>
           },
          
           

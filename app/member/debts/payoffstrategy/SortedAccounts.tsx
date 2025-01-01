@@ -70,12 +70,20 @@ const SortedAccount = ({debt_accounts_list}:SortProps)=>{
                         return(
                             <tr key={index}>
                                 {
-                                    Object.keys(data).map((key, i) => (
-                                        <td key={i}>
-                                            {DataPrefix[key as keyof DebtRow]}{data[key as keyof DebtRow]}
-                                        </td>   
-                                    ))
-                                }
+  Object.keys(data).map((key, i) => (
+    <td key={i}>
+      {DataPrefix[key as keyof DebtRow]}
+      {
+        DataPrefix[key as keyof DebtRow] === "$"
+          ? Intl.NumberFormat('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            }).format(Number(data[key as keyof DebtRow]))
+          : data[key as keyof DebtRow]
+      }
+    </td>
+  ))
+}
                                  
 
 

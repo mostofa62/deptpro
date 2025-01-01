@@ -88,7 +88,8 @@ const DebtAmortization = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
             {
               accessorKey: 'balance',
               header: 'Balance',
-              cell: info => <p><span>$</span><span>{info.getValue()}</span></p>,
+              cell: info => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>,
               
             }, 
             
@@ -97,30 +98,38 @@ const DebtAmortization = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
             {
                 accessorKey: 'total_payment',
                 header: 'Total Payment',
-                cell: info => <p><span>$</span><span>{info.getValue()}</span></p>,
-                footer:(props)=><p className=" capitalize">{total_payment.toFixed(2)}</p>
+                cell: info => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+                  minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>,
+                footer:(props)=><p className=" capitalize">{Intl.NumberFormat('en-US', {
+                  minimumFractionDigits: 2,maximumFractionDigits: 2}).format(total_payment)}</p>
             },
 
             {
               accessorKey: 'snowball_amount',
               header: 'Snowball Amount',
-              cell: info => <p><span>$</span><span>{info.getValue()}</span></p>,
-              footer:(props)=><p className=" capitalize">{total_snowball_amount.toFixed(2)}</p>
+              cell: info => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>,
+              footer:(props)=><p className=" capitalize">{Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,maximumFractionDigits: 2}).format(total_snowball_amount)}</p>
             },
             
             {
                 accessorKey: 'interest',
                 header: 'Interest',
-                cell: info => <p><span>$</span><span>{info.getValue()}</span></p>,
-                footer:(props)=><p className=" capitalize">{total_interest.toFixed(2)}</p>
+                cell: info => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+                  minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>,
+                footer:(props)=><p className=" capitalize">{Intl.NumberFormat('en-US', {
+                  minimumFractionDigits: 2,maximumFractionDigits: 2}).format(total_interest)}</p>
             },
             
             
             {
                 accessorKey: 'principle',
                 header: 'Principal',
-                cell: info => <p><span>$</span><span>{info.getValue()}</span></p>,
-                footer:(props)=><p className=" capitalize">{total_principle.toFixed(2)}</p>
+                cell: info => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+                  minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>,
+                footer:(props)=><p className=" capitalize">{Intl.NumberFormat('en-US', {
+                  minimumFractionDigits: 2,maximumFractionDigits: 2}).format(total_principle)}</p>
             },
 
             

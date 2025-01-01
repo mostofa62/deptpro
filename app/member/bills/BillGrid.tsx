@@ -213,12 +213,14 @@ const BillGrid = ({category}:BillProps)=>{
               {
                   accessorKey: 'default_amount',
                   header: DataLabel.default_amount,
-                  cell: (info) => <p><span>$</span><span>{info.getValue<number>()}</span></p>,
+                  cell: (info) => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+                    minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>,
                   footer: (props) => {
                     const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
                       return sum + row.original.default_amount;
                     }, 0);
-                    return <p><span>$</span><span>{total}</span></p>;
+                    return <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+                      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(total)}</span></p>;
                   },
               },
       

@@ -1,6 +1,7 @@
+import RechartHorizentalBar from "@/app/components/chart/RechartHorizentalBar";
 import CardHolder from "@/app/components/ui/CardHolder";
 import DataProgress from "@/app/components/ui/DataProgress";
-import { generateUniqueColors, getColorForValue, hashString, hslToHex } from "@/app/components/utils/Util";
+import { formatLargeNumber, generateUniqueColors, getColorForValue, hashString, hslToHex } from "@/app/components/utils/Util";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import { useEffect, useRef, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Line, BarChart, Bar } from "recharts";
@@ -200,47 +201,8 @@ const TotalAllocation = ({userid}:TotalProps) => {
     }
     
     
-    const CustomBar = (props: any) => {
-      const { fill, x, y, width, height, value } = props;
-      
-      return (
-        <rect
-          x={x}
-          y={y}
-          width={width}
-          height={height}
-          fill={fill}
-          tabIndex={-1} // Prevent focus
-          style={{
-            outline: 'none', // Remove any focus outline
-            transition: 'none', // Remove hover transition effect
-          }}
-        />
-      );
-    };
-
-    const CustomTooltipBar = ({ payload, label }: any) => {
-      if (payload && payload.length) {
-        const data = payload[0].payload;
     
-        return (
-          <div style={{
-            color:'#ffffff',  
-            backgroundColor: '#22bf6a',
-            border: '1px solid #4f4f4f',
-            borderRadius: '5px',
-            padding: '4px',
-            fontSize: '16px',
-            minWidth:'100px'                    
-          }}>          
-            <p style={{ margin: 0 }}>${Intl.NumberFormat('en-US').format(data.total_balance)} in <span>{data.year_month_word}</span></p>
-          </div>
-        );
-      }
-    
-      return null;
-    };
-    
+   
     const CustomTooltipLine = ({ payload,label }:any) => {
       if (!payload || payload.length === 0) return null;
       return (
@@ -248,7 +210,8 @@ const TotalAllocation = ({userid}:TotalProps) => {
           <div><strong>Month:</strong> {label}</div>
           {payload.map((entry:any, index:number) => (
             <div key={`item-${index}`} style={{ color: entry.stroke }}>
-              <strong>{dataLabel[entry.dataKey as keyof typeof dataLabel]}:</strong> ${entry.value.toFixed(2)}
+              <strong>{dataLabel[entry.dataKey as keyof typeof dataLabel]}:</strong> ${Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(entry.value)}
             </div>
           ))}
         </div>
@@ -360,9 +323,22 @@ const TotalAllocation = ({userid}:TotalProps) => {
 
 {barData.length > 0 &&
   <CardHolder title={`12 months history`} maxHeight={maxHeight}>
-                <div className="w-full flex justify-center items-center py-2">
+                <div className="flex flex-col justify-center items-center">
+
+
+                  <RechartHorizentalBar
+                                      barData={barData}
+                                      axisData={ 
+                                        {XAxis:{dataKey:'year_month_word'}}
+                                      }
+                                      bar={
+                                        {dataKey:'total_balance'}
+                                      }
+                                     
+                  
+                                    />
                     
-                                <ResponsiveContainer width="35%" height={200}>
+                                {/* <ResponsiveContainer width="35%" height={200}>
                                         <BarChart                                            
                                             data={barData}
                                             margin={{
@@ -383,7 +359,7 @@ const TotalAllocation = ({userid}:TotalProps) => {
                                         
                                         </BarChart>
 
-                                        </ResponsiveContainer>
+                                        </ResponsiveContainer> */}
                 </div>
                 </CardHolder>
             }
@@ -404,7 +380,7 @@ const TotalAllocation = ({userid}:TotalProps) => {
               <LineChart data={lineData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month_word" tick={{ fontSize:12 }} />
-              <YAxis tick={{ fontSize:12 }} tickFormatter={(value) => `$${value}`}/>
+              <YAxis tick={{ fontSize:12 }} tickFormatter={(value) => `$${formatLargeNumber(value)}`}/>
               {/* <Tooltip content={<CustomTooltipLine />} /> */}
               <Tooltip content={<CustomTooltipLine />} />
               <Legend 

@@ -131,14 +131,16 @@ const SavingContributions = ({saving_id}:SavingProps)=>{
             {
               accessorKey: 'contribution',
               header: 'Contribution',
-              cell: info => <p><span>$</span><span>{info.row.original.contribution.toFixed(2)}</span></p>
+              cell: info => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.row.original.contribution)}</span></p>
               
             },
 
             {
               accessorKey: 'interest_xyz',
               header: 'Interest',
-              cell: info => <p><span>$</span><span>{info.row.original.interest_xyz.toFixed(2)}</span></p>
+              cell: info => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.row.original.interest_xyz)}</span></p>
               
             },
 
@@ -146,7 +148,8 @@ const SavingContributions = ({saving_id}:SavingProps)=>{
             {
               accessorKey: 'total_balance_xyz',
               header: 'Total Balance',
-              cell: info => <p><span>$</span><span>{info.row.original.total_balance_xyz.toFixed(2)}</span></p>
+              cell: info => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.row.original.total_balance_xyz)}</span></p>
               
             },
 

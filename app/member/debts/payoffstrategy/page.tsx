@@ -338,8 +338,14 @@ const PayoffStrategy =()=>{
                         <div className="w-[35%]">
 
                             <Summary 
-                            total_paid={`$${payoffData.total_paid}`} 
-                            total_interest={`$${payoffData.total_interest}`} 
+                            total_paid={`$${Intl.NumberFormat('en-US', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              }).format(payoffData.total_paid)}`} 
+                            total_interest={`$${Intl.NumberFormat('en-US', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              }).format(payoffData.total_interest)}`} 
                             paid_off={payoffData.paid_off}
                             max_months_to_payoff={payoffData.max_months_to_payoff}
                             

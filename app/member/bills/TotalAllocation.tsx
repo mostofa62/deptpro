@@ -1,6 +1,6 @@
 import CardHolder from "@/app/components/ui/CardHolder";
 import DataProgress from "@/app/components/ui/DataProgress";
-import { generateUniqueColors, getColorForValue, hashString, hslToHex } from "@/app/components/utils/Util";
+import { generateUniqueColors, formatLargeNumber, hashString, hslToHex } from "@/app/components/utils/Util";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import { useEffect, useRef, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Line } from "recharts";
@@ -48,7 +48,9 @@ const CustomTooltip = ({ active, payload, label, total_count, total_balance }:an
     if (active && payload && payload.length) {
       return (
         <div className="custom-tooltip" style={{ backgroundColor: '#fff', padding: '3px', border: '1px solid #ccc' }}>
-          <p className="text-lg"><span className=" font-semibold">{`${payload[0].name}`}</span> : <span className=" font-semibold">${`${payload[0].value.toFixed(2)}`}</span> in <span className=" font-semibold">${`${total_balance}`}</span></p>
+          <p className="text-lg"><span className=" font-semibold">{`${payload[0].name}`}</span> : <span className=" font-semibold">${`${Intl.NumberFormat('en-US', {
+            minimumFractionDigits: 2,maximumFractionDigits: 2}).format(payload[0].value)}`}</span> in <span className=" font-semibold">${`${Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(total_balance)}`}</span></p>
         </div>
       );
     }
@@ -143,7 +145,8 @@ const TotalAllocation = ({userid}:TotapProps) => {
           <div><strong>Month:</strong> {label}</div>
           {payload.map((entry:any, index:number) => (
             <div key={`item-${index}`} style={{ color: entry.stroke }}>
-              <strong>{bill_type_names && bill_type_names[entry.dataKey]}:</strong> ${entry.value.toFixed(2)}
+              <strong>{bill_type_names && bill_type_names[entry.dataKey]}:</strong> ${Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(entry.value)}
             </div>
           ))}
         </div>
@@ -271,7 +274,7 @@ const TotalAllocation = ({userid}:TotapProps) => {
             <LineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month" tick={{ fontSize:12 }} />
-              <YAxis tick={{ fontSize:12 }} tickFormatter={(value) => `$${value}`} />
+              <YAxis tick={{ fontSize:12 }} tickFormatter={(value) => `$${formatLargeNumber(value)}`} />
               {/* <Tooltip content={<CustomTooltipLine />} /> */}
               <Tooltip content={<CustomTooltipLine />} />
               <Legend 

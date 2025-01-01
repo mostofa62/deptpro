@@ -76,7 +76,8 @@ export default function InsuranceCreate({
         <div className="flex flex-col gap-1 text-[15px]">
           <div><span>DUE DATE</span><span className="ml-4">{DebtWithTransactionData.debtaccounts.due_date}</span></div>
           <div><span>Name</span><span className="ml-4">{DebtWithTransactionData.debtaccounts.name}</span></div>
-          <div><span>Balance</span><span className="ml-4">$</span><span className="ml-1">{Intl.NumberFormat('en-US').format(DebtWithTransactionData.debtaccounts.balance)}</span></div>
+          <div><span>Balance</span><span className="ml-4">$</span><span>{Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(DebtWithTransactionData.debtaccounts.balance)}</span></div>
         </div>
       )
   
@@ -175,7 +176,8 @@ export default function InsuranceCreate({
                     <strong>{datalabel[key]}</strong>
                     <p className="mt-1">
                       {/*DebtWithTransactionData.debtAccount[key] !== undefined ? DebtWithTransactionData.debtAccount[key].toString() : '-'*/}
-                      {DataPrefix[key as keyof DebtRow]}{key in DebtWithTransactionData.debtaccounts ? DebtWithTransactionData.debtaccounts[key]?.toString() : '-'} {DataSuffix[key as keyof DebtRow]}
+                      {DataPrefix[key as keyof DebtRow]}{key in DebtWithTransactionData.debtaccounts ? typeof DebtWithTransactionData.debtaccounts[key] == 'number'? Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(DebtWithTransactionData.debtaccounts[key]) :DebtWithTransactionData.debtaccounts[key]?.toString() : '-'} {DataSuffix[key as keyof DebtRow]}
                     </p>
                   </div>
                 ))}

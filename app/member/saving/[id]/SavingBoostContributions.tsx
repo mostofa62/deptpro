@@ -140,7 +140,8 @@ const SavingBoostContributions = ({saving_id}:SavingProps)=>{
             {
               accessorKey: 'contribution',
               header: 'Contribution',
-              cell: info => <p><span>$</span><span>{info.row.original.contribution.toFixed(2)}</span></p>
+              cell: info => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.row.original.contribution)}</span></p>
               
             },
 
@@ -150,7 +151,8 @@ const SavingBoostContributions = ({saving_id}:SavingProps)=>{
             {
               accessorKey: 'total_balance',
               header: 'Total Balance',
-              cell: info => <p><span>$</span><span>{info.row.original.total_balance.toFixed(2)}</span></p>
+              cell: info => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.row.original.total_balance)}</span></p>
               
             },
 

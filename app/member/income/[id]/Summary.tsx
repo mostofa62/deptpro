@@ -3,7 +3,7 @@ import RechartHorizentalBar from "@/app/components/chart/RechartHorizentalBar";
 import CardHolder from "@/app/components/ui/CardHolder";
 import CardHolderOne from "@/app/components/ui/CardHolderOne";
 import ProgressBarOne from "@/app/components/ui/ProgressBarOne";
-import { hashString, hslToHex } from "@/app/components/utils/Util";
+import { formatLargeNumber, hashString, hslToHex } from "@/app/components/utils/Util";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import { useEffect, useRef, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Line, BarChart, Bar } from "recharts";
@@ -57,7 +57,8 @@ const Summary = ({income_id}:DebtTransProps)=>{
       payLoads:payloadFuture
     })
 
-    const formattedAmount = new Intl.NumberFormat('en-US').format(IncomeContributions.total_monthly_balance);
+    const formattedAmount = new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(IncomeContributions.total_monthly_balance);
 
     const barData = IncomeContributions.year_month_wise_counts;
 
@@ -69,17 +70,57 @@ const Summary = ({income_id}:DebtTransProps)=>{
       previous_net_history:'12 months net earning history'         
     }
 
+    const EarnerDataLabel={
+      earner:'Earner',
+      gross_income:'Gross Earnings',
+      net_income:'Net Earnings'
+    }
+
     const CustomTooltipLine = ({ payload,label }:any) => {
       if (!payload || payload.length === 0) return null;
+      // Find the 'earners' data for the current label
+      const currentData = lineData.find((d:any) => d.month_word === label);
+      const earners = currentData?.earners || [];
       return (
-        <div className="bg-white border p-2 rounded shadow-lg text-sm">
+        <div className="bg-white border p-2 rounded shadow-lg text-sm z-9999 max-h-screen">
           <div><strong>Month:</strong> {label}</div>
           
           {payload.map((entry:any, index:number) => (
             <div key={`item-${index}`} style={{ color: entry.stroke }}>
-              <strong>{dataLabel[entry.dataKey as keyof typeof dataLabel]}:</strong> ${entry.value.toFixed(2)}
+              <strong>{dataLabel[entry.dataKey as keyof typeof dataLabel]}:</strong> ${Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(entry.value)}
             </div>
           ))}
+
+          {/* Display earners array as a list */}
+          {earners.length > 0 && (
+            <div className="mt-1">
+              <div><strong>Earners</strong></div>
+              <div className="overflow-y-scroll max-h-25">
+              {earners.map((earner: any, index: number) => (
+                <div className="border p-1 my-1" key={`earner-${index}`} style={{ color: getColorForDebtType(earner.earner_id) }}>
+                  {/* Iterate over keys in the earner object */}
+                  {Object.keys(earner)
+                  .filter((key) => key !== "earner_id") // Filter out 'earner_id'
+                  .map((key) => (
+                    <div key={key}>
+                      <strong>{EarnerDataLabel[key as keyof typeof EarnerDataLabel] || key}:</strong>
+                      <span className="px-1">{typeof earner[key] === "number" ? (
+                        `$${Intl.NumberFormat('en-US', {
+                          minimumFractionDigits: 2,maximumFractionDigits: 2}).format(earner[key])}`
+                      ) : (
+                        earner[key]
+                      )}
+                      </span>
+                    </div>
+                  ))}
+
+
+                </div>
+              ))}
+              </div>
+            </div>
+          )}
         </div>
       );
     };
@@ -200,7 +241,7 @@ const Summary = ({income_id}:DebtTransProps)=>{
               <LineChart data={lineData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month_word" tick={{ fontSize:12 }} />
-              <YAxis tick={{ fontSize:12 }} tickFormatter={(value) => `$${value}`} />
+              <YAxis tick={{ fontSize:12 }} tickFormatter={(value) => `$${formatLargeNumber(value)}`} />
               {/* <Tooltip content={<CustomTooltipLine />} /> */}
               <Tooltip content={<CustomTooltipLine />} />
               <Legend 
@@ -212,7 +253,7 @@ const Summary = ({income_id}:DebtTransProps)=>{
 
               {/* Render Line components for each unique dataKey (e.g., BB, TEACHER_FEE, etc.) */}
               { Object.keys(lineData[0]).
-              filter(key => key !== 'month_word' && key !== 'month').map((key, index) => (
+              filter(key => key !== 'month_word' && key !== 'month' && key!='earners').map((key, index) => (
                 <Line
                   key={key}
                   type="monotone"

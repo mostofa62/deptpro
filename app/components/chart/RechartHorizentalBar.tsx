@@ -125,7 +125,8 @@ import { useEffect, useState } from "react";
               fontSize: '16px',
               minWidth:'100px'                    
             }}>          
-              <p style={{ margin: 0 }}>${Intl.NumberFormat('en-US').format(data.total_balance_net)} in <span>{data.year_month_word}</span></p>
+              <p style={{ margin: 0 }}>${Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(data[bar.dataKey])} in <span>{data[axisData.XAxis.dataKey]}</span></p>
             </div>
           );
         }

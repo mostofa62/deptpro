@@ -193,7 +193,8 @@ const ExtraTransactions = ({bill_id}:DebtProps)=>{
                   );
                 },
                 */
-                cell: info => <p>{info.row.original.type_number>1 &&<span>-</span>}<span className='ml-1'>$</span><span>{info.getValue()}</span></p>
+                cell: info => <p>{info.row.original.type_number>1 &&<span>-</span>}<span className='ml-1'>$</span><span>{Intl.NumberFormat('en-US', {
+                  minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>
                 
             },
 

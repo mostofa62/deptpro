@@ -1,3 +1,4 @@
+import RechartHorizentalBar from "@/app/components/chart/RechartHorizentalBar";
 import ProgressBarOne from "@/app/components/ui/ProgressBarOne";
 
 import {
@@ -41,7 +42,8 @@ const CustomTooltip = ({ payload, label }: any) => {
           fontSize: '16px',
           minWidth:'100px'                    
         }}>          
-          <p style={{ margin: 0 }}>${Intl.NumberFormat('en-US').format(data.amount)}</p>
+          <p style={{ margin: 0 }}>${Intl.NumberFormat('en-US', {
+        minimumFractionDigits: 2,maximumFractionDigits: 2}).format(data.amount)}</p>
         </div>
       );
     }
@@ -55,7 +57,8 @@ interface DebtTransProps{
 const Summary = ({BillWithPaymentData}:DebtTransProps)=>{
 
     
-    const formattedAmount = new Intl.NumberFormat('en-US').format(BillWithPaymentData?.billaccounts?.current_amount);
+    const formattedAmount = Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(BillWithPaymentData?.billaccounts?.current_amount);
 
 
     return(
@@ -101,11 +104,23 @@ const Summary = ({BillWithPaymentData}:DebtTransProps)=>{
             {BillWithPaymentData.billpayments.length > 0 &&
                 <div className="w-full flex gap-2">
 
-                  <div className="w-[30%]">
+                  <div className="w-[30%] flex flex-col items-center justify-center">
                     <p className="text-[#4f4f4f] font-medium">12 Month Bill Payment History</p>
                   </div>
                     <div className="w-[70%]">
-                                <ResponsiveContainer width="10%" height={120}>
+                      
+                      <RechartHorizentalBar
+                                          barData={BillWithPaymentData.billpayments}
+                                          axisData={ 
+                                            {XAxis:{dataKey:'pay_date_word'}}
+                                          }
+                                          bar={
+                                            {dataKey:'amount'}
+                                          }
+                                         
+                      
+                                        />
+                                {/* <ResponsiveContainer width="10%" height={120}>
                                         <BarChart                                            
                                             data={BillWithPaymentData.billpayments}
                                             margin={{
@@ -126,7 +141,7 @@ const Summary = ({BillWithPaymentData}:DebtTransProps)=>{
                                         
                                         </BarChart>
 
-                                        </ResponsiveContainer>
+                                        </ResponsiveContainer> */}
                                         </div>
                 </div>
             }

@@ -37,7 +37,8 @@ const Projection = ({chartData, debt_type_names}:ProjectionProps)=>{
             <div><strong>Month:</strong> {label}</div>
             {payload.map((entry:any, index:number) => (
               <div key={`item-${index}`} style={{ color: entry.stroke }}>
-                <strong>{datalabel[entry.dataKey as keyof typeof datalabel]?datalabel[entry.dataKey as keyof typeof datalabel]: debt_type_names[entry.dataKey]}:</strong> ${entry.value.toFixed(2)}
+                <strong>{datalabel[entry.dataKey as keyof typeof datalabel]?datalabel[entry.dataKey as keyof typeof datalabel]: debt_type_names[entry.dataKey]}:</strong> ${Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(entry.value)}
               </div>
             ))}
           </div>

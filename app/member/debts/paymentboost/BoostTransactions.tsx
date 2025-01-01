@@ -187,7 +187,8 @@ const BoostTransactions = ({user_id,reloadGrid,onEdit}:DebtProps)=>{
                   );
                 },
                 */
-                cell: info => <p><span>$</span><span>{info.getValue()}</span></p>
+                cell: info => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+                  minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>
                 
             },
 

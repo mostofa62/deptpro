@@ -246,7 +246,8 @@ const generateItems = useCallback((row) => [
           {
             accessorKey: 'interest',
             header: DataLabel.interest,
-            cell: (info) => <p><span>{info.getValue<number>().toFixed(2)}</span><span>%</span></p>,
+            cell: (info) => <p><span>{Intl.NumberFormat('en-US', {
+              minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span><span>%</span></p>,
             /*
             footer: (props) => {
               const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
@@ -261,7 +262,8 @@ const generateItems = useCallback((row) => [
           {
             accessorKey: 'total_balance_xyz',
             header: DataLabel.total_balance_xyz,
-            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
+            cell: (info) => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+              minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>,
           },
 
 
@@ -275,7 +277,8 @@ const generateItems = useCallback((row) => [
           {
             accessorKey: 'starting_amount',
             header: 'Starting Amount',
-            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
+            cell: (info) => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+              minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>,
             /*
             footer: (props) => {
               const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
@@ -284,13 +287,15 @@ const generateItems = useCallback((row) => [
               return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
             },
             */
-           footer:(props)=><p><span>$</span><span>{total_starting_amount.toFixed(2)}</span></p>
+           footer:(props)=><p><span>$</span><span>{Intl.NumberFormat('en-US', {
+            minimumFractionDigits: 2,maximumFractionDigits: 2}).format(total_starting_amount)}</span></p>
           },
 
           {
             accessorKey: 'contribution',
             header: DataLabel.contribution,
-            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
+            cell: (info) => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+              minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>,
             /*
             footer: (props) => {
               const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
@@ -299,7 +304,8 @@ const generateItems = useCallback((row) => [
               return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
             },
             */
-           footer:(props)=><p><span>$</span><span>{total_contribution.toFixed(2)}</span></p>
+           footer:(props)=><p><span>$</span><span>{Intl.NumberFormat('en-US', {
+            minimumFractionDigits: 2,maximumFractionDigits: 2}).format(total_contribution)}</span></p>
           },
                    
           {
@@ -337,21 +343,25 @@ const generateItems = useCallback((row) => [
           {
             accessorKey: 'monthly_saving_boost',
             header: DataLabel.monthly_saving_boost,
-            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
+            cell: (info) => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+              minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>,
           },
           
           {
             accessorKey: 'monthly_saving',
             header: DataLabel.monthly_saving,
-            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
-            footer:(props)=><p><span>$</span><span>{total_monthly_saving.toFixed(2)}</span></p>
+            cell: (info) => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+              minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>,
+            footer:(props)=><p><span>$</span><span>{Intl.NumberFormat('en-US', {
+              minimumFractionDigits: 2,maximumFractionDigits: 2}).format(total_monthly_saving)}</span></p>
           },
 
 
           {
             accessorKey: 'goal_amount',
             header: DataLabel.goal_amount,
-            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
+            cell: (info) => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+              minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>,
             /*
             footer: (props) => {
               const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
@@ -360,7 +370,8 @@ const generateItems = useCallback((row) => [
               return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
             },
             */
-           footer:(props)=><p><span>$</span><span>{total_goal_amount.toFixed(2)}</span></p>
+           footer:(props)=><p><span>$</span><span>{Intl.NumberFormat('en-US', {
+            minimumFractionDigits: 2,maximumFractionDigits: 2}).format(total_goal_amount)}</span></p>
           },
 
          

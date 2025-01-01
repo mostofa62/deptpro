@@ -53,7 +53,8 @@ export default function BillDetails({
         <div className="flex flex-col gap-1 text-[15px]">
           <div><span>DUE DATE</span><span className="ml-4">{BillWithPaymentData.billaccounts.next_due_date_word}</span></div>
           <div><span>Name</span><span className="ml-4">{BillWithPaymentData.billaccounts.name}</span></div>
-          <div><span>CURRENT BILL</span><span className="ml-4">$</span><span className="ml-1">{Intl.NumberFormat('en-US').format(BillWithPaymentData.billaccounts.current_amount)}</span></div>
+          <div><span>CURRENT BILL</span><span className="ml-4">$</span><span>{Intl.NumberFormat('en-US', {
+        minimumFractionDigits: 2,maximumFractionDigits: 2}).format(BillWithPaymentData.billaccounts.current_amount)}</span></div>
         </div>
       )
   
@@ -116,7 +117,8 @@ export default function BillDetails({
                     <strong>{key == 'bill_type' ? datalabel[key]['first']:datalabel[key] }</strong>
                     <p className="mt-1">
                       {/*BillWithPaymentData.debtAccount[key] !== undefined ? BillWithPaymentData.debtAccount[key].toString() : '-'*/}
-                      {DataPrefix[key as keyof DebtRow]}{key in BillWithPaymentData.billaccounts ?   ( key == 'bill_type' ? `${BillWithPaymentData.billaccounts[datalabel[key]['parent']] &&  `${BillWithPaymentData.billaccounts[datalabel[key]['parent']]?.toString()} > `}${BillWithPaymentData.billaccounts[key]?.toString()} `: BillWithPaymentData.billaccounts[key]?.toString()) : '-'}
+                      {DataPrefix[key as keyof DebtRow]}{key in BillWithPaymentData.billaccounts ?   ( key == 'bill_type' ? `${BillWithPaymentData.billaccounts[datalabel[key]['parent']] &&  `${BillWithPaymentData.billaccounts[datalabel[key]['parent']]?.toString()} > `}${BillWithPaymentData.billaccounts[key]?.toString()} `: DataPrefix[key as keyof DebtRow] == '$' ?Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(BillWithPaymentData.billaccounts[key]): BillWithPaymentData.billaccounts[key]?.toString()) : '-'}
                     </p>
                   </div>
                 ))}

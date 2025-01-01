@@ -1,5 +1,5 @@
 import CardHolder from "@/app/components/ui/CardHolder";
-import { hashString, hslToHex } from "@/app/components/utils/Util";
+import { formatLargeNumber, hashString, hslToHex } from "@/app/components/utils/Util";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import { useState } from "react";
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
@@ -61,7 +61,8 @@ const BillProjection = ({userid}:TotalPros) => {
           <div><strong>Month:</strong> {label}</div>
           {payload.map((entry:any, index:number) => (
             <div key={`item-${index}`} style={{ color: entry.stroke }}>
-              <strong>{bill_type_names && bill_type_names[entry.dataKey]}:</strong> ${entry.value.toFixed(2)}
+              <strong>{bill_type_names && bill_type_names[entry.dataKey]}:</strong> ${Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(entry.value)}
             </div>
           ))}
         </div>
@@ -108,7 +109,7 @@ const BillProjection = ({userid}:TotalPros) => {
             <LineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month" tick={{ fontSize:12 }} />
-              <YAxis tick={{ fontSize:12 }} tickFormatter={(value) => `$${value}`} />
+              <YAxis tick={{ fontSize:12 }} tickFormatter={(value) => `$${formatLargeNumber(value)}`} />
               {/* <Tooltip content={<CustomTooltipLine />} /> */}
               <Tooltip content={<CustomTooltipLine />} />
               <Legend 

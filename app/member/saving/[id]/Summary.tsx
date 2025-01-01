@@ -1,4 +1,5 @@
 
+import RechartHorizentalBar from "@/app/components/chart/RechartHorizentalBar";
 import ProgressBarOne from "@/app/components/ui/ProgressBarOne";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import { useEffect, useRef, useState } from "react";
@@ -16,46 +17,7 @@ interface SavingPayload{
   }
 const Summary = ({saving_id, ProgressData}:DebtTransProps)=>{
 
-    const CustomBar = (props: any) => {
-        const { fill, x, y, width, height, value } = props;
-        
-        return (
-          <rect
-            x={x}
-            y={y}
-            width={width}
-            height={height}
-            fill={fill}
-            tabIndex={-1} // Prevent focus
-            style={{
-              outline: 'none', // Remove any focus outline
-              transition: 'none', // Remove hover transition effect
-            }}
-          />
-        );
-      };
-
-    const CustomTooltipBar = ({ payload, label }: any) => {
-        if (payload && payload.length) {
-          const data = payload[0].payload;
-      
-          return (
-            <div style={{
-              color:'#ffffff',  
-              backgroundColor: '#22bf6a',
-              border: '1px solid #4f4f4f',
-              borderRadius: '5px',
-              padding: '4px',
-              fontSize: '16px',
-              minWidth:'100px'                    
-            }}>          
-              <p style={{ margin: 0 }}>${Intl.NumberFormat('en-US').format(data.total_balance)} in <span>{data.year_month_word}</span></p>
-            </div>
-          );
-        }
-      
-        return null;
-      };
+   
 
     const payloadSaving :SavingPayload = {
         year_month_wise_counts:[],
@@ -67,7 +29,8 @@ const Summary = ({saving_id, ProgressData}:DebtTransProps)=>{
         payLoads:payloadSaving
       })
 
-    const formattedAmount = new Intl.NumberFormat('en-US').format(SavingContributions.total_monthly_balance);
+    const formattedAmount = new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(SavingContributions.total_monthly_balance);
 
     const barData = SavingContributions.year_month_wise_counts;
 
@@ -101,8 +64,19 @@ const Summary = ({saving_id, ProgressData}:DebtTransProps)=>{
             </div>
 
             <div className="w-[50%] flex justify-center">
+              <RechartHorizentalBar
+                                                    barData={barData}
+                                                    axisData={ 
+                                                      {XAxis:{dataKey:'year_month_word'}}
+                                                    }
+                                                    bar={
+                                                      {dataKey:'total_balance'}
+                                                    }
+                                                   
+                                
+                                                  /> 
                     
-                                <ResponsiveContainer width="35%" height={150}>
+                                {/* <ResponsiveContainer width="35%" height={150}>
                                         <BarChart                                            
                                             data={barData}
                                             margin={{
@@ -123,7 +97,7 @@ const Summary = ({saving_id, ProgressData}:DebtTransProps)=>{
                                         
                                         </BarChart>
 
-                                        </ResponsiveContainer>
+                                        </ResponsiveContainer> */}
                 </div>
 
         </div>

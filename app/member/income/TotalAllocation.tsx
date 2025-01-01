@@ -49,7 +49,8 @@ const CustomTooltip = ({ active, payload, label, total_count, total_balance }:an
     if (active && payload && payload.length) {
       return (
         <div className="custom-tooltip" style={{ backgroundColor: '#fff', padding: '3px', border: '1px solid #ccc' }}>
-          <p className="text-lg"><span className=" font-semibold">{`${payload[0].name}`}</span> : <span className=" font-semibold">{`${payload[0].value.toFixed(2)}`}</span> in <span className=" font-semibold">{`${total_balance}`}</span></p>
+          <p className="text-lg"><span className=" font-semibold">{`${payload[0].name}`}</span> : <span className=" font-semibold">{`${Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(payload[0].value)}`}</span> in <span className=" font-semibold">{`${total_balance}`}</span></p>
         </div>
       );
     }
@@ -175,7 +176,8 @@ const TotalAllocation = ({userid}:TotalPros) => {
           
           {payload.map((entry:any, index:number) => (
             <div key={`item-${index}`} style={{ color: entry.stroke }}>
-              <strong>{dataLabel[entry.dataKey as keyof typeof dataLabel]}:</strong> ${Intl.NumberFormat('en-US').format(entry.value)}
+              <strong>{dataLabel[entry.dataKey as keyof typeof dataLabel]}:</strong> ${Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(entry.value)}
             </div>
           ))}
 
@@ -193,7 +195,8 @@ const TotalAllocation = ({userid}:TotalPros) => {
                     <div key={key}>
                       <strong>{EarnerDataLabel[key as keyof typeof EarnerDataLabel] || key}:</strong>
                       <span className="px-1">{typeof earner[key] === "number" ? (
-                        `$${new Intl.NumberFormat('en-US').format(earner[key])}`
+                        `$${Intl.NumberFormat('en-US', {
+                          minimumFractionDigits: 2,maximumFractionDigits: 2}).format(earner[key])}`
                       ) : (
                         earner[key]
                       )}

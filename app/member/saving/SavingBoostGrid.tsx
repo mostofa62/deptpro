@@ -231,7 +231,8 @@ const SavingGrid = ({saving_id}:BoostProps)=>{
           {
             accessorKey: 'saving_boost',
             header: DataLabel.saving_boost,
-            cell: (info) => <p>{info.row.original.op_type_value > 1 && <span className='px-1'>-</span>} <span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
+            cell: (info) => <p>{info.row.original.op_type_value > 1 && <span className='px-1'>-</span>} <span>$</span><span>{Intl.NumberFormat('en-US', {
+              minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>,
             /*
             footer: (props) => {
               const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
@@ -240,7 +241,8 @@ const SavingGrid = ({saving_id}:BoostProps)=>{
               return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
             },
             */
-           footer:(props)=><p><span>$</span><span>{total_saving_boost.toFixed(2)}</span></p>
+           footer:(props)=><p><span>$</span><span>{Intl.NumberFormat('en-US', {
+            minimumFractionDigits: 2,maximumFractionDigits: 2}).format(total_saving_boost)}</span></p>
           },
 
           {

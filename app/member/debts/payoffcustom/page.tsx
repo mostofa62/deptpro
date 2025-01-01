@@ -108,9 +108,26 @@ const Debt = ()=>{
       { accessorKey: 'custom_payoff_order', header: 'Order' },
       { accessorKey: 'name', header: 'Name' },
       { accessorKey: 'debt_type', header: 'Debt Type' },
-      { accessorKey: 'balance', header: 'Balance' },
-      { accessorKey: 'monthly_payment', header: 'Monthly Payment' },
-      { accessorKey: 'monthly_interest', header: 'Monthly Interest' },
+      { 
+        accessorKey: 'balance', 
+        header: 'Balance',
+        cell: (info) => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+          minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>, 
+      },
+      { 
+        accessorKey: 'monthly_payment', 
+        header: 'Monthly Payment',
+        cell: (info) => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+          minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>, 
+      
+      },
+      { 
+        accessorKey: 'monthly_interest', 
+        header: 'Monthly Interest',
+        cell: (info) => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+          minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>, 
+      
+      },
       // Add more column definitions as needed
     ];
     

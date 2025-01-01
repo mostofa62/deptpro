@@ -3,6 +3,16 @@ interface TypeProps{
     debt_type_names:{[key:string]:string},
 }
 
+
+interface DebtRow {
+    month:string;
+    boost:number;       
+    total_snowball: number;    
+    total_interest:number;
+    total_balance:number;
+    total_payment:number;    
+    
+}
 const datalabel = {
     month:'Month',
     boost:'Payment Boost',
@@ -10,6 +20,13 @@ const datalabel = {
     total_interest:'Total Interest',
     total_balance:'Total Balance',
     total_payment:'Total Payment'
+}
+
+const DataPrefix = {   
+    total_snowball:'$',
+    total_interest:'$',
+    total_balance:'$',
+    total_payment:'$',    
 }
 const TypeWiseTable = ({all_data,debt_type_names}:TypeProps)=>{
 
@@ -26,6 +43,7 @@ const TypeWiseTable = ({all_data,debt_type_names}:TypeProps)=>{
             {columns.map((col:any, index:number)=>(
 
                 <th className="py-1 border-l text-sm border-[#E6E6E6]" key={index}>
+                    
                     {datalabel[col as keyof typeof datalabel]?datalabel[col as keyof typeof datalabel]: debt_type_names[col]}
                 </th>
 
@@ -37,17 +55,22 @@ const TypeWiseTable = ({all_data,debt_type_names}:TypeProps)=>{
     }
 
     const getData = (data:any)=>{
-
+        
         return(
             <>
             
-            {data.map((col:any, index:number)=>(
-
+            {data.map((col:any, index:number)=>{
+                const row = typeof col == 'number' ? `$${Intl.NumberFormat('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  }).format(col)}` :col;
+                return(
                 <td className="py-1 border-l text-sm border-[#E6E6E6]" key={index}>
-                    {col}
+                    {row}
                 </td>
+                )
 
-            ))}
+            })}
             </>
 
         )

@@ -215,7 +215,8 @@ const generateItems = useCallback((row) => [
           {
             accessorKey: 'gross_income',
             header: DataLabel.gross_income,
-            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
+            cell: (info) => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+              minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>,
             /*
             footer: (props) => {
               const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
@@ -224,14 +225,16 @@ const generateItems = useCallback((row) => [
               return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
             },
             */
-           footer:(props)=><div className='flex flex-col items-center justify-center'><p className='capitalize font-semibold'>monthly gross income</p><p><span>$</span><span>{total_gross_income.toFixed(2)}</span></p></div>
+           footer:(props)=><div className='flex flex-col items-center justify-center'><p className='capitalize font-semibold'>monthly gross income</p><p><span>$</span><span>{Intl.NumberFormat('en-US', {
+            minimumFractionDigits: 2,maximumFractionDigits: 2}).format(total_gross_income)}</span></p></div>
           },
        
 
           {
             accessorKey: 'net_income',
             header: DataLabel.net_income,
-            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
+            cell: (info) => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+              minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>,
             /*
             footer: (props) => {
               const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
@@ -240,7 +243,8 @@ const generateItems = useCallback((row) => [
               return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
             },
             */
-           footer:(props)=><div className='flex flex-col items-center justify-center'><p className='capitalize font-semibold'>monthly net income</p><p><span>$</span><span>{total_net_income.toFixed(2)}</span></p></div>
+           footer:(props)=><div className='flex flex-col items-center justify-center'><p className='capitalize font-semibold'>monthly net income</p><p><span>$</span><span>{Intl.NumberFormat('en-US', {
+            minimumFractionDigits: 2,maximumFractionDigits: 2}).format(total_net_income)}</span></p></div>
           },
 
           
@@ -271,21 +275,24 @@ const generateItems = useCallback((row) => [
           {
             accessorKey: 'total_gross_income',
             header: DataLabel.total_gross_income,
-            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
+            cell: (info) => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+              minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>,
 
           },
 
           {
             accessorKey: 'total_net_income',
             header: DataLabel.total_net_income,
-            cell: (info) => <p><span>$</span><span>{info.getValue<number>().toFixed(2)}</span></p>,
+            cell: (info) => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+              minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>,
 
           },
 
           {
             accessorKey: 'total_yearly_net_income',
             header: DataLabel.total_yearly_net_income,
-            cell: (info) => <p><span>$</span><span>{info.getValue<number>()?.toFixed(2)}</span></p>,
+            cell: (info) => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+              minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>,
 
           },
 

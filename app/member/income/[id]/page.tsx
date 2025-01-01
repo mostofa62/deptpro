@@ -176,7 +176,8 @@ export default function IncomeDetail({
                             <strong>{datalabel[key]}</strong>
                             <p className="mt-1">
                             {/*DebtWithTransactionData.debtAccount[key] !== undefined ? DebtWithTransactionData.debtAccount[key].toString() : '-'*/}
-                            {DataPrefix[key as keyof DebtRow]}{key in IncomeWithTransactionData.income ? typeof IncomeWithTransactionData.income[key] == 'number'? IncomeWithTransactionData.income[key]?.toFixed(2) :IncomeWithTransactionData.income[key]?.toString() : '-'}
+                            {DataPrefix[key as keyof DebtRow]}{key in IncomeWithTransactionData.income ? typeof IncomeWithTransactionData.income[key] == 'number'? Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(IncomeWithTransactionData.income[key]) :IncomeWithTransactionData.income[key]?.toString() : '-'}
                             </p>
                         </div>
                         ))}
