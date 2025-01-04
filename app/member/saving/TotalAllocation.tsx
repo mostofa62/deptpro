@@ -1,10 +1,30 @@
 import RechartHorizentalBar from "@/app/components/chart/RechartHorizentalBar";
 import CardHolder from "@/app/components/ui/CardHolder";
 import DataProgress from "@/app/components/ui/DataProgress";
-import { formatLargeNumber, generateUniqueColors, getColorForValue, hashString, hslToHex } from "@/app/components/utils/Util";
+import {
+  formatLargeNumber,
+  generateUniqueColors,
+  getColorForValue,
+  hashString,
+  hslToHex,
+} from "@/app/components/utils/Util";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import { useEffect, useRef, useState } from "react";
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Line, BarChart, Bar } from "recharts";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  LineChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Line,
+  BarChart,
+  Bar,
+} from "recharts";
 
 // const data = [
 //   { name: "Group A", value: 400 },
@@ -15,15 +35,19 @@ import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, C
 
 // const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
-
-
-
-
-
-
-
 const RADIAN = Math.PI / 180;
-const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius,percent, value, index, total_count, total_balance }:any) => {
+const renderCustomizedLabel = ({
+  cx,
+  cy,
+  midAngle,
+  innerRadius,
+  outerRadius,
+  percent,
+  value,
+  index,
+  total_count,
+  total_balance,
+}: any) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
@@ -33,111 +57,111 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius,perc
       x={x}
       y={y}
       fill="white"
-      textAnchor={x > cx ? 'start' : 'end'}
+      textAnchor={x > cx ? "start" : "end"}
       dominantBaseline="central"
-      fontSize={percent < 0.10 ? 11 : 14}
+      fontSize={percent < 0.1 ? 11 : 14}
     >
       {/*`${(percent * 100).toFixed(0)}%`*/}
-      {percent >= 0.02 ? `${((100/total_balance) * value).toFixed(0)}%`:''}
+      {percent >= 0.02 ? `${((100 / total_balance) * value).toFixed(0)}%` : ""}
     </text>
   );
 };
 
-
-
-
-
-
-
-interface PayLoads{
-    category_type_counts:{_id:string,count:number,label:string, balance:number}[],
-    total_saving_source_type:number,
-    total_balance:number,
-    bill_type_ammortization:any[],
-    category_type_names:{[key:string]:string},
-    year_month_wise_counts:{total_balance:number,year_month:string, year_month_word:string}[],
-    year_month_wise_balance:number
-    
-    
+interface PayLoads {
+  category_type_counts: {
+    _id: string;
+    count: number;
+    label: string;
+    balance: number;
+  }[];
+  total_saving_source_type: number;
+  total_balance: number;
+  bill_type_ammortization: any[];
+  category_type_names: { [key: string]: string };
+  year_month_wise_counts: {
+    total_balance: number;
+    year_month: string;
+    year_month_word: string;
+  }[];
+  year_month_wise_balance: number;
 }
 
-interface SavingPayload{
-  year_month_wise_counts:{total_balance:number,total_contribution:number, year_month_word:string}[],
+interface SavingPayload {
+  year_month_wise_counts: {
+    total_balance: number;
+    total_contribution: number;
+    year_month_word: string;
+  }[];
 }
 
-interface FuturePayLoad{
-  projection_list:{total_balance:number, contribution:number, month:string, month_word:string}[]
+interface FuturePayLoad {
+  projection_list: {
+    total_balance: number;
+    contribution: number;
+    month: string;
+    month_word: string;
+  }[];
 }
 
-interface TotalProps{
-  userid:string;
+interface TotalProps {
+  userid: string;
 }
 
-const TotalAllocation = ({userid}:TotalProps) => {
+const TotalAllocation = ({ userid }: TotalProps) => {
+  const [highlightedKey, setHighlightedKey] = useState(null);
 
-    const [highlightedKey, setHighlightedKey] = useState(null);
+  const handleLegendMouseEnter = (key: any, event: any) => {
+    //alert('o')
+    setHighlightedKey(key);
+  };
 
-    const handleLegendMouseEnter = (key:any, event:any) => {
-      //alert('o')
-      setHighlightedKey(key);
-    };
+  const handleLegendMouseLeave = () => {
+    setHighlightedKey(null);
+  };
 
-    const handleLegendMouseLeave = () => {
-      setHighlightedKey(null);
-    };
+  const payload: PayLoads = {
+    category_type_counts: [],
+    total_saving_source_type: 0,
+    total_balance: 0,
+    bill_type_ammortization: [],
+    category_type_names: {},
+    year_month_wise_counts: [],
+    year_month_wise_balance: 0,
+  };
 
+  const payloadSaving: SavingPayload = {
+    year_month_wise_counts: [],
+  };
 
-    const payload: PayLoads ={
-        category_type_counts:[],
-        total_saving_source_type:0,
-        total_balance:0,
-        bill_type_ammortization:[],
-        category_type_names:{},
-        year_month_wise_counts:[],
-        year_month_wise_balance:0,
-        
-    }
+  const payloadFuture: FuturePayLoad = {
+    projection_list: [],
+  };
 
-    const payloadSaving :SavingPayload = {
-      year_month_wise_counts:[]
-    }
+  const SavingTypewiseInfo: any = useFetchDropDownObjects({
+    urlSuffix: `saving-typewise-info/${userid}`,
+    payLoads: payload,
+  });
 
-    const payloadFuture:FuturePayLoad={
-      projection_list:[]
-    }
-    
+  const SavingContributions: any = useFetchDropDownObjects({
+    urlSuffix: `saving-contributions-previous?userid=${userid}`,
+    payLoads: payloadSaving,
+  });
 
+  const SavingFuture: any = useFetchDropDownObjects({
+    urlSuffix: `saving-contributions-next/${userid}`,
+    payLoads: payloadFuture,
+  });
 
-    const SavingTypewiseInfo:any = useFetchDropDownObjects({
-        urlSuffix:`saving-typewise-info/${userid}`,
-        payLoads:payload
-    })
+  const total_balance = SavingTypewiseInfo.total_balance;
 
+  const data = SavingTypewiseInfo.category_type_counts;
 
-    const SavingContributions:any = useFetchDropDownObjects({
-      urlSuffix:`saving-contributions-previous?userid=${userid}`,
-      payLoads:payloadSaving
-    })
+  const barData = SavingContributions.year_month_wise_counts;
 
-    const SavingFuture:any = useFetchDropDownObjects({
-      urlSuffix:`saving-contributions-next/${userid}`,
-      payLoads:payloadFuture
-    })
+  const lineData = SavingFuture.projection_list;
 
-    
-
-    const total_balance = SavingTypewiseInfo.total_balance;
-
-    const data = SavingTypewiseInfo.category_type_counts;
-
-
-    const barData = SavingContributions.year_month_wise_counts;
-
-    const lineData = SavingFuture.projection_list;
-
-
-    // Create a mapping from bill_type_id to bill_type_name
-    /*
+  // Create a mapping from bill_type_id to bill_type_name
+  /*
     const billTypeNameMap = chartData.reduce((acc:any, data:any) => {
       data.bill_names.forEach((d:any) => {
         const [id, name] = Object.entries(d)[0];
@@ -147,8 +171,8 @@ const TotalAllocation = ({userid}:TotalProps) => {
     }, {});
     */
 
-    // Tooltip formatter function
-    /* const CustomTooltipLine = ({ payload,label }:any) => {
+  // Tooltip formatter function
+  /* const CustomTooltipLine = ({ payload,label }:any) => {
       if (!payload || payload.length === 0) return null;
       return (
         <div className="bg-white border p-2 rounded shadow-lg text-sm">
@@ -162,8 +186,8 @@ const TotalAllocation = ({userid}:TotalProps) => {
       );
     }; */
 
-    // Legend formatter function
-    /* const CustomLegendLine = ({ payload }:any) => {
+  // Legend formatter function
+  /* const CustomLegendLine = ({ payload }:any) => {
       return (
         <div className="flex gap-4 justify-center items-center text-sm">
           {payload.map((entry:any, index:number) => (
@@ -175,98 +199,117 @@ const TotalAllocation = ({userid}:TotalProps) => {
       );
     }; */
 
-    
+  // Get min and max values
+  //const minValue = Math.min(...data.map((d:any) => d.count));
+  //const maxValue = Math.max(...data.map((d:any) => d.count));
+  const maxProgressLength = Math.max(
+    ...data.map((d: any) =>
+      d.count.toString().length > 4 ? d.count.toString().length : 4
+    )
+  );
+  const maxAmountLength = Math.max(
+    ...data.map((d: any) =>
+      d.balance.toString().length > 4 ? d.balance.toString().length : 4
+    )
+  );
+  //console.log(minValue, maxValue, maxProgressLength)
 
-    // Get min and max values
-    //const minValue = Math.min(...data.map((d:any) => d.count));
-    //const maxValue = Math.max(...data.map((d:any) => d.count));
-    const maxProgressLength = Math.max(...data.map((d: any) => d.count.toString().length > 4?d.count.toString().length:4 ));
-    const maxAmountLength = Math.max(...data.map((d: any) => d.balance.toString().length > 4?d.balance.toString().length:4 ));
-    //console.log(minValue, maxValue, maxProgressLength)
+  const getColorForDebtType = (key: string) => {
+    const hue = Math.abs(hashString(key)) % 360;
+    return hslToHex(hue, 70, 50);
+    // const name:string = billTypeNameMap[key];
 
-    const getColorForDebtType = (key:string)=>{
-      const hue = Math.abs(hashString(key)) % 360;
-      return hslToHex(hue, 70, 50);
-      // const name:string = billTypeNameMap[key];
-      
+    // const color:string =  getColorForValue(name.length*20+key.length, 300, 1000, 1)
+    // console.log(color)
+    // return color;
+  };
 
-      // const color:string =  getColorForValue(name.length*20+key.length, 300, 1000, 1)
-      // console.log(color)
-      // return color;
-    }
+  const dataLabel = {
+    total_balance: "Total Balances",
+    contribution: "Contribution",
+  };
 
-    const dataLabel = {
-      total_balance:'Total Balances',
-      contribution:'Contribution'
-    }
-    
-    
-    
-   
-    const CustomTooltipLine = ({ payload,label }:any) => {
-      if (!payload || payload.length === 0) return null;
-      return (
-        <div className="bg-white border p-2 rounded shadow-lg text-sm">
-          <div><strong>Month:</strong> {label}</div>
-          {payload.map((entry:any, index:number) => (
-            <div key={`item-${index}`} style={{ color: entry.stroke }}>
-              <strong>{dataLabel[entry.dataKey as keyof typeof dataLabel]}:</strong> ${Intl.NumberFormat('en-US', {
-      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(entry.value)}
-            </div>
-          ))}
-        </div>
-      );
-    };
-
-    // Legend formatter function
-    const CustomLegendLine = ({ payload }:any) => {
-      return (
-        <div className="flex gap-4 justify-center items-center text-sm">
-          {payload.map((entry:any, index:number) => (
-            <span onMouseEnter={(event)=>handleLegendMouseEnter(entry.value,event)} onMouseLeave={handleLegendMouseLeave} className="font-semibold" key={`legend-item-${index}`} style={{ color: entry.color }}>
-              {dataLabel[entry.dataKey as keyof typeof dataLabel]}
-            </span>
-          ))}
-        </div>
-      );
-    };
-
-
-    const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
-    const [maxHeight, setMaxHeight] = useState<number>(0);
-
-    useEffect(() => {
-      // Calculate the height of the tallest element after component renders
-      const total_length:number = data.length + barData.length + lineData.length;
-      if(total_length > 0){
-        const heights = itemRefs.current.map(item => item?.getBoundingClientRect().height || 0);
-        const tallestHeight = Math.max(...heights);
-        if (lineData.length > 0 && tallestHeight < 350){
-          setMaxHeight(450)
-        }else{ 
-          setMaxHeight(tallestHeight);
-        }
-      }
-      
-    }, [data, barData, lineData]);
-
-    const ids = data.map((item :any)=> item._id);
-
-    const uniquecolors = generateUniqueColors(ids);
-
-    const idsline = lineData.map((item :any)=> item._id);
-
-   // const uniquecolorsLine = generateUniqueColors(idsline);
-
-
+  const CustomTooltipLine = ({ payload, label }: any) => {
+    if (!payload || payload.length === 0) return null;
     return (
+      <div className="bg-white border p-2 rounded shadow-lg text-sm">
+        <div>
+          <strong>Month:</strong> {label}
+        </div>
+        {payload.map((entry: any, index: number) => (
+          <div key={`item-${index}`} style={{ color: entry.stroke }}>
+            <strong>
+              {dataLabel[entry.dataKey as keyof typeof dataLabel]}:
+            </strong>{" "}
+            $
+            {Intl.NumberFormat("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            }).format(entry.value)}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  // Legend formatter function
+  const CustomLegendLine = ({ payload }: any) => {
+    return (
+      <div className="flex gap-4 justify-center items-center text-sm">
+        {payload.map((entry: any, index: number) => (
+          <span
+            onMouseEnter={(event) => handleLegendMouseEnter(entry.value, event)}
+            onMouseLeave={handleLegendMouseLeave}
+            className="font-semibold"
+            key={`legend-item-${index}`}
+            style={{ color: entry.color }}
+          >
+            {dataLabel[entry.dataKey as keyof typeof dataLabel]}
+          </span>
+        ))}
+      </div>
+    );
+  };
+
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [maxHeight, setMaxHeight] = useState<number>(0);
+
+  useEffect(() => {
+    // Calculate the height of the tallest element after component renders
+    const total_length: number = data.length + barData.length + lineData.length;
+    if (total_length > 0) {
+      const heights = itemRefs.current.map(
+        (item) => item?.getBoundingClientRect().height || 0
+      );
+      const tallestHeight = Math.max(...heights);
+      if (lineData.length > 0 && tallestHeight < 350) {
+        setMaxHeight(450);
+      } else {
+        setMaxHeight(tallestHeight);
+      }
+    }
+  }, [data, barData, lineData]);
+
+  const ids = data.map((item: any) => item._id);
+
+  const uniquecolors = generateUniqueColors(ids);
+
+  const idsline = lineData.map((item: any) => item._id);
+
+  // const uniquecolorsLine = generateUniqueColors(idsline);
+
+  return (
     <div className="flex flex-row gap-2.5">
-        <div className="w-[35%]" ref={el => (itemRefs.current[0] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
-        {data.length > 0 &&
-        <CardHolder title="Total Allocation" maxHeight={maxHeight}>
+      <div
+        className="w-[35%]"
+        ref={(el) => (itemRefs.current[0] = el)}
+        style={{ height: maxHeight ? `${maxHeight}px` : "auto" }}
+      >
+        {data.length > 0 && (
+          <CardHolder title="Total Allocation" maxHeight={maxHeight}>
             <div className="flex flex-row">
-                {/* {JSON.stringify(data)} */}
-                {/* <div className="w-[45%]">
+              {/* {JSON.stringify(data)} */}
+              {/* <div className="w-[45%]">
                     <PieChart width={250} height={250}>
                         <Pie
                         data={data}
@@ -287,58 +330,50 @@ const TotalAllocation = ({userid}:TotalProps) => {
                         </Pie>
                         <Tooltip content={<CustomTooltip total_count={total_count} total_balance={total_balance}/>} />
                         {/*<Legend /> */}
-                    {/* </PieChart>
+              {/* </PieChart>
                 </div>  */}
 
-                <div className="w-full">
-                    <div className="ml-[5px]">
-                    {                         
-                        data.map((dp:any,i:number)=>{
-                            
-                            return (
-                                <>
-                                <DataProgress
-                                key={dp._id} 
-                                title={dp.name} 
-                                progress={((100/total_balance) * dp.balance).toFixed(0)}
-                                color={uniquecolors[dp._id]}
-                                maxProgressLength={maxProgressLength}
-                                amount={dp.balance}
-                                maxAmountLength={maxAmountLength}
-                                />
-                                </>
-                            )
-
-                        })
-
-
-                    }
-                    </div>
+              <div className="w-full">
+                <div className="ml-[5px]">
+                  {data.map((dp: any, i: number) => {
+                    return (
+                      <>
+                        <DataProgress
+                          key={dp._id}
+                          title={dp.name}
+                          progress={(
+                            (100 / total_balance) *
+                            dp.balance
+                          ).toFixed(0)}
+                          color={uniquecolors[dp._id]}
+                          maxProgressLength={maxProgressLength}
+                          amount={dp.balance}
+                          maxAmountLength={maxAmountLength}
+                        />
+                      </>
+                    );
+                  })}
                 </div>
+              </div>
             </div>
-        </CardHolder>
-        }
-        </div>
-        <div className="w-[25%]" ref={el => (itemRefs.current[1] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
+          </CardHolder>
+        )}
+      </div>
+      <div
+        className="w-[25%]"
+        ref={(el) => (itemRefs.current[1] = el)}
+        style={{ height: maxHeight ? `${maxHeight}px` : "auto" }}
+      >
+        {barData.length > 0 && (
+          <CardHolder title={`12 months history`} maxHeight={maxHeight}>
+            <div className="flex flex-col justify-center items-center">
+              <RechartHorizentalBar
+                barData={barData}
+                axisData={{ XAxis: { dataKey: "year_month_word" } }}
+                bar={{ dataKey: "total_balance" }}
+              />
 
-{barData.length > 0 &&
-  <CardHolder title={`12 months history`} maxHeight={maxHeight}>
-                <div className="flex flex-col justify-center items-center">
-
-
-                  <RechartHorizentalBar
-                                      barData={barData}
-                                      axisData={ 
-                                        {XAxis:{dataKey:'year_month_word'}}
-                                      }
-                                      bar={
-                                        {dataKey:'total_balance'}
-                                      }
-                                     
-                  
-                                    />
-                    
-                                {/* <ResponsiveContainer width="35%" height={200}>
+              {/* <ResponsiveContainer width="35%" height={200}>
                                         <BarChart                                            
                                             data={barData}
                                             margin={{
@@ -360,60 +395,64 @@ const TotalAllocation = ({userid}:TotalProps) => {
                                         </BarChart>
 
                                         </ResponsiveContainer> */}
-                </div>
-                </CardHolder>
-            }
+            </div>
+          </CardHolder>
+        )}
+      </div>
 
+      <div
+        className="w-[40%]"
+        ref={(el) => (itemRefs.current[2] = el)}
+        style={{ height: maxHeight ? `${maxHeight}px` : "auto" }}
+      >
+        {lineData.length > 0 && (
+          <CardHolder title="Savings Goal Projection" maxHeight={maxHeight}>
+            <div className="w-full overflow-x-auto">
+              <div className={`w-[${lineData.length * 100}px]`}>
+                {" "}
+                {/* Dynamically adjust width */}
+                <ResponsiveContainer
+                  width="100%"
+                  height={maxHeight >= 350 ? maxHeight - 80 : maxHeight}
+                >
+                  <LineChart data={lineData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="month_word" tick={{ fontSize: 12 }} />
+                    <YAxis
+                      tick={{ fontSize: 12 }}
+                      tickFormatter={(value) => `$${formatLargeNumber(value)}`}
+                    />
+                    {/* <Tooltip content={<CustomTooltipLine />} /> */}
+                    <Tooltip content={<CustomTooltipLine />} />
+                    <Legend content={<CustomLegendLine />} />
 
-
-    
-            
-        </div>
-
-        <div className="w-[40%]" ref={el => (itemRefs.current[2] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
-        {lineData.length > 0 && 
-          <CardHolder title="12 Months Projection" maxHeight={maxHeight}>
-          <div className="w-full overflow-x-auto">
-            
-            <div className={`w-[${lineData.length * 100}px]`}> {/* Dynamically adjust width */}
-              <ResponsiveContainer width="100%" height={maxHeight >= 350 ? maxHeight - 80:maxHeight}>
-              <LineChart data={lineData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month_word" tick={{ fontSize:12 }} />
-              <YAxis tick={{ fontSize:12 }} tickFormatter={(value) => `$${formatLargeNumber(value)}`}/>
-              {/* <Tooltip content={<CustomTooltipLine />} /> */}
-              <Tooltip content={<CustomTooltipLine />} />
-              <Legend 
-                content={<CustomLegendLine/>}
-                                 
-              />
-
-              {/* Render Line components for each unique dataKey (e.g., BB, TEACHER_FEE, etc.) */}
-              {Object.keys(lineData[0]).
-              filter(key => key !== 'month_word' && key !== 'month').map((key, index) => (
-                <Line
-                  key={key}
-                  type="monotone"
-                  dataKey={key}
-                  dot={false}
-                  strokeWidth={highlightedKey!=null && highlightedKey === key ?3:1}
-                  stroke={getColorForDebtType(key)} // Ensure this function is defined elsewhere
-                  activeDot={{ r: 5 }}
-                />
-              ))}
-            </LineChart>
-          </ResponsiveContainer>
-
-          </div>
-        </div>
-
-        </CardHolder>
-
-        }
-        </div>            
-
+                    {/* Render Line components for each unique dataKey (e.g., BB, TEACHER_FEE, etc.) */}
+                    {Object.keys(lineData[0])
+                      .filter((key) => key !== "month_word" && key !== "month")
+                      .map((key, index) => (
+                        <Line
+                          key={key}
+                          type="monotone"
+                          dataKey={key}
+                          dot={false}
+                          strokeWidth={
+                            highlightedKey != null && highlightedKey === key
+                              ? 3
+                              : 1
+                          }
+                          stroke={getColorForDebtType(key)} // Ensure this function is defined elsewhere
+                          activeDot={{ r: 5 }}
+                        />
+                      ))}
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          </CardHolder>
+        )}
+      </div>
     </div>
-    );
-  };
-  
-  export default TotalAllocation;
+  );
+};
+
+export default TotalAllocation;
