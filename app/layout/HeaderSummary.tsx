@@ -122,7 +122,7 @@ const HeaderSummary = () => {
                   style={{
                     height: maxChildHeight ? `${maxChildHeight}px` : "auto",
                   }}
-                  className="bg-[#f09a25] border-[#595959] border-2 w-full text-center text-white"
+                  className="bg-[#f09a25] shadow-custom w-full text-center text-white"
                 >
                   <p className="font-semibold capitalize md:text-sm lg:text-[16px] lg:py-1">
                     {
@@ -134,7 +134,7 @@ const HeaderSummary = () => {
                 </div>
                 <div className="text-[#47E535]">
                   <Link
-                    className="font-semibold lg:text-[25px] drop-shadow-custom"
+                    className="font-semibold lg:text-[25px]"
                     href={link}
                   >
                     {prefix != "" && prefix}

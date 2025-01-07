@@ -8,6 +8,8 @@ import HolderOne from "@/app/layout/HolderOne";
 import MortgageCalculator from "./MortgageCalculator";
 import TabViewFlow from "@/app/components/ui/TabViewFlow";
 import CreditCardPaymentCalculator from "./CreditCardPaymentCalculator";
+import StockCalculator from "./StockCalculator";
+import SavingsForecaster from "./SavingsForecaster";
 
 interface Tab {
     label: string;
@@ -20,14 +22,27 @@ export default function CalculatorPage() {
 
     const tabs: Tab[] = [
 
-       { 
-            label: 'Credit Card Payment Calculator', 
-            content: <CreditCardPaymentCalculator/>
-          } ,
+      {
+
+        label:'Savings & Withdrawal Forecaster',
+        content:<SavingsForecaster/>
+      },
+
+      { 
+        label: 'Stock Calculator', 
+        content: <StockCalculator />
+      } ,   
+
+       
         { 
-          label: 'Mortgage Calculator', 
+          label: 'Amortization Mortgage & Loan Calculator', 
           content: <MortgageCalculator />
         } ,   
+        { 
+          label: 'Credit Card Payment Calculator', 
+          content: <CreditCardPaymentCalculator/>
+        } ,
+        
 
 
           

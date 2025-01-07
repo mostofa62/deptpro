@@ -70,7 +70,7 @@ const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen }) => {
       )}
       <div className="flex flex-col gap-1">
         <span className="text-[14px] text-white lg:text-[16px] font-semibold">{title}</span>
-        <span className="text-[17px] text-[#C1FF72] lg:text-[25px] font-bold drop-shadow-custom">
+        <span className="text-[17px] text-[#C1FF72] lg:text-[25px] font-bold">
           {isCurrency && '$'}
           {value}
         </span>

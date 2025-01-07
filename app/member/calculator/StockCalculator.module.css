@@ -1,0 +1,10 @@
+/* StockCalculator.module.css */
+.highlight {
+  background-color: #fffacd; /* Gold color for highlight */
+  font-weight:bold;
+}
+
+.tableRow {
+  padding: 0.5rem 1rem;
+}
+
