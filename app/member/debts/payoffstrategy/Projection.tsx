@@ -1,4 +1,4 @@
-import { hashString, hslToHex } from "@/app/components/utils/Util";
+import { formatLargeNumber, hashString, hslToHex } from "@/app/components/utils/Util";
 import { useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Line } from "recharts";
 
@@ -68,7 +68,7 @@ const Projection = ({chartData, debt_type_names}:ProjectionProps)=>{
             <LineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month" tick={{ fontSize:12 }} />
-              <YAxis tick={{ fontSize:12 }} tickFormatter={(value) => `$${value}`}/>
+              <YAxis tick={{ fontSize:12 }} tickFormatter={(value) => `$${formatLargeNumber(value)}`}/>
               {/* <Tooltip content={<CustomTooltipLine />} /> */}
               <Tooltip content={<CustomTooltipLine />} />
               <Legend 
