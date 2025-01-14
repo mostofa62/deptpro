@@ -94,8 +94,8 @@ const StockCalculator = () => {
   
 
   return (
-    <div className="mx-auto p-6 bg-white rounded-sm shadow-md flex flex-col gap-4">
-      <h1 className="text-3xl font-semibold text-center text-[#42acd8]">Stock Calculator</h1>
+    <div className="mx-auto p-6 bg-white rounded-sm shadow-md flex flex-col gap-4 border">
+      <h1 className="text-2xl font-semibold text-center text-[#42acd8]">Stock Calculator</h1>
       <h5 className='text-center'>Estimate the value of buying and selling stock</h5>
       <Formik
         initialValues={{

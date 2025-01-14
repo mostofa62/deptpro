@@ -12,14 +12,14 @@ function ProgressBarTwo({ progress, title,progressColor,amount }:propsProgs) {
     <div className="w-full flex flex-col gap-4">
 
         <div className='flex items-center justify-center'>
-            <p className='text-[25px] text-[#4f4f4f] font-semibold'>${Intl.NumberFormat('en-US').format(amount)}</p>
+            <p className='text-[25px] text-[#595959] font-semibold'>${Intl.NumberFormat('en-US').format(amount)}</p>
         </div>
 
         {/* Progress Bar */}
         <div className="bg-gray rounded h-4">
             <div
-            className={`${progressColor? `bg-[${progressColor}]`:'bg-secondary'}  h-4 rounded-full transition-all duration-500`}
-            style={{ width: `${progress}%` }}
+            className={`h-4 rounded-full transition-all duration-500`}
+            style={{ width: `${progress}%`, backgroundColor:progressColor? `${progressColor}`:'#f0f9ff'  }}
             ></div>
         </div>
 

@@ -9,6 +9,7 @@ import LogoIcon from '@/app/images/logo/logo-icon.svg';
 import DropdownUser from './DropdownUser';
 import ArrowGraph from '@/app/images/icon/arrowgraph';
 import CoinSvg from '@/app/images/icon/coin';
+import GoldBarTick from '@/app/images/icon/goldbartick';
 
 type TransactionData = {
   debt_total_balance: number;
@@ -101,7 +102,7 @@ const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen }) => {
         <div className="flex justify-between w-full max-w-8xl mx-auto">
           <div className="flex  items-start gap-4">
             <InfoBox
-              icon={ArrowGraph}
+              icon={GoldBarTick}
               title="DEBT BALANCE"
               value={Intl.NumberFormat('en-US').format(transactionData.debt_total_balance)}
               isCurrency

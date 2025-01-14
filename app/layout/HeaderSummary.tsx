@@ -107,8 +107,9 @@ const HeaderSummary = () => {
           transactioDataLabel[data as keyof typeof transactioDataLabel].href;
         const amount: number =
           transactioData[data as keyof typeof transactioDataLabel];
-        const amountstring =
-          prefix == "$" ? formatLargeNumber(amount) : amount.toFixed(0);
+        // const amountstring =
+        //   prefix == "$" ? formatLargeNumber(amount) : amount.toFixed(0);
+        const amountstring = amount.toFixed(0);
         return (
           <div key={index} className="flex-1">
             <CardHolderTiny>

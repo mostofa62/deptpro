@@ -10,6 +10,10 @@ import TabViewFlow from "@/app/components/ui/TabViewFlow";
 import CreditCardPaymentCalculator from "./CreditCardPaymentCalculator";
 import StockCalculator from "./StockCalculator";
 import SavingsForecaster from "./SavingsForecaster";
+import CryptoReturnCalculator from "./CryptoReturnCalculator";
+import LifeInsuranceCalculator from "./LifeInsuranceCalculator";
+import FinancialFreedomCalculator from "./FinancialFreedomCalculator";
+import SavingsWithdrawalForecaster from "./SavingsWithdrawalForecaster";
 
 interface Tab {
     label: string;
@@ -24,14 +28,29 @@ export default function CalculatorPage() {
 
       {
 
+        label:'Financial Freedom Calculator',
+        content:<FinancialFreedomCalculator/>
+      },
+
+      {
+
         label:'Savings & Withdrawal Forecaster',
-        content:<SavingsForecaster/>
+        content:<SavingsWithdrawalForecaster/>
       },
 
       { 
         label: 'Stock Calculator', 
         content: <StockCalculator />
-      } ,   
+      } ,  
+      
+      
+      { 
+        label: 'Crypto Calculator', 
+        content: <CryptoReturnCalculator />
+      } ,  
+
+
+
 
        
         { 
@@ -41,6 +60,11 @@ export default function CalculatorPage() {
         { 
           label: 'Credit Card Payment Calculator', 
           content: <CreditCardPaymentCalculator/>
+        } ,
+
+        { 
+          label: 'Life Insurance Needs Calculator', 
+          content: <LifeInsuranceCalculator/>
         } ,
         
 

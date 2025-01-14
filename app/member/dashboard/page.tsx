@@ -22,6 +22,7 @@ import ProgressBarTwo from "@/app/components/ui/ProgressBarTwo";
 import IncomeProjection from "./IncomeProjection";
 import BillProjection from "./BillProjection";
 import SavingProjection from "./SavingProjection";
+import TreasureBox from "@/app/images/icon/treasurebox";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -38,7 +39,7 @@ const GaugeData = [
   {
     name: "Moderate",
     range: "30-50",
-    color: "#00e64d",
+    color: "#47e535",
   },
   {
     name: "High",
@@ -73,6 +74,7 @@ export default function DashBoard() {
     total_net_income: 0,
     saving_list: [],
     total_wealth: 0,
+    total_saving:0,
     debt_to_wealth: 0,
     credit_ratio: 0,
     total_allocation_data: [],
@@ -123,17 +125,17 @@ export default function DashBoard() {
                   <ProgressBarTwo
                     progress={50}
                     amount={transactioData.total_net_income}
-                    title={`net income`}
-                    progressColor="#43acd6"
+                    title={`monthly net income`}
+                    progressColor={"#43acd6"}
                   />
                 </div>
 
                 <div className="w-[18%] ml-[1%] flex items-center justify-center">
                   <ProgressBarTwo
-                    progress={30}
+                    progress={20}
                     amount={transactioData.debt_total_balance}
-                    title={`debt`}
-                    progressColor="#fe992c"
+                    title={`monthly debt`}
+                    progressColor={"#FEC001"}
                   />
                 </div>
 
@@ -141,16 +143,26 @@ export default function DashBoard() {
                   <ProgressBarTwo
                     progress={30}
                     amount={transactioData.total_wealth}
-                    title={`wealth`}
-                    progressColor="#43acd6"
+                    title={`monthly wealth`}
+                    progressColor={"#fe992c"}
+                  />
+                </div>
+
+                <div className="w-[18%] ml-[1%] flex items-center justify-center">
+                  <ProgressBarTwo
+                    progress={45}
+                    amount={transactioData.total_saving}
+                    title={`monthly saving`}
+                    progressColor={"#C1FF72"}
                   />
                 </div>
 
                 <div className="w-[30%] ml-[1%] flex items-center justify-center">
-                  <DebtToWealthScore
+                  {/* <DebtToWealthScore
                     title={`DEBT TO WEALTH SCORE`}
                     amount={transactioData.debt_to_wealth}
-                  />
+                  /> */}
+                  <TreasureBox height={180} treasureValue={transactioData.debt_to_wealth} fontSize={50} color="#47E535"/>
                 </div>
               </div>
             </CardHolder>
