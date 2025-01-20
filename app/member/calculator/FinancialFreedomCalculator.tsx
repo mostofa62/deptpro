@@ -221,7 +221,7 @@ const FinancialFreedomCalculator: React.FC = () => {
                          
             </div>} />
       </p>
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 mt-5">
         <div className="flex justify-center gap-3">
 
             <div className="w-[50%]">

@@ -100,7 +100,16 @@ export const ValidationSchema =  object().shape({
              
 
               gross_income: number().min(0,`${DataLabel.gross_income} least 0`)              
-              .required(`${DataLabel.gross_income} is required`),
+              .required(`${DataLabel.gross_income} is required`)
+              .test(
+                              'credit-limit-check',
+                              `${DataLabel.gross_income} must be greater than or equal to ${DataLabel.net_income}`,
+                              function (value) {
+                                const { net_income } = this.parent;
+                                return value >= net_income;
+                              }
+                            ),
+              
 
               net_income: number().min(0,`${DataLabel.net_income} least 0`)              
               .required(`${DataLabel.net_income} is required`),

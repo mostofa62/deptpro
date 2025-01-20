@@ -88,8 +88,8 @@ const CryptoReturnCalculator: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50">
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-full border">
+    <div className="min-h-screen bg-gray-50">
+      <div className="bg-white p-8 rounded-md shadow-md w-full border flex flex-col gap-1">
         <h1 className="text-center text-[#42acd8] font-semibold text-2xl mb-1 flex gap-2 items-center justify-center">
             Crypto Return Calculator
             

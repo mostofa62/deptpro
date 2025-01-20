@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputField from "./InputField";
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { formatLargeNumber } from "@/app/components/utils/Util";
+import TooltipOne from "@/app/components/ui/TooltipOne";
 
 // const CustomTooltipBar = ({ payload }: any) => {
 //   if (payload && payload.length) {
@@ -122,9 +123,9 @@ type InputsState = {
     taxedAccount:{ data: AccountData[]; finalBalance: number; }
     deferredAccount:{ data: AccountData[]; finalBalance: number; }
     freeAccount:{ data: AccountData[]; finalBalance: number; }
-    taxedWithdrawal:WithdrawalData[];
-    deferredWithdrawal: WithdrawalData[];
-    freeWithdrawal: WithdrawalData[];
+    taxedWithdrawal:{data:WithdrawalData[],finalBalance: number;};
+    deferredWithdrawal: {data:WithdrawalData[],finalBalance: number;};
+    freeWithdrawal: {data:WithdrawalData[],finalBalance: number;} ;
   }
 
   
@@ -166,9 +167,9 @@ const SavingsWithdrawalForecaster: React.FC = () => {
     taxedAccount:{ data: [], finalBalance: 0 },
     deferredAccount:{ data: [], finalBalance: 0 },
     freeAccount:{ data: [], finalBalance: 0 },
-    taxedWithdrawal: [],
-    deferredWithdrawal: [],
-    freeWithdrawal: [],
+    taxedWithdrawal: { data: [], finalBalance: 0 },
+    deferredWithdrawal: { data: [], finalBalance: 0 },
+    freeWithdrawal: { data: [], finalBalance: 0 },
   });
 
   const calculateSavings = (inputs: InputsState) => {
@@ -300,12 +301,13 @@ const SavingsWithdrawalForecaster: React.FC = () => {
     taxRate: number,
     accountType: "taxed" | "deferred" | "free",
     frequency: "Monthly" | "Quarterly" | "Annually"
-  ): WithdrawalData[] => {
+  )=> {
     const withdrawalMultiplier =
       frequency === "Monthly" ? 12 : frequency === "Quarterly" ? 4 : 1;
     const data: WithdrawalData[] = [];
     let balance = initialBalance;
     const annualWithdrawal = balance / (years * withdrawalMultiplier);
+    let finalBalance:number = annualWithdrawal
   
     for (let year = 1; year <= years; year++) {
       const totalWithdrawal = annualWithdrawal * withdrawalMultiplier;
@@ -319,12 +321,13 @@ const SavingsWithdrawalForecaster: React.FC = () => {
         year,
         withdrawal: netWithdrawal.toFixed(2),
       });
+      finalBalance = netWithdrawal
   
       balance -= totalWithdrawal;
       balance += balance * returnRate;
     }
   
-    return data;
+    return {data,finalBalance:finalBalance};
   };
 
   
@@ -342,6 +345,10 @@ const SavingsWithdrawalForecaster: React.FC = () => {
       freeWithdrawal:calsaving.freeWithdrawal
     })
   };
+
+  useEffect(()=>{
+    calculateResults()
+  })
 
   // const chartData = [
   //   {
@@ -374,9 +381,9 @@ const SavingsWithdrawalForecaster: React.FC = () => {
 
     {
       name: 'Final Withdrawal',
-      taxedWithdrawal: resultWithDraw.taxedWithdrawal,
-      deferredBalance: resultWithDraw.deferredAccount.finalBalance,
-      freeBalance: resultWithDraw.freeAccount.finalBalance,
+      taxedWithdrawal: resultWithDraw.taxedWithdrawal.finalBalance,
+      deferredWithdrawal: resultWithDraw.deferredWithdrawal.finalBalance,
+      freeWithdrawal: resultWithDraw.freeWithdrawal.finalBalance,
     },
     
   ]
@@ -384,11 +391,21 @@ const SavingsWithdrawalForecaster: React.FC = () => {
   
 
   return (
-    <div className="p-6 mx-auto rounded-md shadow-md border">
+    <div className="p-6 mx-auto rounded-md shadow-md border flex flex-col gap-1">
       <h1 className="text-2xl font-bold text-[#42acd8] mb-4 text-center">
         Savings and Withdrawal Forecaster
       </h1>
-      <div className="gap-1">
+      <p className='flex items-center justify-center gap-2'>
+        <span>Taxable vs. Tax-Deferred vs. Tax-Free</span>
+        <TooltipOne text={<div className='flex flex-col gap-1 items-start justify-center'>
+          <p className="whitespace-normal leading-normal">Disclosure: This is to be use as a general educational tool.</p>
+          <p className="whitespace-normal leading-normal">It is not designed to be accurate due to multiple variables inside various investment, savings, insurance accounts etc.</p>
+          <p className="whitespace-normal leading-normal">All data is general estimates as terms, conditions, types of investments, returns, interest, contributions, withdrawals, timing, market conditions and world economy will vary.</p>
+          <p className="whitespace-normal leading-normal">We are not tax advisors or attorneys. Please consult a professional life insurance, financial advisor, tax and attorney for the specifics to your accounts.</p>
+                                 
+            </div>} />
+      </p>
+      <div className="mt-4">
         <InputField
           label="Existing Balance ($)"
           id="existingBalance"
@@ -608,61 +625,61 @@ const SavingsWithdrawalForecaster: React.FC = () => {
       
       <div className="p-1">
 
-<ResponsiveContainer width="100%" height={300}>
-<BarChart data={chartData}
+      <ResponsiveContainer width="100%" height={300}>
+      <BarChart data={withdrawalChartData}
 
-margin={{
-  top: 0 ,
-  right: 0,
-  left: 0,
-  bottom: 0,
-  }}>
-  
-  <XAxis 
-  dataKey="name" 
-  tickLine={false} 
-  axisLine={false}  
-  />
-  <YAxis tick={{ fontSize:12 }} tickFormatter={(value) => `$${formatLargeNumber(value)}`}/>
+      margin={{
+        top: 0 ,
+        right: 0,
+        left: 0,
+        bottom: 0,
+        }}>
+        
+        <XAxis 
+        dataKey="name" 
+        tickLine={false} 
+        axisLine={false}  
+        />
+        <YAxis tick={{ fontSize:12 }} tickFormatter={(value) => `$${formatLargeNumber(value)}`}/>
 
-  <Tooltip content={<CustomTooltipBar hoveredBar={hoveredBar} />} cursor={{ fill: "transparent" }} />
-  <Legend iconType={"star"} // Square icon for legend
-    layout="horizontal"/>
-  <Bar
-    dataKey="taxedBalance"
-    fill="rgba(255, 159, 0, 0.7)"
-    name="Annual Taxed Account"
-    
-    shape={<CustomBar/>} 
-    key="taxedBalanceBar"
-    onMouseEnter={(e) => handleMouseEnter(e, "taxedBalance")}
-    onMouseLeave={handleMouseLeave}
-   
-  />
-  <Bar
-    dataKey="deferredBalance"
-    fill="rgba(66, 172, 216, 0.7)"
-    name="Tax-Deferred Account"
-    
-    shape={<CustomBar/>} 
-    key="deferredBalanceBar"
+        <Tooltip content={<CustomTooltipBar hoveredBar={hoveredBar} />} cursor={{ fill: "transparent" }} />
+        <Legend iconType={"star"} // Square icon for legend
+          layout="horizontal"/>
+        <Bar
+          dataKey="taxedWithdrawal"
+          fill="rgba(255, 159, 0, 0.7)"
+          name="Annual Taxed Account Withdrawal"
+          
+          shape={<CustomBar/>} 
+          key="taxedWithdrawalBar"
+          onMouseEnter={(e) => handleMouseEnter(e, "taxedWithdrawal")}
+          onMouseLeave={handleMouseLeave}
+        
+        />
+        <Bar
+          dataKey="deferredWithdrawal"
+          fill="rgba(66, 172, 216, 0.7)"
+          name="Tax-Deferred Account Withdrawal"
+          
+          shape={<CustomBar/>} 
+          key="deferredWithdrawalBar"
 
-    onMouseEnter={(e) => handleMouseEnter(e, "deferredBalance")}
-    onMouseLeave={handleMouseLeave}
-  />
-  <Bar
-    dataKey="freeBalance"
-    fill="rgba(49, 196, 162, 0.7)"
-    name="Tax-Free Account"
-    
-    shape={<CustomBar/>}
-    key="freeBalanceBar"
-    onMouseEnter={(e) => handleMouseEnter(e, "freeBalance")}
-    onMouseLeave={handleMouseLeave}
-  />
-  
-</BarChart>
-</ResponsiveContainer>
+          onMouseEnter={(e) => handleMouseEnter(e, "deferredWithdrawal")}
+          onMouseLeave={handleMouseLeave}
+        />
+        <Bar
+          dataKey="freeWithdrawal"
+          fill="rgba(49, 196, 162, 0.7)"
+          name="Tax-Free Account Withdrawal"
+          
+          shape={<CustomBar/>}
+          key="freeWithdrawalBar"
+          onMouseEnter={(e) => handleMouseEnter(e, "freeWithdrawal")}
+          onMouseLeave={handleMouseLeave}
+        />
+        
+      </BarChart>
+      </ResponsiveContainer>
 
 </div>
 
@@ -679,13 +696,13 @@ margin={{
           </tr>
 
           {
-            resultWithDraw.taxedWithdrawal.map((row, index) =>(
+            resultWithDraw.taxedWithdrawal.data.map((row, index) =>(
 
               <tr key={index} style={{ backgroundColor: index %2==0 ? '#f9f9f9':'#ffffff'}}>
                 <td className="p-2 border-[1px] border-[#ddd]">{row.year}</td>
-                <td className="p-2 border-[1px] border-[#ddd]">${parseFloat(resultWithDraw.taxedWithdrawal[index].withdrawal).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                <td className="p-2 border-[1px] border-[#ddd]">${parseFloat(resultWithDraw.deferredWithdrawal[index].withdrawal).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                <td className="p-2 border-[1px] border-[#ddd]">${parseFloat(resultWithDraw.freeWithdrawal[index].withdrawal).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                <td className="p-2 border-[1px] border-[#ddd]">${parseFloat(resultWithDraw.taxedWithdrawal.data[index].withdrawal).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                <td className="p-2 border-[1px] border-[#ddd]">${parseFloat(resultWithDraw.deferredWithdrawal.data[index].withdrawal).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                <td className="p-2 border-[1px] border-[#ddd]">${parseFloat(resultWithDraw.freeWithdrawal.data[index].withdrawal).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
               </tr>
             ))
           }

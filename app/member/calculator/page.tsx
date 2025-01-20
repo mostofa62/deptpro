@@ -1,19 +1,16 @@
 "use client";
 import DefaultLayout from "@/app/layout/DefaultLayout";
 
-import { useState,useEffect, useRef, useCallback } from "react";
-import axios from "axios";
-import useAuth from '@/app/hooks/useAuth';
-import HolderOne from "@/app/layout/HolderOne";
-import MortgageCalculator from "./MortgageCalculator";
 import TabViewFlow from "@/app/components/ui/TabViewFlow";
+import HolderOne from "@/app/layout/HolderOne";
+import { useState } from "react";
 import CreditCardPaymentCalculator from "./CreditCardPaymentCalculator";
-import StockCalculator from "./StockCalculator";
-import SavingsForecaster from "./SavingsForecaster";
 import CryptoReturnCalculator from "./CryptoReturnCalculator";
-import LifeInsuranceCalculator from "./LifeInsuranceCalculator";
 import FinancialFreedomCalculator from "./FinancialFreedomCalculator";
+import LifeInsuranceCalculator from "./LifeInsuranceCalculator";
+import MortgageCalculator from "./MortgageCalculator";
 import SavingsWithdrawalForecaster from "./SavingsWithdrawalForecaster";
+import StockCalculator from "./StockCalculator";
 
 interface Tab {
     label: string;

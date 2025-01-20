@@ -3,10 +3,13 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import styles from './StockCalculator.module.css';
+import { formatLargeNumber } from '@/app/components/utils/Util';
 // Currency formatter
 const currencyFormatter = (amount: number, currencySymbol: string) => {
   return `${currencySymbol} ${amount.toFixed(2)}`;
 };
+
+
 
 const StockCalculator = () => {
   const [spreadsheetData, setSpreadsheetData] = useState<any>(null);
@@ -75,10 +78,11 @@ const StockCalculator = () => {
 
     // Prepare chart data
     setChartData([
-      { name: 'Purchase Price', value: purchasePrice },
-      { name: 'Selling Price', value: sellingPrice },
-      { name: 'Break-even Price', value: breakEvenPrice },
-      { name: 'Net Profit/Loss', value: netProfitLoss },
+      
+      { purchasePrice: purchasePrice },
+      { sellingPrice: sellingPrice },
+      { breakEvenPrice: breakEvenPrice },
+      { netProfitLoss: netProfitLoss },
     ]);
   };
   const [highlighted, setHighlighted] = useState<string>('');
@@ -91,22 +95,31 @@ const StockCalculator = () => {
     setHighlighted('netProfit')
   };
 
+  const [hoveredBar, setHoveredBar] = useState<string | null>(null);
+  
+    const handleMouseEnter = (e: any, barName: string) => {
+      setHoveredBar(barName);
+    };
+  
+    const handleMouseLeave = () => {
+      setHoveredBar(null);
+    };
   
 
   return (
-    <div className="mx-auto p-6 bg-white rounded-sm shadow-md flex flex-col gap-4 border">
+    <div className="mx-auto p-6 bg-white rounded-md shadow-md flex flex-col gap-4 border">
       <h1 className="text-2xl font-semibold text-center text-[#42acd8]">Stock Calculator</h1>
       <h5 className='text-center'>Estimate the value of buying and selling stock</h5>
       <Formik
         initialValues={{
-          shares: 1,
-          purchasePrice: 0,
-          sellingPrice: 0,
-          buyCommission: 0,
-          sellCommission: 0,
+          shares: 10,
+          purchasePrice: 10,
+          sellingPrice: 10,
+          buyCommission: 10,
+          sellCommission: 10,
           buyCommissionType: 'amount',
           sellCommissionType: 'amount',
-          taxRate: 0,
+          taxRate: 10,
         }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
@@ -226,13 +239,68 @@ const StockCalculator = () => {
       {chartData.length > 0 && (
         <div className="mt-6">
           <ResponsiveContainer width="100%" height={350}>
-            <BarChart data={chartData}>
-              <CartesianGrid strokeDasharray="4 4" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="value" fill="#8884d8" />
+            <BarChart data={chartData} barCategoryGap="100%">
+              <CartesianGrid strokeDasharray="8 8" />
+              <XAxis dataKey="name"  
+              tickLine={false} 
+              axisLine={false} 
+              />
+              <YAxis  tick={{ fontSize:15 }} tickFormatter={(value) => `$${formatLargeNumber(value)}`}/>
+              <Tooltip formatter={(value) => `$${Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 2,maximumFractionDigits: 2}).format(parseFloat(value.toLocaleString()))}`}   cursor={{ fill: "transparent" }}/>
+               <Legend iconType={"star"} // Square icon for legend
+                        layout="horizontal"/>
+              
+              <Bar
+                        dataKey="purchasePrice"
+                        fill="rgba(66, 172, 216, 0.6)"
+                        name="Purchase Price"
+                        
+                        
+                        key="purchasePriceBar"
+                        onMouseEnter={(e) => handleMouseEnter(e, "purchasePrice")}
+                        onMouseLeave={handleMouseLeave}
+                        barSize={250}
+                      />
+
+<Bar
+                        dataKey="sellingPrice"
+                        fill="rgba(0, 204, 102, 0.6)"
+                        name="Selling Price"
+                        
+                        
+                        
+                        key="sellingPriceBar"
+                        onMouseEnter={(e) => handleMouseEnter(e, "sellingPrice")}
+                        onMouseLeave={handleMouseLeave}
+                        barSize={250}
+                      />
+
+<Bar
+                        dataKey="breakEvenPrice"
+                        fill="rgba(204, 102, 0, 0.6)"
+                        name="Break-even Price"
+                        
+                        
+                        
+                        key="breakEvenPriceBar"
+                        onMouseEnter={(e) => handleMouseEnter(e, "breakEvenPrice")}
+                        onMouseLeave={handleMouseLeave}
+                        barSize={250}
+                      />
+
+<Bar
+                        dataKey="netProfitLoss"
+                        fill={chartData.netProfitLoss >=0 ?"rgba(0, 255, 0, 0.6)":"rgba(255, 0, 0, 0.6)"}
+                        name="Net Profit/Loss"
+                        
+                        
+                        
+                        key="netProfitLossBar"
+                        onMouseEnter={(e) => handleMouseEnter(e, "netProfitLoss")}
+                        onMouseLeave={handleMouseLeave}
+                        barSize={250}
+                      />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -263,7 +331,7 @@ const StockCalculator = () => {
         <div className="mt-6">
           <table className="min-w-full text-left  border border-[#ddd] rounded-lg">
             <tbody>
-            <tr className=' border border-[#ddd]'>
+            <tr className='border border-[#ddd]'>
                 <th className="px-4 py-2 bg-[#e6f7ff] border border-[#ddd]">Item</th>
                 <th className="px-4 py-2 bg-[#e6f7ff] border border-[#ddd]">Value</th>
             </tr>

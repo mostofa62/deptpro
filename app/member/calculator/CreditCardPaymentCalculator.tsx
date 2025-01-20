@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import 'react-datepicker/dist/react-datepicker.css';
+import TooltipOne from '@/app/components/ui/TooltipOne';
+import { formatLargeNumber } from '@/app/components/utils/Util';
 
 const CreditCardCalculator = () => {
   // State to manage inputs
@@ -97,12 +99,31 @@ const CreditCardCalculator = () => {
     settotalPaidAmount(formatter.format(totalPaid));
   };
 
+  useEffect(()=>{
+  handleCalculate()
+  })
+
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <div className="flex flex-col gap-4">
+    <div className="bg-white p-8 rounded-md shadow-md w-full border flex flex-col gap-2">
+
+      <h1 className="text-center text-[#42acd8] font-semibold text-2xl mb-1 flex gap-2 items-center justify-center">Mortgage & Loan Amortization Calculator</h1>
+      
+      <p className="flex gap-2 items-center justify-center">
+        <span>
+        Credit Card Payment Calculator
+        </span>
+        <span>
+          <TooltipOne text={<div className='flex flex-col gap-1 items-start justify-center'>
+            <p className="whitespace-normal leading-normal">Disclosure: This is an estimate only as terms will vary.</p>
+            <p className="whitespace-normal leading-normal">IE: Vendors can have different types of APR interest, how they are applied, penalties, fees, balance variations, minimum payment requirments, credit ratings etc.</p>
+            <p className="whitespace-normal leading-normal">Please contact your credit card company for any questions you may have.</p>
+        </div>} />
+        </span>  
+      </p>
+      
         {/* Input fields */}
-        <div className="flex flex-row gap-6">
-          <div className="flex flex-col gap-2 w-[30%]">
+        
+          <div className="flex flex-col gap-2">
             <label htmlFor="balance">Credit Card Balance ($)</label>
             <input
               type="number"
@@ -114,16 +135,16 @@ const CreditCardCalculator = () => {
             />
           </div>
 
-          <div className="flex flex-col gap-2 w-[30%]">
+          <div className="flex flex-col gap-2">
             <label htmlFor="dueDate">Due Date</label>
             <DatePicker
               selected={dueDate}
               onChange={(date: Date) => setDueDate(date)}
-              className="border border-gray-300 rounded-md shadow-sm focus:border-[#42acd8] focus:ring-1 focus:ring-[#42acd8] p-2"
+              className="w-full border border-gray-300 rounded-md shadow-sm focus:border-[#42acd8] focus:ring-1 focus:ring-[#42acd8] p-2"
             />
           </div>
 
-          <div className="flex flex-col gap-2 w-[30%]">
+          <div className="flex flex-col gap-2">
             <label htmlFor="apr">APR (%)</label>
             <input
               type="number"
@@ -134,10 +155,10 @@ const CreditCardCalculator = () => {
               placeholder="Enter APR"
             />
           </div>
-        </div>
+        
 
-        <div className="flex flex-row gap-4">
-          <div className="flex flex-col gap-2 w-[30%]">
+        
+          <div className="flex flex-col gap-2">
             <label htmlFor="repaymentType">Repayment Type</label>
             <select
               
@@ -151,7 +172,7 @@ const CreditCardCalculator = () => {
           </div>
 
           {repaymentType === 2 && (
-            <div className="flex flex-col gap-2 w-[30%]">
+            <div className="flex flex-col gap-2">
               <label htmlFor="fixedPayment">Fixed Payment ($)</label>
               <input
                 type="number"
@@ -163,10 +184,10 @@ const CreditCardCalculator = () => {
               />
             </div>
           )}
-        </div>
+        
 
         {/* Calculate Button */}
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center mt-5">
           <button
             onClick={handleCalculate}
             className="bg-[#42acd8] text-white py-2 px-6 rounded-md text-center"
@@ -174,7 +195,7 @@ const CreditCardCalculator = () => {
             Calculate
           </button>
         </div>
-      </div>
+      
 
       {/* Summary Boxes */}
       <div className="my-6 flex flex-col gap-4 text-white">
@@ -206,12 +227,13 @@ const CreditCardCalculator = () => {
             <LineChart data={graphData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month" />
-              <YAxis />
-              <Tooltip />
+              <YAxis tick={{ fontSize:15 }} tickFormatter={(value) => `$${formatLargeNumber(value)}`}/>
+              <Tooltip formatter={(value) => `$${Intl.NumberFormat('en-US', {
+                  minimumFractionDigits: 2,maximumFractionDigits: 2}).format(parseFloat(value.toLocaleString()))}`} />
               <Legend />
-              <Line type="monotone" dataKey="balance" stroke="#8884d8" />
-              <Line type="monotone" dataKey="paymentAmount" stroke="#82ca9d" />
-              <Line type="monotone" dataKey="cumulativeInterest" stroke="#ff7300" />
+              <Line type="monotone" dataKey="balance" stroke="#8884d8" name='Balance' />
+              <Line type="monotone" dataKey="paymentAmount" stroke="#82ca9d" name='Payment Amount' />
+              <Line type="monotone" dataKey="cumulativeInterest" stroke="#ff7300" name='Cumulative Interest' />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -219,32 +241,37 @@ const CreditCardCalculator = () => {
 
       {/* Projected Data Table */}
       {projectedData.length > 0 && (
-        <div className="overflow-x-auto">
-          <table className="min-w-full table-auto">
-            <thead className='bg-[#f2f2f2] text-[#4a4a4a] font-semibold'>
-              <tr>
-                <th className="px-4 py-2 border">Month</th>
-                <th className="px-4 py-2 border">Min Payment</th>
-                <th className="px-4 py-2 border">Payment</th>
-                <th className="px-4 py-2 border">Principal</th>
-                <th className="px-4 py-2 border">Interest</th>
-                <th className="px-4 py-2 border">Remaining Balance</th>
+        
+          <table className="table-auto border-collapse border border-[#ddd] rounded-lgw-full mt-4">
+            <thead className='bg-[#f2f2f2]'>
+              <tr className='border border-[#ddd] text-left'>
+                <th className="px-4 py-2 border border-[#ddd]">Month</th>
+                <th className="px-4 py-2 border border-[#ddd]">Min Payment</th>
+                <th className="px-4 py-2 border border-[#ddd]">Payment</th>
+                <th className="px-4 py-2 border border-[#ddd]">Principal</th>
+                <th className="px-4 py-2 border border-[#ddd]">Interest</th>
+                <th className="px-4 py-2 border border-[#ddd]">Remaining Balance</th>
               </tr>
             </thead>
             <tbody>
               {projectedData.map((data, index) => (
-                <tr key={index}>
-                  <td className="px-4 py-2 border">{data.month}</td>
-                  <td className="px-4 py-2 border">${data.minPayment}</td>
-                  <td className="px-4 py-2 border">${data.payment}</td>
-                  <td className="px-4 py-2 border">${data.principal}</td>
-                  <td className="px-4 py-2 border">${data.interest}</td>
-                  <td className="px-4 py-2 border">${data.remainingBalance}</td>
+                <tr key={index} className='text-left' style={{ backgroundColor: index %2 == 0? '#f9f9f9':'#fffff' }}>
+                  <td className="px-4 py-2 border border-[#ddd]">{data.month}</td>
+                  <td className="px-4 py-2 border border-[#ddd]">${Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 2,maximumFractionDigits: 2}).format(data.minPayment)}</td>
+                  <td className="px-4 py-2 border border-[#ddd]">${Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 2,maximumFractionDigits: 2}).format(data.payment)}</td>
+                  <td className="px-4 py-2 border border-[#ddd]">${Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 2,maximumFractionDigits: 2}).format(data.principal)}</td>
+                  <td className="px-4 py-2 border border-[#ddd]">${Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 2,maximumFractionDigits: 2}).format(data.interest)}</td>
+                  <td className="px-4 py-2 border border-[#ddd]">${Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 2,maximumFractionDigits: 2}).format(data.remainingBalance)}</td>
                 </tr>
               ))}
             </tbody>
           </table>
-        </div>
+        
       )}
     </div>
   );
