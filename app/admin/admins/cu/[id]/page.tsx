@@ -2,40 +2,58 @@
 import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 import FormikFormHolder from "@/app/components/form/FormikFormHolder";
 import useAuth from '@/app/hooks/useAuth';
+import AdminLayout from "@/app/layout/AdminLayout";
 import axios from "axios";
-import { Formik, validateYupSchema, yupToFormErrors } from 'formik';
+import { Formik } from 'formik';
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
-import { DataLabel, DataSchema, ValidationSchema } from "./DataValidationSchema";
-
-
-import AdminLayout from "@/app/layout/AdminLayout";
+import { useCallback, useEffect, useRef, useState } from "react";
 import toast from 'react-hot-toast';
+import { DataLabel, DataSchema, ValidationSchema } from "../DataValidationSchema";
 import HolderOne from "@/app/layout/HolderOne";
 import {AdminRoles} from '@/app/data/AdminOptions.json';
 const url = process.env.NEXT_PUBLIC_API_URL;
-export default function InsuranceCreate() {
+export default function InsuranceCreate({
+    params,
+    searchParams
+  }:{
+    params: { id: string }
+    searchParams: { [key: string]: string | string[] | undefined }
+  
+  }) {
     const authCtx = useAuth();
     const router = useRouter()
     const formRef = useRef<any>(null);
-    const role:number = AdminRoles[0].value;    
+    const role:number = AdminRoles[0].value;
 
     const [fetchFomrData,setFetchFormData] = useState(DataSchema);
-
-    const fetchdata = fetchFomrData;
-
+    //console.log(fetchFomrData)
     
+      
+    const id = params.id;
+    const fetchDataCallback=useCallback(async()=>{
+        //console.log(id);
+        const response = await axios.get(`${url}users/${id}`);
+        //return response.data.user;
+        setFetchFormData({id,...response.data.user});
+    },[id]);
+    useEffect(()=>{
+        fetchDataCallback();
+    
+    },[fetchDataCallback]);
+    const fetchdata = fetchFomrData;
+    fetchdata.password = '';
+    //console.log(fetchdata);
     
 
     const handleFormSubmit = async(values:any,{ resetForm }:any)=>{
         //alert(JSON.stringify(values));
-
-        await axios.post(`${url}member-registration`, 
+        
+        await axios.post(`${url}user-create/${id}`, 
             values.fetchdata, {
             
             headers: {
-              'Content-Type': 'application/json'
+                'Content-Type': 'multipart/form-data'
             }
           }
         ) .then(function (response) {
@@ -45,19 +63,28 @@ export default function InsuranceCreate() {
             toast.error(response.data.message);
           }else{
             toast.success(response.data.message);
+            router.push('/admin/admins');
+            //resetForm();
+          }
+          /*
+          if(response.data.agency_id!=null){
+
             resetForm();
-            router.push('/admin/clients')
-          }         
+
+            
+            
+            
+            //router.push('/admin/agency/cu');
+          }*/
           
         })
         .catch(function (error) {
             toast.error(error);
           //console.log(error);
         });
+        
 
     }
-
-
 
     const handleSubmit = ()=> {
         formRef.current?.handleSubmit();
@@ -91,46 +118,21 @@ export default function InsuranceCreate() {
         <AdminLayout>
         <div className="flex flex-col">
 
+           
         <HolderOne
             title="clients"            
-            linkItems={[
-              {
-                link:'/admin/clients',
-                title:'list client'
-              },
-
-              {
-                link:'/admin/dashboard',
-                title:'dashboard'
-              },
-              {
-                link:'/admin/profile',
-                title:'profile'
-              }
-            ]}
-            />    
-
-            
-
+            linkItems={linkItems}
+            /> 
         
 
-            <div className="mt-[32px]">
+            <div className="mt-8">
             <Formik
             innerRef={formRef}
         initialValues={{ fetchdata }}
-        /*validationSchema={ValidationSchema}*/
+        enableReinitialize
+        validationSchema={ValidationSchema}
         validateOnChange={false}
-        /*validateOnBlur={false}*/
-        validate={async (value) => {
-            try {
-              await validateYupSchema(value, ValidationSchema, false, {'newentry':'1'});
-            } catch (err) {
-              return yupToFormErrors(err); //for rendering validation errors
-            }
-          
-            return {};
-          }}
-        
+        validateOnBlur={false}
 
         onSubmit={handleFormSubmit}
 
@@ -196,8 +198,8 @@ export default function InsuranceCreate() {
     
     <div className="ml-[24px] w-[50%]">
 
-    <FormikFieldInput
-    type="password" 
+    <FormikFieldInput 
+        type="password"
         label={DataLabel.password} 
         name={`fetchdata.password`}
         placeHolder={`${DataLabel.password}`}
@@ -210,9 +212,6 @@ export default function InsuranceCreate() {
         
     </div>
 </div>
-
-
-
 {/*
 <div className="flex flex-row">
     {JSON.stringify(values)}

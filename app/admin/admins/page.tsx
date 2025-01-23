@@ -7,7 +7,7 @@ import TabView from "@/app/components/ui/TabView";
 import HolderOne from "@/app/layout/HolderOne";
 import React, { useState } from 'react';
 import UserGrid from "./UserGrid";
-import {UserRoles, AdminRoles} from '@/app/data/AdminOptions.json';
+import {AdminRoles} from '@/app/data/AdminOptions.json';
 const url = process.env.NEXT_PUBLIC_API_URL;
 
 
@@ -19,26 +19,27 @@ interface Tab {
 
 
 
-export default function Clients() {
+export default function Admins() {
   const authCtx = useAuth();
+  const role:any  = authCtx.role;
 
   const [activeTab, setActiveTab] = useState(0);
 
-  const UserRole:any = UserRoles;
-  const role:number = AdminRoles[0].value; 
+  const AdminRole:any = AdminRoles;
+
 
     const tabs: Tab[] = [
         
 
       { 
-        label: 'members', 
-        content: <UserGrid role={UserRole[1].value} />
+        label: 'admins', 
+        content: <UserGrid role={AdminRole[0].value} />
       },
 
-      { 
-        label: 'prospect list', 
-        content: <UserGrid role={UserRole[0].value} />
-      } , 
+      // { 
+      //   label: 'prospect list', 
+      //   content: <UserGrid role={UserRole[0].value} />
+      // } , 
       /*
       { 
         label: 'client refer', 
@@ -51,9 +52,6 @@ export default function Clients() {
       },
       */
 
-      
-      
-      
     ];
 
     const linkItems = [
@@ -87,7 +85,7 @@ export default function Clients() {
         <div className="flex flex-col">
 
         <HolderOne
-            title="clients"            
+            title="admins"            
             linkItems={linkItems}
             />
 

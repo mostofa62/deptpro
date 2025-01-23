@@ -42,11 +42,16 @@ export function middleware(request: NextRequest) {
   
       // Redirect user trying to access the admin path
       if (url.pathname.startsWith('/admin')) {
+        if(url.pathname.includes('admins') && role > 1){
+          url.pathname = '/admin/dashboard';
+          return NextResponse.redirect(url);
+        }
         if (role >= 10) {
           url.pathname = '/member/dashboard'; // Redirect to user dashboard
           return NextResponse.redirect(url);
         }
       }
+      //console.log('url.pathname',url.pathname.includes('admins'))
   
       // Redirect admin trying to access the user path
       if (url.pathname.startsWith('/member')) {

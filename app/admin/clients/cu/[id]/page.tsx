@@ -11,7 +11,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import toast from 'react-hot-toast';
 import { DataLabel, DataSchema, ValidationSchema } from "../DataValidationSchema";
 import HolderOne from "@/app/layout/HolderOne";
-
+import {AdminRoles} from '@/app/data/AdminOptions.json';
 const url = process.env.NEXT_PUBLIC_API_URL;
 export default function InsuranceCreate({
     params,
@@ -24,7 +24,7 @@ export default function InsuranceCreate({
     const authCtx = useAuth();
     const router = useRouter()
     const formRef = useRef<any>(null);
-    
+    const role:number = AdminRoles[0].value; 
 
     const [fetchFomrData,setFetchFormData] = useState(DataSchema);
     //console.log(fetchFomrData)
@@ -90,6 +90,30 @@ export default function InsuranceCreate({
         formRef.current?.handleSubmit();
       }
 
+
+      const linkItems = [
+        {
+          link: "/admin/clients/cu",
+          title: "create client",
+        },
+        {
+          link: "/admin/dashboard",
+          title: "dashboard",
+        },
+        {
+          link: "/admin/profile",
+          title: "profile",
+        },
+        ...(role < 2
+          ? [
+              {
+                link: "/admin/admins/cu",
+                title: "create admin",
+              },
+            ]
+          : []),
+      ];
+
     return(
         <>
         <AdminLayout>
@@ -98,21 +122,7 @@ export default function InsuranceCreate({
            
         <HolderOne
             title="clients"            
-            linkItems={[
-              {
-                link:'/admin/clients',
-                title:'list client'
-              },
-
-              {
-                link:'/admin/dashboard',
-                title:'dashboard'
-              },
-              {
-                link:'/admin/profile',
-                title:'profile'
-              }
-            ]}
+            linkItems={linkItems}
             /> 
         
 
@@ -190,6 +200,7 @@ export default function InsuranceCreate({
     <div className="ml-[24px] w-[50%]">
 
     <FormikFieldInput 
+    type="password"
         label={DataLabel.password} 
         name={`fetchdata.password`}
         placeHolder={`${DataLabel.password}`}

@@ -196,6 +196,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 </>
 }
 
+{(Loguser && parseInt(Loguser) < 2 ) &&
+<>
+<li key={21}>
+  <Link
+    href={'/admin/admins'}
+    className={`capitalize text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
+      pathname.includes('admins') && 'bg-[#43ACD6] text-[#f5f5f8]'
+    }`}
+  >
+  Admins
+  </Link>
+</li>
+</>
+}
+
 {(Loguser && parseInt(Loguser) >= 10 ) &&
 <>
 

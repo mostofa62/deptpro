@@ -14,12 +14,13 @@ import AdminLayout from "@/app/layout/AdminLayout";
 import toast from 'react-hot-toast';
 import HolderOne from "@/app/layout/HolderOne";
 import {AdminRoles} from '@/app/data/AdminOptions.json';
+
 const url = process.env.NEXT_PUBLIC_API_URL;
 export default function InsuranceCreate() {
     const authCtx = useAuth();
+    const role:number = AdminRoles[0].value;
     const router = useRouter()
-    const formRef = useRef<any>(null);
-    const role:number = AdminRoles[0].value;    
+    const formRef = useRef<any>(null);    
 
     const [fetchFomrData,setFetchFormData] = useState(DataSchema);
 
@@ -32,7 +33,7 @@ export default function InsuranceCreate() {
         //alert(JSON.stringify(values));
 
         await axios.post(`${url}member-registration`, 
-            values.fetchdata, {
+            {...values.fetchdata,role}, {
             
             headers: {
               'Content-Type': 'application/json'
@@ -46,7 +47,7 @@ export default function InsuranceCreate() {
           }else{
             toast.success(response.data.message);
             resetForm();
-            router.push('/admin/clients')
+            router.push('/admin/admins')
           }         
           
         })
@@ -56,8 +57,6 @@ export default function InsuranceCreate() {
         });
 
     }
-
-
 
     const handleSubmit = ()=> {
         formRef.current?.handleSubmit();
@@ -92,22 +91,8 @@ export default function InsuranceCreate() {
         <div className="flex flex-col">
 
         <HolderOne
-            title="clients"            
-            linkItems={[
-              {
-                link:'/admin/clients',
-                title:'list client'
-              },
-
-              {
-                link:'/admin/dashboard',
-                title:'dashboard'
-              },
-              {
-                link:'/admin/profile',
-                title:'profile'
-              }
-            ]}
+            title="admins"            
+            linkItems={linkItems}
             />    
 
             
@@ -197,7 +182,7 @@ export default function InsuranceCreate() {
     <div className="ml-[24px] w-[50%]">
 
     <FormikFieldInput
-    type="password" 
+        type="password" 
         label={DataLabel.password} 
         name={`fetchdata.password`}
         placeHolder={`${DataLabel.password}`}
