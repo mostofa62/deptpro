@@ -6,6 +6,7 @@ import ProgressBarOne from "@/app/components/ui/ProgressBarOne";
 import { formatLargeNumber, hashString, hslToHex } from "@/app/components/utils/Util";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import { useEffect, useRef, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Line, BarChart, Bar } from "recharts";
 
 
@@ -23,6 +24,8 @@ interface IncomePayload{
     projection_list:{base_gross_income:number, base_net_income:number, month:string, month_word:string}[]
   }
 const Summary = ({income_id}:DebtTransProps)=>{
+
+  const isMobile = useMediaQuery({ maxWidth: 768 });
 
   const [highlightedKey, setHighlightedKey] = useState(null);
 
@@ -165,20 +168,20 @@ const Summary = ({income_id}:DebtTransProps)=>{
     
 
     return(
-        <div className="flex flex-row gap-1">
+        <div className="flex flex-col md:flex-row gap-1">
 
-            <div className="w-[25%]" ref={el => (itemRefs.current[0] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
-              <CardHolderOne title="current net income" maxHeight={maxHeight}>
+            <div className="md:w-[25%]" ref={el => (itemRefs.current[0] = el)} style={{ height: isMobile? 'auto': maxHeight ? `${maxHeight}px` : 'auto' }}>
+              <CardHolderOne title="current net income" maxHeight={isMobile?80:maxHeight}>
                   
 
                     <div className="w-full flex items-center justify-center">
-                    <p className='text-[25px] font-bold text-[#31c4a2] mt-[40%]'><span>$</span><span>{formattedAmount}</span></p>
+                    <p className='md:text-[25px] font-bold text-[#31c4a2] md:mt-[40%]'><span>$</span><span>{formattedAmount}</span></p>
                     </div>
                   
               </CardHolderOne>
 
             </div>
-            <div className="w-[45%]" ref={el => (itemRefs.current[1] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
+            <div className="md:w-[45%]" ref={el => (itemRefs.current[1] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
             {barData.length > 0 &&
   <CardHolderOne title={`12 months history`} maxHeight={maxHeight}>
                 <div className="flex flex-col justify-center items-center">
@@ -230,7 +233,7 @@ const Summary = ({income_id}:DebtTransProps)=>{
                 
             </div>
 
-            <div className="w-[40%]" ref={el => (itemRefs.current[2] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
+            <div className="md:w-[40%]" ref={el => (itemRefs.current[2] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
 
             {lineData.length > 0 && 
           <CardHolderOne title="12 Months Projection" maxHeight={maxHeight}>

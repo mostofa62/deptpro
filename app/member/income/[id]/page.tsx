@@ -112,7 +112,7 @@ export default function IncomeDetail({
         
         <DefaultLayout>
 
-            <div className="grid grid-flow-row">
+            <div className="flex flex-col md:grid grid-flow-row">
 
 
             <HolderOne
@@ -133,7 +133,7 @@ export default function IncomeDetail({
             ]}
             />
 
-            <div className="mt-[32px] p-5">
+            <div className="mt-3 md:mt-[32px] md:p-5">
               <Summary income_id={id}              
         
 
@@ -142,9 +142,9 @@ export default function IncomeDetail({
             
 
 
-            <div className="mt-[32px] bg-[#fafafa] rounded-lg flex p-5">
+            <div className="mt-3 py-2 md:mt-[32px] bg-[#fafafa] rounded-lg flex flex-col md:flex-row md:p-5 gap-2.5">
 
-                <div className="w-[35%] h-[30%] flex flex-col">
+                <div className="md:w-[35%] md:h-[30%] flex flex-col">
                     {/* <div className="p-1">  
                     <BasicCalendar 
                     extraDayData={{[`${IncomeWithTransactionData.income.pay_date
@@ -155,7 +155,7 @@ export default function IncomeDetail({
                     </div> */}
 
 
-                    <div className="p-1">  
+                    <div className="md:p-1">  
                     <BasicCalendar 
                     extraDayData={{[`${IncomeWithTransactionData.income.next_pay_date
                     }`]:{'title':`Next Pay date`,'description':descriptionNext()}}} 
@@ -168,13 +168,13 @@ export default function IncomeDetail({
             
 
 
-                <div className="w-[65%] px-5">
+                <div className="md:w-[65%] md:px-5">
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {Object.keys(datalabel).map((key, index) => (
-                        <div key={index} className="bg-white p-4 rounded shadow">
+                        <div key={index} className="bg-white p-2 md:p-4 rounded shadow">
                             <strong>{datalabel[key]}</strong>
-                            <p className="mt-1">
+                            <p className="md:mt-1">
                             {/*DebtWithTransactionData.debtAccount[key] !== undefined ? DebtWithTransactionData.debtAccount[key].toString() : '-'*/}
                             {DataPrefix[key as keyof DebtRow]}{key in IncomeWithTransactionData.income ? typeof IncomeWithTransactionData.income[key] == 'number'? Intl.NumberFormat('en-US', {
       minimumFractionDigits: 2,maximumFractionDigits: 2}).format(IncomeWithTransactionData.income[key]) :IncomeWithTransactionData.income[key]?.toString() : '-'}
@@ -190,12 +190,12 @@ export default function IncomeDetail({
 
             </div>
 
-            <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
+            <div className="w-full p-1 mt-3 md:mt-[32px] md:border-[#fafafa] md:border-[2px] shadow-1 rounded-lg md:p-5">
               <IncomeTransactions income_id={id}  />
             </div>
 
 
-            <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
+            <div className="w-full mt-3 md:mt-[32px] md:border-[#fafafa] md:border-[2px] shadow-1 rounded-lg md:p-5">
             {/* <SavingBoostGrid saving_id={id}  /> */}
             {
               <TabView align={`left`}  tabs={tabs} onChageTab={(index)=>{

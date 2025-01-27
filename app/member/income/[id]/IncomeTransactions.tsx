@@ -211,13 +211,13 @@ const IncomeTransactions = ({income_id}:IncomeProps)=>{
 
                     <div className="grid grid-flow-row">
 
-                    <p className="text-[16px] uppercase font-medium mt-3">Income Transaction History</p>
+                    <p className="text-[16px] uppercase font-medium md:mt-3">Income Transaction History</p>
 
                     <hr className="mt-2 border-stroke"/>
 
-                    <div className="grid grid-cols-1 gap-1 mt-4">
+                    <div className="grid grid-cols-1 gap-1 md:mt-4 mt-2">
 
-                    <div className="mt-10 p-2">  
+                    <div className="md:mt-10 md:p-2 overflow-auto">  
             
             <table className="tanstack-table table-auto w-full text-left">
               <thead>
@@ -303,7 +303,7 @@ const IncomeTransactions = ({income_id}:IncomeProps)=>{
         &&
         (pageCount * per_page) > per_page
         &&
-        <div className="mt-[100px]">
+        <div className="mt-3 md:mt-[100px]">
       <GridPaginationHolder 
       table={table}
       pageNumbers={pageNumbers}

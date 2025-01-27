@@ -104,7 +104,7 @@ export default function InsuranceCreate() {
     return(
         <>
         <DefaultLayout>
-        <div className="grid grid-flow-row">
+        <div className="flex flex-col md:grid grid-flow-row">
 
 
         <HolderOne
@@ -125,7 +125,7 @@ export default function InsuranceCreate() {
 
             
 
-            <div className="mt-[32px]">
+<div className="mt-2.5 md:mt-[32px]">
             <Formik
             innerRef={formRef}
         initialValues={{ fetchdata }}
@@ -137,10 +137,10 @@ export default function InsuranceCreate() {
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
             <FormikFormHolder>
 
-<div className="flex flex-row gap-2">
+<div className="flex flex-col md:flex-row gap-2">
 
-<div className="w-[35%] flex justify-center items-center">
-        <div className="">
+<div className="w-full md:w-[35%] flex justify-center items-center">
+<div className="hidden md:block">
                        
             <VideoComponent
                 src="/animated/incomentry.mp4"
@@ -154,21 +154,11 @@ export default function InsuranceCreate() {
         </div>
 
 
-<div className="w-[65%]">
+<div className="w-full md:w-[65%]">
 
+<div className="flex flex-col md:flex-row md:mt-[15px] gap-2">
 
-
-
-
-
-
-
-
-
-
-<div className="flex flex-row mt-[15px]">
-
-<div className="w-[50%]">
+<div className="w-full md:w-[50%]">
 
 <FormikSelectInput
             label={DataLabel.income}
@@ -196,7 +186,7 @@ export default function InsuranceCreate() {
 
 
         </div>
-    <div className="ml-[24px] w-[50%]">
+        <div className="md:ml-[24px] md:w-[50%]">
 
 
     <FormikFieldInput 
@@ -228,9 +218,9 @@ export default function InsuranceCreate() {
     
 </div>
 
-<div className="flex flex-row mt-[15px]">
+<div className="flex flex-col md:flex-row md:mt-[15px] gap-2">
 
-<div className="w-[50%]">
+<div className="md:w-[50%]">
 
 <FormikFieldInput 
         type="number"
@@ -252,7 +242,7 @@ export default function InsuranceCreate() {
             
             
         </div>
-    <div className="ml-[24px]  w-[50%]">
+        <div className="md:ml-[24px] md:w-[50%]">
     
     <FormikSelectCreatableInput
                 label={DataLabel.income_boost_source}
@@ -285,11 +275,9 @@ export default function InsuranceCreate() {
     
 </div>
 
-<div className="flex flex-row mt-[15px]">
+<div className="flex flex-col md:flex-row md:mt-[15px] py-1">
 
-
-<div className="w-[50%]">
-        
+<div className="md:w-[50%] w-full">
 
 <FormikFieldInput 
         type="date"            
@@ -307,7 +295,7 @@ export default function InsuranceCreate() {
             
             
         </div>
-<div className="ml-[24px]  w-[50%]">
+<div className="md:ml-[24px]  md:w-[50%]">
 
 <FormikSelectInput
             label={DataLabel.repeat_boost}
@@ -328,8 +316,8 @@ export default function InsuranceCreate() {
 </div>
 </div>
 
-<div className="flex flex-row mt-[15px]">
-<div className="w-[50%]">
+<div className="flex flex-col md:flex-row md:mt-[15px] py-1">
+<div className="md:w-[50%] w-full">
 <FormikFieldInput 
         label={DataLabel.note} 
         name={`fetchdata.note`}
@@ -360,7 +348,7 @@ export default function InsuranceCreate() {
             </div>
 
 
-            <div className="mt-10">
+            <div className="mt-2 md:mt-10">
                 <div className="flex flex-row-reverse gap-4">
                     <div className="relative right-5 top-0">
                         <button type="button" className="text-[15px] h-[40px] bg-[#43ACD6] rounded text-white px-4  capitalize text-center font-semibold" onClick={handleSubmit}>

@@ -211,9 +211,9 @@ const IncomeBoostTransactions = ({income_id}:IncomeProps)=>{
                     <div className="grid grid-flow-row">
                    
 
-                    <div className="grid grid-cols-1 gap-1 mt-4">
+                    <div className="grid grid-cols-1 gap-1 md:mt-4 mt-2">
 
-                    <div className="mt-10 p-2">  
+                    <div className="md:mt-10 md:p-2 overflow-auto w-full">  
             
             <table className="tanstack-table table-auto w-full text-left">
               <thead>
@@ -299,7 +299,7 @@ const IncomeBoostTransactions = ({income_id}:IncomeProps)=>{
         &&
         (pageCount * per_page) > per_page
         &&
-        <div className="mt-[100px]">
+        <div className="mt-3 md:mt-[100px]">
           
       <GridPaginationHolder 
       table={table}

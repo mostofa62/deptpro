@@ -260,8 +260,8 @@ const TotalAllocation = ({userid}:TotalPros) => {
     
 
     return (
-    <div className="flex flex-row gap-2.5">
-        <div className="w-[35%]" ref={el => (itemRefs.current[0] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
+    <div className="flex flex-col py-2 md:flex-row gap-2.5">
+        <div className="w-full md:w-[35%]" ref={el => (itemRefs.current[0] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
         {data.length > 0 &&
         <CardHolder title="Total Allocation" maxHeight={maxHeight}>
            
@@ -292,7 +292,7 @@ const TotalAllocation = ({userid}:TotalPros) => {
         </CardHolder>
         }
         </div>
-        <div className="w-[25%]" ref={el => (itemRefs.current[1] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
+        <div className="w-full md:w-[25%]" ref={el => (itemRefs.current[1] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
 
 {barData.length > 0 &&
   <CardHolder title={`12 months history`} maxHeight={maxHeight}>
@@ -340,7 +340,7 @@ bar={
 
         </div>
 
-        <div className="w-[40%]" ref={el => (itemRefs.current[2] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
+        <div className="w-full md:w-[40%]" ref={el => (itemRefs.current[2] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
         {lineData.length > 0 && 
           <CardHolder title="12 Months Projection" maxHeight={maxHeight}>
           <div className="w-full overflow-x-auto">

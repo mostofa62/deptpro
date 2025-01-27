@@ -400,8 +400,8 @@ const generateItems = useCallback((row) => [
         
         <div>
 
-            <div className="p-2 flex flex-col gap-5">
-
+            <div className="p-2 flex flex-col gap-5 w-full overflow-x-auto">
+                  {tableRows.length > 0 &&
                     <div className="py-2">
                        <GridGlobalSearch 
                       filterInput={filterInput}
@@ -410,9 +410,9 @@ const generateItems = useCallback((row) => [
                       searchButtonText="Search"
                       placeHolderText="Search here"
                       />
-                    </div>  
+                    </div>  }
             
-            <table className="tanstack-table table-auto w-full text-left">
+            <table className="tanstack-table table-auto w-full text-left overflow-x-auto">
               <thead>
                 {table.getHeaderGroups().map(headerGroup => (
                   <tr key={headerGroup.id}>
@@ -437,7 +437,7 @@ const generateItems = useCallback((row) => [
                       {error &&
                       <>
                       <tr className="col-span-full row-span-full">
-                        <td className="text-center w-full p-2 font-normal">
+                        <td colSpan={table.getAllColumns().length} className="text-center w-full p-2 font-normal">
                           <span>{error}</span>
                         </td>
                       </tr>
@@ -446,14 +446,18 @@ const generateItems = useCallback((row) => [
                       {loading ?  
                       <>
                       <tr className="col-span-full row-span-full">
-                        <td className="text-center w-full p-2 font-normal">
+                        <td colSpan={table.getAllColumns().length} className="text-center w-full p-2 font-normal flex items-center justify-center">
                           <span>... Loading ...</span>
                         </td>
                       </tr>
                       </>
                       :
-                      <>   
-                      {tableRows.map((row:any) => (
+                      <> 
+                        
+                      {
+                      
+                      tableRows.length > 0 ?
+                      tableRows.map((row:any) => (
                                             
                           
                           <tr 
@@ -482,11 +486,20 @@ const generateItems = useCallback((row) => [
                             
                           
                           
-                      ))}
+                      )) : 
+
+                      <tr className="col-span-full row-span-full">
+                        <td colSpan={table.getAllColumns().length} className="col-span-full text-center w-full p-2 font-normal">
+                          <span className=' capitalize'>No data found!</span>
+                        </td>
+                      </tr>
+                      
+                      
+                      }
                       </> 
                       }
                       </tbody>
-
+                      {tableRows.length > 0 && 
                       <tfoot>
                         {table.getFooterGroups().map(footerGroup => (
                           <tr key={footerGroup.id}>
@@ -498,6 +511,7 @@ const generateItems = useCallback((row) => [
                           </tr>
                         ))}
                       </tfoot>
+                    }
                       
               
             </table>

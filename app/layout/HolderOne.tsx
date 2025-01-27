@@ -19,19 +19,19 @@ const HolderOne = ({title, showingText, linkItems}:HolderProps)=>{
     return (
 
         <div className="mt-[20px] bg-[#43ACD6] text-white rounded-lg border-[#43ACD6]">
-            <div className="flex flex-row h-[50px] px-2">
-                <div className="text-[15px] font-semibold w-[20%] flex items-center justify-start px-2">                    
+            <div className="flex flex-col py-2 md:flex-row md:h-[50px] md:px-2">
+                <div className="text-md md:text-[15px] font-semibold w-full md:w-[20%] flex items-center justify-center md:justify-start md:px-2">                    
                     <p className="capitalize">
                     {title}
                     </p>
                     
                 </div>
 
-                <div className="flex items-center justify-center w-[25%] text-sm">
+                <div className="flex items-center justify-center w-full md:w-[25%] text-sm">
                     <p className="capitalize text-center">{showingText}</p>
                 </div>
 
-                <div className="flex flex-row items-center justify-end w-[55%] gap-1">
+                <div className="flex flex-col py-1 md:flex-row items-center md:justify-end w-full md:w-[55%]">
                     {linkItems.map((item:LinkProps, index:number)=>{
 
                         return (
@@ -39,7 +39,7 @@ const HolderOne = ({title, showingText, linkItems}:HolderProps)=>{
                             <Link
                                 key={index}
                                 href={item.link}
-                                className={`text-sm capitalize group relative flex items-center gap-2 rounded-sm py-2 px-3 font-semibold duration-300 ease-in-out`}
+                                className={`text-sm capitalize group gap-1 relative flex items-center md:gap-2 rounded-sm md:py-2 px-3 font-semibold duration-300 ease-in-out`}
                             >                        
                                 <p className="font-semibold capitalize">
                                     {item.title}

@@ -118,12 +118,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     <aside
       ref={sidebar}
       style={{ boxShadow: "0px 1px 5px 0px #dbdbdb" }}
-      className={`absolute left-0 top-0 z-9999 flex h-screen w-65 flex-col overflow-y-hidden duration-300 ease-linear lg:static lg:translate-x-0 ${
+      className={`bg-white absolute left-0 top-0 z-9999 flex h-screen w-full md:w-65 flex-col overflow-y-hidden duration-300 ease-linear lg:static lg:translate-x-0 ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}
     >
       {/* <!-- SIDEBAR HEADER --> */}
-      <div className="flex items-center justify-between py-2 gap-2 px-6">
+      <div className="flex flex-col md:flex-row py-2 items-center justify-between md:py-2 gap-2 md:px-6">
         
         {/*
         <button
@@ -148,7 +148,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           </svg>
         </button>
         */}
+        <Link href="/dashboard">
         <Image src={Logo} alt={app_name} className="" height={50}  />
+        </Link>
       </div>
       {/* <!-- SIDEBAR HEADER --> */}
 

@@ -41,7 +41,7 @@ const Income = ()=>{
     return(
         
         <DefaultLayout>
-            <div className="grid grid-flow-row">
+            <div className="flex flex-col md:grid grid-flow-row">
            
             <HolderOne
             title="your income dashboard"            
@@ -61,13 +61,13 @@ const Income = ()=>{
             
 
 
-            <div className="mt-5 p-2 mb-5">
+            <div className="md:my-5 md:p-2">
 
               <TotalAllocation userid={userid}/>
 
             </div>
 
-            <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
+            <div className="w-full mt-2.5 md:mt-[32px] md:border-[#fafafa] md:border-[2px] md:shadow-1 md:rounded-lg md:p-5">
             {/* <SavingBoostGrid saving_id={id}  /> */}
             {
               <TabView  tabs={tabs} align={`left`} onChageTab={(index)=>{

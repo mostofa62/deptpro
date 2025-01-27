@@ -63,11 +63,12 @@ type ExtraDayDataItem = {
     // Create an array of empty slots for days before the first day of the month
     const emptyDays = Array(firstDayOfMonth).fill(null);
     
+    
     // Create an array of day numbers for the current month (1 to daysInMonth)
     const daysArray = [...emptyDays, ...Array.from({ length: daysInMonth }, (_, i) => i + 1)];
 
     return daysArray.map((day, index) => {
-      if (!day) return <div key={index} className="h-16 w-16"></div>; // Empty day cell with increased height
+      if (!day) return <div key={index} className="h-8 w-8 md:h-16 md:w-16"></div>; // Empty day cell with increased height
 
       // Create a moment object for each day
       const dayMoment = currentDate.clone().date(day);
@@ -79,8 +80,9 @@ type ExtraDayDataItem = {
 
       return (
         <div
+          onClick={()=>{ alert(day) }}
           key={index}
-          className={`h-16 min-h-[4rem] w-auto flex flex-col items-center justify-center relative rounded-lg cursor-pointer group ${
+          className={`h-8 md:h-16 min-h-[1rem] md:min-h-[4rem] w-auto flex flex-col items-center justify-center relative rounded-lg cursor-pointer group ${
             extraData ? 'bg-[#31c4a2] text-white' : 'bg-gray-200 text-black'
           }`}
         >
@@ -108,25 +110,25 @@ type ExtraDayDataItem = {
   };
 
   return (
-    <div className="p-4 w-auto mx-auto bg-white shadow-lg rounded-lg">
+    <div className="p-1 md:p-4 w-auto mx-auto bg-white shadow-lg rounded-lg">
       <div className="flex justify-between items-center mb-4 bg-[#43acd6] text-white px-5 py-3 rounded">
         <button
           onClick={handlePrevMonth}
-          className="text-lg font-bold text-gray-600"
+          className="text-sm md:text-lg font-bold text-gray-600"
         >
           &lt;
         </button>
-        <h2 className="text-xl capitalize font-semibold">
+        <h2 className="text-md md:text-xl capitalize font-semibold">
           {currentDate.format("MMMM YYYY")}
         </h2>
         <button
           onClick={handleNextMonth}
-          className="text-lg font-bold text-gray-600"
+          className="text-sm md:text-lg font-bold text-gray-600"
         >
           &gt;
         </button>
       </div>
-      <div className="grid grid-cols-7 gap-4">
+      <div className="grid grid-cols-7 gap-1 md:gap-4">
         {renderDaysOfWeek()}
         {renderDates()}
       </div>

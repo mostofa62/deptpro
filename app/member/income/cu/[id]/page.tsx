@@ -187,7 +187,7 @@ export default function InsuranceCreate({
     return(
         <>
         <DefaultLayout>
-        <div className="grid grid-flow-row">
+        <div className="flex flex-col md:grid grid-flow-row">
 
 
         <HolderOne
@@ -213,7 +213,7 @@ export default function InsuranceCreate({
 
             
 
-            <div className="mt-[32px]">
+            <div className="mt-2.5 md:mt-[32px]">
             <Formik
             innerRef={formRef}
         initialValues={{ fetchdata }}
@@ -226,8 +226,8 @@ export default function InsuranceCreate({
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
             <FormikFormHolder>
 
-<div className="flex flex-row mt-[15px]">
-    <div className="w-[32%]">
+<div className="flex flex-col md:flex-row md:mt-[15px] gap-2">
+<div className="w-full md:w-[32%]">
         
         
 
@@ -252,7 +252,7 @@ export default function InsuranceCreate({
         
     </div>
 
-    <div className="ml-[24px] w-[32%]">
+    <div className="md:ml-[24px] md:w-[32%]">
 
     
         
@@ -281,7 +281,7 @@ deleteSelectedOption={(data:IncomeSrcProps) => deleteAction(data)}
         
     </div>
     
-    <div className="ml-[24px] w-[32%]">
+    <div className="md:ml-[24px] md:w-[32%]">
 
     <FormikFieldInput 
         type="number"
@@ -307,8 +307,8 @@ deleteSelectedOption={(data:IncomeSrcProps) => deleteAction(data)}
 
 
 
-<div className="flex flex-row mt-[15px]">
-    <div className="w-[32%]">
+<div className="flex flex-col md:flex-row md:mt-[15px] gap-2">
+<div className="md:w-[32%]">
 
     <FormikFieldInput 
         type="number"
@@ -327,7 +327,7 @@ deleteSelectedOption={(data:IncomeSrcProps) => deleteAction(data)}
         
     </div>
 
-    <div className="ml-[24px] w-[32%]">
+    <div className="md:ml-[24px] md:w-[32%]">
 
     
 
@@ -347,7 +347,7 @@ deleteSelectedOption={(data:IncomeSrcProps) => deleteAction(data)}
         
     </div>
     
-    <div className="ml-[24px] w-[32%]">
+    <div className="md:ml-[24px] md:w-[32%]">
 
     
 
@@ -375,8 +375,8 @@ deleteSelectedOption={(data:IncomeSrcProps) => deleteAction(data)}
 
 
 
-<div className="flex flex-row mt-[15px]">
-<div className="w-[48%]">
+<div className="flex md:flex-row md:mt-[15px] py-1">
+<div className="md:w-[48%] w-full">
 <FormikFieldInput 
         label={DataLabel.note} 
         name={`fetchdata.note`}
@@ -444,17 +444,17 @@ deleteSelectedOption={(data:IncomeSrcProps) => deleteAction(data)}
             </div>
 
 
-            <div className="mt-10">
+            <div className="mt-2 md:mt-10">
                 <div className="flex flex-row-reverse gap-4">
                     <div className="relative right-5 top-0">
-                        <button type="button" className="text-[15px] h-[40px] bg-[#0166FF] rounded text-white px-4  capitalize text-center font-semibold" onClick={handleSubmit}>
+                        <button type="button" className="text-[15px] h-[40px] bg-[#43ACD6] rounded text-white px-4  capitalize text-center font-semibold" onClick={handleSubmit}>
                             Save
                         </button>
                     </div>
                     <div className="relative right-[30px] top-[10px]">
                     <Link
                                     href={'/member/income'}
-                                    className={`text-[15px] h-[40px] capitalize text-center px-4 py-2.5  font-semibold bg-[#0166FF] rounded bg-opacity-5 text-[#0166FF]`}
+                                    className={`text-[15px] h-[40px] capitalize text-center px-4 py-2.5  font-semibold bg-[#43ACD6] rounded bg-opacity-5 text-[#43ACD6]`}
                                 >                               
 
 

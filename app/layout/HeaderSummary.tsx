@@ -3,9 +3,11 @@ import useAuth from "@/app/hooks/useAuth";
 import axios from "axios";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { formatLargeNumber } from "@/app/components/utils/Util";
+import { useMediaQuery } from "react-responsive";
 const url = process.env.NEXT_PUBLIC_API_URL;
 const HeaderSummary = () => {
+
+  const isMobile = useMediaQuery({ maxWidth: 768 });
   const authCtx = useAuth();
   const user_id = authCtx.userId;
 
@@ -97,7 +99,7 @@ const HeaderSummary = () => {
   }, []); // Empty dependency array ensures it runs once after mount
 
   return (
-    <div className="flex flex-row-reverse gap-1">
+    <div className="grid grid-cols-2 gap-2 md:flex flex-row-reverse md:gap-1">
       {Object.keys(transactioDataLabel).map((data: string, index: number) => {
         const prefix: string =
           transactioDataLabel[data as keyof typeof transactioDataLabel].prefix;
@@ -115,15 +117,15 @@ const HeaderSummary = () => {
             <CardHolderTiny>
               <div
                 ref={(el) => (itemRefs.current[index] = el)}
-                style={{ height: maxHeight ? `${maxHeight}px` : "auto" }}
+                style={{ height:isMobile ? '50px': maxHeight ? `${maxHeight}px` : "auto" }}
                 className="flex flex-col justify-center items-center gap-2"
               >
                 <div
                   ref={(el) => (childRefs.current[index] = el)}
                   style={{
-                    height: maxChildHeight ? `${maxChildHeight}px` : "auto",
+                    height:isMobile ? '25px': maxChildHeight ? `${maxChildHeight}px` : "auto",
                   }}
-                  className="bg-[#f09a25] shadow-custom w-full text-center text-white"
+                  className={`bg-[#f09a25] shadow-custom flex items-center justify-center w-full md:text-center text-white`}
                 >
                   <p className="font-semibold capitalize md:text-sm lg:text-[16px] lg:py-1">
                     {
@@ -135,7 +137,7 @@ const HeaderSummary = () => {
                 </div>
                 <div className="text-[#47E535]">
                   <Link
-                    className="font-semibold lg:text-[25px]"
+                    className="font-semibold text-[20px] lg:text-[25px]"
                     href={link}
                   >
                     {prefix != "" && prefix}
