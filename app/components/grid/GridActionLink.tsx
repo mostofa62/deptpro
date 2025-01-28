@@ -32,7 +32,7 @@ const GridActionLink = memo(({hoveredRowHeight,items}:GridLinkProps)=>{
                     
                     return(
                         
-                        <div key={i} className={`flex flex-col items-center ${i > 0 && 'ml-[30px]'}`}> 
+                        <div key={i} className={`flex flex-col md:items-center ${i > 0 && 'md:ml-[30px]'}`}> 
                             <div className="h-[50px]">
                             {v.actionId == 'delete' || v.actionId == 'internal'?
                             <button 

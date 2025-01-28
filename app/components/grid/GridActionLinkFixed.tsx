@@ -18,7 +18,7 @@ const GridActionLinkFixed = memo(({ hoveredRowHeight, items }: GridLinkProps) =>
   }, []);
 
   return (
-    <div className="px-2 flex flex-row bg-white gap-3 justify-center items-center">
+    <div className="md:px-2 flex flex-row bg-white gap-4 md:gap-3 justify-center items-center">
       {items.map((v, i) => (
         <div key={i} className="flex flex-col items-center justify-center relative">
           <div className="h-auto">

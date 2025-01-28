@@ -1,7 +1,7 @@
 "use client"; // This is a client component 👈🏽
 
 
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import Header from '@/app/components/Header';
 import Sidebar from '@/app/components/Sidebar';
 import UseAuthRoute from '@/app/hooks/useAuthRoute';
@@ -10,7 +10,17 @@ import { RouteChangeListener } from '../components/utils/RouteChangeListener';
 import { AppContextProvider } from '../context/app-context';
 import HeaderSummary from './HeaderSummary';
 import HeaderOne from '../components/HeaderOne';
+import { useMediaQuery } from 'react-responsive';
+import useAuth from '../hooks/useAuth';
+import axios from 'axios';
 
+
+type TransactionData = {
+  debt_total_balance: number;
+  month_debt_free: string;
+  financial_frdom_date: string;
+  financial_frdom_target: number;
+};
 
 
 interface DefaultLayoutProps {
@@ -21,13 +31,36 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   const router = useRouter();
   const pathname = usePathname();
   
-  
+  const authCtx = useAuth();  
+  const user_id = authCtx.userId;
+  const url = process.env.NEXT_PUBLIC_API_URL || '';
 
   //const redirect = useAuthRoute(pathname);
   
   
   //useProtection();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+
+  const [transactionData, setTransactionData] = useState<TransactionData>({
+    debt_total_balance: 0,
+    month_debt_free: '',
+    financial_frdom_date: '',
+    financial_frdom_target: 0,
+  });
+
+  const fetchTransactionData = useCallback(async () => {
+    try {
+      const response = await axios.get<TransactionData>(`${url}header-summary-data/${user_id}`);
+      setTransactionData(response.data);
+    } catch (error) {
+      console.error('Error fetching transaction data:', error);
+    }
+  }, [user_id, url]);
+
+  useEffect(() => {
+    fetchTransactionData();
+  }, [fetchTransactionData, pathname]);
 
   return (
     <div className="bg-white">
@@ -37,18 +70,25 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
       {/* <!-- ===== Page Wrapper Start ===== --> */}
       <div className="flex h-screen overflow-hidden bg-slate-800">
         {/* <!-- ===== Sidebar Start ===== --> */}
-        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} transactionData={transactionData} />
         {/* <!-- ===== Sidebar End ===== --> */}
+
+         {/* Overlay for mobile view */}
+         {isMobile && sidebarOpen && (
+      <div className="absolute inset-0 bg-black opacity-50 z-999 pointer-events-auto h-screen w-full" />
+    )}
 
         {/* <!-- ===== Content Area Start ===== --> */}
         <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+
+         
           {/* <!-- ===== Header Start ===== --> */}
-          <HeaderOne sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          <HeaderOne sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} transactionData={transactionData} />
           {/* <!-- ===== Header End ===== --> */}
 
           {/* <!-- ===== Main Content Start ===== --> */}
           <main>
-            <div className="mx-auto max-w-screen-2xl p-1 md:p-2 2xl:p-2">
+            <div className="mx-auto max-w-screen-2xl py-2.5 px-1 md:p-2 2xl:p-2">
               <HeaderSummary/>
               
               {children}

@@ -10,16 +10,28 @@ import Logo from '@/app/images/logo/logo.svg';
 import useAuth from '@/app/hooks/useAuth';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import axios from 'axios';
+import InfoBox from './InfoBox';
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
 const app_name:any = process.env.app_name;
+
+type TransactionData = {
+  debt_total_balance: number;
+  month_debt_free: string;
+  financial_frdom_date: string;
+  financial_frdom_target: number;
+};
+
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
+  transactionData?:TransactionData
 }
 
-const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
+
+
+const Sidebar = ({ sidebarOpen, setSidebarOpen, transactionData }: SidebarProps) => {
   
   const pathname  = usePathname();
   const authCtx = useAuth();
@@ -118,7 +130,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     <aside
       ref={sidebar}
       style={{ boxShadow: "0px 1px 5px 0px #dbdbdb" }}
-      className={`bg-white absolute left-0 top-0 z-9999 flex h-screen w-full md:w-65 flex-col overflow-y-hidden duration-300 ease-linear lg:static lg:translate-x-0 ${
+      className={`bg-white absolute left-0 top-0 z-9999 flex h-screen w-2/3 md:w-65 flex-col overflow-y-hidden duration-300 ease-linear lg:static lg:translate-x-0 ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}
     >
@@ -837,6 +849,50 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     contact us
   </Link>
 </li>
+
+{transactionData && 
+<li className='md:hidden lg:hidden xl:hidden'>
+
+
+<div className="md:hidden lg:hidden xl:hidden flex flex-col px-4 py-1 gap-1 w-full bg-[#43ACD6] rounded-sm">
+          
+            <InfoBox
+              
+              title="DEBT BALANCE"
+              value={Intl.NumberFormat('en-US').format(transactionData.debt_total_balance)}
+              isCurrency
+              
+              iconHeight={0}
+            />
+            <InfoBox title="DEBT FREE DATE" value={transactionData.month_debt_free}
+            iconWidth={0}
+            iconHeight={0}
+            />
+          
+          
+            <InfoBox
+              
+              title="FINANCIAL FREEDOM DATE"
+              value={transactionData.financial_frdom_date}
+
+              
+              iconHeight={0}
+            />
+            <InfoBox
+              title="FINANCIAL FREEDOM TARGET"
+              value={transactionData.financial_frdom_target > 0 ? Intl.NumberFormat('en-US').format(transactionData.financial_frdom_target):transactionData.financial_frdom_target}
+              isCurrency={transactionData.financial_frdom_target > 0}
+
+              iconWidth={0}
+                iconHeight={0}
+            />
+          </div>
+        
+
+
+</li>
+}
+
 </>
 }
 

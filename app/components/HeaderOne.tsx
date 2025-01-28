@@ -11,6 +11,8 @@ import ArrowGraph from '@/app/images/icon/arrowgraph';
 import CoinSvg from '@/app/images/icon/coin';
 import GoldBarTick from '@/app/images/icon/goldbartick';
 import { useMediaQuery } from 'react-responsive';
+import Logo from '@/app/images/logo/logo.svg';
+import InfoBox from './InfoBox';
 
 type TransactionData = {
   debt_total_balance: number;
@@ -22,9 +24,10 @@ type TransactionData = {
 type HeaderProps = {
   sidebarOpen: boolean;
   setSidebarOpen: (isOpen: boolean) => void;
+  transactionData:TransactionData
 };
 
-const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen }) => {
+const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen, transactionData }) => {
   const router = useRouter();
   const pathname = usePathname();
   const authCtx = useAuth();
@@ -33,65 +36,19 @@ const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen }) => {
   const app_name = process.env.app_name || '';
   const url = process.env.NEXT_PUBLIC_API_URL || '';
   const isMobile = useMediaQuery({ maxWidth: 768 });
+  
 
-  const [transactionData, setTransactionData] = useState<TransactionData>({
-    debt_total_balance: 0,
-    month_debt_free: '',
-    financial_frdom_date: '',
-    financial_frdom_target: 0,
-  });
-
-  const fetchTransactionData = useCallback(async () => {
-    try {
-      const response = await axios.get<TransactionData>(`${url}header-summary-data/${user_id}`);
-      setTransactionData(response.data);
-    } catch (error) {
-      console.error('Error fetching transaction data:', error);
-    }
-  }, [user_id, url]);
-
-  useEffect(() => {
-    fetchTransactionData();
-  }, [fetchTransactionData, appCtx.debtsAccountsScreen]);
-
-  const InfoBox: React.FC<{ icon?: React.FC<{ width:number; height:number; className: string }>; title: string; value: string | number; isCurrency?: boolean; iconWidth?: number;
-  iconHeight?: number;
-  iconClassName?: string; }> = ({
-    icon: Icon,
-    title,
-    value,
-    isCurrency = false,
-    iconWidth = 40,
-    iconHeight = 40,
-    iconClassName = 'text-white',
-  }) => (
-    <div className="flex items-center space-x-4">
-      {!isMobile && <>
-      {Icon ? (
-        <Icon width={iconWidth} height={iconHeight} className={iconClassName} />
-      ) : (
-        <div style={{ width: iconWidth, height: iconHeight }}></div>
-      )} 
-      </>}
-      <div className="flex flex-row space-x-2 md:flex-col md:gap-1">
-        <span className="text-[14px] text-white lg:text-[16px] font-semibold">{title}</span>
-        <span className="text-[17px] text-[#C1FF72] lg:text-[25px] font-bold">
-          {isCurrency && '$'}
-          {value}
-        </span>
-      </div>
-    </div>
-  );
+  
 
   return (
-    <header className="sticky top-0 z-50 bg-[#43ACD6]">
+    <header className="sticky top-0 z-50 md:bg-[#43ACD6] bg-white shadow-2">
       <div className="flex items-center  justify-between py-1 px-4 md:px-6 lg:min-h-[100px]">
         {/* Sidebar Toggle & Logo */}
         <div className="items-center gap-4 sm:hidden lg:hidden md:hidden">
           <button
             aria-controls="sidebar"
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="p-2 rounded border border-white bg-white dark:bg-gray-800"
+            className="p-2 rounded border border-[#43ACD6] bg-white dark:bg-gray-800"
           >
             <span className="block w-6 h-0.5 bg-[#f09a25] dark:bg-white mb-1"></span>
             <span className="block w-6 h-0.5 bg-[#f09a25] dark:bg-white mb-1"></span>
@@ -102,8 +59,14 @@ const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen }) => {
           </Link> */}
         </div>
 
+        <div className='flex w-full h-15 items-center justify-center md:hidden sm:hidden lg:hidden xl:hidden'>
+          <Link href="/dashboard">
+          <Image src={Logo} alt={app_name} className="" height={50}  />
+          </Link>
+        </div>
+
         {/* Info Section */}
-        <div className="flex flex-col md:flex-row md:justify-between w-full md:max-w-8xl md:mx-auto">
+        <div className="hidden md:flex flex-col md:flex-row md:justify-between w-full md:max-w-8xl md:mx-auto">
           <div className="flex flex-col items-center md:flex-row md:items-start md:gap-4">
             <InfoBox
               icon={GoldBarTick}
