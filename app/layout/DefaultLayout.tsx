@@ -42,6 +42,8 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
+  const isTab = useMediaQuery({ maxWidth: 900 });
+
   const [transactionData, setTransactionData] = useState<TransactionData>({
     debt_total_balance: 0,
     month_debt_free: '',
@@ -62,6 +64,8 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     fetchTransactionData();
   }, [fetchTransactionData, pathname]);
 
+  //alert(isTab)
+
   return (
     <div className="bg-white">
       
@@ -74,13 +78,13 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
         {/* <!-- ===== Sidebar End ===== --> */}
 
          {/* Overlay for mobile view */}
-         {isMobile && sidebarOpen && (
+         {(isMobile || isTab) && sidebarOpen && (
       <div className="absolute inset-0 bg-black opacity-50 z-999 pointer-events-auto h-screen w-full" />
     )}
 
         {/* <!-- ===== Content Area Start ===== --> */}
         <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
-
+         
          
           {/* <!-- ===== Header Start ===== --> */}
           <HeaderOne sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} transactionData={transactionData} />
@@ -88,7 +92,8 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
 
           {/* <!-- ===== Main Content Start ===== --> */}
           <main>
-            <div className="mx-auto max-w-screen-2xl py-2.5 px-1 md:p-2 2xl:p-2">
+              <div className="mx-auto py-2.5 px-1 md:px-2 md:max-w-screen-md lg:max-w-screen-lg 2xl:max-w-screen-2xl">
+
               <HeaderSummary/>
               
               {children}

@@ -38,7 +38,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, transactionData }: SidebarProps)
   const router = useRouter();
 
   
-  const [callStatus, setCallStatus] =  useState(false);
+  
   let Loguser:any = authCtx.role;
   let urlSuffix = (Loguser && parseInt(Loguser) < 10 )?'admin-logout':'member-logout';
   let redirect = (Loguser && parseInt(Loguser) < 10 )?'/admin':'/member';
@@ -82,7 +82,19 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, transactionData }: SidebarProps)
       setSidebarOpen(false);
     };
     document.addEventListener('keydown', keyHandler);
-    return () => document.removeEventListener('keydown', keyHandler);
+
+    const clickOutsideHandler = (event: MouseEvent) => {
+      if (sidebar.current && !sidebar.current.contains(event.target as Node)) {
+        setSidebarOpen(false);
+      }
+    };
+
+    document.addEventListener('click', clickOutsideHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keyHandler);
+      document.removeEventListener('click', clickOutsideHandler);
+    };
   });
 
   useEffect(() => {
@@ -160,7 +172,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, transactionData }: SidebarProps)
           </svg>
         </button>
         */}
-        <Link href="/dashboard">
+        <Link href={(Loguser && parseInt(Loguser) < 10 )?'/admin/dashboard':'/member/dashboard'}>
         <Image src={Logo} alt={app_name} className="" height={50}  />
         </Link>
       </div>

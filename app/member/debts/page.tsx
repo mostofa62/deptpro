@@ -51,7 +51,7 @@ const Debt = ()=>{
     return(
         
         <DefaultLayout>
-            <div className="grid grid-flow-row">
+            <div className="flex flex-col">
 
             <HolderOne
             title="your debt dashboard"            

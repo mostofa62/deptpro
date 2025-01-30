@@ -39,7 +39,8 @@ interface DataRow {
 const IncomeTransactions = ({income_id}:IncomeProps)=>{
 
     const isMobile = useMediaQuery({ maxWidth: 768 });
-    const per_page = isMobile ? 1 :per_page_list[0];
+    const isTab = useMediaQuery({ maxWidth: 900 });
+    const per_page = isMobile ? 1 : !isMobile && isTab? 4:per_page_list[0];
     const authCtx = useAuth();
     const appCtx = useApp();
     const debtsAccountsScreen = appCtx.debtsAccountsScreen;
@@ -213,7 +214,7 @@ const IncomeTransactions = ({income_id}:IncomeProps)=>{
 
                 return(
 
-                  isMobile ? <CardView
+                  isMobile || isTab ? <CardView
                   table={table}
                   tableRows={rows}
                   rowRefs={rowRefs}

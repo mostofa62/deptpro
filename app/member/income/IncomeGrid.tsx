@@ -37,8 +37,9 @@ interface IncomeProps{
 }
 const IncomeGrid = ({category}:IncomeProps)=>{
    const isMobile = useMediaQuery({ maxWidth: 768 });
+   const isTab = useMediaQuery({ maxWidth: 900 });
 
-   const per_page = isMobile ? 1 :per_page_list[0];
+   const per_page = isMobile ? 1 : !isMobile && isTab? 4:per_page_list[0];
 
     const authCtx = useAuth();
 
@@ -403,7 +404,7 @@ const generateItems = useCallback((row) => [
 
     return(
         
-      isMobile ? <CardView
+      isMobile || isTab ? <CardView
       table={table}
       tableRows={tableRows}
       rowRefs={rowRefs}

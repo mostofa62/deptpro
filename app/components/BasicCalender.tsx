@@ -82,7 +82,7 @@ type ExtraDayDataItem = {
         <div
           onClick={()=>{ alert(day) }}
           key={index}
-          className={`h-8 md:h-16 min-h-[1rem] md:min-h-[4rem] w-auto flex flex-col items-center justify-center relative rounded-lg cursor-pointer group ${
+          className={`h-8 lmd:h-10 lmd:min-h-[1.5rem]  md:h-16 min-h-[1rem] md:min-h-[4rem] w-auto flex flex-col items-center justify-center relative rounded-lg cursor-pointer group ${
             extraData ? 'bg-[#31c4a2] text-white' : 'bg-gray-200 text-black'
           }`}
         >

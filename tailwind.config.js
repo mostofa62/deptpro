@@ -59,6 +59,10 @@ module.exports = {
       ...defaultTheme.screens,
     },
     extend: {
+
+      screens: {
+        'lmd': {'min':'768px','max': '900px'},  // less then md
+      },
       fontSize: {
         'title-xxl': ['44px', '55px'],
         'title-xl': ['36px', '45px'],

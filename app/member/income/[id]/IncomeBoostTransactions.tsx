@@ -9,10 +9,13 @@ import { useMemo, useRef, useState } from 'react';
 import CardHolderDefault from '@/app/components/ui/CardHolderDefault';
 import Loading from '@/app/loading';
 import useApp from '@/app/hooks/useApp';
+import CardView from '@/app/components/grid/CardView';
+import TableView from '@/app/components/grid/TableView';
+import { useMediaQuery } from 'react-responsive';
 
 
 const per_page_list = PerPageList();
-const per_page = per_page_list[0];
+
 
 
 
@@ -36,6 +39,9 @@ interface DataRow {
 
 const IncomeBoostTransactions = ({income_id}:IncomeProps)=>{
 
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+  const isTab = useMediaQuery({ maxWidth: 900 });
+  const per_page = isMobile ? 1 : !isMobile && isTab? 4:per_page_list[0];
     
     const authCtx = useAuth();
     const appCtx = useApp();
@@ -204,115 +210,47 @@ const IncomeBoostTransactions = ({income_id}:IncomeProps)=>{
 
               
 
-                
+                const rows = table.getRowModel().rows;
 
                 return(
 
-                    <div className="grid grid-flow-row">
-                   
-
-                    <div className="grid grid-cols-1 gap-1 md:mt-4 mt-2">
-
-                    <div className="md:mt-10 md:p-2 overflow-auto w-full">  
-            
-            <table className="tanstack-table table-auto w-full text-left">
-              <thead>
-                {table.getHeaderGroups().map(headerGroup => (
-                  <tr key={headerGroup.id}>
-                    {headerGroup.headers.map(header => (
-                      <th className={
-                        header.column.getCanSort()
-                          ? 'cursor-pointer select-none'
-                          : ''
-                      } key={header.id} onClick={header.column.getToggleSortingHandler()}>
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                        {{
-                                asc: ' 🔼',
-                                desc: ' 🔽',
-                              }[header.column.getIsSorted() as string] ?? null}
-                      </th>
-                    ))}
-                  </tr>
-                ))}
-              </thead>
-             
-                      <tbody>
-                      {error &&
-                      <>
-                      <tr className="col-span-full row-span-full">
-                        <td className="text-center w-full p-2">
-                          <span>{error}</span>
-                        </td>
-                      </tr>
-                      </>
-                      }  
-                      {loading ?  
-                      <>
-                      <tr className="col-span-full row-span-full">
-                        <td className="text-center w-full p-2">
-                          <span>... Loading ...</span>
-                        </td>
-                      </tr>
-                      </>
-                      :
-                      <>   
-                      {table.getRowModel().rows.map((row:any) => {
-                          
-                          return(
-                                             
-                          
-                          <tr 
-                          ref={el => (rowRefs.current[row.original._id] = el)}
-                          onMouseEnter={() => handleMouseEnter(row.original._id)}
-                          onMouseLeave={handleMouseLeave}  
-                          key={row.id} className="border-t">
-                          {row.getVisibleCells().map((cell:any) => (
-                              <td className="py-1" key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
-                          ))}
-     
-                                          
-                          </tr>
-      
-                            
-                          
-                          
-                          )
-                      })}
-                      </> 
-                      }
-                      </tbody>
-                      
-              
-            </table>
-            
-            
-                  </div>
-                    
-                    </div>
-
-                    <div className="grid grid-flow-row">
-
-                    {
-        !loading 
-        && 
-        !error 
-        &&
-        (pageCount * per_page) > per_page
-        &&
-        <div className="mt-3 md:mt-[100px]">
-          
-      <GridPaginationHolder 
-      table={table}
-      pageNumbers={pageNumbers}
-      handlePageChange={handlePageChange}
-      
-      />
-      </div>
-
-}
-
-</div>
-                    </div>
+                  isMobile || isTab ? <CardView
+                  table={table}
+                  tableRows={rows}
+                  rowRefs={rowRefs}
+                  hoveredRowId={hoveredRowId}
+                  hoveredRowHeight={hoveredRowHeight}
+                  
+                  
+                  pageCount={pageCount}
+                  pageNumbers={pageNumbers}
+                  handlePageChange={handlePageChange}
+                  
+                  loading={loading}
+                  error={error}
+                  handleMouseEnter={handleMouseEnter}
+                  handleMouseLeave={handleMouseLeave}
+                  enableSearch={false}
+                  
+                  />:<TableView
+                  table={table}
+                  tableRows={rows}
+                  rowRefs={rowRefs}
+                  hoveredRowId={hoveredRowId}
+                  hoveredRowHeight={hoveredRowHeight}
+                  
+                  
+                  pageCount={pageCount}
+                  pageNumbers={pageNumbers}
+                  handlePageChange={handlePageChange}
+                  
+                  loading={loading}
+                  error={error}
+                  handleMouseEnter={handleMouseEnter}
+                  handleMouseLeave={handleMouseLeave}
+                  enableSearch={false}
+                  
+                  />
                 )
     
 

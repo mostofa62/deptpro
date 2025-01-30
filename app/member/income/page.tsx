@@ -41,7 +41,7 @@ const Income = ()=>{
     return(
         
         <DefaultLayout>
-            <div className="flex flex-col md:grid grid-flow-row">
+            <div className="flex flex-col">
            
             <HolderOne
             title="your income dashboard"            

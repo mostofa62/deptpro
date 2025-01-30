@@ -24,6 +24,7 @@ interface ViewData{
     handleMouseLeave:()=>void;
     enableSearch?:boolean;
     title?:string;
+    perPage?:number;
 }
 
 const TableView = ({
@@ -43,7 +44,8 @@ const TableView = ({
     handleMouseEnter,
     handleMouseLeave,
     enableSearch=true,
-    title
+    title,
+    perPage=per_page
     
 }:ViewData)=>{
 
@@ -94,7 +96,7 @@ const TableView = ({
                       {error &&
                       <>
                       <tr className="col-span-full row-span-full">
-                        <td colSpan={table.getAllColumns().length} className="text-center w-full p-2 font-normal">
+                        <td colSpan={table.getAllColumns().length} className="col-span-full text-center w-full p-2 font-normal">
                           <span>{error}</span>
                         </td>
                       </tr>
@@ -103,7 +105,7 @@ const TableView = ({
                       {loading ?  
                       <>
                       <tr className="col-span-full row-span-full">
-                        <td colSpan={table.getAllColumns().length} className="text-center w-full p-2 font-normal flex items-center justify-center">
+                        <td colSpan={table.getAllColumns().length} className="col-span-full text-center w-full p-2 font-normal">
                           <span>... Loading ...</span>
                         </td>
                       </tr>
@@ -180,7 +182,7 @@ const TableView = ({
         && 
         !error 
         &&
-        (pageCount * per_page) > per_page
+        (pageCount * perPage) > perPage
         &&
         <div className="mt-3">
       <GridPaginationHolder 

@@ -3,8 +3,6 @@ import { PerPageList } from "./useFetchGridData";
 import GridPaginationHolder from "./GridPaginationHolder";
 import GridGlobalSearch from "./GridGlobalSearch";
 
-const per_page_list = PerPageList();
-const per_page = per_page_list[0];
 
 interface ViewData{
     table:Table<any>
@@ -24,6 +22,7 @@ interface ViewData{
     handleMouseLeave:()=>void;
     enableSearch?:boolean;
     title?:string;
+    perPage?:number;
 }
 
 const CardView = ({
@@ -43,7 +42,8 @@ const CardView = ({
     handleMouseEnter,
     handleMouseLeave,
     enableSearch=true,
-    title
+    title,
+    perPage=1
     
 }:ViewData)=>{
 
@@ -118,22 +118,24 @@ const CardView = ({
     )}
   </div>
 
-  {/* Optional footer or extra information */}
-  {tableRows.length > 0 && table.getFooterGroups().length > 0 && (
-    <div className="mt-3 border rounded-md shadow-md hover:shadow-lg transition-shadow">
-      <div className="text-center">
-        {table.getFooterGroups().map((footerGroup) => (
-          <div key={footerGroup.id} className="py-2">
-            {footerGroup.headers.map((header) => (
-              <div key={header.id} className="mt-1">
-                {flexRender(header.column.columnDef.footer, header.getContext())}
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
+  {tableRows.length > 0 && table.getFooterGroups().some(group => 
+  group.headers.some(header => header.column.columnDef.footer)
+) && (
+  <div className="mt-3 border rounded-md shadow-md hover:shadow-lg transition-shadow">
+    <div className="text-center">
+      {table.getFooterGroups().map((footerGroup) => (
+        <div key={footerGroup.id} className="py-2">
+          {footerGroup.headers.map((header) => (
+            <div key={header.id} className="mt-1">
+              {header.column.columnDef.footer ? 
+                flexRender(header.column.columnDef.footer, header.getContext()) : null}
+            </div>
+          ))}
+        </div>
+      ))}
     </div>
-  )}
+  </div>
+)}
 </div>
 
       
@@ -144,7 +146,7 @@ const CardView = ({
         && 
         !error 
         &&
-        (pageCount * per_page) > per_page
+        (pageCount * perPage) > perPage
         &&
         <div className="mt-3">
       <GridPaginationHolder 

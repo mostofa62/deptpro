@@ -5,6 +5,7 @@ import DataProgress from "@/app/components/ui/DataProgress";
 import { formatLargeNumber, generateUniqueColors, hashString, hslToHex } from "@/app/components/utils/Util";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import { useEffect, useRef, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 // const data = [
 //   { name: "Group A", value: 400 },
@@ -80,8 +81,8 @@ interface TotalPros{
   userid:string;
 }
 const TotalAllocation = ({userid}:TotalPros) => {
-
-    
+     const isMobile = useMediaQuery({ maxWidth: 768 });
+     const isTab = useMediaQuery({ maxWidth: 900 });
 
     const [highlightedKey, setHighlightedKey] = useState(null);
 
@@ -260,87 +261,90 @@ const TotalAllocation = ({userid}:TotalPros) => {
     
 
     return (
-    <div className="flex flex-col py-2 md:flex-row gap-2.5">
-        <div className="w-full md:w-[35%]" ref={el => (itemRefs.current[0] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
-        {data.length > 0 &&
-        <CardHolder title="Total Allocation" maxHeight={maxHeight}>
-           
-                    <div className="ml-[5px]">
-                    {                         
-                        data.map((dp:any,i:number)=>{
-                            
-                            return (
-                                <>
-                                <DataProgress
-                                key={dp._id} 
-                                title={dp.name} 
-                                progress={((100/total_balance) * dp.balance).toFixed(0)}
-                                color={uniquecolors[dp._id]}
-                                maxProgressLength={maxProgressLength}
-                                amount={dp.balance}
-                                maxAmountLength={maxAmountLength}
-                                />
-                                </>
-                            )
+    <div className="flex flex-col py-2 lg:flex-row gap-2.5">
 
-                        })
+        <div className={isTab && !isMobile ? `flex flex-row gap-2`:`flex flex-col lg:flex-row lg:w-[60%] lg:gap-2.5`} >
+          <div className="w-full md:w-[45%]" ref={el => (itemRefs.current[0] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
+          {data.length > 0 &&
+          <CardHolder title="Total Allocation" maxHeight={maxHeight}>
+            
+                      <div className="ml-[5px]">
+                      {                         
+                          data.map((dp:any,i:number)=>{
+                              
+                              return (
+                                  <>
+                                  <DataProgress
+                                  key={dp._id} 
+                                  title={dp.name} 
+                                  progress={((100/total_balance) * dp.balance).toFixed(0)}
+                                  color={uniquecolors[dp._id]}
+                                  maxProgressLength={maxProgressLength}
+                                  amount={dp.balance}
+                                  maxAmountLength={maxAmountLength}
+                                  />
+                                  </>
+                              )
+
+                          })
 
 
-                    }
-                    </div>
-                
-        </CardHolder>
-        }
-        </div>
-        <div className="w-full md:w-[25%]" ref={el => (itemRefs.current[1] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
-
-{barData.length > 0 &&
-  <CardHolder title={`12 months history`} maxHeight={maxHeight}>
-                <div className="flex flex-col justify-center items-center">
-                  {/*JSON.stringify(barData)*/}
+                      }
+                      </div>
                   
-                  <RechartHorizentalBar
-                    barData={barData}
-                    axisData={ 
-                      {XAxis:{dataKey:'year_month_word'}}
-                    }
-                    bar={
-                      {dataKey:'total_balance_net'}
-                    }
-                   
+          </CardHolder>
+          }
+          </div>
+          <div className="w-full md:w-[55%]" ref={el => (itemRefs.current[1] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
 
-                  />
-
-                  {/* <HorizontalBarChartWithLabels
-
-barData={barData}
-axisData={ 
-  {YAxis:{dataKey:'year_month_word'}}
-}
-bar={
-  {dataKey:'total_balance_net'}
-}
-
-/> */}
-
-                
-
-                {/* <div>
-                  <p className={`capitalize pt-1 text-[13px] font-semibold text-[${getColorForDebtType(dataLabel.base_net_income)}]`}>
-                    {dataLabel.previous_net_history}
-                  </p>
-                </div> */}
-                  
+  {barData.length > 0 &&
+    <CardHolder title={`12 months history`} maxHeight={maxHeight}>
+                  <div className="flex flex-col justify-center items-center">
+                    {/*JSON.stringify(barData)*/}
+                    
+                    <RechartHorizentalBar
+                      barData={barData}
+                      axisData={ 
+                        {XAxis:{dataKey:'year_month_word'}}
+                      }
+                      bar={
+                        {dataKey:'total_balance_net'}
+                      }
                     
 
-                      
-                </div>
-                </CardHolder>
-            }
+                    />
 
+                    {/* <HorizontalBarChartWithLabels
+
+  barData={barData}
+  axisData={ 
+    {YAxis:{dataKey:'year_month_word'}}
+  }
+  bar={
+    {dataKey:'total_balance_net'}
+  }
+
+  /> */}
+
+                  
+
+                  {/* <div>
+                    <p className={`capitalize pt-1 text-[13px] font-semibold text-[${getColorForDebtType(dataLabel.base_net_income)}]`}>
+                      {dataLabel.previous_net_history}
+                    </p>
+                  </div> */}
+                    
+                      
+
+                        
+                  </div>
+                  </CardHolder>
+              }
+
+          </div>
         </div>
 
-        <div className="w-full md:w-[40%]" ref={el => (itemRefs.current[2] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
+        <div className="w-full lg:w-[40%]" ref={el => (itemRefs.current[2] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
         {lineData.length > 0 && 
           <CardHolder title="12 Months Projection" maxHeight={maxHeight}>
           <div className="w-full overflow-x-auto">

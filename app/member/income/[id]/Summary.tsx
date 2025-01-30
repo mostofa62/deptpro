@@ -26,6 +26,7 @@ interface IncomePayload{
 const Summary = ({income_id}:DebtTransProps)=>{
 
   const isMobile = useMediaQuery({ maxWidth: 768 });
+  const isTab = useMediaQuery({ maxWidth: 900 });
 
   const [highlightedKey, setHighlightedKey] = useState(null);
 
@@ -168,9 +169,12 @@ const Summary = ({income_id}:DebtTransProps)=>{
     
 
     return(
-        <div className="flex flex-col md:flex-row gap-1">
+        <div className="flex flex-col lg:flex-row gap-2.5">
 
-            <div className="md:w-[25%]" ref={el => (itemRefs.current[0] = el)} style={{ height: isMobile? 'auto': maxHeight ? `${maxHeight}px` : 'auto' }}>
+
+            <div className={isTab && !isMobile ? `flex flex-row gap-2`:`flex flex-col lg:flex-row lg:w-[60%] lg:gap-2.5`} >
+
+            <div className="w-full" ref={el => (itemRefs.current[0] = el)} style={{ height: isMobile? 'auto': maxHeight ? `${maxHeight}px` : 'auto' }}>
               <CardHolderOne title="current net income" maxHeight={isMobile?80:maxHeight}>
                   
 
@@ -181,7 +185,7 @@ const Summary = ({income_id}:DebtTransProps)=>{
               </CardHolderOne>
 
             </div>
-            <div className="md:w-[45%]" ref={el => (itemRefs.current[1] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
+            <div className="w-full" ref={el => (itemRefs.current[1] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
             {barData.length > 0 &&
   <CardHolderOne title={`12 months history`} maxHeight={maxHeight}>
                 <div className="flex flex-col justify-center items-center">
@@ -233,7 +237,9 @@ const Summary = ({income_id}:DebtTransProps)=>{
                 
             </div>
 
-            <div className="md:w-[40%]" ref={el => (itemRefs.current[2] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
+            </div>
+
+            <div className="lg:w-[40%]" ref={el => (itemRefs.current[2] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
 
             {lineData.length > 0 && 
           <CardHolderOne title="12 Months Projection" maxHeight={maxHeight}>

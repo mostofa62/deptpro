@@ -1,17 +1,12 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { useEffect, useCallback, useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import axios from 'axios';
-import useAuth from '@/app/hooks/useAuth';
 import useApp from '@/app/hooks/useApp';
-import LogoIcon from '@/app/images/logo/logo-icon.svg';
-import DropdownUser from './DropdownUser';
-import ArrowGraph from '@/app/images/icon/arrowgraph';
+import useAuth from '@/app/hooks/useAuth';
 import CoinSvg from '@/app/images/icon/coin';
 import GoldBarTick from '@/app/images/icon/goldbartick';
-import { useMediaQuery } from 'react-responsive';
 import Logo from '@/app/images/logo/logo.svg';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import DropdownUser from './DropdownUser';
 import InfoBox from './InfoBox';
 
 type TransactionData = {
@@ -32,10 +27,11 @@ const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen, transactio
   const pathname = usePathname();
   const authCtx = useAuth();
   const appCtx = useApp();
+  let Loguser:any = authCtx.role;
   const user_id = authCtx.userId;
   const app_name = process.env.app_name || '';
   const url = process.env.NEXT_PUBLIC_API_URL || '';
-  const isMobile = useMediaQuery({ maxWidth: 768 });
+  
   
 
   
@@ -44,7 +40,7 @@ const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen, transactio
     <header className="sticky top-0 z-50 md:bg-[#43ACD6] bg-white shadow-2">
       <div className="flex items-center  justify-between py-1 px-4 md:px-6 lg:min-h-[100px]">
         {/* Sidebar Toggle & Logo */}
-        <div className="items-center gap-4 sm:hidden lg:hidden md:hidden">
+        <div className="flex items-center justify-center md:items-start lg:hidden xl:hidden">
           <button
             aria-controls="sidebar"
             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -60,13 +56,13 @@ const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen, transactio
         </div>
 
         <div className='flex w-full h-15 items-center justify-center md:hidden sm:hidden lg:hidden xl:hidden'>
-          <Link href="/dashboard">
+          <Link href={(Loguser && parseInt(Loguser) < 10 )?'/admin/dashboard':'/member/dashboard'}>
           <Image src={Logo} alt={app_name} className="" height={50}  />
           </Link>
         </div>
 
         {/* Info Section */}
-        <div className="hidden md:flex flex-col md:flex-row md:justify-between w-full md:max-w-8xl md:mx-auto">
+        <div className="hidden md:px-5 md:flex flex-col md:flex-row md:justify-between w-full md:max-w-8xl md:mx-auto">
           <div className="flex flex-col items-center md:flex-row md:items-start md:gap-4">
             <InfoBox
               icon={GoldBarTick}
@@ -102,7 +98,7 @@ const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen, transactio
         </div>
 
         {/* User Info */}
-        <div className="hidden md:flex md:items-center">
+        <div className="hidden lg:flex md:items-center">
           <span className="text-white font-bold mr-4">{authCtx.activeMobileNumber}</span>
           {authCtx.isLoggedIn && <DropdownUser />}
         </div>

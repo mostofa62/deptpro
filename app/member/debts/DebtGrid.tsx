@@ -8,10 +8,13 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { confirmAlert } from "react-confirm-alert";
 import { DataLabel } from "./cu/DataValidationSchema";
 import Link from 'next/link';
+import { useMediaQuery } from 'react-responsive';
+import CardView from '@/app/components/grid/CardView';
+import TableView from '@/app/components/grid/TableView';
 
 
 const per_page_list = PerPageList();
-const per_page = per_page_list[0];
+
 
 interface DataRow {
     _id:string;    
@@ -39,6 +42,11 @@ interface DebtProps{
   category?:string;
 }
 const DebtGrid = ({category}:DebtProps)=>{
+
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+  const isTab = useMediaQuery({ maxWidth: 900 });
+  
+  const per_page = isMobile ? 1 : !isMobile && isTab? 4:per_page_list[0];
     
 
     const authCtx = useAuth();
@@ -402,137 +410,44 @@ const generateItems = useCallback((row) => [
 
 
 
-    return(
+                return(
         
-        <div>
-
-            <div className="p-2 flex flex-col gap-5">
-
-                    <div className="py-2">
-                       <GridGlobalSearch 
-                      filterInput={filterInput}
-                      handleFilterChange={handleFilterChange}
-                      applyFilter={applyFilter}
-                      searchButtonText="Search"
-                      placeHolderText="Search here"
-                      />
-                    </div>  
-            
-            <table className="tanstack-table table-auto w-full text-left">
-              <thead>
-                {table.getHeaderGroups().map(headerGroup => (
-                  <tr key={headerGroup.id}>
-                    {headerGroup.headers.map(header => (
-                      <th className={`font-medium
-                        ${header.column.getCanSort()
-                          ? 'cursor-pointer select-none'
-                          : ''}`
-                      } key={header.id} onClick={header.column.getToggleSortingHandler()}>
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                        {{
-                                asc: ' 🔼',
-                                desc: ' 🔽',
-                              }[header.column.getIsSorted() as string] ?? null}
-                      </th>
-                    ))}
-                  </tr>
-                ))}
-              </thead>
-            
-                      <tbody>
-                      {error &&
-                      <>
-                      <tr className="col-span-full row-span-full">
-                        <td className="text-center w-full p-2 font-normal">
-                          <span>{error}</span>
-                        </td>
-                      </tr>
-                      </>
-                      }  
-                      {loading ?  
-                      <>
-                      <tr className="col-span-full row-span-full">
-                        <td className="text-center w-full p-2 font-normal">
-                          <span>... Loading ...</span>
-                        </td>
-                      </tr>
-                      </>
-                      :
-                      <>   
-                      {tableRows.map((row:any) => (
-                                            
-                          
-                          <tr 
-                          ref={el => (rowRefs.current[row.original._id] = el)}
-                          onMouseEnter={() => handleMouseEnter(row.original._id)}
-                          onMouseLeave={handleMouseLeave}   
-                          key={row.id} className="border-t">
-                          {row.getVisibleCells().map((cell:any) => (
-                              <td className="font-normal" key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
-                          ))}
-
-      {/* {
-                          hoveredRowId == row.original._id &&
-                          <div className=" absolute">
-                          <GridActionLink
-                  hoveredRowHeight={hoveredRowHeight} // Adjust or compute dynamically as needed
-                  items={row.items}
-                />
-
-                          </div>
-                        
-                          } */}
-                                          
-                          </tr>
-
-                            
-                          
-                          
-                      ))}
-                      </> 
-                      }
-                      </tbody>
-
-                      <tfoot>
-                        {table.getFooterGroups().map(footerGroup => (
-                          <tr key={footerGroup.id}>
-                            {footerGroup.headers.map(header => (
-                              <td key={header.id}>
-                                {flexRender(header.column.columnDef.footer, header.getContext())}
-                              </td>
-                            ))}
-                          </tr>
-                        ))}
-                      </tfoot>
-                      
-              
-            </table>
-      
-            </div>
-
-            {
-        !loading 
-        && 
-        !error 
-        &&
-        (pageCount * per_page) > per_page
-        &&
-        <div className="mt-3">
-      <GridPaginationHolder 
-      table={table}
-      pageNumbers={pageNumbers}
-      handlePageChange={handlePageChange}
-      per_page_list={per_page_list}
-      />
-      </div>
-
-}
-
-
-            </div>
-        
-        
-    )
+                  isMobile || isTab ? <CardView
+                  table={table}
+                  tableRows={tableRows}
+                  rowRefs={rowRefs}
+                  hoveredRowId={hoveredRowId}
+                  hoveredRowHeight={hoveredRowHeight}
+                  filterInput={filterInput}
+                  handleFilterChange={handleFilterChange}
+                  pageCount={pageCount}
+                  pageNumbers={pageNumbers}
+                  handlePageChange={handlePageChange}
+                  applyFilter={applyFilter}
+                  loading={loading}
+                  error={error}
+                  handleMouseEnter={handleMouseEnter}
+                  handleMouseLeave={handleMouseLeave}
+                  />:<TableView
+                  table={table}
+                  tableRows={tableRows}
+                  rowRefs={rowRefs}
+                  hoveredRowId={hoveredRowId}
+                  hoveredRowHeight={hoveredRowHeight}
+                  filterInput={filterInput}
+                  handleFilterChange={handleFilterChange}
+                  pageCount={pageCount}
+                  pageNumbers={pageNumbers}
+                  handlePageChange={handlePageChange}
+                  applyFilter={applyFilter}
+                  loading={loading}
+                  error={error}
+                  handleMouseEnter={handleMouseEnter}
+                  handleMouseLeave={handleMouseLeave}
+                  />
+                    
+                    
+                )
 
 }
 

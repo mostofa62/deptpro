@@ -7,7 +7,8 @@ import { useMediaQuery } from "react-responsive";
 const url = process.env.NEXT_PUBLIC_API_URL;
 const HeaderSummary = () => {
 
-  const isMobile = useMediaQuery({ maxWidth: 768 });
+  const isMobile = useMediaQuery({ maxWidth: 768 });  
+  const isTab = useMediaQuery({ maxWidth: 900 });  
   const authCtx = useAuth();
   const user_id = authCtx.userId;
 
@@ -38,43 +39,43 @@ const HeaderSummary = () => {
       label: "Saving Progress",
       prefix: "",
       suffix: "%",
-      href: "",
+      href: "/member/saving",
     },
     total_paid_off: {
       label: "debt payoff progress",
       prefix: "",
       suffix: "%",
-      href: "",
+      href: "/member/debts",
     },
     snowball_amount: {
       label: "monthly + cashflow",
       prefix: "$",
       suffix: "",
-      href: "",
+      href: "/member/income",
     },
     monthly_budget: {
       label: "monthly debt budget",
       prefix: "$",
       suffix: "",
-      href: "",
+      href: "/member/debts/settings",
     },
     total_monthly_minimum: {
       label: "minimum payments",
       prefix: "$",
       suffix: "",
-      href: "",
+      href: "/member/debts",
     },
     total_monthly_bill_expese: {
       label: "monthly bill totals",
       prefix: "$",
       suffix: "",
-      href: "",
+      href: "/member/bills",
     },
     total_monthly_net_income: {
       label: "monthly net income",
       prefix: "$",
       suffix: "",
-      href: "",
+      href: "/member/income",
     },
   };
 
@@ -83,6 +84,7 @@ const HeaderSummary = () => {
 
   const childRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [maxChildHeight, setMaxChildHeight] = useState<number>(0);
+  
 
   useEffect(() => {
     // Calculate the height of the tallest element after component renders
@@ -99,7 +101,7 @@ const HeaderSummary = () => {
   }, []); // Empty dependency array ensures it runs once after mount
 
   return (
-    <div className="grid grid-cols-2 gap-2 md:flex flex-row-reverse md:gap-1">
+    <div className="grid grid-cols-2 gap-2 lg:flex flex-row-reverse md:gap-1">
       {Object.keys(transactioDataLabel).map((data: string, index: number) => {
         const prefix: string =
           transactioDataLabel[data as keyof typeof transactioDataLabel].prefix;
@@ -123,11 +125,11 @@ const HeaderSummary = () => {
                 <div
                   ref={(el) => (childRefs.current[index] = el)}
                   style={{
-                    height:isMobile ? '25px': maxChildHeight ? `${maxChildHeight}px` : "auto",
+                    height:isMobile? '25px':!isMobile && isTab?'40px': maxChildHeight ? `${maxChildHeight}px` : "auto",
                   }}
                   className={`bg-[#f09a25] shadow-custom flex items-center justify-center w-full md:text-center text-white`}
                 >
-                  <p className="font-semibold capitalize md:text-sm lg:text-[16px] lg:py-1">
+                  <p className="font-semibold capitalize  md:text-md lg:text-[16px] lg:py-1">
                     {
                       transactioDataLabel[
                         data as keyof typeof transactioDataLabel
