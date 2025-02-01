@@ -96,13 +96,13 @@ export default function InsuranceCreate() {
             ]}
             />
         
-        <div className="grid grid-cols-3 gap-1 mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-1 mt-1 md:mt-4">
 
             <div className="w-full">
 
               <div className="grid grid-row">                          
                
-                <div className="w-full mt-8">
+                <div className="w-full mt-2 md:mt-8">
                                    
                     <BoostEntry                    
                     user_id={user_id}
@@ -129,7 +129,7 @@ export default function InsuranceCreate() {
             </div>
             <div className="w-full col-span-2">
 
-              <div className="w-full mt-8">
+              <div className="w-full mt-2 md:mt-8">
 
                   <CardHolderDefault>
 

@@ -71,9 +71,9 @@ const BoostEntry=({user_id, editData,cleanData}:BoostProps)=>{
     return(
         <CardHolderDefault>
 
-            <p className="text-[16px] uppercase font-medium">{editData.id!='' ?`update entry AMOUNT: $ ${editData.amount}`:`add a payment boost`}</p>
+            <p className="text-[13px] md:text-[16px] uppercase font-medium">{editData.id!='' ?`update entry AMOUNT: $ ${editData.amount}`:`add a payment boost`}</p>
 
-            <hr className="mt-2 border-stroke"/>
+            <hr className="mt-1 md:mt-2 border-stroke"/>
 
             <div className="grid grid-flow-row">
             <Formik
@@ -86,12 +86,12 @@ const BoostEntry=({user_id, editData,cleanData}:BoostProps)=>{
         onSubmit={handleFormSubmit}
 
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched}:any)=>(
-            <Form className="mt-5">
+            <Form className="md:mt-5">
 
             
            
             
-            <div className="flex flex-row mt-[15px]">
+            <div className="flex flex-row mt-2 md:mt-[15px]">
                 <div className="w-full">
 
                 <FormikFieldInput 
@@ -113,7 +113,7 @@ const BoostEntry=({user_id, editData,cleanData}:BoostProps)=>{
             </div>    
 
 
-            <div className="flex flex-row mt-[15px]">
+            <div className="flex flex-row mt-2 md:mt-[15px]">
                 <div className="w-full">
 
                 <FormikFieldInput 
@@ -135,7 +135,7 @@ const BoostEntry=({user_id, editData,cleanData}:BoostProps)=>{
                 
             </div>
 
-            <div className="flex flex-row mt-[15px]">
+            <div className="flex flex-row mt-2 md:mt-[15px]">
 
                 <div className="w-full">
                     
@@ -158,9 +158,9 @@ const BoostEntry=({user_id, editData,cleanData}:BoostProps)=>{
             
            
 
-            <hr className="mt-8 border-stroke"/>
+            <hr className="mt-2 md:mt-8 border-stroke"/>
 
-            <div className="flex flex-row mt-4">
+            <div className="flex flex-row mt-2 md:mt-4">
                 <div className="w-[40%]">
                         <button  type="submit" className="text-[15px] h-[40px] bg-[#43ACD6] rounded text-white px-4  capitalize text-center font-semibold">
                             Save

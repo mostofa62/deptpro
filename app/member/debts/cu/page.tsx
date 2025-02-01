@@ -72,7 +72,7 @@ export default function InsuranceCreate() {
     return(
         <>
         <DefaultLayout>
-        <div className="grid grid-flow-row">
+        <div className="flex flex-col">
 
 
         <HolderOne
@@ -91,7 +91,7 @@ export default function InsuranceCreate() {
 
  
 
-            <div className="mt-[32px]">
+            <div className="mt-2 lg:mt-[32px]">
             <Formik
             innerRef={formRef}
         initialValues={{ fetchdata }}
@@ -103,8 +103,8 @@ export default function InsuranceCreate() {
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
             <FormikFormHolder>
 
-<div className="flex flex-row mt-[15px]">
-    <div className="w-[32%]">
+<div className="flex flex-col  md:flex-row lg:mt-[15px]">
+    <div className="w-full md:w-[32%]">
         
     <FormikSelectCreatableInput
             label={DataLabel.debt_type}
@@ -126,7 +126,7 @@ export default function InsuranceCreate() {
         
     </div>
 
-    <div className="ml-[24px] w-[32%]">
+    <div className="w-full md:ml-[24px] md:w-[32%]">
         
         
 
@@ -151,7 +151,7 @@ export default function InsuranceCreate() {
         
     </div>
     
-    <div className="ml-[24px] w-[32%]">
+    <div className="w-full md:ml-[24px] md:w-[32%]">
 
     
 
@@ -180,8 +180,8 @@ export default function InsuranceCreate() {
 </div>
 
 
-<div className="flex flex-row mt-[15px]">
-    <div className="w-[24%]">
+<div className="flex flex-col md:flex-row mt-2 md:mt-[15px]">
+    <div className="w-full md:w-[24%]">
 
     <FormikFieldInput 
         type="number"
@@ -200,7 +200,7 @@ export default function InsuranceCreate() {
         
     </div>
     
-    <div className="ml-[24px] w-[24%]">
+    <div className="w-full md:ml-[24px] md:w-[24%]">
 
     
 
@@ -221,7 +221,7 @@ export default function InsuranceCreate() {
         
     </div>
 
-    <div className="ml-[24px] w-[24%]">
+    <div className="w-full md:ml-[24px] md:w-[24%]">
         <FormikFieldInput 
             type="number"
             step="any"
@@ -238,7 +238,7 @@ export default function InsuranceCreate() {
 
     </div>
 
-    <div className="ml-[24px] w-[24%]">
+    <div className="w-full md:ml-[24px] md:w-[24%]">
 
     <FormikFieldInput 
         type="number"
@@ -261,8 +261,8 @@ export default function InsuranceCreate() {
 
 
 
-<div className="flex flex-row mt-[15px]">
-    <div className="w-[32%]">
+<div className="flex flex-col md:flex-row mt-2 md:mt-[15px]">
+    <div className="w-full md:w-[32%]">
 
     <FormikFieldInput 
         type="number"
@@ -281,7 +281,7 @@ export default function InsuranceCreate() {
         
     </div>
 
-    <div className="ml-[24px] w-[32%]">
+    <div className="w-full md:ml-[24px] md:w-[32%]">
 
     
 
@@ -299,7 +299,7 @@ export default function InsuranceCreate() {
         
     </div>
     
-    <div className="ml-[24px] w-[32%]">
+    <div className="w-full md:ml-[24px] md:w-[32%]">
 
     
 
@@ -320,9 +320,9 @@ export default function InsuranceCreate() {
    
 </div>
 
-<div className="flex flex-row mt-[15px]">
+<div className="flex flex-col md:flex-row mt-2 md:mt-[15px]">
 
-<div className="w-[32%]">
+<div className="w-full md:w-[32%]">
                 <FormikFieldInput 
         label={DataLabel.note} 
         name={`fetchdata.note`}
@@ -353,7 +353,7 @@ export default function InsuranceCreate() {
             </div>
 
 
-            <div className="mt-10">
+            <div className="mt-2 md:mt-10">
                 <div className="flex flex-row-reverse gap-4">
                     <div className="relative right-5 top-0">
                         <button type="button" className="text-[15px] h-[40px] bg-[#43ACD6] rounded text-white px-4  capitalize text-center font-semibold" onClick={handleSubmit}>

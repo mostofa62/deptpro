@@ -7,10 +7,7 @@ import DefaultLayout from "@/app/layout/DefaultLayout";
 import { useCallback, useEffect, useState } from "react";
 
 import ProgressBarTwo from "@/app/components/ui/ProgressBarTwo";
-import {
-  hashString,
-  hslToHex
-} from "@/app/components/utils/Util";
+import { hashString, hslToHex } from "@/app/components/utils/Util";
 import TreasureBox from "@/app/images/icon/treasurebox";
 import axios from "axios";
 import dynamic from "next/dynamic";
@@ -71,7 +68,7 @@ export default function DashBoard() {
     total_net_income: 0,
     saving_list: [],
     total_wealth: 0,
-    total_saving:0,
+    total_saving: 0,
     debt_to_wealth: 0,
     credit_ratio: 0,
     total_allocation_data: [],
@@ -108,57 +105,61 @@ export default function DashBoard() {
         <div className="grid grid-flow-row">
           <div className="mt-2">
             <CardHolder title="Main Dashboard">
-            <div className="flex flex-wrap md:gap-1 gap-4 md:flex-row md:justify-between">
-              <div className="w-full md:w-[15%] flex justify-center items-center">
-                <Image
-                  src="/animated/maindashboard.gif"
-                  width={isMobile ? 140:200}
-                  height={isMobile ? 140:200}
-                  alt="Focus"
-                />
-              </div>
+              <div className="flex flex-wrap md:gap-1 gap-4 md:flex-row md:justify-between">
+                <div className="w-full md:w-[15%] flex justify-center items-center">
+                  <Image
+                    src="/animated/maindashboard.gif"
+                    width={isMobile ? 140 : 200}
+                    height={isMobile ? 140 : 200}
+                    alt="Focus"
+                  />
+                </div>
 
-              <div className="w-full md:w-[14%] flex items-center justify-center">
-                <ProgressBarTwo
-                  progress={50}
-                  amount={transactioData.total_net_income}
-                  title="monthly net income"
-                  progressColor="#43acd6"
-                />
-              </div>
+                <div className="w-full md:w-[14%] flex items-center justify-center">
+                  <ProgressBarTwo
+                    progress={50}
+                    amount={transactioData.total_net_income}
+                    title="monthly net income"
+                    progressColor="#43acd6"
+                  />
+                </div>
 
-              <div className="w-full md:w-[14%] flex items-center justify-center">
-                <ProgressBarTwo
-                  progress={20}
-                  amount={transactioData.debt_total_balance}
-                  title="monthly debt"
-                  progressColor="#FEC001"
-                />
-              </div>
+                <div className="w-full md:w-[14%] flex items-center justify-center">
+                  <ProgressBarTwo
+                    progress={20}
+                    amount={transactioData.debt_total_balance}
+                    title="monthly debt"
+                    progressColor="#FEC001"
+                  />
+                </div>
 
-              <div className="w-full md:w-[14%] flex items-center justify-center">
-                <ProgressBarTwo
-                  progress={30}
-                  amount={transactioData.total_wealth}
-                  title="monthly wealth"
-                  progressColor="#fe992c"
-                />
-              </div>
+                <div className="w-full md:w-[14%] flex items-center justify-center">
+                  <ProgressBarTwo
+                    progress={30}
+                    amount={transactioData.total_wealth}
+                    title="monthly wealth"
+                    progressColor="#fe992c"
+                  />
+                </div>
 
-              <div className="w-full md:w-[14%] flex items-center justify-center">
-                <ProgressBarTwo
-                  progress={45}
-                  amount={transactioData.total_saving}
-                  title="monthly saving"
-                  progressColor="#C1FF72"
-                />
-              </div>
+                <div className="w-full md:w-[14%] flex items-center justify-center">
+                  <ProgressBarTwo
+                    progress={45}
+                    amount={transactioData.total_saving}
+                    title="monthly saving"
+                    progressColor="#C1FF72"
+                  />
+                </div>
 
-              <div className="w-full md:w-[25%] flex items-center justify-center">
-                <TreasureBox height={isMobile ? 140 :180} treasureValue={transactioData.debt_to_wealth} fontSize={50} color="#47E535"/>
+                <div className="w-full md:w-[25%] flex items-center justify-center">
+                  <TreasureBox
+                    height={isMobile ? 140 : 180}
+                    treasureValue={transactioData.debt_to_wealth}
+                    fontSize={isMobile ? 35 : 50}
+                    color="#47E535"
+                  />
+                </div>
               </div>
-            </div>
-
             </CardHolder>
           </div>
 

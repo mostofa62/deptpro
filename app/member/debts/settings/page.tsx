@@ -112,7 +112,7 @@ export default function Setting() {
             ]}
             />
 
-        <div className="flex flex-row mt-2">
+        <div className="hidden md:flex md:flex-row md:mt-2">
             <div className="p-9">
                 <DebtRocket width={110} height={92} />
 
@@ -139,19 +139,19 @@ export default function Setting() {
             
         </div>
 
-        <div className="flex flex-col px-9">
+        <div className="flex flex-col px-9 py-1 gap-1">
 
             <p className="text-[#31c4a2] text-[18px] font-semibold">
                 Set Your Monthly Debt Budget & Debt Strategy
             </p>
 
-            <p className="text-[16px] text-[#4f4f4f] w-[70%] mt-1">
+            <p className="text-[16px] text-[#4f4f4f] w-full  md:w-[70%] mt-1">
             To set your monthly debt budget: Total your minimum payments  + any extra to accelerate paydown debt strategies. 
             If you plan to pay minimum payments only, then re-enter the minimum only amount.  Fill in the total monthly debt budget amount.
             </p>
 
         </div>    
-        <div className="grid grid-flow-row">
+        <div className="flex flex-col">
 
 
         {/* <div className="mt-[20px] bg-[#43ACD6] text-white rounded-lg border-[#43ACD6]">
@@ -208,9 +208,9 @@ export default function Setting() {
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
             <FormikFormHolder>
 
-<div className="flex flex-row">
+<div className="flex flex-col gap-4 md:flex-row md:gap-0">
   
-<div className="w-[32%]">
+<div className="w-full md:w-[32%]">
 
 <FormikFieldInputDP
 disabled
@@ -231,7 +231,7 @@ readOnly
     
 </div>
 
-<div className="ml-[24px] w-[32%]">
+<div className="w-full md:ml-[24px] md:w-[32%]">
 
     <FormikFieldInputDP 
         type="number"
@@ -251,7 +251,7 @@ readOnly
     </div>
     
     
-    <div className="ml-[24px] w-[32%]">
+    <div className="w-full md:ml-[24px] md:w-[32%]">
 
     <FormikSelectInputDP
             label={DataLabel.debt_payoff_method}
@@ -306,7 +306,7 @@ readOnly
             </div>
 
 
-            <div className="mt-10">
+            <div className="mt-3 md:mt-10">
                 <div className="flex flex-row-reverse gap-4">
                     <div className="relative right-5 top-0">
                         <button type="button" className="text-[15px] h-[40px] bg-[#43ACD6] rounded text-white px-4  capitalize text-center font-semibold" onClick={handleSubmit}>
