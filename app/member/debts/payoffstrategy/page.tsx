@@ -16,6 +16,10 @@ import SortedAccount from "./SortedAccounts";
 import Projection from "./Projection";
 import TypeWiseTable from "./TypeWiseTable";
 import HolderOne from "@/app/layout/HolderOne";
+import { useMediaQuery } from "react-responsive";
+import Setting from "@/app/images/icon/setting";
+import AddPlus from "@/app/images/icon/add-plus";
+import DashGrid from "@/app/images/icon/dash-grid";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -39,6 +43,9 @@ interface PayOffData{
     all_data:any[]
 }
 const PayoffStrategy =()=>{
+
+    const isMobile = useMediaQuery({ maxWidth: 768 });  
+    const isTab = useMediaQuery({ maxWidth: 900 }); 
 
     const authCtx = useAuth();
     //const router = useRouter();
@@ -171,26 +178,29 @@ const PayoffStrategy =()=>{
             linkItems={[
               {
                 link:'/member/debts/cu',
-                title:'add debt'
+                title:'add debt',
+                icon:<DashGrid width={14} height={14} />
               },
               {
                 link:'/member/debts',
-                title:'your debt dashboard'
+                title:'your debt dashboard',
+                icon:<AddPlus width={16} height={16} />
                 },
               {
                 link:'/member/debts/settings',
-                title:'set debt budget'
+                title:'set debt budget',
+                icon:<Setting width={15} height={15} />
               }
             ]}
             />
             
 
-            <div className="flex flex-col gap-5 mt-8">
+            <div className="flex flex-col md:gap-5 md:mt-8">
 
-            <div className="flex flex-row gap-1 items-center justify-center">
+            <div className="flex flex-col lmd:flex-row md:flex-row gap-1 items-center justify-center">
 
 
-            <div className="w-[25%]" ref={el => (itemRefs.current[0] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
+            <div className="w-full lmd:w-[30%] md:w-[25%]" ref={el => (itemRefs.current[0] = el)} style={{ height: isMobile? 'auto': maxHeight ? `${maxHeight}px` : 'auto' }}>
             <Formik
             innerRef={formRef}
             
@@ -204,7 +214,7 @@ const PayoffStrategy =()=>{
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
             <FormikFormHolder>
 
-<div className="flex flex-col gap-5">
+<div className="flex flex-col gap-1 md:gap-5">
   
     <div className="">
 
@@ -309,7 +319,7 @@ const PayoffStrategy =()=>{
             </div>
 
 
-            <div className="w-[75%]" ref={el => (itemRefs.current[1] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
+            <div className="w-full lmd:w-[70%] md:w-[75%]" ref={el => (itemRefs.current[1] = el)} style={{ height: isMobile? 'auto': maxHeight ? `${maxHeight}px` : 'auto' }}>
                 <Projection 
                 chartData={chartData} 
                 debt_type_names={debt_type_names}
@@ -322,9 +332,9 @@ const PayoffStrategy =()=>{
             
 
 
-            <div className="bg-[#fafafa] rounded-lg flex flex-col gap-4">
+            <div className="bg-[#fafafa] rounded-lg flex flex-col gap-1 md:gap-4">
 
-                <div className="mt-8">
+                <div className="mt-2 md:mt-8">
 
                     <TypeWiseTable 
                     all_data={all_data} 
@@ -333,9 +343,9 @@ const PayoffStrategy =()=>{
 
                 </div>
 
-                <div className="flex gap-2 mt-6">
+                <div className="flex flex-col lmd:flex-row md:flex-row gap-2 md:mt-6">
 
-                        <div className="w-[35%]">
+                        <div className="w-full lmd:w-[40%] md:w-[35%]">
 
                             <Summary 
                             total_paid={`$${Intl.NumberFormat('en-US', {
@@ -352,7 +362,7 @@ const PayoffStrategy =()=>{
                             />
                         </div>
 
-                        <div className="w-[65%]">
+                        <div className="w-full lmd:w-[60%] md:w-[65%] mt-5 lmd:mt-0 md:mt-0">
 
                             <SortedAccount debt_accounts_list={payoffData.debt_accounts_list} />
                         </div>

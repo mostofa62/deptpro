@@ -3,8 +3,8 @@ import Link from "next/link";
 interface LinkProps{
     link:string;
     title:string;
+    icon?: any
 }
-
 interface HolderProps{
 
     title:string;
@@ -36,9 +36,11 @@ const HolderOne = ({title, showingText, linkItems}:HolderProps)=>{
       <Link
         key={index}
         href={item.link}
-        className="text-sm capitalize group gap-1 relative flex items-center md:gap-2 rounded-sm md:py-2 px-3 font-semibold duration-300 ease-in-out whitespace-nowrap"
+        className="text-sm capitalize group gap-1.5 relative flex items-center md:gap-1 rounded-sm md:py-2 px-3 font-semibold duration-300 ease-in-out whitespace-nowrap"
       >
-        <p className="font-semibold capitalize">{item.title}</p>
+        {/* Render icon if it exists */}
+        {item.icon && item.icon}
+                            <p className="font-semibold capitalize">{item.title}</p>
       </Link>
     ))}
   </div>

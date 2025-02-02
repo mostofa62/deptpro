@@ -6,6 +6,7 @@ import IncomeGrid from "./IncomeGrid";
 import TotalAllocation from "./TotalAllocation";
 import TabView from '@/app/components/ui/TabView';
 import { useState } from 'react';
+import AddPlus from '@/app/images/icon/add-plus';
 interface Tab {
   label: string;
   content: React.ReactNode;
@@ -48,12 +49,14 @@ const Income = ()=>{
             linkItems={[
               {
                 link:'income/cu',
-                title:'add income'
+                title:'add income',
+                icon:<AddPlus width={14} height={14} />
               },
 
               {
                 link:'income/bst/cu',
-                title:'add income boost'
+                title:'add income boost',
+                icon:<AddPlus width={14} height={14} />
               }
             ]}
             />

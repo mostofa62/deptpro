@@ -1,4 +1,5 @@
 import { mapToInterface } from "@/app/components/utils/Util";
+import { useMediaQuery } from "react-responsive";
 
 interface DebtRow {
     name:string;
@@ -34,6 +35,9 @@ interface SortProps{
 
 const SortedAccount = ({debt_accounts_list}:SortProps)=>{
 
+    const isMobile = useMediaQuery({ maxWidth: 768 });  
+    const isTab = useMediaQuery({ maxWidth: 900 }); 
+
     const debtTemplate: any = {        
         name: '',
         total_payment_sum: 0,
@@ -53,6 +57,32 @@ const SortedAccount = ({debt_accounts_list}:SortProps)=>{
             {debt_accounts_list.length > 0 &&
             
             <div className="flex items-center justify-center">
+
+                {isMobile || isTab ?
+                <div className="flex flex-col gap-3 w-full">
+                {filteredDebt.map((data, index) => (
+                  <div key={index} className="bg-white p-2 rounded-lg shadow-lg">
+                    
+                    
+                      {Object.keys(data).map((key, i) => (
+                        <div key={i} className="flex justify-between">
+                          <span className="font-semibold">{DataLabel[key as keyof typeof DataLabel]}</span>
+                          <span>
+                            {DataPrefix[key as keyof DebtRow]}
+                            {DataPrefix[key as keyof DebtRow] === "$"
+                              ? Intl.NumberFormat('en-US', {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                }).format(Number(data[key as keyof DebtRow]))
+                              : data[key as keyof DebtRow]}
+                          </span>
+                        </div>
+                      ))}
+                    
+                  </div>
+                ))}
+              </div>
+                :
                 <table className="tanstack-table table-auto w-full">
                 <thead>
                     <tr>                    
@@ -93,7 +123,8 @@ const SortedAccount = ({debt_accounts_list}:SortProps)=>{
                 }
                 </tbody>
                     
-                </table>    
+                </table> 
+}   
 
 
             </div>

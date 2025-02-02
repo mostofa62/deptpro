@@ -15,6 +15,9 @@ import Summary from "./Summary";
 import IncomeBoostGrid from "../IncomeBoostGrid";
 import TabView from "@/app/components/ui/TabView";
 import IncomeBoostTransactions from "./IncomeBoostTransactions";
+import DashGrid from "@/app/images/icon/dash-grid";
+import AddPlus from "@/app/images/icon/add-plus";
+import EditView from "@/app/images/icon/edit-view";
 
 interface Tab {
   label: string;
@@ -120,15 +123,19 @@ export default function IncomeDetail({
             linkItems={[
               {
                 link:'/member/income',
-                title:'income dashboard'
+                title:'income dashboard',
+                icon:<DashGrid width={16} height={16} />
               },
               {
                 link:'income/cu',
-                title:'add income'
+                title:'add income',
+                icon:<AddPlus width={14} height={14} />
               },
               {
                 link:`/member/income/cu/${id}`,
-                title:'update income'
+                title:'update income',
+                icon:<EditView width={15} height={15} />
+              
               },
             ]}
             />

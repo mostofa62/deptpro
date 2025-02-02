@@ -24,6 +24,9 @@ import Tooltip from "@/app/components/ui/Tooltip";
 import { removeConfirmAlert } from "@/app/components/utils/Util";
 import { AlertBox, DeleteActionGlobal } from "@/app/components/grid/useFetchGridData";
 import { confirmAlert } from "react-confirm-alert";
+import DetailsView from "@/app/images/icon/details-view";
+import AddPlus from "@/app/images/icon/add-plus";
+import DashGrid from "@/app/images/icon/dash-grid";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -195,15 +198,19 @@ export default function InsuranceCreate({
             linkItems={[
               {
                 link:'/member/income',
-                title:'income dashboard'
+                title:'income dashboard',
+                icon:<DashGrid width={16} height={16} />
               },
               {
-                link:'income/cu',
-                title:'add income'
+                link:'/member/income/cu',
+                title:'add income',
+                icon:<AddPlus width={14} height={14} />
               },
               {
                 link:`/member/income/${id}`,
-                title:'income details'
+                title:'income details',
+                icon:<DetailsView width={15} height={15} />
+              
               },
             ]}
             />

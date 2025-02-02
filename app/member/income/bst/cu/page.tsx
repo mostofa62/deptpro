@@ -20,6 +20,7 @@ import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import VideoComponent from "@/app/components/utils/VideoComponent";
 import HolderOne from "@/app/layout/HolderOne";
 import Tooltip from "@/app/components/ui/Tooltip";
+import DashGrid from "@/app/images/icon/dash-grid";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -112,7 +113,8 @@ export default function InsuranceCreate() {
             linkItems={[
               {
                 link:'/member/income',
-                title:'your income dashboard'
+                title:'income dashboard',
+                icon:<DashGrid width={16} height={16} />
               }
             ]}
             />

@@ -22,6 +22,7 @@ import HolderOne from "@/app/layout/HolderOne";
 import { confirmAlert } from 'react-confirm-alert';
 import { removeConfirmAlert } from '@/app/components/utils/Util';
 import { AlertBox, DeleteActionGlobal } from '@/app/components/grid/useFetchGridData';
+import DashGrid from '@/app/images/icon/dash-grid';
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -174,7 +175,8 @@ export default function InsuranceCreate() {
             linkItems={[
               {
                 link:'/member/income',
-                title:'income dashboard'
+                title:'income dashboard',
+                icon:<DashGrid width={16} height={16} />
               }
             ]}
             />

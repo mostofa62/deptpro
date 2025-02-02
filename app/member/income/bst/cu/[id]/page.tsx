@@ -19,6 +19,9 @@ import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import HolderOne from "@/app/layout/HolderOne";
 import Tooltip from "@/app/components/ui/Tooltip";
+import DashGrid from "@/app/images/icon/dash-grid";
+import AddPlus from "@/app/images/icon/add-plus";
+import DetailsView from "@/app/images/icon/details-view";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -122,15 +125,18 @@ export default function InsuranceCreate({
             linkItems={[
               {
                 link:'/member/income',
-                title:'income dashboard'
+                title:'income dashboard',
+                icon:<DashGrid width={16} height={16} />
               },
               {
                 link:'income/cu',
-                title:'add income'
+                title:'add income',
+                icon:<AddPlus width={14} height={14} />
               },
               {
                 link:`/member/income/bst/${id}`,
-                title:'income boost details'
+                title:'income boost details',
+                icon:<DetailsView width={15} height={15} />
               },
               
             ]}

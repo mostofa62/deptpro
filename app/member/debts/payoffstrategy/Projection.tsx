@@ -14,6 +14,7 @@ const datalabel = {
 const Projection = ({chartData, debt_type_names}:ProjectionProps)=>{
 
     const [highlightedKey, setHighlightedKey] = useState(null);
+    
 
     const handleLegendMouseEnter = (key:any, event:any) => {
       //alert('o')
@@ -59,7 +60,7 @@ const Projection = ({chartData, debt_type_names}:ProjectionProps)=>{
       };
     
     return(
-        <div className="bg-white p-4 rounded shadow">            
+        <div className="bg-white md:p-4 rounded shadow">            
                 {chartData.length > 0 && (
   
   <div className="w-full overflow-x-auto"> {/* Scrollable container */}

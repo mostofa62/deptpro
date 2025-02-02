@@ -18,7 +18,7 @@ const Summary = (props:DataProps)=>{
     return(
 
         <div className="bg-white p-4 rounded shadow">
-            <div  className="grid grid-cols-2 gap-2">
+            <div  className="grid grid-cols-2 lmd:grid-cols-1 gap-2">
 
             {Object.keys(DataLabel).map((key, index) => {
 

@@ -17,6 +17,7 @@ import {
   useSensor,
   useSensors,
   MouseSensor,
+  TouchSensor,
   DragEndEvent,
 } from '@dnd-kit/core';
 import {
@@ -27,6 +28,7 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import IconDragVertical from "@/app/images/icon/drag-vertical";
 import GridPaginationHolder from "@/app/components/grid/GridPaginationHolder";
+import { useMediaQuery } from "react-responsive";
 
 const per_page_list = PerPageList();
 const per_page = per_page_list[0];
@@ -45,7 +47,8 @@ interface DataRow {
 
 const Debt = ()=>{
 
-
+  const isMobile = useMediaQuery({ maxWidth: 768 });  
+  const isTab = useMediaQuery({ maxWidth: 900 });  
 
     const authCtx = useAuth();
     const userid = authCtx.userId;
@@ -103,7 +106,7 @@ const Debt = ()=>{
           
              <IconDragVertical width={20} height={20} />
           
-        ),
+        ),       
       },
       { accessorKey: 'custom_payoff_order', header: 'Order' },
       { accessorKey: 'name', header: 'Name' },
@@ -136,6 +139,9 @@ const Debt = ()=>{
             columns,
             state: {              
               pagination,
+              columnVisibility: {
+                drag: !(isMobile || isTab), // Hide 'drag' column on mobile/tablet
+              },
             },
             getCoreRowModel: getCoreRowModel(),
             onPaginationChange: setPagination,
@@ -144,7 +150,10 @@ const Debt = ()=>{
             pageCount:pageCount
           });
           
-    const sensors = useSensors(useSensor(MouseSensor));
+    const sensors = useSensors(
+      useSensor(MouseSensor, { activationConstraint: { distance: 5 } }), // Slight movement before dragging
+      useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 5 } }) // Allow touch dragging
+    );
     
     const handleDragEnd = (event: DragEndEvent) => {
       const { active, over } = event;
@@ -201,7 +210,7 @@ const Debt = ()=>{
     return(
         
         <DefaultLayout>
-            <div className="grid grid-flow-row">
+            <div className="flex flex-col">
 
             <HolderOne
             title="custom payoff strategy"            
@@ -227,6 +236,21 @@ const Debt = ()=>{
 
       <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
       <SortableContext items={tableData.map(row => row._id)}>
+
+        {isMobile || isTab ? (<div className="flex flex-col gap-3">
+
+          {table.getRowModel().rows.length > 0 ? (
+          table.getRowModel().rows.map((row: any) => (
+            <SortableDiv key={row.id} row={row} getVisibleCells={() => row.getVisibleCells()} />
+          ))
+        ) : (
+          <div className="col-span-full text-center p-4 font-normal">
+            <span className="capitalize">No data found!</span>
+          </div>
+        )}
+          
+
+        </div>):(
         <table className="tanstack-table table-auto w-full text-left">
         <thead>
           {table.getHeaderGroups().map(headerGroup => (
@@ -253,6 +277,7 @@ const Debt = ()=>{
       ))}
     </tbody>
         </table>
+        )}
       </SortableContext>
     </DndContext>
       
@@ -308,6 +333,45 @@ const SortableRow: React.FC<{ row: Row<DataRow>; getVisibleCells: () => Cell<Dat
   );
 };
 
+
+const SortableDiv: React.FC<{ row: Row<DataRow>; getVisibleCells: () => Cell<DataRow, unknown>[] }> = ({ row, getVisibleCells }) => {
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: row.original._id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  return (
+    <div
+      className="flex flex-col border p-4 rounded-md shadow-md hover:shadow-lg transition-shadow"
+      ref={setNodeRef}
+      style={style}
+    >
+      {/* Drag Handle with Normal Icon */}
+      <div className="flex justify-end items-center">
+        {/* <span className="font-bold">Row {row.id}</span> */}
+        <button {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing">
+          {/* <span className="text-lg">≡</span> Normal Unicode icon */}
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" width={20} height={20}>
+  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 0 1 0 3.75H5.625a1.875 1.875 0 0 1 0-3.75Z" />
+</svg>
+
+        </button>
+      </div>
+
+      {/* Table Cells */}
+      {getVisibleCells().map((cell: Cell<DataRow, unknown>) => (
+        <div key={cell.id} className="flex flex-col gap-1">
+          <div className="font-semibold">{cell.column.columnDef.header}</div>
+          {typeof cell.column.columnDef.cell === "function"
+            ? cell.column.columnDef.cell(cell.getContext())
+            : cell.getValue()}
+        </div>
+      ))}
+    </div>
+  );
+};
 
 
 export default Debt;
