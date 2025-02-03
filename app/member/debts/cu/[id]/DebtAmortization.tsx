@@ -6,6 +6,9 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import useApp from '@/app/hooks/useApp';
 
 import GridPaginationHolder from "@/app/components/grid/GridPaginationHolder";
+import { useMediaQuery } from 'react-responsive';
+import CardView from '@/app/components/grid/CardView';
+import TableView from '@/app/components/grid/TableView';
 
 const per_page_list = PerPageList();
 const per_page = per_page_list[0];
@@ -36,7 +39,8 @@ interface ExtraPayloadProps{
 
 const DebtAmortization = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 
-    console.log('Loading amortization seciton...')
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+  const isTab = useMediaQuery({ maxWidth: 900 });
     const authCtx = useAuth();
     const appCtx = useApp();
     const debtsAccountsScreen = appCtx.debtsAccountsScreen;
@@ -51,6 +55,28 @@ const DebtAmortization = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
       total_interest:0,
       total_principle:0
     });
+
+
+    const [hoveredRowId, setHoveredRowId] = useState<string | null>(null);
+
+
+    /* ROW HEIGHT CALCULATION FOR UI */
+
+    const [hoveredRowHeight, setHoveredRowHeight] = useState<number | null>(null);
+    const rowRefs = useRef<{ [key: number]: HTMLTableRowElement | null }>({});
+
+    const handleMouseEnter = (rowId: any) => {
+      const rowElement = rowRefs.current[rowId];
+      if (rowElement) {
+        setHoveredRowHeight(rowElement.offsetHeight);
+        setHoveredRowId(rowId);
+      }
+    };
+  
+    const handleMouseLeave = () => {
+      setHoveredRowHeight(null);
+      setHoveredRowId(null);
+    };
     
 
 
@@ -178,131 +204,48 @@ const DebtAmortization = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 
                   
 
-                return(
+              const rows = table.getRowModel().rows;
 
-                    <div className="grid grid-flow-row">
+              return(
 
-                    <p className="text-[16px] uppercase font-medium mt-3">Amortization Table <span className='text-[11px] ml-2'>Projected payment schedule for this account</span></p>
-
-                    <hr className="mt-2 border-stroke"/>
-
-                    <div className="mt-[10px] flex flex-row">
-                      <div className="py-[1px] px-10">
-                          <p className="text-[15px] text-[#4F4F4F]">{showingText}</p>
-                      </div>
-
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-1 mt-4">
-
-                    <div className="mt-1 p-2">  
-            
-            <table className="tanstack-table table-auto w-full text-left">
-              <thead>
-                {table.getHeaderGroups().map(headerGroup => (
-                  <tr key={headerGroup.id}>
-                    {headerGroup.headers.map(header => (
-                      <th className={
-                        header.column.getCanSort()
-                          ? 'cursor-pointer select-none'
-                          : ''
-                      } key={header.id} onClick={header.column.getToggleSortingHandler()}>
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                        {{
-                                asc: ' 🔼',
-                                desc: ' 🔽',
-                              }[header.column.getIsSorted() as string] ?? null}
-                      </th>
-                    ))}
-                  </tr>
-                ))}
-              </thead>
-             
-                      <tbody>
-                      {error &&
-                      <>
-                      <tr className="col-span-full row-span-full">
-                        <td className="text-center w-full p-2">
-                          <span>{error}</span>
-                        </td>
-                      </tr>
-                      </>
-                      }  
-                      {loading ?  
-                      <>
-                      <tr className="col-span-full row-span-full">
-                        <td className="text-center w-full p-2">
-                          <span>... Loading ...</span>
-                        </td>
-                      </tr>
-                      </>
-                      :
-                      <>   
-                      {table.getRowModel().rows.map((row:any) => {
-                          
-                          return(
-                                             
-                          
-                          <tr                          
-                          key={row.id} className="border-t">
-                          {row.getVisibleCells().map((cell:any) => (
-                              <td className="py-1" key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
-                          ))}
-      
-      
-                                          
-                          </tr>
-      
-                            
-                          
-                          
-                          )
-                      })}
-                      </> 
-                      }
-                      </tbody>
-
-                      <tfoot>
-                  {table.getFooterGroups().map(footerGroup => (
-                    <tr key={footerGroup.id}>
-                      {footerGroup.headers.map(header => (
-                        <td key={header.id}>
-                          {flexRender(header.column.columnDef.footer, header.getContext())}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tfoot>
-                      
-              
-            </table>
-            
-            
-                  </div>
-
-                  {
-        !loading 
-        && 
-        !error 
-        &&
-        data.length > 0
-        &&
-        <div className="mt-[10px]">
-      <GridPaginationHolder 
-      table={table}
-      pageNumbers={pageNumbers}
-      handlePageChange={handlePageChange}
-      
-      />
-      </div>
-
-}
-                    
-                    </div>
-
-                   
-                    </div>
-                )
+                isMobile || isTab ? <CardView
+                table={table}
+                tableRows={rows}
+                rowRefs={rowRefs}
+                hoveredRowId={hoveredRowId}
+                hoveredRowHeight={hoveredRowHeight}
+                
+                
+                pageCount={pageCount}
+                pageNumbers={pageNumbers}
+                handlePageChange={handlePageChange}
+                
+                loading={loading}
+                error={error}
+                handleMouseEnter={handleMouseEnter}
+                handleMouseLeave={handleMouseLeave}
+                enableSearch={false}
+                title='amortization table'
+                />:<TableView
+                table={table}
+                tableRows={rows}
+                rowRefs={rowRefs}
+                hoveredRowId={hoveredRowId}
+                hoveredRowHeight={hoveredRowHeight}
+                
+                
+                pageCount={pageCount}
+                pageNumbers={pageNumbers}
+                handlePageChange={handlePageChange}
+                
+                loading={loading}
+                error={error}
+                handleMouseEnter={handleMouseEnter}
+                handleMouseLeave={handleMouseLeave}
+                enableSearch={false}
+                title='amortization table'
+                />
+              )
     
 
 

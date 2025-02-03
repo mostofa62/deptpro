@@ -353,14 +353,14 @@ const generateItems = useCallback((row) => [
   
             
 
-    //const rows = table.getRowModel().rows;
+    const rows = table.getRowModel().rows;
 
-    // const tableRows = useMemo(() => rows.map((row) => ({
-    //   ...row,
-    //   items: generateItems(row),
-    // })), [rows, generateItems]);
+    const tableRows = useMemo(() => rows.map((row) => ({
+      ...row,
+      items: generateItems(row),
+    })), [rows, generateItems]);
 
-    const tableRows = table.getRowModel().rows;
+    //const tableRows = table.getRowModel().rows;
 
     return(
         

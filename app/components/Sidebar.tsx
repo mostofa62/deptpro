@@ -12,6 +12,9 @@ import SidebarLinkGroup from "./SidebarLinkGroup";
 import axios from "axios";
 import InfoBox from "./InfoBox";
 import Setting from "../images/icon/setting";
+import CurveUp from "../images/icon/curve-up";
+import ProjectionBar from "../images/icon/projection-bar";
+import Ordering from "../images/icon/ordering";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -507,22 +510,7 @@ const Sidebar = ({
                                       : "text-[#4F4F4F]"
                                   }`}
                                 >
-                                  <svg
-                                    width={20}
-                                    height={20}
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth={1.5}
-                                    stroke="currentColor"
-                                    className="size-6"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941"
-                                    />
-                                  </svg>
+                                  <CurveUp width={20} height={20} />
 
                                   <p>Payment Boost</p>
                                 </Link>
@@ -537,22 +525,7 @@ const Sidebar = ({
                                       : "text-[#4F4F4F]"
                                   }`}
                                 >
-                                  <svg
-                                    width={20}
-                                    height={20}
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth={1.5}
-                                    stroke="currentColor"
-                                    className="size-6"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z"
-                                    />
-                                  </svg>
+                                  <ProjectionBar width={20} height={20} />
 
                                   <p>Payoff Strategy</p>
                                 </Link>
@@ -567,22 +540,7 @@ const Sidebar = ({
                                       : "text-[#4F4F4F]"
                                   }`}
                                 >
-                                  <svg
-                                    width={20}
-                                    height={20}
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth={1.5}
-                                    stroke="currentColor"
-                                    className="size-6"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3"
-                                    />
-                                  </svg>
+                                  <Ordering width={20} height={20} />
 
                                   <p>Custom Payoff</p>
                                 </Link>

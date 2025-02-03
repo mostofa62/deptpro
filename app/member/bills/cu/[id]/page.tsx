@@ -14,6 +14,10 @@ import CurrentBillDashboard from "./CurrentBillDashboard";
 import BillPayment from "./payment/BillPayment";
 import moment from "moment";
 import HolderOne from "@/app/layout/HolderOne";
+import { useMediaQuery } from "react-responsive";
+import DashGrid from "@/app/images/icon/dash-grid";
+import AddPlus from "@/app/images/icon/add-plus";
+import DetailsView from "@/app/images/icon/details-view";
 
 interface Tab {
   label: string;
@@ -34,6 +38,10 @@ export default function InsuranceCreate({
     searchParams: { [key: string]: string | string[] | undefined }
   
   }) {
+
+    const isMobile = useMediaQuery({ maxWidth: 768 });
+    const isTab = useMediaQuery({ maxWidth: 900 });
+
     const authCtx = useAuth();
     const router = useRouter()
 
@@ -136,15 +144,18 @@ export default function InsuranceCreate({
             linkItems={[
               {
                 link:'/member/bills/cu',
-                title:'add bill'
+                title:'add bill',
+                icon:<AddPlus width={14} height={14} />
               },
               {
                 link:'/member/bills',
-                title:'your bill dashboard'
+                title:'your bill dashboard',
+                icon:<DashGrid width={16} height={16} />
               },
               {
                 link:`/member/bills/${id}`,
-                title:'bill details'
+                title:'bill details',
+                icon:<DetailsView width={15} height={15} />
               }
             ]}
             />

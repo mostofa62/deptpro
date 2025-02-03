@@ -11,6 +11,8 @@ import CardHolderDefault from "@/app/components/ui/CardHolderDefault";
 import { DataSchema } from "./DataValidationSchema";
 import HolderOne from "@/app/layout/HolderOne";
 import VideoComponent from "@/app/components/utils/VideoComponent";
+import AddPlus from "@/app/images/icon/add-plus";
+import DashGrid from "@/app/images/icon/dash-grid";
 
 
 interface Tab {
@@ -67,11 +69,13 @@ export default function BillExtra() {
             linkItems={[
               {
                 link:'/member/bills/cu',
-                title:'add bill'
+                title:'add bill',
+                icon:<AddPlus width={14} height={14} />
               },
               {
                 link:'/member/bills',
-                title:'your bill dashboard'
+                title:'your bill dashboard',
+                icon:<DashGrid width={16} height={16} />
               }
             ]}
             />

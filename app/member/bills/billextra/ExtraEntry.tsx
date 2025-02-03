@@ -88,7 +88,7 @@ const ExtraEntry=({user_id, extraType,billList}:ExtraProps)=>{
     return(
 
         <div className="">
-        <div className="mt-[32px]">
+        <div className="mt-2.5  lmd:mt-5 md:mt-[32px]">
             <Formik
            innerRef={formRef} 
         initialValues={{ fetchdata }}
@@ -102,9 +102,9 @@ const ExtraEntry=({user_id, extraType,billList}:ExtraProps)=>{
             <FormikFormHolder>
 
 
-<div className="flex flex-row">
+<div className="flex flex-col lmd:flex-row md:flex-row">
 
-<div className="w-[35%] flex justify-center items-center">
+<div className="w-0 lmd:w-0 md:w-[35%] flex justify-center items-center">
 <div className="">
                
     <VideoComponent
@@ -118,10 +118,10 @@ const ExtraEntry=({user_id, extraType,billList}:ExtraProps)=>{
 </div>
 </div>
 
-<div className="w-[65%]">
+<div className="w-full lmd:w-full md:w-[65%]">
 
-            <div className="flex flex-row mt-[15px]">
-                    <div className="w-[50%]">
+            <div className="flex flex-col md:flex-row md:mt-[15px]">
+                    <div className="w-full md:w-[50%]">
                         <FormikSelectInput
                             label={DataLabel.bill}
                             defaultValue={fetchdata.bill}
@@ -138,7 +138,7 @@ const ExtraEntry=({user_id, extraType,billList}:ExtraProps)=>{
                             }
                         />
                     </div>
-                    <div className="ml-6 w-[50%]">
+                    <div className="w-full md:ml-6 md:w-[50%]">
 
                     <FormikFieldInput 
                     label={DataLabel.payor} 
@@ -165,8 +165,8 @@ const ExtraEntry=({user_id, extraType,billList}:ExtraProps)=>{
             
                 
             
-            <div className="flex flex-row mt-[15px]">
-                <div className="w-[50%]">
+            <div className="flex flex-col md:flex-row md:mt-[15px]">
+                <div className="w-full md:w-[50%]">
 
                 <FormikSelectInput
                             label={DataLabel.type}
@@ -189,7 +189,7 @@ const ExtraEntry=({user_id, extraType,billList}:ExtraProps)=>{
                     
                 </div> 
 
-                <div className="ml-6 w-[50%]">
+                <div className="w-full md:ml-6 md:w-[50%]">
 
                 <FormikFieldInput 
                     type="date"          
@@ -208,8 +208,8 @@ const ExtraEntry=({user_id, extraType,billList}:ExtraProps)=>{
                 </div> 
             </div>    
 
-            <div className="flex flex-row mt-[15px]">
-                <div className="w-[50%]">
+            <div className="flex flex-col md:flex-row md:mt-[15px]">
+                <div className="w-full md:w-[50%]">
 
                 <FormikFieldInput 
                     type="number"
@@ -226,7 +226,7 @@ const ExtraEntry=({user_id, extraType,billList}:ExtraProps)=>{
                     
                 </div>
 
-                <div className="ml-6 w-[50%]">
+                <div className="w-full md:ml-6 md:w-[50%]">
 
                 <FormikFieldInput 
         label={DataLabel.note} 
@@ -278,7 +278,7 @@ const ExtraEntry=({user_id, extraType,billList}:ExtraProps)=>{
         />
             </div>
 
-<div className="mt-10">
+<div className="mt-2 lmd:mt-3.5 md:mt-10">
 <div className="flex flex-row-reverse gap-4">
     <div className="relative right-5 top-0">
         <button type="button" className="text-[15px] h-[40px] bg-[#43ACD6] rounded text-white px-4  capitalize text-center font-semibold" onClick={handleSubmit}>

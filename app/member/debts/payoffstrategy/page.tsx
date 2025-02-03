@@ -179,12 +179,12 @@ const PayoffStrategy =()=>{
               {
                 link:'/member/debts/cu',
                 title:'add debt',
-                icon:<DashGrid width={14} height={14} />
+                icon:<AddPlus width={14} height={14} />
               },
               {
                 link:'/member/debts',
                 title:'your debt dashboard',
-                icon:<AddPlus width={16} height={16} />
+                icon:<DashGrid width={16} height={16} />
                 },
               {
                 link:'/member/debts/settings',
@@ -334,7 +334,7 @@ const PayoffStrategy =()=>{
 
             <div className="bg-[#fafafa] rounded-lg flex flex-col gap-1 md:gap-4">
 
-                <div className="mt-2 md:mt-8">
+                <div className="mt-2 lmd:mt-2 md:mt-5">
 
                     <TypeWiseTable 
                     all_data={all_data} 
@@ -343,7 +343,7 @@ const PayoffStrategy =()=>{
 
                 </div>
 
-                <div className="flex flex-col lmd:flex-row md:flex-row gap-2 md:mt-6">
+                <div className="flex flex-col lmd:flex-row md:flex-row gap-2 md:mt-5">
 
                         <div className="w-full lmd:w-[40%] md:w-[35%]">
 

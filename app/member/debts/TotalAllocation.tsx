@@ -226,7 +226,7 @@ const TotalAllocation = () => {
                     </PieChart>
                 </div>
 
-                <div className="w-full lg:w-[55%] mt-5 md:mt:0">
+                <div className="w-full lg:w-[55%] mt-2.5 md:mt:0">
                     <div className="md:ml-[5%]">
                     {                         
                         data.map((dp:any,i:number)=>{

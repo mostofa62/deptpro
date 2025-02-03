@@ -16,6 +16,11 @@ import { DataLabel } from "./cu/DataValidationSchema";
 import GridActionLinkFixed from "@/app/components/grid/GridActionLinkFixed";
 import TabView from "@/app/components/ui/TabView";
 import DebtGrid from "./DebtGrid";
+import AddPlus from "@/app/images/icon/add-plus";
+import Setting from "@/app/images/icon/setting";
+import ProjectionBar from "@/app/images/icon/projection-bar";
+import Ordering from "@/app/images/icon/ordering";
+import CurveUp from "@/app/images/icon/curve-up";
 
 
 interface Tab {
@@ -58,11 +63,29 @@ const Debt = ()=>{
             linkItems={[
               {
                 link:'debts/cu',
-                title:'add debt'
+                title:'add debt',
+                icon:<AddPlus width={14} height={14} />
               },
               {
                 link:'debts/settings',
-                title:'set debt budget'
+                title:'set debt budget',
+                icon:<Setting width={15} height={15} />
+              },
+              {
+                link:'debts/payoffstrategy',
+                title:'payoff strategy',
+                icon:<ProjectionBar width={15} height={15} />
+              },
+              {
+                link:'debts/payoffcustom',
+                title:'custom payoff',
+                icon:<Ordering width={18} height={18} />
+              }
+              ,
+              {
+                link:'/member/debts/paymentboost',
+                title:'payment boost',
+                icon:<CurveUp width={18} height={18} />
               }
             ]}
             />
@@ -73,13 +96,13 @@ const Debt = ()=>{
             
             
 
-            <div className="mt-10 p-2 mb-10">
+            <div className="md:my-3 p-2">
 
               <TotalAllocation />
 
             </div>
 
-            <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
+            <div className="w-full md:mt-3 border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
             {/* <SavingBoostGrid saving_id={id}  /> */}
             {
               <TabView  tabs={tabs} align={`left`} onChageTab={(index)=>{

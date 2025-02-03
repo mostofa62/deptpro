@@ -15,6 +15,7 @@ import TotalAllocation from "./TotalAllocation";
 import HolderOne from "@/app/layout/HolderOne";
 import SavingGrid from "./SavingGrid";
 import TabView from "@/app/components/ui/TabView";
+import AddPlus from "@/app/images/icon/add-plus";
 
 
 
@@ -59,24 +60,26 @@ const Saving = ()=>{
             linkItems={[
                 {
                 link:'saving/cu',
-                title:'add savings'
+                title:'add savings',                
+                icon:<AddPlus width={14} height={14} />
                 },
 
                 {
                   link:'saving/bst/cu',
-                  title:'add saving boost'
+                  title:'add saving boost',
+                  icon:<AddPlus width={14} height={14} />
                   }
             ]}
             />
 
 
-            <div className="mt-10 p-2 mb-10">
+            <div className="lmd:mt-0 md:my-3 p-2">
 
               <TotalAllocation userid={userid} />
 
             </div>
 
-            <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg">
+            <div className="w-full mt-0 lmd:mt-0 md:mt-5 border-[#fafafa] border-[2px] shadow-1 rounded-lg">
             {/* <SavingBoostGrid saving_id={id}  /> */}
             {
               <TabView  tabs={tabs} align={`left`} onChageTab={(index)=>{

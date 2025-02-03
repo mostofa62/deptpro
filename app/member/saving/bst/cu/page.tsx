@@ -20,6 +20,7 @@ import DebtRocket from "@/app/images/icon/debtrocket";
 import VideoComponent from "@/app/components/utils/VideoComponent";
 import HolderOne from "@/app/layout/HolderOne";
 import Tooltip from "@/app/components/ui/Tooltip";
+import DashGrid from "@/app/images/icon/dash-grid";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -109,7 +110,7 @@ export default function InsuranceCreate() {
     return(
         <>
         <DefaultLayout>
-        <div className="grid grid-flow-row">
+        <div className="flex flex-col md:grid grid-flow-row">
 
 
         <HolderOne
@@ -117,7 +118,8 @@ export default function InsuranceCreate() {
             linkItems={[
                 {
                 link:'/member/saving',
-                title:'your savings dashboard'
+                title:'your savings dashboard',                
+                icon:<DashGrid width={16} height={16} />
                 }
             ]}
             />
@@ -127,7 +129,7 @@ export default function InsuranceCreate() {
 
 
 
-            <div className="flex flex-row mt-2">
+            <div className="hidden lmd:hidden md:flex flex-row mt-2">
             <div className="p-9">
                 <DebtRocket width={110} height={92} />
 
@@ -172,7 +174,7 @@ export default function InsuranceCreate() {
 
             
 
-            <div className="mt-[32px]">
+        <div className="mt-2.5 md:mt-[32px]">
             <Formik
             innerRef={formRef}
         initialValues={{ fetchdata }}
@@ -184,8 +186,8 @@ export default function InsuranceCreate() {
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
             <FormikFormHolder>
 
-<div className="flex flex-row mt-[15px]">
-    <div className="w-[32%]">
+<div className="flex flex-col md:flex-row md:mt-[15px]">
+    <div className="w-full md:w-[32%]">
 
 
     <FormikSelectInput
@@ -220,7 +222,7 @@ export default function InsuranceCreate() {
         
     </div>
 
-    <div className="ml-[24px] w-[32%]">
+    <div className="w-full md:ml-[24px] md:w-[32%]">
 
 
     <FormikFieldInput 
@@ -245,7 +247,7 @@ export default function InsuranceCreate() {
         
     </div>
     
-    <div className="ml-[24px] w-[32%]">
+    <div className="w-full md:ml-[24px] md:w-[32%]">
 
 
     <FormikSelectInput
@@ -271,8 +273,8 @@ export default function InsuranceCreate() {
 </div>
 
 
-<div className="flex flex-row mt-[15px]">
-    <div className="w-[32%]">
+<div className="flex flex-col md:flex-row md:mt-[15px]">
+    <div className="w-full md:w-[32%]">
 
     <FormikFieldInput 
         type="number"
@@ -292,7 +294,7 @@ export default function InsuranceCreate() {
         
     </div>
 
-    <div className="ml-[24px] w-[32%]">
+    <div className="w-full md:ml-[24px] md:w-[32%]">
     
     <FormikSelectCreatableInput
             label={DataLabel.saving_boost_source}
@@ -321,7 +323,7 @@ export default function InsuranceCreate() {
     
 
 
-    <div className="ml-[24px] w-[32%]">
+    <div className="w-full md:ml-[24px] md:w-[32%]">
 
     <FormikFieldInput 
         type="date"
@@ -347,9 +349,8 @@ export default function InsuranceCreate() {
 </div>
 
 
-<div className="flex flex-row mt-[15px]">
-
-<div className="w-[32%]">
+<div className="flex flex-col md:flex-row md:mt-[15px]">
+    <div className="w-full md:w-[32%]">
 
 <FormikSelectInput
             label={DataLabel.repeat_boost}
@@ -371,7 +372,7 @@ export default function InsuranceCreate() {
             
         </div>
 
-<div className="ml-[24px] w-[32%]">
+        <div className="w-full md:ml-[24px] md:w-[32%]">
 
 <FormikFieldInput 
             label={DataLabel.note} 
@@ -403,7 +404,7 @@ export default function InsuranceCreate() {
             </div>
 
 
-            <div className="mt-10">
+            <div className="mt-2 md:mt-10">
                 <div className="flex flex-row-reverse gap-4">
                     <div className="relative right-5 top-0">
                         <button type="button" className="text-[15px] h-[40px] bg-[#43ACD6] rounded text-white px-4  capitalize text-center font-semibold" onClick={handleSubmit}>

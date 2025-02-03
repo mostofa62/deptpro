@@ -3,6 +3,7 @@ import DataProgress from "@/app/components/ui/DataProgress";
 import { generateUniqueColors, formatLargeNumber, hashString, hslToHex } from "@/app/components/utils/Util";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import { useEffect, useRef, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Line } from "recharts";
 
 // const data = [
@@ -79,6 +80,9 @@ interface TotapProps{
   userid:string;
 }
 const TotalAllocation = ({userid}:TotapProps) => {
+
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+  const isTab = useMediaQuery({ maxWidth: 900 });
 
     const [highlightedKey, setHighlightedKey] = useState(null);
 
@@ -207,20 +211,20 @@ const TotalAllocation = ({userid}:TotapProps) => {
         
     const uniquecolors = generateUniqueColors(ids);
     return (
-    <div className="flex flex-row gap-2.5">
-        <div className="w-[40%]" ref={el => (itemRefs.current[0] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
+      <div className="flex flex-col lg:flex-row gap-2.5">
+        <div className="w-full lg:w-[40%]" ref={el => (itemRefs.current[0] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
           {data.length > 0 &&
         <CardHolder title="Total Allocation" maxHeight={maxHeight}>
-            <div className="flex flex-row">
+            <div className="flex flex-col  md:flex-row">
                 {/* {JSON.stringify(data)} */}
-                <div className="w-[45%]">
+                <div className="w-full md:w-[45%] flex items-center justify-center">
                     <PieChart width={250} height={250}>
                         <Pie
                         data={data}
-                        cx={`40%`}
+                        cx={isMobile || isTab? `50%`: `40%`}
                         cy={`50%`}
                         innerRadius={0}
-                        outerRadius={100}
+                        outerRadius={isMobile || isTab?75:100}
                         fill="#8884d8"
                         paddingAngle={0}
                         dataKey="balance"
@@ -237,8 +241,8 @@ const TotalAllocation = ({userid}:TotapProps) => {
                     </PieChart>
                 </div>
 
-                <div className="w-[55%]">
-                    <div className="ml-[5%]">
+                <div className="w-full lg:w-[55%] mt-2.5 md:mt:0">
+                    <div className="md:ml-[5%]">
                     {                         
                         data.map((dp:any,i:number)=>{
                             
@@ -264,7 +268,7 @@ const TotalAllocation = ({userid}:TotapProps) => {
         </CardHolder>
         }
         </div>
-        <div className="w-[60%]" ref={el => (itemRefs.current[1] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
+        <div className="w-full lg:w-[60%]" ref={el => (itemRefs.current[1] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
 
         {chartData.length > 0 && (
   <CardHolder title="12 Months Projection" maxHeight={maxHeight}>

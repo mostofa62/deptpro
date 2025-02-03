@@ -7,6 +7,7 @@ import TabView from "@/app/components/ui/TabView";
 import HolderOne from "@/app/layout/HolderOne";
 import BillGrid from "./BillGrid";
 import TotalAllocation from "./TotalAllocation";
+import AddPlus from '@/app/images/icon/add-plus';
 
 interface Tab {
   label: string;
@@ -43,7 +44,7 @@ export default function Bill() {
     return(
         <>
         <DefaultLayout>
-        <div className="grid grid-flow-row">
+        <div className="flex flex-col">
 
 
         <HolderOne
@@ -51,7 +52,8 @@ export default function Bill() {
             linkItems={[
               {
                 link:'bills/cu',
-                title:'add bill'
+                title:'add bill',
+                icon:<AddPlus width={14} height={14} />
               }
             ]}
             />
@@ -61,13 +63,13 @@ export default function Bill() {
 
            
 
-            <div className="mt-10 p-2 mb-10">
+            <div className="md:my-3 p-2">
 
               <TotalAllocation userid={userid} />
 
             </div>
 
-            <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
+            <div className="w-full md:mt-3 border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
             {/* <SavingBoostGrid saving_id={id}  /> */}
             {
               <TabView  tabs={tabs} align={`left`} onChageTab={(index)=>{

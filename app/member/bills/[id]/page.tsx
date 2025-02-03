@@ -10,6 +10,9 @@ import BasicCalendar from "@/app/components/BasicCalender";
 import { DataLabelView } from "../cu/DataValidationSchema";
 import HolderOne from "@/app/layout/HolderOne";
 import ExtraTransactions from "./ExtraTransactions";
+import AddPlus from "@/app/images/icon/add-plus";
+import DashGrid from "@/app/images/icon/dash-grid";
+import EditView from "@/app/images/icon/edit-view";
 
 
 
@@ -68,7 +71,7 @@ export default function BillDetails({
     return(
         <>
         <DefaultLayout>
-        <div className="grid grid-flow-row">
+        <div className="flex flex-col">
 
 
         <HolderOne
@@ -76,15 +79,18 @@ export default function BillDetails({
             linkItems={[
               {
                 link:'/member/bills/cu',
-                title:'add bill'
+                title:'add bill',
+                icon:<AddPlus width={14} height={14} />
               },
               {
                 link:'/member/bills',
-                title:'your bill dashboard'
+                title:'your bill dashboard',
+                icon:<DashGrid width={16} height={16} />
               },
               {
                 link:`/member/bills/cu/${id}`,
-                title:'update bill'
+                title:'update bill',
+                icon:<EditView width={15} height={15} />
               }
             ]}
             />
@@ -92,16 +98,16 @@ export default function BillDetails({
 
 
 
-            <div className="mt-[32px]">
+            <div className="mt-2.5 md:mt-[32px]">
             
 
               <Summary BillWithPaymentData={BillWithPaymentData} />
 
             </div>
 
-            <div className="mt-[32px] bg-[#fafafa] rounded-lg flex p-5">
+            <div className="md:mt-[32px] bg-[#fafafa] rounded-lg flex flex-col gap-2.5 lmd:gap-1 md:gap-1 lmd:flex-row md:flex-row p-2 md:p-5">
 
-              <div className="w-[35%] h-[30%]">  
+              <div className="w-full lmd:w-[40%] h-[20%] lmd:h-[23%] md:w-[35%] md:h-[30%]">  
                 <BasicCalendar 
                 extraDayData={{[`${BillWithPaymentData.billaccounts.next_due_date}`]:{'title':`Next due date`,'description':description()}}} 
                 currentMonth={BillWithPaymentData.billaccounts.next_due_date}
@@ -109,9 +115,9 @@ export default function BillDetails({
               </div>
 
 
-              <div className="w-[65%] px-5">
+              <div className="w-full lmd:w-[60%] md:w-[65%] px-1 lmd:px-2 md:px-5">
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 lmd:gap-2 md:gap-4">
                 {Object.keys(datalabel).map((key, index) => (
                   <div key={index} className="bg-white p-4 rounded shadow">
                     <strong>{key == 'bill_type' ? datalabel[key]['first']:datalabel[key] }</strong>
@@ -129,7 +135,7 @@ export default function BillDetails({
 
             </div>
 
-            <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg">
+            <div className="w-full md:mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg">
               <ExtraTransactions bill_id={id}  />
             </div>
 

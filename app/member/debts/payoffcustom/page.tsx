@@ -29,6 +29,7 @@ import { CSS } from '@dnd-kit/utilities';
 import IconDragVertical from "@/app/images/icon/drag-vertical";
 import GridPaginationHolder from "@/app/components/grid/GridPaginationHolder";
 import { useMediaQuery } from "react-responsive";
+import DashGrid from "@/app/images/icon/dash-grid";
 
 const per_page_list = PerPageList();
 const per_page = per_page_list[0];
@@ -217,7 +218,8 @@ const Debt = ()=>{
             linkItems={[
               {
                 link:'/member/debts',
-                title:'your debt dashboard'
+                title:'your debt dashboard',
+                icon:<DashGrid width={16} height={16} />
               }
             ]}
             />
@@ -239,6 +241,19 @@ const Debt = ()=>{
 
         {isMobile || isTab ? (<div className="flex flex-col gap-3">
 
+          {error && (
+            <div className="col-span-full text-center p-4 font-normal">
+              <span>{error}</span>
+            </div>
+          )}
+
+      {loading ? (
+            <div className="col-span-full text-center p-4 font-normal">
+              <span>... Loading ...</span>
+            </div>
+          ) : (
+      <>
+
           {table.getRowModel().rows.length > 0 ? (
           table.getRowModel().rows.map((row: any) => (
             <SortableDiv key={row.id} row={row} getVisibleCells={() => row.getVisibleCells()} />
@@ -248,6 +263,8 @@ const Debt = ()=>{
             <span className="capitalize">No data found!</span>
           </div>
         )}
+    </>
+    )}
           
 
         </div>):(
@@ -272,9 +289,42 @@ const Debt = ()=>{
           ))}
         </thead>
       <tbody>
-      {table.getRowModel().rows.map(row => (
+      {error &&
+      <>
+      <tr className="col-span-full row-span-full">
+        <td colSpan={table.getAllColumns().length} className="col-span-full text-center w-full p-2 font-normal">
+          <span>{error}</span>
+        </td>
+      </tr>
+      </>
+      }
+{loading ?  
+                      <>
+                      <tr className="col-span-full row-span-full">
+                        <td colSpan={table.getAllColumns().length} className="col-span-full text-center w-full p-2 font-normal">
+                          <span>... Loading ...</span>
+                        </td>
+                      </tr>
+                      </>
+                      :
+                     
+                        <>
+                      {
+                      
+                      rows.length > 0 ? 
+                      table.getRowModel().rows.map(row => (
         <SortableRow key={row.id} row={row} getVisibleCells={() => row.getVisibleCells()} />
-      ))}
+      )) :  
+      <tr className="col-span-full row-span-full">
+      <td colSpan={table.getAllColumns().length} className="col-span-full text-center w-full p-2 font-normal">
+        <span className=' capitalize'>No data found!</span>
+      </td>
+    </tr>
+      
+      }
+      </>
+}
+    
     </tbody>
         </table>
         )}

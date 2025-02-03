@@ -1,3 +1,4 @@
+import RechartHorizentalBar from "@/app/components/chart/RechartHorizentalBar";
 import ProgressBarOne from "@/app/components/ui/ProgressBarOne";
 
 import {
@@ -61,10 +62,10 @@ const Summary = ({DebtWithTransactionData}:DebtTransProps)=>{
 
 
     return(
-        <div className="flex flex-row gap-1">
+      <div className="flex flex-col md:flex-row gap-1">
             
 
-            <div className="w-[25%] text-left px-5 flex flex-col gap-9">
+            <div className="w-full md:w-[25%] text-center md:text-left px-5 flex flex-col gap-2 lmd:gap-4 md:gap-9">
 
                 <div className="w-full">
                     <p className='font-semibold text-[18px] uppercase text-[#4f4f4f]'><span>CURRENT BALANCE</span></p>
@@ -77,11 +78,11 @@ const Summary = ({DebtWithTransactionData}:DebtTransProps)=>{
                 
             </div>
 
-            <div className="w-[35%] flex flex-col gap-6">
+            <div className="mt-2.5 md:mt-0 lmd:mt-0  w-full md:w-[35%] flex flex-col text-center lmd:text-left md:text-left gap-1 md:gap-6">
                 <div className="w-full">
                     <p className='font-semibold text-[18px] uppercase text-[#4f4f4f]'><span>PROGRESS</span></p>
                 </div>
-                <div className="w-full">
+                <div className="w-full px-3 md:px-0 lmd:px-0">
                     <ProgressBarOne 
                     title={`left to go`} 
                     progress={DebtWithTransactionData?.left_to_go} 
@@ -91,20 +92,32 @@ const Summary = ({DebtWithTransactionData}:DebtTransProps)=>{
                 
             </div>
 
-            <div className="w-[40%]">
+            <div className="w-full md:w-[40%]">
 
             <div className="grid grid-cols-1 h-auto gap-4">
 
             {DebtWithTransactionData.debttrasactions.length > 0 &&
-                <div className="w-full flex gap-2">
+                <div className="w-full flex flex-col md:flex-row gap-2 mt-3 lmd:mt-0 md:mt-0">
 
 
-                    <div className="w-[30%] px-2">
+                    <div className="w-full md:w-[30%] flex flex-col items-center justify-center">
                       <p className="text-[#4f4f4f] font-medium">12 Month Debt Payment History</p>
                     </div>
-                    <div className="w-[70%]">
+                    <div className="w-full my-3 lmd:my-0 md:my-0 md:w-[70%]  flex justify-center lmd:justify-start md:justify-start">
+
+                      <RechartHorizentalBar
+                                                                barData={DebtWithTransactionData.debttrasactions}
+                                                                axisData={ 
+                                                                  {XAxis:{dataKey:'trans_date'}}
+                                                                }
+                                                                bar={
+                                                                  {dataKey:'amount'}
+                                                                }
+                                                               
+                                            
+                                                              />
                     
-                                <ResponsiveContainer width="10%" height={120}>
+                                {/* <ResponsiveContainer width="10%" height={120}>
                                         <BarChart                                            
                                             data={DebtWithTransactionData.debttrasactions}
                                             margin={{
@@ -125,7 +138,7 @@ const Summary = ({DebtWithTransactionData}:DebtTransProps)=>{
                                         
                                         </BarChart>
 
-                                        </ResponsiveContainer>
+                                        </ResponsiveContainer> */}
 
                       </div>
                 </div>

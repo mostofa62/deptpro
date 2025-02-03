@@ -263,7 +263,7 @@ const TotalAllocation = ({userid}:TotalPros) => {
     return (
     <div className="flex flex-col py-2 lg:flex-row gap-2.5">
 
-        <div className={isTab && !isMobile ? `flex flex-row gap-2`:`flex flex-col lg:flex-row lg:w-[60%] lg:gap-2.5`} >
+        <div className={isTab && !isMobile ? `flex flex-row gap-2`:`flex flex-col gap-2.5 lg:flex-row lg:w-[60%] lg:gap-2.5`} >
           <div className="w-full md:w-[45%]" ref={el => (itemRefs.current[0] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
           {data.length > 0 &&
           <CardHolder title="Total Allocation" maxHeight={maxHeight}>

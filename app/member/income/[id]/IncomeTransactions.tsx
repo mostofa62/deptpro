@@ -15,8 +15,7 @@ import CardView from '@/app/components/grid/CardView';
 
 
 const per_page_list = PerPageList();
-
-
+const per_page = per_page_list[0];
 
 
 interface IncomeProps{
@@ -40,7 +39,7 @@ const IncomeTransactions = ({income_id}:IncomeProps)=>{
 
     const isMobile = useMediaQuery({ maxWidth: 768 });
     const isTab = useMediaQuery({ maxWidth: 900 });
-    const per_page = isMobile ? 1 : !isMobile && isTab? 4:per_page_list[0];
+    
     const authCtx = useAuth();
     const appCtx = useApp();
     const debtsAccountsScreen = appCtx.debtsAccountsScreen;

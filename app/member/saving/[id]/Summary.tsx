@@ -37,9 +37,9 @@ const Summary = ({saving_id, ProgressData}:DebtTransProps)=>{
     
 
     return(
-        <div className="flex flex-row gap-1">
+        <div className="flex flex-col md:flex-row gap-1">
 
-            <div className="w-[25%] text-left px-5 flex flex-col gap-1">
+            <div className="w-full text-center md:w-[25%] lmd:text-left md:text-left px-5 flex flex-col gap-1">
 
                 <div className="w-full">
                     <p className='font-semibold text-[15px] uppercase text-[#4f4f4f]'><span>CURRENT MONTHLY SAVINGS</span></p>
@@ -51,7 +51,7 @@ const Summary = ({saving_id, ProgressData}:DebtTransProps)=>{
 
 
             </div>
-            <div className="w-[25%]">
+            <div className="w-full px-5 lmd:px-0 md:px-0 md:w-[25%]">
                 
                 
                 <ProgressBarOne 
@@ -63,7 +63,7 @@ const Summary = ({saving_id, ProgressData}:DebtTransProps)=>{
                 
             </div>
 
-            <div className="w-[50%] flex justify-center">
+            <div className="w-full md:w-[50%] flex justify-center">
               <RechartHorizentalBar
                                                     barData={barData}
                                                     axisData={ 

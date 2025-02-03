@@ -10,6 +10,7 @@ import {
 } from "@/app/components/utils/Util";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import { useEffect, useRef, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import {
   PieChart,
   Pie,
@@ -108,6 +109,8 @@ interface TotalProps {
 }
 
 const TotalAllocation = ({ userid }: TotalProps) => {
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+  const isTab = useMediaQuery({ maxWidth: 900 });
   const [highlightedKey, setHighlightedKey] = useState(null);
 
   const handleLegendMouseEnter = (key: any, event: any) => {
@@ -299,109 +302,110 @@ const TotalAllocation = ({ userid }: TotalProps) => {
   // const uniquecolorsLine = generateUniqueColors(idsline);
 
   return (
-    <div className="flex flex-row gap-2.5">
-      <div
-        className="w-[35%]"
-        ref={(el) => (itemRefs.current[0] = el)}
-        style={{ height: maxHeight ? `${maxHeight}px` : "auto" }}
-      >
-        {data.length > 0 && (
-          <CardHolder title="Total Allocation" maxHeight={maxHeight}>
-            <div className="flex flex-row">
-              {/* {JSON.stringify(data)} */}
-              {/* <div className="w-[45%]">
-                    <PieChart width={250} height={250}>
-                        <Pie
-                        data={data}
-                        cx={`40%`}
-                        cy={`50%`}
-                        innerRadius={0}
-                        outerRadius={100}
-                        fill="#8884d8"
-                        paddingAngle={0}
-                        dataKey="balance"
-                        label={(props) => renderCustomizedLabel({ ...props, total_count, total_balance })}
-                        labelLine={false}
-                        >
-                        {data.map((entry:any, index:number) => (
-                            
-                            <Cell key={`cell-${index}`} fill={getColorForDebtType(entry._id)} />
-                        ))}
-                        </Pie>
-                        <Tooltip content={<CustomTooltip total_count={total_count} total_balance={total_balance}/>} />
-                        {/*<Legend /> */}
-              {/* </PieChart>
-                </div>  */}
+    <div className="flex flex-col py-2 lg:flex-row gap-2.5">
+      <div className={isTab && !isMobile ? `flex flex-row gap-2`:`flex flex-col gap-2.5 lg:flex-row lg:w-[60%] lg:gap-2.5`} >
+        <div
+          className="w-full md:w-[45%]"
+          ref={(el) => (itemRefs.current[0] = el)}
+          style={{ height: maxHeight ? `${maxHeight}px` : "auto" }}
+        >
+          {data.length > 0 && (
+            <CardHolder title="Total Allocation" maxHeight={maxHeight}>
+              <div className="flex flex-row">
+                {/* {JSON.stringify(data)} */}
+                {/* <div className="w-[45%]">
+                      <PieChart width={250} height={250}>
+                          <Pie
+                          data={data}
+                          cx={`40%`}
+                          cy={`50%`}
+                          innerRadius={0}
+                          outerRadius={100}
+                          fill="#8884d8"
+                          paddingAngle={0}
+                          dataKey="balance"
+                          label={(props) => renderCustomizedLabel({ ...props, total_count, total_balance })}
+                          labelLine={false}
+                          >
+                          {data.map((entry:any, index:number) => (
+                              
+                              <Cell key={`cell-${index}`} fill={getColorForDebtType(entry._id)} />
+                          ))}
+                          </Pie>
+                          <Tooltip content={<CustomTooltip total_count={total_count} total_balance={total_balance}/>} />
+                          {/*<Legend /> */}
+                {/* </PieChart>
+                  </div>  */}
 
-              <div className="w-full">
-                <div className="ml-[5px]">
-                  {data.map((dp: any, i: number) => {
-                    return (
-                      <>
-                        <DataProgress
-                          key={dp._id}
-                          title={dp.name}
-                          progress={(
-                            (100 / total_balance) *
-                            dp.balance
-                          ).toFixed(0)}
-                          color={uniquecolors[dp._id]}
-                          maxProgressLength={maxProgressLength}
-                          amount={dp.balance}
-                          maxAmountLength={maxAmountLength}
-                        />
-                      </>
-                    );
-                  })}
+                <div className="w-full">
+                  <div className="ml-[5px]">
+                    {data.map((dp: any, i: number) => {
+                      return (
+                        <>
+                          <DataProgress
+                            key={dp._id}
+                            title={dp.name}
+                            progress={(
+                              (100 / total_balance) *
+                              dp.balance
+                            ).toFixed(0)}
+                            color={uniquecolors[dp._id]}
+                            maxProgressLength={maxProgressLength}
+                            amount={dp.balance}
+                            maxAmountLength={maxAmountLength}
+                          />
+                        </>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
-            </div>
-          </CardHolder>
-        )}
+            </CardHolder>
+          )}
+        </div>
+        <div
+          className="w-full md:w-[55%]"
+          ref={(el) => (itemRefs.current[1] = el)}
+          style={{ height: maxHeight ? `${maxHeight}px` : "auto" }}
+        >
+          {barData.length > 0 && (
+            <CardHolder title={`12 months history`} maxHeight={maxHeight}>
+              <div className="flex flex-col justify-center items-center">
+                <RechartHorizentalBar
+                  barData={barData}
+                  axisData={{ XAxis: { dataKey: "year_month_word" } }}
+                  bar={{ dataKey: "total_balance" }}
+                />
+
+                {/* <ResponsiveContainer width="35%" height={200}>
+                                          <BarChart                                            
+                                              data={barData}
+                                              margin={{
+                                              top: 0,
+                                              right: 0,
+                                              left: 0,
+                                              bottom: 0,
+                                              }}
+                                              
+                                              barCategoryGap={10}
+                                              
+                                          >
+
+                                          
+                                          <XAxis   dataKey="total_balance" tickLine={false} axisLine={false} tick={false} />
+                                          <Bar   dataKey="total_balance" fill="#22bf6a"  barSize={20} shape={<CustomBar />} />
+                                          <Tooltip content={<CustomTooltipBar />} cursor={{fill: 'transparent'}}/>
+                                          
+                                          </BarChart>
+
+                                          </ResponsiveContainer> */}
+              </div>
+            </CardHolder>
+          )}
+        </div>
       </div>
       <div
-        className="w-[25%]"
-        ref={(el) => (itemRefs.current[1] = el)}
-        style={{ height: maxHeight ? `${maxHeight}px` : "auto" }}
-      >
-        {barData.length > 0 && (
-          <CardHolder title={`12 months history`} maxHeight={maxHeight}>
-            <div className="flex flex-col justify-center items-center">
-              <RechartHorizentalBar
-                barData={barData}
-                axisData={{ XAxis: { dataKey: "year_month_word" } }}
-                bar={{ dataKey: "total_balance" }}
-              />
-
-              {/* <ResponsiveContainer width="35%" height={200}>
-                                        <BarChart                                            
-                                            data={barData}
-                                            margin={{
-                                            top: 0,
-                                            right: 0,
-                                            left: 0,
-                                            bottom: 0,
-                                            }}
-                                            
-                                            barCategoryGap={10}
-                                            
-                                        >
-
-                                        
-                                        <XAxis   dataKey="total_balance" tickLine={false} axisLine={false} tick={false} />
-                                        <Bar   dataKey="total_balance" fill="#22bf6a"  barSize={20} shape={<CustomBar />} />
-                                        <Tooltip content={<CustomTooltipBar />} cursor={{fill: 'transparent'}}/>
-                                        
-                                        </BarChart>
-
-                                        </ResponsiveContainer> */}
-            </div>
-          </CardHolder>
-        )}
-      </div>
-
-      <div
-        className="w-[40%]"
+        className="w-full lg:w-[40%]"
         ref={(el) => (itemRefs.current[2] = el)}
         style={{ height: maxHeight ? `${maxHeight}px` : "auto" }}
       >

@@ -19,6 +19,9 @@ import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import FormikCheckInput from "@/app/components/form/FormikCheckInput";
 import HolderOne from "@/app/layout/HolderOne";
+import AddPlus from "@/app/images/icon/add-plus";
+import DashGrid from "@/app/images/icon/dash-grid";
+import DetailsView from "@/app/images/icon/details-view";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -118,7 +121,7 @@ export default function InsuranceCreate({
     return(
         <>
         <DefaultLayout>
-        <div className="grid grid-flow-row">
+        <div className="flex flex-col md:grid grid-flow-row">
 
 
 
@@ -127,22 +130,25 @@ export default function InsuranceCreate({
             linkItems={[
                 {
                     link:'/member/saving/cu',
-                    title:'add savings'
+                    title:'add savings',
+                    icon:<AddPlus width={14} height={14} />
                 },
                 {
                 link:'/member/saving',
-                title:'your savings dashboard'
+                title:'your savings dashboard',
+                icon:<DashGrid width={16} height={16} />
                 },
                 {
                     link:`/member/saving/${id}`,
-                    title:'saving  details'
+                    title:'saving  details',
+                    icon:<DetailsView width={15} height={15} />
                 }
             ]}
             />
 
             
 
-            <div className="mt-[32px]">
+            <div className="mt-2.5 md:mt-[32px]">
             <Formik
             innerRef={formRef}
         initialValues={{ fetchdata }}
@@ -155,8 +161,8 @@ export default function InsuranceCreate({
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
             <FormikFormHolder>
 
-<div className="flex flex-row mt-[15px]">
-    <div className="w-[32%]">
+<div className="flex flex-col md:flex-row md:mt-[15px]">
+    <div className="w-full md:w-[32%]">
         
         
 
@@ -181,7 +187,7 @@ export default function InsuranceCreate({
         
     </div>
 
-    <div className="ml-[24px] w-[32%]">
+    <div className="w-full md:ml-[24px] md:w-[32%]">
 
 
     <FormikFieldInput 
@@ -207,7 +213,7 @@ export default function InsuranceCreate({
         
     </div>
     
-    <div className="ml-[24px] w-[32%]">
+    <div className="w-full md:ml-[24px] md:w-[32%]">
 
 
     <FormikSelectCreatableInput
@@ -236,8 +242,8 @@ export default function InsuranceCreate({
 </div>
 
 
-<div className="flex flex-row mt-[15px]">
-    <div className="w-[32%]">
+<div className="flex flex-col md:flex-row md:mt-[15px]">
+    <div className="w-full md:w-[32%]">
 
     
 
@@ -258,7 +264,7 @@ export default function InsuranceCreate({
         
     </div>
 
-    <div className="ml-[24px] w-[32%]">
+    <div className="w-full md:ml-[24px] md:w-[32%]">
 
 
     <FormikSelectInput
@@ -284,7 +290,7 @@ export default function InsuranceCreate({
         
     </div>
     
-    <div className="ml-[24px] w-[32%]">
+    <div className="w-full md:ml-[24px] md:w-[32%]">
 
 
     <FormikFieldInput 
@@ -309,8 +315,8 @@ export default function InsuranceCreate({
 </div>
 
 
-<div className="flex flex-row mt-[15px]">
-    <div className="w-[32%]">
+<div className="flex flex-col md:flex-row md:mt-[15px]">
+    <div className="w-full md:w-[32%]">
 
 
     <FormikSelectInput
@@ -334,7 +340,7 @@ export default function InsuranceCreate({
         
     </div>
 
-    <div className="ml-[24px] w-[32%]">
+    <div className="w-full md:ml-[24px] md:w-[32%]">
 
     <FormikFieldInput 
         type="date"
@@ -356,7 +362,7 @@ export default function InsuranceCreate({
         
     </div>
     
-    <div className="ml-[24px] w-[32%]">
+    <div className="w-full md:ml-[24px] md:w-[32%]">
 
     <FormikFieldInput 
         type="number"
@@ -385,8 +391,8 @@ export default function InsuranceCreate({
 </div>
 
 
-<div className="flex flex-row mt-[15px]">
-    <div className="w-[32%]">
+<div className="flex flex-col md:flex-row md:mt-[15px]">
+    <div className="w-full md:w-[32%]">
         
         
     <FormikFieldInput 
@@ -408,7 +414,7 @@ export default function InsuranceCreate({
         
     </div>
 
-    <div className="ml-[24px] w-[32%]">
+    <div className="w-full md:ml-[24px] md:w-[32%]">
 
     <FormikFieldInput 
         type="number"
@@ -431,7 +437,7 @@ export default function InsuranceCreate({
         
     </div>
 
-    <div className="ml-[24px] w-[32%]">
+    <div className="w-full md:ml-[24px] md:w-[32%]">
 
     <FormikSelectInput
         label={DataLabel.repeat}
@@ -459,9 +465,9 @@ export default function InsuranceCreate({
 </div>
 
 
-<div className="flex flex-row mt-[15px]">
+<div className="flex flex-col md:flex-row md:mt-[15px]">
 
-<div className="w-[32%]">
+<div className="w-full md:w-[32%]">
 <FormikFieldInput 
         label={DataLabel.note} 
         name={`fetchdata.note`}
@@ -493,17 +499,17 @@ export default function InsuranceCreate({
             </div>
 
 
-            <div className="mt-10">
+            <div className="mt-2 md:mt-10">
                 <div className="flex flex-row-reverse gap-4">
                     <div className="relative right-5 top-0">
-                        <button type="button" className="text-[15px] h-[40px] bg-[#0166FF] rounded text-white px-4  capitalize text-center font-semibold" onClick={handleSubmit}>
+                        <button type="button" className="text-[15px] h-[40px] bg-[#43ACD6] rounded text-white px-4  capitalize text-center font-semibold" onClick={handleSubmit}>
                             Save
                         </button>
                     </div>
                     <div className="relative right-[30px] top-[10px]">
                     <Link
                                     href={'/member/saving'}
-                                    className={`text-[15px] h-[40px] capitalize text-center px-4 py-2.5  font-semibold bg-[#0166FF] rounded bg-opacity-5 text-[#0166FF]`}
+                                    className={`text-[15px] h-[40px] capitalize text-center px-4 py-2.5  font-semibold bg-[#43ACD6] rounded bg-opacity-5 text-[#43ACD6]`}
                                 >                               
 
 

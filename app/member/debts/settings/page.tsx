@@ -19,6 +19,9 @@ import { DeptPayOffMethod } from '@/app/data/DebtOptions.json';
 import DebtChain from "@/app/images/icon/debtchain";
 import DebtRocket from "@/app/images/icon/debtrocket";
 import HolderOne from "@/app/layout/HolderOne";
+import AddPlus from '@/app/images/icon/add-plus';
+import DashGrid from '@/app/images/icon/dash-grid';
+import CurveUp from '@/app/images/icon/curve-up';
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 export default function Setting() {
@@ -99,15 +102,18 @@ export default function Setting() {
             linkItems={[
               {
                 link:'/member/debts/cu',
-                title:'add debt'
+                title:'add debt',
+                icon:<AddPlus width={14} height={14} />
               },
               {
                 link:'/member/debts',
-                title:'your debt dashboard'
+                title:'your debt dashboard',
+                icon:<DashGrid width={16} height={16} />
                 },
               {
-                link:'/member/paymentboost',
-                title:'payment boost'
+                link:'/member/debts/paymentboost',
+                title:'payment boost',
+                icon:<CurveUp width={18} height={18} />
               }
             ]}
             />

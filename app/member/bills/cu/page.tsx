@@ -20,6 +20,7 @@ import Image from "next/image";
 import FormikCheckInput from "@/app/components/form/FormikCheckInput";
 import VideoComponent from "@/app/components/utils/VideoComponent";
 import HolderOne from "@/app/layout/HolderOne";
+import DashGrid from "@/app/images/icon/dash-grid";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 export default function InsuranceCreate() {
@@ -93,14 +94,15 @@ export default function InsuranceCreate() {
     return(
         <>
         <DefaultLayout>
-        <div className="grid grid-flow-row">
+        <div className="flex flex-col">
 
         <HolderOne
             title="add bill"            
             linkItems={[
               {
                 link:'/member/bills',
-                title:'your bill dashboard'
+                title:'your bill dashboard',
+                icon:<DashGrid width={16} height={16} />
               }
             ]}
             />
@@ -109,7 +111,7 @@ export default function InsuranceCreate() {
 
             
 
-            <div className="mt-[32px]">
+            <div className="lmd:mt-3 md:mt-[32px]">
             <Formik
             innerRef={formRef}
         initialValues={{ fetchdata }}
@@ -121,10 +123,10 @@ export default function InsuranceCreate() {
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
             <FormikFormHolder>
 
-<div className="flex flex-row">
+<div className="flex flex-col lmd:flex-row md:flex-row">
 
-        <div className="w-[35%] flex justify-center items-center">
-        <div className="">
+        <div className="hidden lmd:hidden lmd:w-0 md:w-[35%] md:flex justify-center items-center">
+        <div>
                        
             <VideoComponent
                 src="/animated/billentry.mp4"
@@ -137,11 +139,11 @@ export default function InsuranceCreate() {
         </div>
         </div>
 
-        <div className="w-[65%]">
+        <div className="w-full lmd:w-full md:w-[65%]">
 
-            <div className="flex flex-row mt-[15px]">
+            <div className="flex flex-col lmd:flex-row md:flex-row md:mt-[15px]">
 
-            <div className="w-[50%]">
+            <div className="w-full md:w-[50%]">
                     
                     <FormikFieldInput 
                     label={DataLabel.payor} 
@@ -163,7 +165,7 @@ export default function InsuranceCreate() {
                     
                     
                 </div>
-                <div className="ml-[24px] w-[50%]">
+                <div className="w-full md:ml-[24px] md:w-[50%]">
                     
                     <FormikFieldInput 
                     label={DataLabel.name} 
@@ -189,8 +191,8 @@ export default function InsuranceCreate() {
                 
             </div>
 
-            <div className="flex flex-row mt-[15px]">
-            <div className="w-[50%]">
+            <div className="flex flex-col lmd:flex-row md:flex-row md:mt-[15px]">
+            <div className="w-full md:w-[50%]">
 
 <FormikSelectInput
         label={DataLabel.bill_type}
@@ -213,7 +215,7 @@ export default function InsuranceCreate() {
     
     
 </div>
-                <div className="ml-[24px] w-[50%]">
+                <div className="w-full md:ml-[24px] md:w-[50%]">
 
                 <FormikFieldInput 
                     type="number"
@@ -236,9 +238,9 @@ export default function InsuranceCreate() {
             
             </div>
 
-            <div className="flex flex-row mt-[15px]">
+            <div className="flex flex-col lmd:flex-row md:flex-row md:mt-[15px]">
 
-            <div className="w-[50%]">
+            <div className="w-full md:w-[50%]">
 
 <FormikFieldInput 
     type="date"
@@ -255,7 +257,7 @@ export default function InsuranceCreate() {
 </div>
                 
                 
-                <div className="ml-[24px] w-[50%]">
+                <div className="w-full md:ml-[24px] md:w-[50%]">
 
                 <FormikSelectInput
         label={DataLabel.repeat_frequency}
@@ -281,10 +283,10 @@ export default function InsuranceCreate() {
             </div>
 
 
-            <div className="flex flex-row mt-[15px]">
+            <div className="flex flex-col lmd:flex-row md:flex-row md:mt-[15px]">
                
                 
-                <div className="w-[50%]">
+                <div className="w-full md:w-[50%]">
 
                 <FormikSelectInput
         label={DataLabel.reminder_days}
@@ -314,7 +316,7 @@ export default function InsuranceCreate() {
                     
                     
                 </div>
-                <div className="ml-[24px] w-[50%]">
+                <div className="w-full md:ml-[24px] md:w-[50%]">
                 <FormikFieldInput 
         label={DataLabel.note} 
         name={`fetchdata.note`}
@@ -355,7 +357,7 @@ export default function InsuranceCreate() {
             </div>
 
 
-            <div className="mt-10">
+            <div className="mt-2 lmd:mt-3 md:mt-10">
                 <div className="flex flex-row-reverse gap-4">
                     <div className="relative right-5 top-0">
                         <button type="button" className="text-[15px] h-[40px] bg-[#43ACD6] rounded text-white px-4  capitalize text-center font-semibold" onClick={handleSubmit}>

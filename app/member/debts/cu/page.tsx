@@ -17,6 +17,8 @@ import toast from 'react-hot-toast';
 import useFetchDropDownData from "@/app/hooks/useFetchDropDownData";
 import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 import HolderOne from "@/app/layout/HolderOne";
+import DashGrid from "@/app/images/icon/dash-grid";
+import Setting from "@/app/images/icon/setting";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 export default function InsuranceCreate() {
@@ -80,11 +82,13 @@ export default function InsuranceCreate() {
             linkItems={[
                 {
                 link:'/member/debts',
-                title:'your debt dashboard'
+                title:'your debt dashboard',
+                icon:<DashGrid width={16} height={16} />
                 },
                 {
                     link:'/member/debts/settings',
-                    title:'set debt budget'
+                    title:'set debt budget',
+                    icon:<Setting width={16} height={16} />
                 }
             ]}
             />

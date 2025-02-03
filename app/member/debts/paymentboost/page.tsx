@@ -15,6 +15,11 @@ import BoostTransactions from "./BoostTransactions";
 import CardHolderDefault from "@/app/components/ui/CardHolderDefault";
 import { DataSchema } from "./DataValidationSchema";
 import HolderOne from "@/app/layout/HolderOne";
+import AddPlus from "@/app/images/icon/add-plus";
+import DashGrid from "@/app/images/icon/dash-grid";
+import Setting from "@/app/images/icon/setting";
+import ProjectionBar from "@/app/images/icon/projection-bar";
+import Ordering from "@/app/images/icon/ordering";
 
 
 interface Tab {
@@ -83,15 +88,28 @@ export default function InsuranceCreate() {
             linkItems={[
               {
                 link:'/member/debts/cu',
-                title:'add debt'
+                title:'add debt',
+                icon:<AddPlus width={14} height={14} />
               },
               {
                 link:'/member/debts',
-                title:'your debt dashboard'
+                title:'your debt dashboard',
+                icon:<DashGrid width={16} height={16} />
                 },
               {
                 link:'/member/debts/settings',
-                title:'set debt budget'
+                title:'set debt budget',
+                icon:<Setting width={15} height={15} />
+              },
+              {
+                link:'debts/payoffstrategy',
+                title:'payoff strategy',
+                icon:<ProjectionBar width={15} height={15} />
+              },
+              {
+                link:'debts/payoffcustom',
+                title:'custom payoff',
+                icon:<Ordering width={18} height={18} />
               }
             ]}
             />

@@ -64,13 +64,13 @@ const Income = ()=>{
             
 
 
-            <div className="md:my-5 md:p-2">
+            <div className="lmd:mt-0 md:my-3 md:p-2">
 
               <TotalAllocation userid={userid}/>
 
             </div>
 
-            <div className="w-full mt-2.5 md:mt-[32px] md:border-[#fafafa] md:border-[2px] md:shadow-1 md:rounded-lg md:p-5">
+            <div className="w-full mt-0 lmd:mt-0 md:mt-5 md:border-[#fafafa] md:border-[2px] md:shadow-1 md:rounded-lg md:p-5">
             {/* <SavingBoostGrid saving_id={id}  /> */}
             {
               <TabView  tabs={tabs} align={`left`} onChageTab={(index)=>{

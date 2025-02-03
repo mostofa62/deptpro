@@ -9,6 +9,9 @@ import { useMemo, useRef, useState } from 'react';
 import CardHolderDefault from '@/app/components/ui/CardHolderDefault';
 import Loading from '@/app/loading';
 import useApp from '@/app/hooks/useApp';
+import { useMediaQuery } from 'react-responsive';
+import CardView from '@/app/components/grid/CardView';
+import TableView from '@/app/components/grid/TableView';
 
 
 const per_page_list = PerPageList();
@@ -35,6 +38,12 @@ interface DataRow {
 }
 
 const SavingBoostContributions = ({saving_id}:SavingProps)=>{
+
+
+
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+  const isTab = useMediaQuery({ maxWidth: 900 });
+  
 
     
     const authCtx = useAuth();
@@ -204,115 +213,47 @@ const SavingBoostContributions = ({saving_id}:SavingProps)=>{
 
               
 
-                
+                const rows = table.getRowModel().rows;
 
                 return(
 
-                    <div className="grid grid-flow-row">
-                   
-
-                    <div className="grid grid-cols-1 gap-1 mt-4">
-
-                    <div className="mt-10 p-2">  
-            
-            <table className="tanstack-table table-auto w-full text-left">
-              <thead>
-                {table.getHeaderGroups().map(headerGroup => (
-                  <tr key={headerGroup.id}>
-                    {headerGroup.headers.map(header => (
-                      <th className={
-                        header.column.getCanSort()
-                          ? 'cursor-pointer select-none'
-                          : ''
-                      } key={header.id} onClick={header.column.getToggleSortingHandler()}>
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                        {{
-                                asc: ' 🔼',
-                                desc: ' 🔽',
-                              }[header.column.getIsSorted() as string] ?? null}
-                      </th>
-                    ))}
-                  </tr>
-                ))}
-              </thead>
-             
-                      <tbody>
-                      {error &&
-                      <>
-                      <tr className="col-span-full row-span-full">
-                        <td className="text-center w-full p-2">
-                          <span>{error}</span>
-                        </td>
-                      </tr>
-                      </>
-                      }  
-                      {loading ?  
-                      <>
-                      <tr className="col-span-full row-span-full">
-                        <td className="text-center w-full p-2">
-                          <span>... Loading ...</span>
-                        </td>
-                      </tr>
-                      </>
-                      :
-                      <>   
-                      {table.getRowModel().rows.map((row:any) => {
-                          
-                          return(
-                                             
-                          
-                          <tr 
-                          ref={el => (rowRefs.current[row.original._id] = el)}
-                          onMouseEnter={() => handleMouseEnter(row.original._id)}
-                          onMouseLeave={handleMouseLeave}  
-                          key={row.id} className="border-t">
-                          {row.getVisibleCells().map((cell:any) => (
-                              <td className="py-1" key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
-                          ))}
-     
-                                          
-                          </tr>
-      
-                            
-                          
-                          
-                          )
-                      })}
-                      </> 
-                      }
-                      </tbody>
-                      
-              
-            </table>
-            
-            
-                  </div>
-                    
-                    </div>
-
-                    <div className="grid grid-flow-row">
-
-                    {
-        !loading 
-        && 
-        !error 
-        &&
-        (pageCount * per_page) > per_page
-        &&
-        <div className="mt-[100px]">
-          
-      <GridPaginationHolder 
-      table={table}
-      pageNumbers={pageNumbers}
-      handlePageChange={handlePageChange}
-      
-      />
-      </div>
-
-}
-
-</div>
-                    </div>
+                  isMobile || isTab ? <CardView
+                  table={table}
+                  tableRows={rows}
+                  rowRefs={rowRefs}
+                  hoveredRowId={hoveredRowId}
+                  hoveredRowHeight={hoveredRowHeight}
+                  
+                  
+                  pageCount={pageCount}
+                  pageNumbers={pageNumbers}
+                  handlePageChange={handlePageChange}
+                  
+                  loading={loading}
+                  error={error}
+                  handleMouseEnter={handleMouseEnter}
+                  handleMouseLeave={handleMouseLeave}
+                  enableSearch={false}
+                  
+                  />:<TableView
+                  table={table}
+                  tableRows={rows}
+                  rowRefs={rowRefs}
+                  hoveredRowId={hoveredRowId}
+                  hoveredRowHeight={hoveredRowHeight}
+                  
+                  
+                  pageCount={pageCount}
+                  pageNumbers={pageNumbers}
+                  handlePageChange={handlePageChange}
+                  
+                  loading={loading}
+                  error={error}
+                  handleMouseEnter={handleMouseEnter}
+                  handleMouseLeave={handleMouseLeave}
+                  enableSearch={false}
+                  
+                  />
                 )
     
 

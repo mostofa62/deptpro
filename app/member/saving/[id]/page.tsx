@@ -17,6 +17,9 @@ import SavingBoostGrid from "../SavingBoostGrid";
 
 import TabView from "@/app/components/ui/TabView";
 import SavingBoostContributions from "./SavingBoostContributions";
+import AddPlus from "@/app/images/icon/add-plus";
+import DashGrid from "@/app/images/icon/dash-grid";
+import EditView from "@/app/images/icon/edit-view";
 
 interface Tab {
   label: string;
@@ -103,11 +106,13 @@ export default function SavingDetail({
     let linkItems =[
       {
           link:'/member/saving/cu',
-          title:'add savings'
+          title:'add savings',
+          icon:<AddPlus width={14} height={14} />
       },
       {
       link:'/member/saving',
-      title:'your savings dashboard'
+      title:'your savings dashboard',
+      icon:<DashGrid width={16} height={16} />
       },
     ]
 
@@ -118,7 +123,8 @@ export default function SavingDetail({
       linkItems.push(...[
         {
           link:`/member/saving/cu/${id}`,
-          title:'update savings'
+          title:'update savings',
+          icon:<EditView width={15} height={15} />
         }
       ])
     }
@@ -141,7 +147,7 @@ export default function SavingDetail({
         
         <DefaultLayout>
 
-            <div className="grid grid-flow-row">
+            <div className="flex flex-col">
 
 
             <HolderOne
@@ -150,7 +156,7 @@ export default function SavingDetail({
             />
 
 
-            <div className="mt-[32px] p-5">
+            <div className="mt-3 md:mt-[32px] md:p-5">
               <Summary saving_id={id}
               ProgressData={ {title:DataLabel.progress,
               progress:SavingWithTransactionData.saving.progress,
@@ -162,9 +168,9 @@ export default function SavingDetail({
             </div>
           
 
-            <div className="mt-[32px] bg-[#fafafa] rounded-lg flex p-5">
+            <div className="mt-3 py-2 md:mt-[32px] bg-[#fafafa] rounded-lg flex flex-col lmd:flex-row md:flex-row md:p-5 gap-2.5">
 
-                <div className="w-[35%] h-[30%] flex flex-col">
+                  <div className="lmd:w-[45%] md:w-[35%] lmd:h-[25%] md:h-[30%] flex flex-col">
                     {/* <div className="p-1">  
                     <BasicCalendar 
                     extraDayData={{[`${SavingWithTransactionData.saving.starting_date
@@ -198,11 +204,11 @@ export default function SavingDetail({
             
 
 
-                <div className="w-[65%] px-5">
+                <div className="lmd:w-[55%] md:w-[65%] md:px-5">
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {Object.keys(datalabel).map((key, index) => (
-                        <div key={index} className="bg-white p-4 rounded shadow">
+                        <div key={index} className="bg-white p-2 md:p-4 rounded shadow">
                             <strong>{datalabel[key]}</strong>
                             <p className="mt-1">
                             {/*DebtWithTransactionData.debtAccount[key] !== undefined ? DebtWithTransactionData.debtAccount[key].toString() : '-'*/}
@@ -231,12 +237,12 @@ export default function SavingDetail({
             </div>
 
             
-            <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
+            <div className="w-full p-1 mt-3 md:mt-[32px] md:border-[#fafafa] md:border-[2px] shadow-1 rounded-lg md:p-5">
             <SavingContributions saving_id={id}  />
             </div>
 
 
-            <div className="w-full mt-[32px] border-[#fafafa] border-[2px] shadow-1 rounded-lg p-5">
+            <div className="w-full mt-3 md:mt-[32px] md:border-[#fafafa] md:border-[2px] shadow-1 rounded-lg md:p-5">
             {/* <SavingBoostGrid saving_id={id}  /> */}
             {
               <TabView align={`left`}  tabs={tabs} onChageTab={(index)=>{

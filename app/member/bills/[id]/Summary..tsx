@@ -62,10 +62,10 @@ const Summary = ({BillWithPaymentData}:DebtTransProps)=>{
 
 
     return(
-        <div className="flex flex-row gap-1">
+        <div className="flex flex-col md:flex-row gap-1">
             
 
-            <div className="w-[25%] text-left px-5 flex flex-col gap-9">
+            <div className="w-full md:w-[25%] text-center md:text-left px-5 flex flex-col gap-9">
 
                     <div className="w-full py-1">
                         <p className='font-semibold text-[25px] uppercase text-[#4f4f4f]'><span>{BillWithPaymentData?.billaccounts?.name}</span></p>
@@ -76,7 +76,7 @@ const Summary = ({BillWithPaymentData}:DebtTransProps)=>{
                 
             </div>
 
-            <div className="w-[35%] flex flex-col gap-6">
+            <div className="w-full md:w-[35%] flex flex-col text-center lmd:text-left md:text-left gap-1 md:gap-6">
                     <div className="w-full">
                         <p className='font-semibold text-[18px] uppercase text-[#4f4f4f]'><span>CURRENT BILL</span></p>
                     </div>
@@ -97,17 +97,17 @@ const Summary = ({BillWithPaymentData}:DebtTransProps)=>{
                 
             </div>
 
-            <div className="w-[40%]">
+            <div className="w-full md:w-[40%]">
 
             <div className="grid grid-cols-1 h-auto gap-4">
 
             {BillWithPaymentData.billpayments.length > 0 &&
-                <div className="w-full flex gap-2">
+                <div className="w-full flex flex-col md:flex-row gap-2 mt-3 lmd:mt-0 md:mt-0">
 
-                  <div className="w-[30%] flex flex-col items-center justify-center">
+                  <div className="w-full md:w-[30%] flex flex-col items-center justify-center">
                     <p className="text-[#4f4f4f] font-medium">12 Month Bill Payment History</p>
                   </div>
-                    <div className="w-[70%]">
+                  <div className="w-full my-3 lmd:my-0 md:my-0 md:w-[70%]  flex justify-center lmd:justify-start md:justify-start">
                       
                       <RechartHorizentalBar
                                           barData={BillWithPaymentData.billpayments}
