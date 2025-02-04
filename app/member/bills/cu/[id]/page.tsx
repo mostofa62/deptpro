@@ -18,6 +18,7 @@ import { useMediaQuery } from "react-responsive";
 import DashGrid from "@/app/images/icon/dash-grid";
 import AddPlus from "@/app/images/icon/add-plus";
 import DetailsView from "@/app/images/icon/details-view";
+import { DataSchema, DataSchemaType } from "../DataValidationSchema";
 
 interface Tab {
   label: string;
@@ -43,9 +44,59 @@ export default function InsuranceCreate({
     const isTab = useMediaQuery({ maxWidth: 900 });
 
     const authCtx = useAuth();
-    const router = useRouter()
+    
+
+    const id = params.id;
+    const user_id:any = authCtx.userId;
 
     const [activeTab, setActiveTab] = useState(0);
+
+
+    //actual data fetchnow
+
+
+    const formRef = useRef<any>(null);
+    const [fetchFomrData,setFetchFormData] = useState<DataSchemaType>(DataSchema);
+    // const [repeatCount, setRepeatCount] = useState([]);
+    const [repeatFrequency, setRepeatFrequency] = useState([]);
+    const [reminderDays, setReminderDays] = useState([]);
+    const [billTypes, setBillTypes] = useState([]);
+    const [billSummary, setBillSummary] = useState({
+      'currentBalance':0,
+      'monthTransaction':[]
+    })
+    
+    
+
+    const fetchDataCallback=useCallback(async()=>{
+        //console.log(id);
+        const response = await axios.get(`${url}bill/${id}`);
+        //return response.data.user;
+        setFetchFormData(response.data.billaccounts);
+        // setRepeatCount(response.data.repeat_count);
+        setRepeatFrequency(response.data.repeat_frequency);
+        setReminderDays(response.data.reminder_days);
+
+        setBillTypes(response.data.bill_types)
+
+        setBillSummary(response.data.bill_summary)
+
+        
+
+    },[id]);
+    useEffect(()=>{
+        if (activeTab === 0) {
+          fetchDataCallback();
+      }
+    
+    },[fetchDataCallback,activeTab]);
+    
+
+
+    //end actual data fetchnow
+
+
+    
 
     const tdata = {
       'id':'',
@@ -110,21 +161,22 @@ export default function InsuranceCreate({
       }
     }
     
-    const id = params.id;
-    const user_id:any = authCtx.userId;
+    
 
-
-   const setParentData = (data:any)=>{
-    setParentDatas(data);
-   }
+   
 
     const tabs: Tab[] = [
+      
       { label: 'Settings and Info', content: <BillAccountUpdate 
         user_id={user_id} 
         bill_acc_id={id} 
-        tab_number={activeTab}
-        setParentData={setParentData}
+        reminderDays={reminderDays}
+        repeatFrequency={repeatFrequency}
+        fetchFomrData={fetchFomrData}
+        billTypes={billTypes}
+       
         /> },
+        
       { label: 'Bill History', content: <BillTransactions 
 
         user_id={user_id} 
@@ -160,7 +212,7 @@ export default function InsuranceCreate({
             ]}
             />
         
-        <div className="grid grid-cols-3 gap-1 mt-4">
+        <div className="flex flex-col  md:grid lmd:flex-row md:grid-cols-3 gap-1 mt-4">
 
         
 
@@ -169,7 +221,9 @@ export default function InsuranceCreate({
 
               <div className="grid grid-row">
                 <div className="w-full">
-                  <CurrentBillDashboard  bill_title={`${parentDatas.name }`}  bill_acc_id={id} user_id={user_id} />
+                  <CurrentBillDashboard  
+                  bill_title={`${fetchFomrData.name }`} 
+                  bill_summary={billSummary}   />
                 </div>                
                 {/* {transactionData.id =='' &&
                 <div className="w-full mt-8">
@@ -184,7 +238,7 @@ export default function InsuranceCreate({
                 } */}
                 
                 {transactionData.id !='' && prevTransId==transactionData.id &&
-                <div className="w-full mt-8">
+                <div className="w-full mt-2 lmd:mt-4 md:mt-8">
                   <BillPayment
                   bill_acc_id={id}  
                   trans_id={transactionData.id}                  
@@ -197,11 +251,11 @@ export default function InsuranceCreate({
               </div>
 
             </div>
-            <div className="w-full col-span-2">
+            <div className="w-full md:col-span-2">
               
-              <TabView title={`Account Information`} tabs={tabs} onChageTab={(index)=>{
+               <TabView tabs={tabs} onChageTab={(index)=>{
                 setActiveTab(index)
-              }} />
+              }} /> 
             </div>
 
 

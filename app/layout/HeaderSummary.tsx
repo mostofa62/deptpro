@@ -5,34 +5,30 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 const url = process.env.NEXT_PUBLIC_API_URL;
-const HeaderSummary = () => {
+interface HSPRops{
+  saving_progress: number;
+    total_paid_off: number;
+    snowball_amount: number;
+    monthly_budget: number;
+    total_monthly_minimum: number;
+    total_monthly_bill_expese: number;
+    total_monthly_net_income: number;
+    debt_total_balance:number;
+    active_debt_account: number;
+}
+
+interface TransactionProps{
+  transactionData:HSPRops
+}
+
+const HeaderSummary = ({transactionData}:TransactionProps) => {
 
   const isMobile = useMediaQuery({ maxWidth: 768 });  
   const isTab = useMediaQuery({ maxWidth: 900 });  
   const authCtx = useAuth();
   const user_id = authCtx.userId;
 
-  const [transactioData, setTransactionData] = useState({
-    saving_progress: 0,
-    total_paid_off: 0,
-    snowball_amount: 0,
-    monthly_budget: 0,
-    total_monthly_minimum: 0,
-    total_monthly_bill_expese: 0,
-    total_monthly_net_income: 0,
-    debt_total_balance: 0,
-    active_debt_account: 0,
-  });
-
-  const fetchDataCallback = useCallback(async () => {
-    //console.log(id);
-    const response = await axios.get(`${url}header-summary-data/${user_id}`);
-    //return response.data.user;
-    setTransactionData({ ...transactioData, ...response.data });
-  }, [user_id]);
-  useEffect(() => {
-    fetchDataCallback();
-  }, [fetchDataCallback]);
+  
 
   const transactioDataLabel = {
     saving_progress: {
@@ -110,7 +106,7 @@ const HeaderSummary = () => {
         const link: string =
           transactioDataLabel[data as keyof typeof transactioDataLabel].href;
         const amount: number =
-          transactioData[data as keyof typeof transactioDataLabel];
+        transactionData[data as keyof typeof transactioDataLabel];
         // const amountstring =
         //   prefix == "$" ? formatLargeNumber(amount) : amount.toFixed(0);
         const amountstring = amount.toFixed(0);

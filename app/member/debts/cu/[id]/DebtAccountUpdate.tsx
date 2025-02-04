@@ -136,9 +136,9 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 
     return(
 
-        <div className="grid grid-flow-row">
+        <div className="flex flex-col md:grid md:grid-flow-row">
 
-        <div className="mt-[10px]">
+        <div className="lmd:mt-2.5 md:mt-2.5">
         <Formik    
         innerRef={formRef}    
     initialValues={{ fetchdata }}
@@ -151,12 +151,12 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
     render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
         <Form className="mt-1">
 
-<p className="text-[16px] uppercase font-medium">Account Details</p>
+<p className="text-sm lmd:text-sm lmd:text-center md:text-[16px] uppercase font-medium text-center md:text-left">Account Details</p>
 
 <hr className="mt-2 border-stroke"/>
 
-<div className="flex flex-row mt-[15px]">
-<div className="w-[48%]">
+<div className="flex flex-col md:flex-row md:mt-[15px]">
+<div className="w-full md:w-[48%]">
     
     <FormikFieldInput 
     label={DataLabelUpdate.name} 
@@ -179,7 +179,7 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
     
 </div>
 
-<div className="ml-[24px] w-[48%]">
+<div className="w-full md:ml-[24px] md:w-[48%]">
 
 <FormikSelectCreatableInput
             label={DataLabelUpdate.debt_type}
@@ -205,8 +205,8 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 </div>
 
 
-<div className="flex flex-row mt-[15px]">
-<div className="w-[34%]">
+<div className="flex flex-col md:flex-row md:mt-[15px]">
+<div className="w-full md:w-[34%]">
 
 <FormikFieldInput 
     type="number"
@@ -224,7 +224,7 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
     
 </div>
 
-<div className="w-[34%] ml-[24px]">
+<div className="w-full md:w-[34%] md:ml-[24px]">
 
 <FormikFieldInput 
     type="number"
@@ -242,7 +242,7 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
     
 </div>
 
-<div className="ml-[24px] w-[30%]">
+<div className="w-full md:ml-[24px] md:w-[30%]">
 
 <FormikFieldInput 
     type="date"
@@ -263,11 +263,11 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 </div>
 
 
-<div className="flex flex-row mt-[15px]">
+<div className="flex flex-col md:flex-row md:mt-[15px]">
 
 
 
-<div className="w-[32%]">
+<div className="w-full lmd:w-[50%] md:w-[32%]">
 
 
 <FormikFieldInput 
@@ -287,7 +287,7 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
     
 </div>
 
-<div className="ml-[24px] w-[32%]">
+<div className="w-full lmd:w-[50%] md:ml-[24px] md:w-[32%]">
 
 <FormikFieldInput 
     type="date"
@@ -306,8 +306,8 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 </div>
 
 
-<div className="flex flex-row mt-[15px]">
-<div className="w-[50%]">
+<div className="flex flex-col md:flex-row md:mt-[15px]">
+<div className="w-full md:w-[50%]">
 
 <FormikFieldInput 
     type="number"
@@ -325,7 +325,7 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
     
 </div>
 
-<div className="ml-[24px] w-[50%]">
+<div className="w-full md:ml-[24px] md:w-[50%]">
 
 <FormikFieldInput 
     type="number"
@@ -349,22 +349,22 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 
 
 
-<div className="flex flex-row border border-gray my-4">
-<div className="w-[30%] px-4 py-2">
-    <p className="text-[18px] font-semibold">{DataLabelUpdate.monthly_interest}</p>
+<div className="flex flex-grow border border-gray my-4">
+<div className="px-4 py-2">
+    <p className="text-sm md:text-[18px] font-semibold">{DataLabelUpdate.monthly_interest}</p>
 </div>
 
-<div className="w-[30%] px-4 py-2">
-    <p className="text-[18px] font-semibold">{monthlyInterest}</p>
+<div className="px-4 py-2">
+    <p className="text-sm md:text-[18px] font-semibold">{monthlyInterest}</p>
 </div>
 </div>
 
 
 
 
-<div className="flex flex-row mt-[15px]">
+<div className="flex flex-col md:flex-row md:mt-[15px]">
 
-<div className="w-[50%]">
+<div className="w-full md:w-[50%]">
     
     <FormikFieldInput 
     label={DataLabelUpdate.note} 
@@ -383,13 +383,13 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 </div>
 
 
-<p className="text-[16px] uppercase font-medium mt-4">Account Settings</p>
+<p className="text-sm lmd:text-sm md:text-[16px] uppercase font-medium mt-2 md:mt-4">Account Settings</p>
 
-<hr className="mt-2 border-stroke"/>
+<hr className="my-2 border-stroke"/>
 
 
-<div className="flex flex-row mt-[15px]">
-<div className="w-[48%]">
+<div className="flex flex-col gap-2 md:flex-row mt-2.5 md:mt-[15px]">
+<div className="w-full md:w-[48%]">
 
     
 
@@ -431,7 +431,7 @@ component={CheckComponent}
     
     
 </div>
-    <div className="ml-[24px] w-[48%]">
+    <div className="w-full md:ml-[24px] md:w-[48%]">
 
     
 
@@ -474,8 +474,8 @@ component={CheckComponent}
     </div>
 </div>
 
-<div className="flex flex-row mt-[15px] gap-1">
-<div className="w-[48%]">
+<div className="flex flex-col md:flex-row md:mt-[15px] mt-2.5 gap-1">
+<div className="w-full md:w-[48%]">
 
 <FormikSelectInput
         label={DataLabelUpdate.payoff_order}
@@ -499,7 +499,7 @@ component={CheckComponent}
 
 
 
-<div className="ml-[24px] w-[48%]">
+<div className="w-full md:ml-[24px] mt-2.5 md:w-[48%]">
 
 <FormikSelectInput
         label={DataLabelUpdate.reminder_days}
@@ -542,9 +542,9 @@ component={CheckComponent}
 
 
 
-        <div className="mt-[100px]">
-                <div className="flex flex-row gap-4">
-                    <div className="relative top-0">
+        <div className="mt-5 lmd:mt-8 md:mt-10">
+                <div className="flex flex-row justify-center gap-2 md:gap-4">
+                    <div className="md:relative md:top-0">
                         <button className="flex flex-row text-[15px] h-[40px] bg-[#43ACD6] rounded text-white px-2.5 py-2  capitalize text-center font-semibold" onClick={handleSubmit}>
                         <svg className="mt-1" width={15} height={15} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
@@ -553,7 +553,7 @@ component={CheckComponent}
                         <span className="ml-1.5">Save Updates</span>
                         </button>
                     </div>
-                    <div className="relative left-[30px]">
+                    <div className="md:relative md:left-[30px]">
 
                     
 

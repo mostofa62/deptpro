@@ -8,6 +8,7 @@ import useAuth from '@/app/hooks/useAuth';
 import { useMemo, useState } from 'react';
 import CardHolderDefault from '@/app/components/ui/CardHolderDefault';
 import Loading from '@/app/loading';
+import { useMediaQuery } from 'react-responsive';
 
 const per_page_list = PerPageList();
 const per_page = per_page_list[0];
@@ -42,7 +43,8 @@ interface DataRow {
 
 const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:BillProps)=>{
 
-
+    const isMobile = useMediaQuery({ maxWidth: 768 });
+    const isTab = useMediaQuery({ maxWidth: 900 });
     const authCtx = useAuth();
 
     const [data, setData] = useState<DataRow[]>([]);
@@ -170,13 +172,13 @@ const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:Bil
 
                     <div className="flex flex-col">
 
-                    <p className="text-[16px] uppercase font-medium mt-3">Bill History</p>
+                    <p className="text-sm text-center md:text-left lmd:text-left md:text-[16px] uppercase font-medium mt-1 md:mt-3">Bill History</p>
 
-                    <hr className="mt-2 border-stroke"/>
+                    
 
-                    <div className="flex flex-wrap gap-1 mt-4">
+                    <div className="flex flex-wrap gap-1 mt-2 md:mt-4">
 
-                    {loading ? <div className='w-full col-span-2 mt-[-100px]'>
+                    {loading ? <div className='w-full col-span-2 justify-center items-center md:mt-[-100px]'>
                         <Loading width={150}/>
                         </div>:<>
 
@@ -187,12 +189,14 @@ const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:Bil
                         return(
                             <div className="w-full" key={row.id}>
                             <CardHolderDefault>
-                                <div className="flex flex-col gap-1">
+                                <div className="flex flex-col gap-1 p-2 md:p-0 lmd:p-0">
 
                                     <div className='flex'>
                                       <div className="w-[50%] text-left">
-                                          <p className='text-[15px] font-semibold'><span className='mx-1'>Balance</span><span>$</span><span>{row.original.current_amount } </span></p>
-                                          <p className='text-[14px] font-semibold'><span className='mx-1'>Amount</span><span>$</span><span>{row.original.amount}</span></p>
+                                          <p className='text-[15px] font-semibold flex gap-2.5'><span>Balance</span><span>${Intl.NumberFormat('en-US', {
+                          minimumFractionDigits: 2,maximumFractionDigits: 2}).format(row.original.current_amount )} </span></p>
+                                          <p className='text-[14px] font-semibold flex gap-2.5'><span>Amount</span><span>${Intl.NumberFormat('en-US', {
+                          minimumFractionDigits: 2,maximumFractionDigits: 2}).format(row.original.amount)}</span></p>
                                       </div>
                                       <div className="w-[50%] flex flex-row justify-end items-end">
                                      { row.original.payment_status > 0 ? 
@@ -257,6 +261,27 @@ const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:Bil
                                     {row.original.payments.length > 0 &&
 
                                     <div className='mt-5'>
+
+                                      {isMobile || isTab ?
+                                      (<div className='flex flex-col gap-2'>
+
+{row.original.payments.map((data:paymentRow, index:number)=>{
+                                        return(
+
+                                          <div className='flex flex-col gap-1 rounded border shadow-sm p-2' key={index}>
+                                            <p className='font-semibold'>Amount</p>
+                                            <p>${Intl.NumberFormat('en-US', {
+                          minimumFractionDigits: 2,maximumFractionDigits: 2}).format(data.amount)}</p>
+                                            <p className='font-semibold'>Pay Date</p>
+                                            <p>{data.pay_date_word}</p>
+                                          </div>
+
+                                        )
+
+                                      })}
+
+                                      </div>)
+                                      :(
                                       <table className="tanstack-table table-auto w-full text-left">
                                       <thead>
 
@@ -270,7 +295,8 @@ const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:Bil
                                         return(
 
                                           <tr key={index}>
-                                            <td>${data.amount}</td>
+                                            <td>${Intl.NumberFormat('en-US', {
+                          minimumFractionDigits: 2,maximumFractionDigits: 2}).format(data.amount)}</td>
                                             <td>{data.pay_date_word}</td>
                                           </tr>
 
@@ -281,6 +307,7 @@ const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:Bil
                                         </tbody>
 
                                     </table>
+                                      )}
 
                                     </div>
                                     }

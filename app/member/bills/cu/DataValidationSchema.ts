@@ -1,5 +1,24 @@
 import moment from "moment";
 import { object, string, number } from "yup";
+
+interface OptionType{
+  label:string;
+  value:string|number;
+}
+
+export interface DataSchemaType  {
+  name:string;
+  bill_type:OptionType;
+  payor:string;
+  default_amount:number;    
+  next_due_date:string;
+  note:string;
+  // repeat:0,
+  repeat_count:OptionType;
+  repeat_frequency:OptionType;
+  reminder_days:OptionType;    
+
+};
 export const DataSchema = {
     name:'',
     bill_type:{'label':'','value':''},

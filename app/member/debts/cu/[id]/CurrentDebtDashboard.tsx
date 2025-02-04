@@ -3,6 +3,7 @@ import ProgressBarOne from "@/app/components/ui/ProgressBarOne";
 import useApp from "@/app/hooks/useApp";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 
 interface BillProps{
@@ -22,6 +23,8 @@ interface fetchProps{
 
    
 const CurrentDebtDashboard = ({dept_acc_id, user_id}:BillProps)=>{
+
+    const isMobile = useMediaQuery({ maxWidth: 768 });
 
     const appCtx = useApp();
     const debtsAccountsScreen = appCtx.debtsAccountsScreen;
@@ -58,19 +61,19 @@ const CurrentDebtDashboard = ({dept_acc_id, user_id}:BillProps)=>{
     return(
         <CardHolderDefault>
 
-                                <div className="grid grid-cols-2 gap-1">
+                                <div className="p-2 lmd:p-0 md:p-0 grid grid-cols-2 gap-1">
                                     <div className="w-full text-left">
-                                        <p className='text-[30px] font-semibold'><span>$</span><span className='ml-1'>{formattedAmount}</span></p>
+                                        <p className='text-[20px] md:text-[30px] font-semibold'><span>$</span><span className='ml-1'>{formattedAmount}</span></p>
                                     </div>
                                     <div className="w-full text-[#D3D3D3] flex justify-end items-center">
-                                    <svg className='' xmlns="http://www.w3.org/2000/svg" width={30} height={30} viewBox="0 0 24 24">
+                                    <svg className='' xmlns="http://www.w3.org/2000/svg" width={isMobile?20:30} height={isMobile?20:30} viewBox="0 0 24 24">
                                         <path fill="currentColor" d="M5 19h-4v-4h4v4zm6 0h-4v-8h4v8zm6 0h-4v-13h4v13zm6 0h-4v-19h4v19zm1 2h-24v2h24v-2z"/>
                                     </svg>
 
                                     </div>
 
                                     <div className="w-full col-span-2">
-                                        <p className='font-semibold text-[15px] uppercase text-[#bdbbbb]'><span>CURRENT BALANCE</span></p>
+                                        <p className='font-semibold text-sm lmd:text-sm md:text-[15px] uppercase text-[#bdbbbb]'><span>CURRENT BALANCE</span></p>
                                     </div>
 
                                     <div className="w-full col-span-2 h-4 py-2 mt-1 mb-2">

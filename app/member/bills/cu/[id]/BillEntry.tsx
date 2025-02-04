@@ -68,7 +68,7 @@ const BillEntry=({bill_acc_id, user_id,editData,cleanData}:BillProps)=>{
     return(
         <CardHolderDefault>
 
-            <p className="text-[16px] uppercase font-medium">{editData.id!='' ?`update bill entry AMOUNT: $ ${editData.amount}, DUE: ${editData.due_date}`:`add a bill entry`}</p>
+            <p className="text-sm md:text-[16px] text-center md:text-left uppercase font-medium">{editData.id!='' ?`update bill entry AMOUNT: $ ${editData.amount}, DUE: ${editData.due_date}`:`add a bill entry`}</p>
 
             <hr className="mt-2 border-stroke"/>
 

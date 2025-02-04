@@ -20,14 +20,14 @@ const TabView = ({tabs,title,onChageTab,align}:TabProps) => {
       <CardHolderDefault>
       <div className="w-full">
         
-        {title && <span className='text-md capitalize font-medium'>{title}</span>}
+        {title && <p className='text-md text-center lmd:text-left md:text-left capitalize font-medium'>{title}</p>}
         <div className={`flex flex-row${align ? '':'-reverse'} border-b border-gray-200`}>
         
           
           {tabs.map((tab:any, index:any) => (
             <button
               key={index}
-              className={`px-4 py-2 -mb-px font-medium text-md focus:outline-none capitalize ${
+              className={`px-4 py-2 -mb-px font-medium text-sm lmd:text-sm  md:text-md focus:outline-none capitalize ${
                 activeTab === index
                   ? 'border-b-4 border-blue-500 text-blue-600'
                   : 'border-b-2 border-transparent text-gray-600 hover:text-blue-500'

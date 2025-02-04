@@ -58,11 +58,11 @@ const BillPayment = ({bill_acc_id,trans_id,amount,pay_date,cleanData}:paymentPro
     return(
         <CardHolderDefault>
 
-            <p className="text-[16px] uppercase font-medium">Add a Bill Payment</p>
+            <p className="text-sm md:text-[16px] text-center md:text-left uppercase font-medium">Add a Bill Payment</p>
 
-            <hr className="mt-2 border-stroke"/>
+            <hr className="md:mt-2 border-stroke"/>
 
-            <div className="grid grid-flow-row">
+            <div className="flex flex-col">
             <Formik
             
         initialValues={{ fetchdata }}        
@@ -72,7 +72,7 @@ const BillPayment = ({bill_acc_id,trans_id,amount,pay_date,cleanData}:paymentPro
         onSubmit={handleFormSubmit}
 
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
-            <Form className="mt-5">
+            <Form className="flex flex-col gap-2.5 md:mt-5">
 
             <div className="flex flex-row">
                 <div className="w-full">
@@ -91,7 +91,7 @@ const BillPayment = ({bill_acc_id,trans_id,amount,pay_date,cleanData}:paymentPro
                     
                 </div>
             </div>
-            <div className="flex flex-row mt-2">
+            <div className="flex flex-row">
                 <div className="w-full">
 
                 <FormikFieldInput 
@@ -115,16 +115,16 @@ const BillPayment = ({bill_acc_id,trans_id,amount,pay_date,cleanData}:paymentPro
             </div>
             
 
-            <hr className="mt-8 border-stroke"/>
+            <hr className="mt-2 lmd:mt-3 md:mt-8 border-stroke"/>
 
-            <div className="flex flex-row-reverse mt-4">
-                <div className="w-[40%]">
-                        <button  type="submit" className="text-[15px] h-[40px] bg-[#0166FF] rounded text-white px-4  capitalize text-center font-semibold">
+            <div className="flex flex-row-reverse justify-center items-center gap-8 md:gap-2 my-1 md:mt-4">
+                <div className="w-full flex justify-start md:justify-center lmd:justify-center">
+                        <button  type="submit" className="text-[15px] h-[40px] bg-[#43ACD6] rounded text-white px-4  capitalize text-center font-semibold">
                             Save
                         </button>
                 </div>
-                <div className="w-[40%]">
-                        <button type="button" onClick={cleanData} className="text-[15px] h-[40px] bg-[#85878a] rounded text-white px-4  capitalize text-center font-semibold">
+                <div className="w-full flex justify-end md:justify-center lmd:justify-center">
+                        <button type="button" onClick={cleanData} className="text-[15px] h-[40px] bg-[#43ACD6] rounded bg-opacity-5 text-[#43ACD6] px-4  capitalize text-center font-semibold">
                             Cancel
                         </button>
                 </div>

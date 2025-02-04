@@ -15,6 +15,9 @@ import DebtAccountUpdate from "./DebtAccountUpdate";
 import DebtEntry from "./DebtEntry";
 import DebtAmortization from "./DebtAmortization";
 import HolderOne from "@/app/layout/HolderOne";
+import AddPlus from "@/app/images/icon/add-plus";
+import DashGrid from "@/app/images/icon/dash-grid";
+import Setting from "@/app/images/icon/setting";
 
 interface Tab {
   label: string;
@@ -111,20 +114,23 @@ export default function InsuranceCreate({
             linkItems={[
               {
                 link:'/member/debts/cu',
-                title:'add debt'
+                title:'add debt',
+                icon:<AddPlus width={14} height={14} />
               },
               {
                 link:'/member/debts',
-                title:'your debt dashboard'
+                title:'your debt dashboard',
+                icon:<DashGrid width={16} height={16} />
                 },
               {
                 link:'/member/debts/settings',
-                title:'set debt budget'
+                title:'set debt budget',
+                icon:<Setting width={15} height={15} />
               }
             ]}
             /> 
         
-        <div className="grid grid-cols-3 gap-1 mt-4">
+        <div className="flex flex-col  md:grid lmd:flex-row md:grid-cols-3 gap-1 mt-4">
 
             <div className="w-full">
 
@@ -133,7 +139,7 @@ export default function InsuranceCreate({
                   <CurrentDebtDashboard  dept_acc_id={id} user_id={user_id} />
                 </div>                
                
-                <div className="w-full mt-8">
+                <div className="w-full mt-2 lmd:mt-4 md:mt-8">
                                    
                     <DebtEntry
                     debt_acc_id={id} 
@@ -157,9 +163,9 @@ export default function InsuranceCreate({
               </div>
 
             </div>
-            <div className="w-full col-span-2">
+            <div className="w-full md:col-span-2">
               {
-              <TabView title={`Account Information`} tabs={tabs} onChageTab={(index)=>{
+              <TabView tabs={tabs} onChageTab={(index)=>{
                 setActiveTab(index)
               }} />
                }

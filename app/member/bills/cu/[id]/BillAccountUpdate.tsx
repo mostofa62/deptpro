@@ -1,6 +1,6 @@
 const url = process.env.NEXT_PUBLIC_API_URL;
 import { useCallback, useEffect, useRef, useState } from "react";
-import { DataSchema,DataLabel,ValidationSchema } from "../DataValidationSchema"
+import { DataSchemaType,DataLabel,ValidationSchema } from "../DataValidationSchema"
 import FormikSelectInput from "@/app/components/form/FormikSelectInput";
 import useFetchDropDownData from "@/app/hooks/useFetchDropDownData";
 import { Field, Form, Formik } from "formik";
@@ -18,39 +18,27 @@ interface BillProps{
     setParentData?:(data:any)=>void;
 }
 
-const BillAccountUpdate = ({bill_acc_id, user_id,tab_number,setParentData}:BillProps)=>{
+interface BillAccProps{
+    bill_acc_id:string;
+    user_id:string;
+    fetchFomrData:DataSchemaType,
+    repeatFrequency:any[],
+    reminderDays:any[],
+    billTypes:any[]
+}
 
-    const router = useRouter();
+const BillAccountUpdate = ({
+    bill_acc_id,
+    user_id,
+    fetchFomrData,
+    repeatFrequency,
+    reminderDays, 
+    billTypes  }:BillAccProps)=>{
+
+    const router = useRouter()
 
     const formRef = useRef<any>(null);
-    const [fetchFomrData,setFetchFormData] = useState(DataSchema);
-    // const [repeatCount, setRepeatCount] = useState([]);
-    const [repeatFrequency, setRepeatFrequency] = useState([]);
-    const [reminderDays, setReminderDays] = useState([]);
-
-    const billTypeData = useFetchDropDownData({urlSuffix:`billtype-dropdown/${user_id}`});
     
-
-    const fetchDataCallback=useCallback(async()=>{
-        //console.log(id);
-        const response = await axios.get(`${url}bill/${bill_acc_id}`);
-        //return response.data.user;
-        setFetchFormData(response.data.billaccounts);
-        // setRepeatCount(response.data.repeat_count);
-        setRepeatFrequency(response.data.repeat_frequency);
-        setReminderDays(response.data.reminder_days);
-
-        if(setParentData){
-            setParentData(response.data.billaccounts)
-        }
-
-    },[bill_acc_id, setParentData]);
-    useEffect(()=>{
-        //if(tab_number){
-            fetchDataCallback();
-        //}
-    
-    },[fetchDataCallback,tab_number]);
 
     const fetchdata = fetchFomrData;
 
@@ -69,9 +57,7 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number,setParentData}:BillP
         ) .then(function (response) {
           //console.log(response);
 
-          if(setParentData){
-            setParentData(values.fetchdata)
-          }
+         
 
           if(response.data.result > 0){
             setSubmitting(false);
@@ -139,9 +125,9 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number,setParentData}:BillP
 
     return(
 
-        <div className="grid grid-flow-row">
+        <div className="flex flex-col">
 
-        <div className="mt-[10px]">
+        <div className="md:mt-[10px]">
         <Formik    
         innerRef={formRef}    
     initialValues={{ fetchdata }}
@@ -152,14 +138,14 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number,setParentData}:BillP
     onSubmit={handleFormSubmit}
 
     render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
-        <Form className="mt-1">
+        <Form className="flex flex-col md:mt-1">
 
-<p className="text-[16px] uppercase font-medium">Account Details</p>
+<p className="text-sm md:text-[16px] text-center md:text-left lmd:text-left uppercase font-medium">Account Details</p>
 
-<hr className="mt-2 border-stroke"/>
+<hr className="mt-1 md:mt-2 border-stroke"/>
 
-<div className="flex flex-row mt-[15px]">
-<div className="w-[50%]">
+<div className="flex flex-col md:flex-row md:mt-[15px]">
+<div className="w-full md:w-[50%]">
     
     <FormikFieldInput 
     label={DataLabel.name} 
@@ -182,7 +168,7 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number,setParentData}:BillP
     
 </div>
 
-<div className="ml-[24px] w-[50%]">
+<div className="w-full md:ml-[24px] md:w-[50%]">
 
 <FormikSelectInput
         label={DataLabel.bill_type}
@@ -191,7 +177,7 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number,setParentData}:BillP
         isSearchable={true}
         isClearable={true}
         name="fetchdata.bill_type"
-        dataOptions={billTypeData}
+        dataOptions={billTypes}
         errorMessage={errors.fetchdata &&
             errors.fetchdata.bill_type &&
             touched.fetchdata &&
@@ -208,8 +194,8 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number,setParentData}:BillP
 </div>
 
 
-<div className="flex flex-row mt-[15px]">
-<div className="w-[50%]">
+<div className="flex flex-col md:flex-row md:mt-[15px]">
+<div className="w-full md:w-[50%]">
 
 <FormikFieldInput 
     type="number"
@@ -226,7 +212,7 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number,setParentData}:BillP
     
 </div>
 
-<div className="ml-[24px] w-[50%]">
+<div className="w-full md:ml-[24px] md:w-[50%]">
 
 <FormikFieldInput 
     type="date"
@@ -247,10 +233,10 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number,setParentData}:BillP
 </div>
 
 
-<div className="flex flex-row mt-[15px]">
+<div className="flex flex-col md:flex-row md:mt-[15px]">
 
 
-<div className="w-[50%]">
+<div className="w-full md:w-[50%]">
                     
                     <FormikFieldInput 
                     label={DataLabel.payor} 
@@ -273,7 +259,7 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number,setParentData}:BillP
                     
                 </div>
 
-<div className="ml-[24px] w-[50%]">
+<div className="w-full md:ml-[24px] md:w-[50%]">
     
     <FormikFieldInput 
     label={DataLabel.note} 
@@ -292,13 +278,13 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number,setParentData}:BillP
 </div>
 
 
-<p className="text-[16px] uppercase font-medium mt-4">Account Settings</p>
+<p className="text-sm md:text-[16px] text-center md:text-left lmd:text-left uppercase font-medium md:mt-4">Account Settings</p>
 
-<hr className="mt-2 border-stroke"/>
+<hr className="mt-1 md:mt-2 border-stroke"/>
 
 
 
-<div className="flex flex-row mt-[15px] gap-1">
+<div className="flex flex-col md:flex-row md:mt-[15px] gap-1">
 {/* <div className="w-[30%]">
 
 <FormikSelectInput
@@ -320,7 +306,7 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number,setParentData}:BillP
 </div> */}
 
 
-<div className="w-[48%]">
+<div className="w-full md:w-[48%]">
 
 <FormikSelectInput
         label={DataLabel.repeat_frequency}
@@ -341,7 +327,7 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number,setParentData}:BillP
 </div>
 
 
-<div className="w-[48%]">
+<div className="w-full md:w-[48%]">
 
 <FormikSelectInput
         label={DataLabel.reminder_days}
@@ -377,9 +363,9 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number,setParentData}:BillP
 
 
 
-        <div className="mt-[100px]">
-                <div className="flex flex-row gap-4">
-                    <div className="relative top-0">
+        <div className="mt-3 lmd:mt-5 md:mt-10">
+                <div className="flex flex-row justify-center gap-4">
+                    <div className="md:relative md:top-0">
                         <button className="flex flex-row text-[15px] h-[40px] bg-[#43ACD6] rounded text-white px-2.5 py-2  capitalize text-center font-semibold" onClick={handleSubmit}>
                         <svg className="mt-1" width={15} height={15} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
@@ -388,7 +374,7 @@ const BillAccountUpdate = ({bill_acc_id, user_id,tab_number,setParentData}:BillP
                         <span className="ml-1.5">Save Updates</span>
                         </button>
                     </div>
-                    <div className="relative left-[30px]">
+                    <div className="md:relative md:left-[30px]">
 
                     
 

@@ -20,6 +20,14 @@ type TransactionData = {
   month_debt_free: string;
   financial_frdom_date: string;
   financial_frdom_target: number;
+  saving_progress: number;
+  total_paid_off: number;
+  snowball_amount: number;
+  monthly_budget: number;
+  total_monthly_minimum: number;
+  total_monthly_bill_expese:number;
+  total_monthly_net_income: number;  
+  active_debt_account: number;
 };
 
 
@@ -49,6 +57,14 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     month_debt_free: '',
     financial_frdom_date: '',
     financial_frdom_target: 0,
+    saving_progress: 0,
+    total_paid_off: 0,
+    snowball_amount: 0,
+    monthly_budget: 0,
+    total_monthly_minimum: 0,
+    total_monthly_bill_expese: 0,
+    total_monthly_net_income: 0,    
+    active_debt_account: 0,
   });
 
   const fetchTransactionData = useCallback(async () => {
@@ -94,7 +110,7 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
           <main>
               <div className="mx-auto py-2.5 px-1 md:px-2 md:max-w-screen-md lg:max-w-screen-lg 2xl:max-w-screen-2xl">
 
-              <HeaderSummary/>
+              <HeaderSummary transactionData={transactionData}/>
               
               {children}
               

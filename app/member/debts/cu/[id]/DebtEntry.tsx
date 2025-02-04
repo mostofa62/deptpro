@@ -77,11 +77,11 @@ const DebtEntry=({debt_acc_id, user_id,transaction_data,currentDate}:DebtProps)=
     return(
         <CardHolderDefault>
 
-            <p className="text-[16px] uppercase font-medium">{`add a transaction`}</p>
+            <p className="text-sm text-center lmd:text-sm lmd:text-left md:text-left md:text-[16px] uppercase font-medium">{`add a transaction`}</p>
 
-            <hr className="mt-2 border-stroke"/>
+            <hr className="mt-1 md:mt-2 border-stroke"/>
 
-            <div className="grid grid-flow-row">
+            <div className="flex flex-col">
             <Formik
             
         initialValues={{ fetchdata }}
@@ -92,7 +92,7 @@ const DebtEntry=({debt_acc_id, user_id,transaction_data,currentDate}:DebtProps)=
         onSubmit={handleFormSubmit}
 
         render={({isValid, handleChange, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched}:any)=>(
-            <Form className="mt-5">
+            <Form className="mt-2 flex flex-col gap-2.5 lmd:mt-2.5 md:mt-5">
 
             <div className="flex flex-row">
                 <div className="w-full">
@@ -117,7 +117,7 @@ const DebtEntry=({debt_acc_id, user_id,transaction_data,currentDate}:DebtProps)=
                 </div>
             </div>    
 
-            <div className="flex flex-row mt-[15px]">
+            <div className="flex flex-row">
                 <div className="w-full">
 
                 <FormikFieldInput 
@@ -135,8 +135,8 @@ const DebtEntry=({debt_acc_id, user_id,transaction_data,currentDate}:DebtProps)=
                 </div>
             </div>
             
-            <div className="flex flex-row mt-[15px]">
-                <div className="w-[48%]">
+            <div className="flex flex-col gap-2 lmd:flex-col md:flex-row">
+                <div className="w-full lmd:w-full md:w-[48%]">
 
                 <FormikSelectInput
                     label={DataLabel.month}
@@ -157,7 +157,7 @@ const DebtEntry=({debt_acc_id, user_id,transaction_data,currentDate}:DebtProps)=
                     
                 </div>
 
-                <div className="ml-[24px] w-[48%]">
+                <div className="w-full lmd:w-full lmd:ml-0 md:ml-[24px] md:w-[48%]">
 
                 <FormikSelectInput
                     label={DataLabel.year}
@@ -180,7 +180,7 @@ const DebtEntry=({debt_acc_id, user_id,transaction_data,currentDate}:DebtProps)=
             </div>    
 
 
-            <div className="flex flex-row mt-[15px]">
+            <div className="flex flex-row">
                 <div className="w-full">
 
                 <FormikFieldInput 
@@ -200,7 +200,7 @@ const DebtEntry=({debt_acc_id, user_id,transaction_data,currentDate}:DebtProps)=
                 </div>
             </div>
 
-            <div className="flex flex-row mt-[15px]">
+            <div className="flex flex-row">
                 <div className="w-full">
 
                 
@@ -244,14 +244,14 @@ const DebtEntry=({debt_acc_id, user_id,transaction_data,currentDate}:DebtProps)=
                 </div>
             </div>
 
-            <hr className="mt-8 border-stroke"/>
+            <hr className="mt-2 lmd:mt-3 md:mt-8 border-stroke"/>
 
-            <div className="flex flex-row mt-4">
-                <div className="w-[40%]">
-                        <button  type="submit" className="text-[15px] h-[40px] bg-[#43ACD6] rounded text-white px-4  capitalize text-center font-semibold">
+            <div className="flex flex-row justify-center lmd:justify-center md:justify-start my-2 lmd:my-2 md:mt-4">
+                
+                        <button  type="submit" className="text-sm md:text-[15px] h-8 md:h-[40px] bg-[#43ACD6] rounded bg-opacity-5 text-[#43ACD6] px-4  capitalize text-center font-semibold">
                             Save
                         </button>
-                </div>                
+                              
             </div>
 
             
