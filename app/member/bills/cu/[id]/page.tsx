@@ -61,10 +61,11 @@ export default function InsuranceCreate({
     const [repeatFrequency, setRepeatFrequency] = useState([]);
     const [reminderDays, setReminderDays] = useState([]);
     const [billTypes, setBillTypes] = useState([]);
-    const [billSummary, setBillSummary] = useState({
-      'currentBalance':0,
-      'monthTransaction':[]
-    })
+    const [currentBalance, setCurrentBalance] = useState(0);
+    // const [billSummary, setBillSummary] = useState({
+    //   'currentBalance':0,
+    //   'monthTransaction':[]
+    // })
     
     
 
@@ -79,7 +80,9 @@ export default function InsuranceCreate({
 
         setBillTypes(response.data.bill_types)
 
-        setBillSummary(response.data.bill_summary)
+        setCurrentBalance(response.data.current_balance)
+
+        //setBillSummary(response.data.bill_summary)
 
         
 
@@ -223,7 +226,7 @@ export default function InsuranceCreate({
                 <div className="w-full">
                   <CurrentBillDashboard  
                   bill_title={`${fetchFomrData.name }`} 
-                  bill_summary={billSummary}   />
+                  currentBalance={currentBalance}   />
                 </div>                
                 {/* {transactionData.id =='' &&
                 <div className="w-full mt-8">

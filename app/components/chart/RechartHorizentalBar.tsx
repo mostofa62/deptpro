@@ -14,12 +14,12 @@ import { useEffect, useState } from "react";
 
   interface BarProps{    
     barData:any[];
-    axisData:{
-        XAxis:{
+    axisData?:{
+        XAxis?:{
             dataKey:string,
             customTickFill?:string;        
         },
-    },
+    } | null,
     bar:{
         dataKey:string;
         barFill?:string;
@@ -32,7 +32,8 @@ import { useEffect, useState } from "react";
 
   export default function RechartHorizentalBar({    
     barData = [],
-    axisData = { XAxis: { dataKey: "xKey", customTickFill: "#000" } },
+    //axisData = { XAxis: { dataKey: "xKey", customTickFill: "#000" } },
+    axisData = null,
     bar = { dataKey: "value", barFill: "#22bf6a", barSize: 20 },
     barMinHeight = 10,
     barMaxHeight = 80
@@ -126,7 +127,7 @@ import { useEffect, useState } from "react";
               minWidth:'100px'                    
             }}>          
               <p style={{ margin: 0 }}>${Intl.NumberFormat('en-US', {
-      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(data[bar.dataKey])} in <span>{data[axisData.XAxis.dataKey]}</span></p>
+      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(data[bar.dataKey])} { axisData?.XAxis && <span>in {data[axisData.XAxis.dataKey]}</span>}</p>
             </div>
           );
         }
@@ -154,7 +155,7 @@ import { useEffect, useState } from "react";
               dy={0} // Fine-tune the vertical offset if necessary
               textAnchor="end" // Center-align the text under the bar
               transform={`rotate(-90)`} // Rotate the text -90 degrees
-              fill={axisData.XAxis.customTickFill || "#8B0000"} // Text color
+              fill={axisData?.XAxis?.customTickFill || "#8B0000"} // Text color
               fontSize={12} // Font size
               fontWeight={600}              
               
@@ -190,15 +191,16 @@ import { useEffect, useState } from "react";
                               
                           >
                          
-        
-                          <XAxis   
-                          dataKey={axisData.XAxis.dataKey}
-                          tickLine={false} 
-                          axisLine={false}  
-                          tick={<CustomXAxisTick />} 
-                          interval={0}
-                          
-                          />
+                          {axisData?.XAxis &&
+                              <XAxis   
+                              dataKey={axisData.XAxis.dataKey}
+                              tickLine={false} 
+                              axisLine={false}  
+                              tick={<CustomXAxisTick />} 
+                              interval={0}
+                              
+                              />
+                          }
                           <Bar 
                           dataKey={bar.dataKey} 
                           fill={bar.barFill || "#483D8B"}  

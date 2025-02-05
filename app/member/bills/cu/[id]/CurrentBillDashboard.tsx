@@ -1,3 +1,4 @@
+import RechartHorizentalBar from "@/app/components/chart/RechartHorizentalBar";
 import CardHolderDefault from "@/app/components/ui/CardHolderDefault";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
@@ -17,14 +18,16 @@ import {
 const url = process.env.NEXT_PUBLIC_API_URL;
 
 
-
+/*
 interface fetchProps{    
     currentBalance:number
     monthTransaction:any[];
 }
+    */
 interface BillProps{
-  bill_summary:fetchProps
+  //bill_summary:fetchProps
   bill_title:string;
+  currentBalance:number
  
 }
 
@@ -68,10 +71,10 @@ const CustomTooltip = ({ payload, label }: any) => {
     return null;
   };
 
-const CurrentBillDashboard = ({bill_title, bill_summary}:BillProps)=>{
+const CurrentBillDashboard = ({bill_title, currentBalance=0}:BillProps)=>{
 
     
-    const formattedAmount = bill_summary ? new Intl.NumberFormat('en-US').format(bill_summary.currentBalance):0;
+    const formattedAmount = new Intl.NumberFormat('en-US').format(currentBalance);
 
 
     return(
@@ -89,11 +92,11 @@ const CurrentBillDashboard = ({bill_title, bill_summary}:BillProps)=>{
                                         <p className='font-semibold text-[13px] md:text-[15px] md:text-left lmd:text-left text-center uppercase text-[#bdbbbb]'><span>CURRENT BILL</span></p>
                                     </div>
 
-                                    {bill_summary?.monthTransaction && bill_summary.monthTransaction.length > 0 &&
+                                    {/*bill_summary?.monthTransaction && bill_summary.monthTransaction.length > 0 &&
 
                                     <div className="w-full flex justify-center lmd:justify-start md:justify-start col-span-2">
                                         
-                                        <ResponsiveContainer width="10%" height={80}>
+                                        {/* <ResponsiveContainer width="10%" height={80}>
                                         <BarChart                                            
                                             data={bill_summary.monthTransaction}
                                             margin={{
@@ -114,9 +117,19 @@ const CurrentBillDashboard = ({bill_title, bill_summary}:BillProps)=>{
                                         
                                         </BarChart>
 
-                                        </ResponsiveContainer>
+                                        </ResponsiveContainer> *//*}
+                                        
+                                        <RechartHorizentalBar
+                                                              barData={bill_summary.monthTransaction}
+                                                              
+                                                              bar={
+                                                                {dataKey:'amount'}
+                                                              }
+                                                            
+                                        
+                                                            />
                                     </div>
-                                    }
+                                    */}
 
                                 </div>
         </CardHolderDefault>

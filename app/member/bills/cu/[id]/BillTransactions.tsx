@@ -5,14 +5,16 @@ import GridPaginationHolder from "@/app/components/grid/GridPaginationHolder";
 import GridActionLink from "@/app/components/grid/GridActionLink";
 import { confirmAlert } from "react-confirm-alert";
 import useAuth from '@/app/hooks/useAuth';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import CardHolderDefault from '@/app/components/ui/CardHolderDefault';
 import Loading from '@/app/loading';
 import { useMediaQuery } from 'react-responsive';
+import moment from 'moment';
+import axios from 'axios';
 
 const per_page_list = PerPageList();
 const per_page = per_page_list[0];
-
+const url = process.env.NEXT_PUBLIC_API_URL;
 interface paymentProps{
     trans_id:string;
     amount:number;
@@ -28,17 +30,22 @@ interface BillProps{
 }
 
 interface paymentRow{
-  _id:string;
+  //_id:string;
   amount: number;
-  pay_date_word:string;
+  pay_date:string;
+}
+
+interface paymentObj{
+  trans_id:string;
+  payments:paymentRow[]
 }
 interface DataRow {
     _id:string;    
     amount: number;
     current_amount:number;
-    due_date_word:string;
+    due_date:string;
     payment_status:number;
-    payments:paymentRow[] 
+    //payments:paymentRow[] 
 }
 
 const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:BillProps)=>{
@@ -166,7 +173,26 @@ const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:Bil
                                         
                     
                   }
-        
+
+
+                const [payments, setPayments] = useState<paymentObj>({
+                  trans_id:"",
+                  payments:[]
+
+                })
+
+                const fetchPayments = useCallback(async(id:string)=>{
+                    //alert(id)
+                    //console.log(id);
+                    const response = await axios.get(`${url}bill-payments/${id}`);
+                    //console.log(response.data)
+                    //return response.data.user;
+                    setPayments({
+                      trans_id:id,
+                      payments:response.data.payments});
+                },[]);
+
+                
 
                 return(
 
@@ -215,7 +241,7 @@ const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:Bil
                                     <div className='flex'>
 
                                       <div className="w-full col-span-2">
-                                          <p className='font-medium text-[15px]'><span>DUE:</span><span className='ml-1'>{row.original.due_date_word}</span></p>
+                                          <p className='font-medium text-[15px]'><span>DUE:</span><span className='ml-1'>{moment(row.original.due_date).format("MMMM DD, YYYY")}</span></p>
                                       </div>
                                     </div>
 
@@ -258,14 +284,28 @@ const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:Bil
                                     </div>
                                     }
 
-                                    {row.original.payments.length > 0 &&
+{row.original.payment_status > 0 &&
+
+<div className='flex justify-center'>
+
+  <p 
+  onClick={async()=>fetchPayments(row.original._id)}
+  className="py-1 text-sm capitalize cursor-pointer border px-1 border-[#31c4a2] rounded-sm text-[#31c4a2]">
+    show payments
+  </p>
+
+</div>
+
+}
+
+                                    {payments.trans_id == row.original._id && payments.payments.length > 0 &&
 
                                     <div className='mt-5'>
 
                                       {isMobile || isTab ?
                                       (<div className='flex flex-col gap-2'>
 
-{row.original.payments.map((data:paymentRow, index:number)=>{
+{payments.payments.map((data:paymentRow, index:number)=>{
                                         return(
 
                                           <div className='flex flex-col gap-1 rounded border shadow-sm p-2' key={index}>
@@ -273,7 +313,7 @@ const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:Bil
                                             <p>${Intl.NumberFormat('en-US', {
                           minimumFractionDigits: 2,maximumFractionDigits: 2}).format(data.amount)}</p>
                                             <p className='font-semibold'>Pay Date</p>
-                                            <p>{data.pay_date_word}</p>
+                                            <p>{moment(data.pay_date).format("MMMM DD, YYYY")}</p>
                                           </div>
 
                                         )
@@ -291,13 +331,13 @@ const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:Bil
                                         </tr>
                                       </thead>
                                       <tbody>
-                                      {row.original.payments.map((data:paymentRow, index:number)=>{
+                                      {payments.payments.map((data:paymentRow, index:number)=>{
                                         return(
 
                                           <tr key={index}>
                                             <td>${Intl.NumberFormat('en-US', {
                           minimumFractionDigits: 2,maximumFractionDigits: 2}).format(data.amount)}</td>
-                                            <td>{data.pay_date_word}</td>
+                                            <td>{moment(data.pay_date).format("MMMM DD, YYYY")}</td>
                                           </tr>
 
                                         )
@@ -329,7 +369,7 @@ const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:Bil
                     
                     </div>
 
-                    <div className="grid grid-flow-row">
+                    <div className="flex flex-col">
 
                     {
         !loading 
@@ -338,7 +378,7 @@ const BillTransactions = ({bill_acc_id, user_id,reloadGrid,onPayment,onEdit}:Bil
         &&
         (pageCount * per_page) > per_page
         &&
-        <div className="mt-[100px]">
+        <div className="mt-5 lmd:mt-7 md:mt-[100px]">
       <GridPaginationHolder 
       table={table}
       pageNumbers={pageNumbers}
