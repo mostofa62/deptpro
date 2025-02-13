@@ -63,7 +63,7 @@ const CustomTooltip = ({ active, payload, label, total_count, total_balance }:an
 
 
 interface PayLoads{
-    income_source_type_counts:{_id:number,count:number,name:string, balance:number}[],
+    income_source_type_counts:{id:number,count:number,name:string, balance:number}[],
     total_income_source_type:number,
     total_balance:number,    
     income_source_type_names:{[key:string]:string}     
@@ -188,9 +188,9 @@ const TotalAllocation = ({userid}:TotalPros) => {
           {earners.length > 0 && (
             <div className="mt-1">
               <div><strong>Earners</strong></div>
-              <div className="overflow-y-scroll max-h-25">
+              <div className="overflow-x-scroll flex gap-1">
               {earners.map((earner: any, index: number) => (
-                <div className="border p-1 my-1" key={`earner-${index}`} style={{ color: getColorForDebtType(earner.earner_id) }}>
+                <div className="border p-1 my-1" key={`earner-${index}`} style={{ color: getColorForDebtType(earner.earner) }}>
                   {/* Iterate over keys in the earner object */}
                   {Object.keys(earner)
                   .filter((key) => key !== "earner_id") // Filter out 'earner_id'
@@ -256,7 +256,7 @@ const TotalAllocation = ({userid}:TotalPros) => {
       
     }, [data, barData, lineData]); // Empty dependency array ensures it runs once after mount
 
-    const ids = data.map((item :any)=> item._id);
+    const ids = data.map((item :any)=> item.id);
     
     const uniquecolors = generateUniqueColors(ids);
 
@@ -277,10 +277,10 @@ const TotalAllocation = ({userid}:TotalPros) => {
                               return (
                                   <>
                                   <DataProgress
-                                  key={dp._id} 
+                                  key={dp.id} 
                                   title={dp.name} 
                                   progress={((100/total_balance) * dp.balance).toFixed(0)}
-                                  color={uniquecolors[dp._id]}
+                                  color={uniquecolors[dp.id]}
                                   maxProgressLength={maxProgressLength}
                                   amount={dp.balance}
                                   maxAmountLength={maxAmountLength}
