@@ -33,7 +33,7 @@ export default function InsuranceCreate({
     const id = params.id;
     const fetchDataCallback=useCallback(async()=>{
         //console.log(id);
-        const response = await axios.get(`${url}users/${id}`);
+        const response = await axios.get(`${url}userspg/${id}`);
         //return response.data.user;
         setFetchFormData({id,...response.data.user});
     },[id]);
@@ -49,7 +49,7 @@ export default function InsuranceCreate({
     const handleFormSubmit = async(values:any,{ resetForm }:any)=>{
         //alert(JSON.stringify(values));
         
-        await axios.post(`${url}user-create/${id}`, 
+        await axios.post(`${url}user-createpg/${id}`, 
             values.fetchdata, {
             
             headers: {

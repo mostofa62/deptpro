@@ -54,7 +54,7 @@ const Login=()=> {
 
     
 
-    await axios.post(`${url}admin-login`, 
+    await axios.post(`${url}admin-loginpg`, 
     values.user, {
     
     headers: {

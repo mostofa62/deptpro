@@ -20,7 +20,7 @@ const per_page = per_page_list[0];
 
 
 interface IncomeProps{
-    income_id:string;    
+    income_id:number;    
 }
 
 
@@ -82,7 +82,7 @@ const IncomeBoostTransactions = ({income_id}:IncomeProps)=>{
     //const [globalFilter, setGlobalFilter] = useState('');    
 
     const {error,loading,totalRows,pageCount} = useFetchGridData({
-        urlSuffix:`income-boost-transactions/${income_id}`,
+        urlSuffix:`income-boost-transactionspg/${income_id}`,
         pagination:pagination,
         //sorting:sorting,
         //globalFilter:globalFilter,

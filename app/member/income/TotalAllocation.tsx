@@ -63,7 +63,7 @@ const CustomTooltip = ({ active, payload, label, total_count, total_balance }:an
 
 
 interface PayLoads{
-    income_source_type_counts:{_id:string,count:number,label:string, balance:number}[],
+    income_source_type_counts:{_id:number,count:number,name:string, balance:number}[],
     total_income_source_type:number,
     total_balance:number,    
     income_source_type_names:{[key:string]:string}     
@@ -78,8 +78,10 @@ interface FuturePayLoad{
   projection_list:{base_gross_income:number, base_net_income:number, month:string, month_word:string}[]
 }
 interface TotalPros{
-  userid:string;
+  userid:number;
 }
+
+
 const TotalAllocation = ({userid}:TotalPros) => {
      const isMobile = useMediaQuery({ maxWidth: 768 });
      const isTab = useMediaQuery({ maxWidth: 900 });
@@ -115,17 +117,17 @@ const TotalAllocation = ({userid}:TotalPros) => {
 
 
     const IncomeTypewiseInfo:any = useFetchDropDownObjects({
-        urlSuffix:`income-typewise-info`,
+        urlSuffix:`income-typewise-infopg/${userid}`,
         payLoads:payload
     })
 
     const IncomeTransaction:any = useFetchDropDownObjects({
-      urlSuffix:`income-transactions-previous`,
+      urlSuffix:`income-transactions-previouspgu/${userid}`,
       payLoads:payloadIncome
     })
 
     const IncomeFuture:any = useFetchDropDownObjects({
-      urlSuffix:`income-transactions-next`,
+      urlSuffix:`income-transactions-nextpgu/${userid}`,
       payLoads:payloadFuture
     })
 
@@ -245,8 +247,8 @@ const TotalAllocation = ({userid}:TotalPros) => {
       if(total_length > 0){
         const heights = itemRefs.current.map(item => item?.getBoundingClientRect().height || 0);
         const tallestHeight = Math.max(...heights);
-        if (lineData.length > 0 && tallestHeight < 350){
-          setMaxHeight(450)
+        if (total_length > 0 && tallestHeight < 350){
+          setMaxHeight(400)
         }else{ 
           setMaxHeight(tallestHeight);
         }

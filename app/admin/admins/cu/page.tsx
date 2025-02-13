@@ -32,7 +32,7 @@ export default function InsuranceCreate() {
     const handleFormSubmit = async(values:any,{ resetForm }:any)=>{
         //alert(JSON.stringify(values));
 
-        await axios.post(`${url}member-registration`, 
+        await axios.post(`${url}member-registrationpg`, 
             {...values.fetchdata,role}, {
             
             headers: {

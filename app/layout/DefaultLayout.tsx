@@ -67,6 +67,8 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     active_debt_account: 0,
   });
 
+  /*
+
   const fetchTransactionData = useCallback(async () => {
     try {
       const response = await axios.get<TransactionData>(`${url}header-summary-data/${user_id}`);
@@ -79,6 +81,7 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   useEffect(() => {
     fetchTransactionData();
   }, [fetchTransactionData, pathname]);
+  */
 
   //alert(isTab)
 

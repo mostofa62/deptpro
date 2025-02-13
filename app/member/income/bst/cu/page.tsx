@@ -56,7 +56,7 @@ export default function InsuranceCreate() {
     }
 
     const IncomeSourceBoostData:any = useFetchDropDownObjects({
-        urlSuffix:`incomesourceboost-dropdown/${user_id}`,
+        urlSuffix:`incomesourceboostpg-dropdown/${user_id}/boost`,
         payLoads:payload
     })
 
@@ -69,7 +69,7 @@ export default function InsuranceCreate() {
     const handleFormSubmit = async(values:any,{ resetForm,setSubmitting }:any)=>{
         //alert(JSON.stringify(values));
 
-        await axios.post(`${url}save-income-boost`, 
+        await axios.post(`${url}save-income-boostpg`, 
             {user_id,...values.fetchdata}, {
             
             headers: {

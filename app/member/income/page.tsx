@@ -7,6 +7,8 @@ import TotalAllocation from "./TotalAllocation";
 import TabView from '@/app/components/ui/TabView';
 import { useState } from 'react';
 import AddPlus from '@/app/images/icon/add-plus';
+
+
 interface Tab {
   label: string;
   content: React.ReactNode;

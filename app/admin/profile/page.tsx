@@ -27,7 +27,7 @@ const PdfProcessList=()=> {
   const id = authCtx.userId;
   const fetchUser=useCallback(async()=>{
     //console.log(id);
-    const response = await axios.get(`${url}users/${id}`);
+    const response = await axios.get(`${url}userspg/${id}`);
     //return response.data.user;
     setUserdata({id,...response.data.user});
   },[id]);
@@ -43,7 +43,7 @@ const PdfProcessList=()=> {
 
     //console.log(values);
 
-    await axios.post(`${url}user-create/${id}`, 
+    await axios.post(`${url}user-createpg/${id}`, 
     values.user, {
     headers: {
       'Content-Type': 'multipart/form-data'
@@ -145,7 +145,7 @@ type="password" name="user.password" placeholder="password" />
 <div className="w-full my-5">
 <button 
 disabled={isSubmitting} type="submit"
- className="flex w-full justify-center rounded border-primary bg-[#0a4a82] p-3 font-medium text-[#f5f5f8]">
+ className="flex w-full justify-center rounded bg-[#43ACD6]  p-3 font-medium text-[#f5f5f8]">
   Save
 </button>
                     </div>

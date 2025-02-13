@@ -48,7 +48,7 @@ const Registration=()=> {
 
     
 
-    await axios.post(`${url}member-registration`, 
+    await axios.post(`${url}member-registrationpg`, 
     values.user, {
     
     headers: {

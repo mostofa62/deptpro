@@ -54,7 +54,7 @@ const Login=()=> {
 
     
 
-    await axios.post(`${url}member-login`, 
+    await axios.post(`${url}member-loginpg`, 
     values.user, {
     
     headers: {

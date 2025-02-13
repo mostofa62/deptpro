@@ -53,7 +53,7 @@ export default object().shape({
                   //console.log(context);
                   
                   const { data: { success } } = await axios.post(
-                    `${url}userbyemail/${context.parent.id}`, 
+                    `${url}userbyemailpg/${context.parent.id}`, 
                     { email: email }
                   );
         

@@ -1,23 +1,22 @@
 "use client";
-import DefaultLayout from "@/app/layout/DefaultLayout";
-import Link from "next/link";
-import { useState,useEffect, useRef, useCallback } from "react";
-import axios from "axios";
 import useAuth from '@/app/hooks/useAuth';
-import { useRouter } from "next/navigation";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
+import DefaultLayout from "@/app/layout/DefaultLayout";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import BasicCalendar from "@/app/components/BasicCalender";
-import { DataLabelView } from "../cu/DataValidationSchema";
+import AddPlus from "@/app/images/icon/add-plus";
+import DashGrid from "@/app/images/icon/dash-grid";
+import EditView from "@/app/images/icon/edit-view";
 import HolderOne from "@/app/layout/HolderOne";
+import { DataLabelView } from "../cu/DataValidationSchema";
 import IncomeTransactions from "./IncomeTransactions";
 import Summary from "./Summary";
-import IncomeBoostGrid from "../IncomeBoostGrid";
-import TabView from "@/app/components/ui/TabView";
-import IncomeBoostTransactions from "./IncomeBoostTransactions";
-import DashGrid from "@/app/images/icon/dash-grid";
-import AddPlus from "@/app/images/icon/add-plus";
-import EditView from "@/app/images/icon/edit-view";
+import IncomeBoostGrid from '../IncomeBoostGrid';
+import TabView from '@/app/components/ui/TabView';
+import IncomeBoostTransactions from './IncomeBoostTransactions';
+
 
 interface Tab {
   label: string;
@@ -44,7 +43,8 @@ export default function IncomeDetail({
     params,
     searchParams    
   }:{
-    params: { id: string }
+    
+    params: { id: number } 
     searchParams: { [key: string]: string | string[] | undefined },    
   
   }) {
@@ -64,7 +64,7 @@ export default function IncomeDetail({
     }
 
     const IncomeWithTransactionData:any = useFetchDropDownObjects({
-        urlSuffix:`income-all/${id}`,
+        urlSuffix:`income-allpg/${id}`,
         payLoads:payload
     })
 

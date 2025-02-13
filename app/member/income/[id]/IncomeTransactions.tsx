@@ -19,12 +19,12 @@ const per_page = per_page_list[0];
 
 
 interface IncomeProps{
-    income_id:string;    
+    income_id:number;    
 }
 
 
 interface DataRow {
-    _id:string;    
+    id:string;    
     base_gross_income: number;
     base_net_income:number;
     total_gross_for_period:number;
@@ -79,7 +79,7 @@ const IncomeTransactions = ({income_id}:IncomeProps)=>{
     //const [globalFilter, setGlobalFilter] = useState('');    
 
     const {error,loading,totalRows,pageCount} = useFetchGridData({
-        urlSuffix:`income-transactions/${income_id}`,
+        urlSuffix:`income-transactionspg/${income_id}`,
         pagination:pagination,
         //sorting:sorting,
         //globalFilter:globalFilter,
@@ -89,7 +89,7 @@ const IncomeTransactions = ({income_id}:IncomeProps)=>{
         const columns: ColumnDef<DataRow>[] = useMemo(() => [
     
             {
-                accessorKey: '_id',
+                accessorKey: 'id',
                 header: 'ID',
                 visible: false
                 
@@ -104,7 +104,7 @@ const IncomeTransactions = ({income_id}:IncomeProps)=>{
                 return (
                   <EditableCell
                     initialValue={initialValue}
-                    id={row.original._id}
+                    id={row.original.id}
                     field={column.id}
                     onSave={saveData}
                     isEditable={false}

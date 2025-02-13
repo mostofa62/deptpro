@@ -12,7 +12,7 @@ import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, C
 
 interface DebtTransProps{
 
-    income_id:string,
+    income_id:number,
     
 }
 interface IncomePayload{
@@ -52,12 +52,12 @@ const Summary = ({income_id}:DebtTransProps)=>{
       }
 
     const IncomeContributions:any = useFetchDropDownObjects({
-      urlSuffix:`income-transactions-previous/${income_id}`,
+      urlSuffix:`income-transactions-previouspg/${income_id}`,
       payLoads:payloadIncome
     })
 
     const IncomeFuture:any = useFetchDropDownObjects({
-      urlSuffix:`income-transactions-next/${income_id}`,
+      urlSuffix:`income-transactions-nextpg/${income_id}`,
       payLoads:payloadFuture
     })
 
@@ -157,8 +157,8 @@ const Summary = ({income_id}:DebtTransProps)=>{
       if(total_length > 0){
         const heights = itemRefs.current.map(item => item?.getBoundingClientRect().height || 0);
         const tallestHeight = Math.max(...heights);
-        if (lineData.length > 0 && tallestHeight < 350){
-          setMaxHeight(350)
+        if (total_length > 0 && tallestHeight < 350){
+          setMaxHeight(380)
         }else{ 
           setMaxHeight(tallestHeight);
         }

@@ -34,38 +34,11 @@ const Header = (props: {
   const user_id = authCtx.userId;
 
   const appCtx = useApp();
-  const debtsAccountsScreen = appCtx.debtsAccountsScreen;
+
 
   
 
-  const data = {
-    debt_balance:'187,200',
-    debt_free_date:'MAY 2024',
-    financial_frdom_date:'SEPT 2030',
-    financial_frdom_target:'1,000,000'
-  };
-
-  const [transactioData, setTransactionData] = useState({
-    'debt_total_balance':0,
-    'month_debt_free':'',
-    'financial_frdom_date':'',
-    'financial_frdom_target':''
-  })
-
-  const fetchDataCallback=useCallback(async()=>{
-    //console.log(id);
-      const response = await axios.get(`${url}header-summary-data/${user_id}`);
-      //return response.data.user;
-      setTransactionData(response.data);
-            
-
-  },[user_id]);
-  useEffect(()=>{
-      
-      fetchDataCallback();
-      
-
-  },[fetchDataCallback,debtsAccountsScreen]);
+  
 
   
 

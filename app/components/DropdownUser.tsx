@@ -16,7 +16,7 @@ const DropdownUser = () => {
   const {isLoggedIn} = authContext;
   const router = useRouter()
   let Loguser:any = authContext.role;
-  let urlSuffix = (Loguser && parseInt(Loguser) < 10 )?'admin-logout':'member-logout';
+  let urlSuffix = (Loguser && parseInt(Loguser) < 10 )?'admin-logoutpg':'member-logoutpg';
   let redirect = (Loguser && parseInt(Loguser) < 10 )?'/admin':'/member';
 
   const [displayName, setDisplayName] = useState("");

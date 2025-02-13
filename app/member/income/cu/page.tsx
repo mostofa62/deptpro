@@ -41,9 +41,10 @@ interface IncomeSrcProps{
     bysystem:number;
 }
 
-export default function InsuranceCreate() {
+export default function IncomeCreate() {
     const authCtx = useAuth();
     const user_id = authCtx.userId;
+    
     const router = useRouter()
     const formRef = useRef<any>(null);
 
@@ -61,7 +62,7 @@ export default function InsuranceCreate() {
     }
 
     const IncomeSourceBoostData:any = useFetchDropDownObjects({
-        urlSuffix:`incomesourceboost-dropdown/${user_id}`,
+        urlSuffix:`incomesourceboostpg-dropdown/${user_id}`,
         payLoads:payload
     })
 
@@ -75,11 +76,11 @@ export default function InsuranceCreate() {
     const fetchdata = fetchFomrData;
 
     
-
+    
     const handleFormSubmit = async(values:any,{ resetForm,setSubmitting }:any)=>{
         //alert(JSON.stringify(values));
 
-        await axios.post(`${url}save-income-account`, 
+        await axios.post(`${url}create-income`, 
             {user_id,...values.fetchdata}, {
             
             headers: {

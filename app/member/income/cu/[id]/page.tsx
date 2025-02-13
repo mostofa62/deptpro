@@ -45,16 +45,21 @@ interface IncomeSrcProps{
     bysystem:number;
 }
 
-export default function InsuranceCreate({
+
+
+export default function IncomeUpdate({
     params,
     searchParams
   }:{
-    params: { id: string }
+    
+    params: { id: number }
     searchParams: { [key: string]: string | string[] | undefined }
   
   }) {
     const authCtx = useAuth();
     const user_id = authCtx.userId;
+    const id = params.id
+    
     const router = useRouter()
     const formRef = useRef<any>(null);
 
@@ -66,7 +71,7 @@ export default function InsuranceCreate({
             bysystem:0
         }]);
     
-    const id = params.id;
+   
 
     const payload: PayLoads ={
         income_source: [],
@@ -74,7 +79,7 @@ export default function InsuranceCreate({
     }
 
     const IncomeSourceBoostData:any = useFetchDropDownObjects({
-        urlSuffix:`incomesourceboost-dropdown/${user_id}`,
+        urlSuffix:`incomesourceboostpg-dropdown/${user_id}`,
         payLoads:payload
     })
 
@@ -82,7 +87,7 @@ export default function InsuranceCreate({
 
     const fetchDataCallback=useCallback(async()=>{
         //console.log(id);
-        const response = await axios.get(`${url}income/${id}`);
+        const response = await axios.get(`${url}incomepg/${id}`);
         //return response.data.user;
         setFetchFormData(response.data.income);
         
@@ -101,7 +106,7 @@ export default function InsuranceCreate({
     const handleFormSubmit = async(values:any,{ resetForm,setSubmitting }:any)=>{
         //alert(JSON.stringify(values));
 
-        await axios.post(`${url}save-income-account/${id}`, 
+        await axios.post(`${url}edit-income/${id}`, 
             {user_id,...values.fetchdata}, {
             
             headers: {
