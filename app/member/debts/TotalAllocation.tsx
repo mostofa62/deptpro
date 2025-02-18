@@ -63,7 +63,7 @@ const CustomTooltip = ({ active, payload, label, total_count, total_balance }:an
 
 
 interface PayLoads{
-    debt_type_debt_counts:{_id:string,count:number,label:string}[],
+    debt_type_debt_counts:{id:number,count:number,label:string}[],
     total_dept_type:number,
     total_balance:number,
     debt_type_ammortization:any[],
@@ -71,8 +71,11 @@ interface PayLoads{
     
 }
 
+interface TotapProps{
+  userid:number;
+}
 
-const TotalAllocation = () => {
+const TotalAllocation = ({userid}:TotapProps) => {
 
     const isMobile = useMediaQuery({ maxWidth: 768 });
     const isTab = useMediaQuery({ maxWidth: 900 });
@@ -96,13 +99,19 @@ const TotalAllocation = () => {
         debt_type_ammortization:[],
         debt_type_names:{}
     }
-    
 
 
     const DebtTypewiseInfo:any = useFetchDropDownObjects({
-        urlSuffix:`debt-typewise-info`,
-        payLoads:payload
-    })
+      urlSuffix:`debt-projectionpg/${userid}`,
+      payLoads:payload
+  })
+    
+
+
+    // const DebtTypewiseInfo:any = useFetchDropDownObjects({
+    //     urlSuffix:`debt-typewise-info`,
+    //     payLoads:payload
+    // })
 
     const total_count = DebtTypewiseInfo.total_dept_type
 
@@ -191,7 +200,7 @@ const TotalAllocation = () => {
       
     }, [data, chartData]);
 
-    const ids = data.map((item :any)=> item._id);
+    const ids = data.map((item :any)=> item.id);
     
     const uniquecolors = generateUniqueColors(ids);
     return (
@@ -218,7 +227,7 @@ const TotalAllocation = () => {
                         >
                         {data.map((entry:any, index:number) => (
                             
-                            <Cell key={`cell-${index}`} fill={uniquecolors[entry._id]} />
+                            <Cell key={`cell-${index}`} fill={uniquecolors[entry.id]} />
                         ))}
                         </Pie>
                         <Tooltip content={<CustomTooltip total_count={total_count} total_balance={total_balance}/>} />
@@ -234,10 +243,10 @@ const TotalAllocation = () => {
                             return (
                                 <>
                                 <DataProgress
-                                key={dp._id} 
+                                key={dp.id} 
                                 title={dp.name} 
                                 progress={((100/total_balance) * dp.balance).toFixed(0)}
-                                color={uniquecolors[dp._id]}
+                                color={uniquecolors[dp.id]}
                                 maxProgressLength={maxProgressLength}
                                 />
                                 </>

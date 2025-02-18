@@ -37,7 +37,7 @@ export default function InsuranceCreate() {
     const [activeTab, setActiveTab] = useState(0);
 
     const edata = {
-      'id':'',      
+      'id':null,      
       'amount':0,
       'pay_date_boost':DataSchema.pay_date_boost,      
       'comment':''
@@ -45,7 +45,7 @@ export default function InsuranceCreate() {
 
     const [editData, setEditData] = useState(edata);
 
-    const [prevEditId, setPrevEditId] = useState<string>('');
+    const [prevEditId, setPrevEditId] = useState<number|null>(null);
 
     const [reloadGrid, setReloadGrid] = useState(false);
 

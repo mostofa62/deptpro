@@ -14,7 +14,7 @@ import useApp from "@/app/hooks/useApp";
 const url = process.env.NEXT_PUBLIC_API_URL;
 
 interface BoostProps{    
-    user_id:string;
+    user_id:number;
     editData:any;
     cleanData:()=>void    
 }
@@ -36,7 +36,7 @@ const BoostEntry=({user_id, editData,cleanData}:BoostProps)=>{
     const handleFormSubmit = async(values:any,{ resetForm }:any)=>{
         //alert(JSON.stringify(values));
 
-        const link:any = editData.id == ''?`${url}save-boost`:`${url}update-boost`;
+        const link:any = editData.id == null?`${url}save-boostpg`:`${url}update-boostpg`;
 
         
 
@@ -71,7 +71,7 @@ const BoostEntry=({user_id, editData,cleanData}:BoostProps)=>{
     return(
         <CardHolderDefault>
 
-            <p className="text-[13px] md:text-[16px] uppercase font-medium">{editData.id!='' ?`update entry AMOUNT: $ ${editData.amount}`:`add a payment boost`}</p>
+            <p className="text-[13px] md:text-[16px] uppercase font-medium">{editData.id!=null ?`update entry AMOUNT: $ ${editData.amount}`:`add a payment boost`}</p>
 
             <hr className="mt-1 md:mt-2 border-stroke"/>
 

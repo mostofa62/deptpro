@@ -36,7 +36,7 @@ const per_page = per_page_list[0];
 // const per_page = 3;
 
 interface DataRow {
-    _id:string;    
+    id:number;    
     name: string;
     debt_type:string;   
     balance:number;    
@@ -68,7 +68,7 @@ const Debt = ()=>{
       setLoading(true);
       setError(null);
       try{
-            const response = await axios.post(`${url}debtpayoff/${userid}`, {
+            const response = await axios.post(`${url}debtpayoffpg/${userid}`, {
                 pageIndex:  pagination ? pagination.pageIndex:0,
                 pageSize: pagination? pagination.pageSize:0,
                 
@@ -160,8 +160,8 @@ const Debt = ()=>{
       const { active, over } = event;
   
       if (over && active.id !== over.id) {
-        const oldIndex = tableData.findIndex(row => row._id === active.id);
-        const newIndex = tableData.findIndex(row => row._id === over.id);
+        const oldIndex = tableData.findIndex(row => row.id === active.id);
+        const newIndex = tableData.findIndex(row => row.id === over.id);
   
         if (oldIndex !== -1 && newIndex !== -1) {
           const newTableData = arrayMove(tableData, oldIndex, newIndex);
@@ -176,10 +176,10 @@ const Debt = ()=>{
   
           // Send the updated rows to the backend
           const rowsToUpdate = [
-            { _id: sourceRow._id, custom_payoff_order: sourceRow.custom_payoff_order },
-            { _id: destinationRow._id, custom_payoff_order: destinationRow.custom_payoff_order },
+            { id: sourceRow.id, custom_payoff_order: sourceRow.custom_payoff_order },
+            { id: destinationRow.id, custom_payoff_order: destinationRow.custom_payoff_order },
           ];
-          axios.post(`${url}update-payoff-order`, rowsToUpdate)
+          axios.post(`${url}update-payoff-orderpg`, rowsToUpdate)
             .then(response => {
               console.log(response.data.message);
             })
@@ -237,7 +237,7 @@ const Debt = ()=>{
              
 
       <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-      <SortableContext items={tableData.map(row => row._id)}>
+      <SortableContext items={tableData.map(row => row.id)}>
 
         {isMobile || isTab ? (<div className="flex flex-col gap-3">
 
@@ -363,7 +363,7 @@ const Debt = ()=>{
 
 // SortableRow component for draggable rows
 const SortableRow: React.FC<{ row: Row<DataRow>; getVisibleCells: () => Cell<DataRow, unknown>[] }> = ({ row, getVisibleCells }) => {
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: row.original._id });
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: row.original.id });
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
@@ -385,7 +385,7 @@ const SortableRow: React.FC<{ row: Row<DataRow>; getVisibleCells: () => Cell<Dat
 
 
 const SortableDiv: React.FC<{ row: Row<DataRow>; getVisibleCells: () => Cell<DataRow, unknown>[] }> = ({ row, getVisibleCells }) => {
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: row.original._id });
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: row.original.id });
 
   const style = {
     transform: CSS.Transform.toString(transform),

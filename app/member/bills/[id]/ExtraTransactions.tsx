@@ -17,20 +17,20 @@ const per_page_list = PerPageList();
 const per_page = per_page_list[0];
 
 interface paymentProps{
-    trans_id:string;
+    trans_id:number;
     amount:number;
     due_date:string;
   }
 
 interface DebtProps{
-  bill_id:string;
+  bill_id:number;
 
   
 }
 
 
 interface DataRow {
-    _id:string; 
+    id:number; 
     amount: number;       
     due_date_word:string;
     type:string;
@@ -79,7 +79,7 @@ const ExtraTransactions = ({bill_id}:DebtProps)=>{
     const [globalFilter, setGlobalFilter] = useState('');    
 
     const {error,loading,totalRows,pageCount} = useFetchGridData({
-        urlSuffix:`bill-extras/${bill_id}`,
+        urlSuffix:`bill-extraspg/${bill_id}`,
         pagination:pagination,
         sorting:sorting,
         globalFilter:globalFilter,

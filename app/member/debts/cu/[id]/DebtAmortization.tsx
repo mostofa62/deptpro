@@ -15,8 +15,8 @@ const per_page = per_page_list[0];
 
 
 interface DebtProps{
-    debt_acc_id:string;
-    user_id:string;
+    debt_acc_id:number;
+    user_id:number;
     tab_number:number;    
 }
 

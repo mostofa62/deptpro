@@ -22,7 +22,7 @@ interface Options{
 }
 
 interface ExtraProps{    
-    user_id:string;
+    user_id:number;
    
     extraType:any[];
     billList:Options[];
@@ -46,7 +46,7 @@ const ExtraEntry=({user_id, extraType,billList}:ExtraProps)=>{
         // alert(JSON.stringify(values));
 
         //const link:any = editData.id == ''?`${url}save-bill-extra`:`${url}update-bill-extra`;
-        const link:any = `${url}save-bill-transaction`;
+        const link:any = `${url}save-bill-transactionpg`;
 
         
 

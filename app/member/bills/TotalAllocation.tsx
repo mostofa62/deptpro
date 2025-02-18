@@ -63,8 +63,8 @@ const CustomTooltip = ({ active, payload, label, total_count, total_balance }:an
 
 
 interface PayLoads{
-    bill_type_bill_counts:{_id:string,count:number,label:string}[],
-    total_dept_type:number,
+    bill_type_bill_counts:{id:string,count:number,balance:number,label:string}[],
+    total_bill_type:number,
     total_balance:number,
     
     
@@ -73,11 +73,14 @@ interface PayLoads{
 interface ProjectionPayload{
 
     bill_type_ammortization:any[],
-    bill_type_names:{[key:string]:string}
+    bill_type_names:{[key:string]:string},
+    bill_type_bill_counts:{id:string,count:number,balance:number,label:string}[],
+    total_bill_type:number,
+    total_balance:number,
 }
 
 interface TotapProps{
-  userid:string;
+  userid:number;
 }
 const TotalAllocation = ({userid}:TotapProps) => {
 
@@ -98,37 +101,37 @@ const TotalAllocation = ({userid}:TotapProps) => {
 
     const payload: PayLoads ={
         bill_type_bill_counts:[],
-        total_dept_type:0,
+        total_bill_type:0,
         total_balance:0,        
     }
 
     const projectPayload:ProjectionPayload={
       bill_type_ammortization:[],
-      bill_type_names:{}
+      bill_type_names:{},
+      bill_type_bill_counts:[],
+      total_bill_type:0,
+      total_balance:0,   
     }
     
 
 
-    const DebtTypewiseInfo:any = useFetchDropDownObjects({
-        urlSuffix:`bill-typewise-info/${userid}`,
-        payLoads:payload
-    })
+    
 
 
     const BillProjection:any = useFetchDropDownObjects({
-      urlSuffix:`bill-projection/${userid}`,
+      urlSuffix:`bill-projectionpg/${userid}`,
       payLoads:projectPayload
   })
 
-    const total_count = DebtTypewiseInfo.total_dept_type
+    const total_count = BillProjection.total_bill_type
 
-    const total_balance = DebtTypewiseInfo.total_balance;
+    const total_balance = BillProjection.total_balance;
 
-    const data = DebtTypewiseInfo.bill_type_bill_counts;
+    const data = BillProjection.bill_type_bill_counts;
 
     const chartData = BillProjection.bill_type_ammortization;
 
-    const bill_type_names = DebtTypewiseInfo.bill_type_names;
+    const bill_type_names = BillProjection.bill_type_names;
 
     // Create a mapping from bill_type_id to bill_type_name
     /*
@@ -207,7 +210,7 @@ const TotalAllocation = ({userid}:TotapProps) => {
       
     }, [data, chartData]);
 
-    const ids = data.map((item :any)=> item._id);
+    const ids = data.map((item :any)=> item.id);
         
     const uniquecolors = generateUniqueColors(ids);
     return (
@@ -233,7 +236,7 @@ const TotalAllocation = ({userid}:TotapProps) => {
                         >
                         {data.map((entry:any, index:number) => (
                             
-                            <Cell key={`cell-${index}`} fill={uniquecolors[entry._id]} />
+                            <Cell key={`cell-${index}`} fill={uniquecolors[entry.id]} />
                         ))}
                         </Pie>
                         <Tooltip content={<CustomTooltip total_count={total_count} total_balance={total_balance}/>} />
@@ -249,10 +252,10 @@ const TotalAllocation = ({userid}:TotapProps) => {
                             return (
                                 <>
                                 <DataProgress
-                                key={dp._id} 
+                                key={dp.id} 
                                 title={dp.name} 
                                 progress={dp.balance > 0 ? ((100/total_balance) * dp.balance).toFixed(0):'0'}
-                                color={uniquecolors[dp._id]}
+                                color={uniquecolors[dp.id]}
                                 maxProgressLength={maxProgressLength}
                                 />
                                 </>
@@ -273,6 +276,7 @@ const TotalAllocation = ({userid}:TotapProps) => {
         {chartData.length > 0 && (
   <CardHolder title="12 Months Projection" maxHeight={maxHeight}>
   <div className="w-full overflow-x-auto"> {/* Scrollable container */}
+    {/* {bill_type_names[Object.keys(chartData[0])[0]]} */}
       <div className={`w-[${chartData.length * 100}px]`}> {/* Dynamically adjust width */}
           <ResponsiveContainer width="100%" height={350}>
             <LineChart data={chartData}>

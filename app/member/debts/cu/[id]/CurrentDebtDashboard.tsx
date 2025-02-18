@@ -7,8 +7,8 @@ import { useMediaQuery } from "react-responsive";
 
 
 interface BillProps{
-    dept_acc_id:string;
-    user_id:string;
+    dept_acc_id:number;
+    user_id:number;
    
 }
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -40,7 +40,7 @@ const CurrentDebtDashboard = ({dept_acc_id, user_id}:BillProps)=>{
 
     const fetchDataCallback=useCallback(async()=>{
         //console.log(id);
-        const response = await axios.get(`${url}debt-summary/${dept_acc_id}`);
+        const response = await axios.get(`${url}debt-summarypg/${dept_acc_id}`);
         //return response.data.user;
         setFetchFormData(response.data);
         

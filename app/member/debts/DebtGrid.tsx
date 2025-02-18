@@ -103,7 +103,7 @@ const DebtGrid = ({category}:DebtProps)=>{
   
   
     const {error,loading,totalRows,pageCount} = useFetchGridData({
-        urlSuffix:`debts/${authCtx.userId}${category ? `?action=${category}`:''}`,
+        urlSuffix:`debtspg/${authCtx.userId}${category ? `?action=${category}`:''}`,
         pagination:pagination,
         sorting:sorting,
         globalFilter:globalFilter,

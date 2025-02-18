@@ -33,12 +33,12 @@ export default function InsuranceCreate() {
 
     const user_id = authCtx.userId;
 
-    const DeptTypeData = useFetchDropDownData({urlSuffix:`debttype-dropdown/${user_id}`});
+    const DeptTypeData = useFetchDropDownData({urlSuffix:`debttype-dropdownpg/${user_id}`});
 
     const handleFormSubmit = async(values:any,{ resetForm,setSubmitting }:any)=>{
         //alert(JSON.stringify(values));
 
-        await axios.post(`${url}save-debt-account`, 
+        await axios.post(`${url}save-debt-accountpg`, 
             {user_id,...values.fetchdata}, {
             
             headers: {

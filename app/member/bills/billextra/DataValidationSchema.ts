@@ -51,7 +51,7 @@ export const DataLabel = {
                     if (!bill || !bill.value || !value || !type || !type.value ) return true; // Skip validation if fields are not set
 
                     try {
-                      const response = await axios.post(`${url}bill-amount-validation`, {
+                      const response = await axios.post(`${url}bill-amount-validationpg`, {
                         bill_acc_id: bill.value,
                         op_type:type.value,
                         amount: value

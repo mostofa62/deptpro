@@ -110,7 +110,7 @@ const BillGrid = ({ category }: BillProps) => {
             label: "Yes",
             onClick: async () => {
               DeleteActionGlobal({
-                action: "delete-bill",
+                action: "delete-billpg",
                 data: { id: id, key: key },
               }).then((deletedData) => {
                 //console.log(deletedData)

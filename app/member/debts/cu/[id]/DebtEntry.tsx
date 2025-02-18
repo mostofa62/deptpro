@@ -14,8 +14,8 @@ import { DataLabel, DataSchema, ValidationSchema } from "./DataValidationSchema"
 const url = process.env.NEXT_PUBLIC_API_URL;
 
 interface DebtProps{
-    debt_acc_id:string;
-    user_id:string;
+    debt_acc_id:number;
+    user_id:number;
     transaction_data:{
         'transactionType':{}[],
         'transactionMonth':{}[],
@@ -40,7 +40,7 @@ const DebtEntry=({debt_acc_id, user_id,transaction_data,currentDate}:DebtProps)=
     const handleFormSubmit = async(values:any,{ resetForm }:any)=>{
         //alert(JSON.stringify(values));
 
-        const link:any = `${url}save-debt-transaction/${debt_acc_id}`;
+        const link:any = `${url}save-debt-transactionpg/${debt_acc_id}`;
 
 
         await axios.post(link, 

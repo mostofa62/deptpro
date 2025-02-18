@@ -14,8 +14,8 @@ import { useRouter } from "next/navigation";
 import useApp from "@/app/hooks/useApp";
 import FormikSelectCreatableInput from "@/app/components/form/FormikSelectCreatableInput";
 interface DebtProps{
-    debt_acc_id:string;
-    user_id:string;
+    debt_acc_id:number;
+    user_id:number;
     tab_number:number;
 }
 
@@ -31,12 +31,12 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
 
     const [monthlyInterest, setMonthlyInterest] = useState(0);
 
-    const DeptTypeData = useFetchDropDownData({urlSuffix:`debttype-dropdown/${user_id}`});
+    const DeptTypeData = useFetchDropDownData({urlSuffix:`debttype-dropdownpg/${user_id}`});
     
 
     const fetchDataCallback=useCallback(async()=>{
         //console.log(id);
-        const response = await axios.get(`${url}debt/${debt_acc_id}`);
+        const response = await axios.get(`${url}debtpg/${debt_acc_id}`);
         //return response.data.user;
         setFetchFormData(response.data.debtaccounts);
         setPayoffOrder(response.data.payoff_order);        
@@ -58,7 +58,7 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
     const handleFormSubmit = async(values:any,{ resetForm,setSubmitting }:any)=>{
         //alert(JSON.stringify(values));
 
-        await axios.post(`${url}update-debt-account/${debt_acc_id}`, 
+        await axios.post(`${url}update-debt-accountpg/${debt_acc_id}`, 
             {user_id,...values.fetchdata}, {
             
             headers: {
@@ -93,7 +93,7 @@ const DebtAccountUpdate = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
     }
 
 
-    const deleteAction=async(id:string)=>{
+    const deleteAction=async(id:number)=>{
 
 
         confirmAlert({

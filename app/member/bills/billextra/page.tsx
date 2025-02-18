@@ -25,19 +25,20 @@ interface Tab {
 const url = process.env.NEXT_PUBLIC_API_URL;
 export default function BillExtra() {
     const authCtx = useAuth();
+    const user_id:any = authCtx.userId;
   
     const [extraType, setExtraType] = useState([]);
     const [billList, setBillList] = useState([]);
 
     const fetchDataCallback=useCallback(async()=>{
       //console.log(id);
-      const response = await axios.get(`${url}bill-extra-dropdown`);
+      const response = await axios.get(`${url}bill-extra-dropdownpg/${user_id}`);
       //return response.data.user;
       setExtraType(response.data.extra_type)
       setBillList(response.data.bill_accounts_list)
              
 
-  },[]);
+  },[user_id]);
 
   useEffect(()=>{
     fetchDataCallback();
@@ -51,7 +52,7 @@ export default function BillExtra() {
     
     
         
-    const user_id:any = authCtx.userId;
+    
 
    
     

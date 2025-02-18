@@ -35,7 +35,7 @@ export default function Setting() {
 
     const fetchDataCallback=useCallback(async()=>{
         //console.log(id);
-        const response = await axios.get(`${url}get-user-settings/${user_id}`);
+        const response = await axios.get(`${url}get-user-settingspg/${user_id}`);
         //return response.data.user;
         
         if(response.data.user_setting!=null){
@@ -60,7 +60,7 @@ export default function Setting() {
     const handleFormSubmit = async(values:any,{ resetForm,setSubmitting }:any)=>{
         //alert(JSON.stringify(values));
 
-        await axios.post(`${url}save-user-settings`, 
+        await axios.post(`${url}save-user-settingspg`, 
             {user_id,...values.fetchdata}, {
             
             headers: {

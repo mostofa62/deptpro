@@ -98,7 +98,7 @@ const Debt = ()=>{
 
             <div className="md:my-3 p-2">
 
-              <TotalAllocation />
+              <TotalAllocation userid={userid} />
 
             </div>
 

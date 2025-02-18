@@ -73,7 +73,7 @@ const PayoffStrategy =()=>{
 
     const fetchDataCallback=useCallback(async()=>{
         //console.log(id);
-        const response = await axios.get(`${url}get-payoff-strategy/${user_id}`);
+        const response = await axios.get(`${url}get-payoff-strategypg/${user_id}`);
         //return response.data.user;
         
         if(response.data.payoff_strategy!=null){
@@ -85,7 +85,7 @@ const PayoffStrategy =()=>{
     const fetchDataPayoff=useCallback(async()=>{
         //setReload(false);
         //console.log(id);
-        const response = await axios.get(`${url}get-payoff-strategy-account/${user_id}`);
+        const response = await axios.get(`${url}get-payoff-strategy-accountpg/${user_id}`);
         //return response.data.user;
 
         setPayOffData(response.data)
@@ -113,7 +113,7 @@ const PayoffStrategy =()=>{
     const handleFormSubmit = async(values:any,{ resetForm,setSubmitting }:any)=>{
         //alert(JSON.stringify(values));
 
-        await axios.post(`${url}save-payoff-strategy`, 
+        await axios.post(`${url}save-payoff-strategypg`, 
             {user_id,...values.fetchdata}, {
             
             headers: {

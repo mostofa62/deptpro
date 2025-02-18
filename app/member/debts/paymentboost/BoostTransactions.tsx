@@ -34,19 +34,19 @@ import TableView from "@/app/components/grid/TableView";
 const per_page_list = PerPageList();
 
 interface paymentProps {
-  trans_id: string;
+  trans_id: number;
   amount: number;
   due_date: string;
 }
 
 interface DebtProps {
-  user_id: string;
+  user_id: number;
   reloadGrid: boolean;
   onEdit: (data: any) => void;
 }
 
 interface DataRow {
-  _id: string;
+  id: number;
   amount: number;
   pay_date_boost: string;
   month: string;
@@ -99,7 +99,7 @@ const BoostTransactions = ({ user_id, reloadGrid, onEdit }: DebtProps) => {
   const [globalFilter, setGlobalFilter] = useState("");
 
   const { error, loading, totalRows, pageCount } = useFetchGridData({
-    urlSuffix: `boosts/${user_id}`,
+    urlSuffix: `boostspg/${user_id}`,
     pagination: pagination,
     sorting: sorting,
     globalFilter: globalFilter,
@@ -108,7 +108,7 @@ const BoostTransactions = ({ user_id, reloadGrid, onEdit }: DebtProps) => {
   });
 
   const deleteAction = useCallback(
-    async (id: string) => {
+    async (id: number) => {
       confirmAlert({
         title: "Do you want to delete this?",
         message: "Are you sure to do this?",
@@ -117,14 +117,14 @@ const BoostTransactions = ({ user_id, reloadGrid, onEdit }: DebtProps) => {
             label: "Yes",
             onClick: async () => {
               DeleteActionGlobal({
-                action: `delete-boost`,
+                action: `delete-boostpg`,
                 data: { id: id },
               }).then((deletedData) => {
                 //console.log(deletedData)
                 AlertBox(deletedData.message, deletedData.deleted_done);
                 if (deletedData.deleted_done > 0) {
                   const updatedData: any = data.filter(
-                    (row: any) => row._id !== id
+                    (row: any) => row.id !== id
                   );
                   setData(updatedData);
                 }
@@ -151,7 +151,7 @@ const BoostTransactions = ({ user_id, reloadGrid, onEdit }: DebtProps) => {
         link: ``,
         onClick: () => {
           onEdit({
-            id: row.original._id,
+            id: row.original.id,
             pay_date_boost: row.original.pay_date_boost,
             amount: row.original.amount,
             comment: row.original.comment,
@@ -181,7 +181,7 @@ const BoostTransactions = ({ user_id, reloadGrid, onEdit }: DebtProps) => {
         title: "Delete",
         link: `delete-boost`,
         onClick: () => {
-          deleteAction(row.getValue("_id"));
+          deleteAction(row.getValue("id"));
         },
         icon: (
           <svg
@@ -205,7 +205,7 @@ const BoostTransactions = ({ user_id, reloadGrid, onEdit }: DebtProps) => {
   const columns: ColumnDef<DataRow>[] = useMemo(
     () => [
       {
-        accessorKey: "_id",
+        accessorKey: "id",
         header: "ID",
         visible: false,
       },

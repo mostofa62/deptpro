@@ -18,21 +18,21 @@ const per_page_list = PerPageList();
 const per_page = per_page_list[0];
 
 interface paymentProps{
-    trans_id:string;
+    trans_id:number;
     amount:number;
     due_date:string;
   }
 
 interface DebtProps{
-    debt_acc_id:string;
-    user_id:string;
+    debt_acc_id:number;
+    user_id:number;
     tab_number:number;
     view_mode?:number;    
 }
 
 
 interface DataRow {
-    _id:string;    
+    id:string;    
     amount: number;
     previous_balance:number;
     new_balance:number;
@@ -88,7 +88,7 @@ const DebtTransactions = ({debt_acc_id, user_id,tab_number,view_mode}:DebtProps)
     const [globalFilter, setGlobalFilter] = useState('');    
 
     const {error,loading,totalRows,pageCount} = useFetchGridData({
-        urlSuffix:`debt-trans/${debt_acc_id}`,
+        urlSuffix:`debt-transpg/${debt_acc_id}`,
         pagination:pagination,
         sorting:sorting,
         globalFilter:globalFilter,
@@ -98,7 +98,7 @@ const DebtTransactions = ({debt_acc_id, user_id,tab_number,view_mode}:DebtProps)
         const columns: ColumnDef<DataRow>[] = useMemo(() => [
     
             {
-                accessorKey: '_id',
+                accessorKey: 'id',
                 header: 'ID',
                 visible: false
                 
@@ -217,66 +217,9 @@ const DebtTransactions = ({debt_acc_id, user_id,tab_number,view_mode}:DebtProps)
                   }));
                 };
 
-                const deleteAction=async(id:string)=>{
+               
 
-
-                    confirmAlert({
-                      title: 'Do you want to delete this?',
-                      message: 'Are you sure to do this?',
-                      buttons: [
-                        {
-                          label: 'Yes',
-                          onClick: async()=>{ 
-              
-                            DeleteActionGlobal({        
-                              action:`delete-debt-transaction/${debt_acc_id}`,        
-                              data:{'id':id}
-                            }).then((deletedData)=>{
-                                //console.log(deletedData)
-                                AlertBox(deletedData.message, deletedData.deleted_done);
-                                if(deletedData.deleted_done > 0){
-                                  const updatedData:any = data.filter((row:any) => row._id !== id);              
-                                  setData(updatedData)
-                                  appCtx.setDebtsAccountsScreen(debtsAccountsScreen < 1? 1:debtsAccountsScreen+1);
-                                }
-                            })
-                            
-                          }
-                        },
-                        {
-                          label: 'No',
-                          onClick: () => ()=>{                
-              
-                          }
-                        }
-                      ],
-                      closeOnEscape: true,
-                      closeOnClickOutside: true,
-                    
-                    });                                                        
-                                        
-                    
-                  }
-
-
-
-                  const saveData = async (id: string, field: string, value: any) => {
-                    try {
-                      const response = await fetch(`/api/data/${id}`, {
-                        method: 'PATCH',
-                        headers: {
-                          'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ [field]: value }),
-                      });
                   
-                      if (!response.ok) {
-                        throw new Error('Failed to save data');
-                      }
-                    } catch (error) {
-                      console.error('Error saving data:', error);
-                    }
-                  };
         
 
                   const rows = table.getRowModel().rows;

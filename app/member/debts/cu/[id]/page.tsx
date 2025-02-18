@@ -31,7 +31,7 @@ export default function InsuranceCreate({
     params,
     searchParams    
   }:{
-    params: { id: string }
+    params: { id: number }
     searchParams: { [key: string]: string | string[] | undefined },    
   
   }) {
@@ -54,7 +54,7 @@ export default function InsuranceCreate({
     
     const fetchDataCallback=useCallback(async()=>{
         //console.log(id);
-        const response = await axios.get(`${url}debt-transaction-dropdown`);
+        const response = await axios.get(`${url}debt-transaction-dropdownpg`);
         //return response.data.user;
         setTransactionData({
           'transactionType':response.data.transaction_type,
@@ -74,6 +74,8 @@ export default function InsuranceCreate({
         
     
     },[fetchDataCallback]);
+
+    
 
 
    

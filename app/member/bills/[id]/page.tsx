@@ -29,7 +29,7 @@ export default function BillDetails({
     params,
     searchParams    
   }:{
-    params: { id: string }
+    params: { id: number }
     searchParams: { [key: string]: string | string[] | undefined },    
   
   }) {
@@ -47,7 +47,7 @@ export default function BillDetails({
     }
 
     const BillWithPaymentData:any = useFetchDropDownObjects({
-        urlSuffix:`bill-all/${id}`,
+        urlSuffix:`bill-allpg/${id}`,
         payLoads:payload
     })
 
