@@ -65,8 +65,7 @@ export default function DashBoard() {
   const [transactioData, setTransactionData] = useState({
     debt_list: [],
     debt_total_balance: 0,
-    total_net_income: 0,
-    saving_list: [],
+    total_net_income: 0,    
     total_wealth: 0,
     total_saving: 0,
     debt_to_wealth: 0,
@@ -76,7 +75,7 @@ export default function DashBoard() {
 
   const fetchDataCallback = useCallback(async () => {
     //console.log(id);
-    const response = await axios.get(`${url}dashboard-data/${user_id}`);
+    const response = await axios.get(`${url}dashboard-datapg/${user_id}`);
     //return response.data.user;
     setTransactionData(response.data);
   }, [user_id]);
@@ -217,7 +216,7 @@ export default function DashBoard() {
                         <DataProgress
                           title={dp.title}
                           progress={dp.progress}
-                          color={getColorForDebtType(dp._id)}
+                          color={getColorForDebtType(dp.id)}
                           amount={dp.amount}
                           maxProgressLength={maxProgressLength}
                           maxAmountLength={maxAmountLength}

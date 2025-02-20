@@ -13,7 +13,7 @@ interface ProjectionPayload{
 }
 
 interface TotalPros{
-  userid:string;
+  userid:number;
 }
 
 const BillProjection = ({userid}:TotalPros) => {
@@ -43,7 +43,7 @@ const BillProjection = ({userid}:TotalPros) => {
 
 
     const BillProjection:any = useFetchDropDownObjects({
-      urlSuffix:`bill-projection/${userid}`,
+      urlSuffix:`bill-projectionpg/${userid}`,
       payLoads:projectPayload
   })
 

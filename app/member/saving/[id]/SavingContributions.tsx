@@ -82,7 +82,7 @@ const SavingContributions = ({saving_id}:SavingProps)=>{
     //const [globalFilter, setGlobalFilter] = useState('');    
 
     const {error,loading,totalRows,pageCount} = useFetchGridData({
-        urlSuffix:`saving-contributions/${saving_id}`,
+        urlSuffix:`saving-contributionspg/${saving_id}`,
         pagination:pagination,
         //sorting:sorting,
         //globalFilter:globalFilter,

@@ -29,7 +29,7 @@ interface Options{
     label:string;
 }
 interface PayLoads{
-    category:Options[],    
+    saving_category:Options[],    
     repeat_frequency:Options[],
     saving_interest_type:Options[],
     saving_strategy_type:Options[],    
@@ -46,7 +46,7 @@ export default function InsuranceCreate() {
     
 
     const payload: PayLoads ={
-        category: [],        
+        saving_category: [],        
         repeat_frequency: [],
         saving_interest_type:[],
         saving_strategy_type:[]        
@@ -54,7 +54,7 @@ export default function InsuranceCreate() {
     }
 
     const SavingCategoryData:any = useFetchDropDownObjects({
-        urlSuffix:`savingcategory-dropdown/${user_id}`,
+        urlSuffix:`savingcategory-dropdownpg/${user_id}`,
         payLoads:payload
     })
 
@@ -67,7 +67,7 @@ export default function InsuranceCreate() {
     const handleFormSubmit = async(values:any,{ resetForm,setSubmitting }:any)=>{
         //alert(JSON.stringify(values));
 
-        await axios.post(`${url}save-saving-account`, 
+        await axios.post(`${url}save-saving-accountpg`, 
             {user_id,...values.fetchdata}, {
             
             headers: {
@@ -241,7 +241,7 @@ export default function InsuranceCreate() {
             isSearchable={true}
             isClearable={true}
             name="fetchdata.category"
-            dataOptions={SavingCategoryData.category}
+            dataOptions={SavingCategoryData.saving_category}
             errorMessage={errors.fetchdata &&
                 errors.fetchdata.category &&
                 touched.fetchdata &&

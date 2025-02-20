@@ -63,7 +63,7 @@ export default function SavingDetail({
     }
 
     const SavingWithTransactionData:any = useFetchDropDownObjects({
-        urlSuffix:`saving-all/${id}`,
+        urlSuffix:`saving-allpg/${id}`,
         payLoads:payload
     })
 

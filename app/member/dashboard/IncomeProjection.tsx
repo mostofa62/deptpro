@@ -10,7 +10,7 @@ interface FuturePayLoad{
   projection_list:{base_gross_income:number, base_net_income:number, month:string, month_word:string}[]
 }
 interface TotalPros{
-  userid:string;
+  userid:number;
 }
 const IncomeProjection = ({userid}:TotalPros) => {
 
@@ -35,7 +35,7 @@ const IncomeProjection = ({userid}:TotalPros) => {
 
    
     const IncomeFuture:any = useFetchDropDownObjects({
-      urlSuffix:`income-transactions-next`,
+      urlSuffix:`income-transactions-nextpgu/${userid}`,
       payLoads:payloadFuture
     })
 
@@ -87,7 +87,7 @@ const IncomeProjection = ({userid}:TotalPros) => {
           {earners.length > 0 && (
             <div className="mt-1">
               <div><strong>Earners</strong></div>
-              <div className="overflow-y-scroll max-h-25">
+              <div className="overflow-x-scroll flex gap-1">
               {earners.map((earner: any, index: number) => (
                 <div className="border p-1 my-1" key={`earner-${index}`} style={{ color: getColorForDebtType(earner.earner_id) }}>
                   {/* Iterate over keys in the earner object */}

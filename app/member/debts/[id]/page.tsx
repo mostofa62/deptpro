@@ -50,7 +50,7 @@ export default function InsuranceCreate({
     params,
     searchParams    
   }:{
-    params: { id: string }
+    params: { id: number }
     searchParams: { [key: string]: string | string[] | undefined },    
   
   }) {
@@ -70,7 +70,7 @@ export default function InsuranceCreate({
     }
 
     const DebtWithTransactionData:any = useFetchDropDownObjects({
-        urlSuffix:`debt-all/${id}`,
+        urlSuffix:`debt-allpg/${id}`,
         payLoads:payload
     })
 

@@ -25,7 +25,7 @@ interface SavingProps{
 
 
 interface DataRow {
-    _id:string; 
+    id:number; 
     saving_boost:string;   
     contribution: number;
     total_balance:number;
@@ -85,7 +85,7 @@ const SavingBoostContributions = ({saving_id}:SavingProps)=>{
     //const [globalFilter, setGlobalFilter] = useState('');    
 
     const {error,loading,totalRows,pageCount} = useFetchGridData({
-        urlSuffix:`saving-boost-contributions/${saving_id}`,
+        urlSuffix:`saving-boost-contributionspg/${saving_id}`,
         pagination:pagination,
         //sorting:sorting,
         //globalFilter:globalFilter,
@@ -95,7 +95,7 @@ const SavingBoostContributions = ({saving_id}:SavingProps)=>{
         const columns: ColumnDef<DataRow>[] = useMemo(() => [
     
             {
-                accessorKey: '_id',
+                accessorKey: 'id',
                 header: 'ID',
                 visible: false
                 

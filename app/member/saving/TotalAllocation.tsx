@@ -141,17 +141,17 @@ const TotalAllocation = ({ userid }: TotalProps) => {
   };
 
   const SavingTypewiseInfo: any = useFetchDropDownObjects({
-    urlSuffix: `saving-typewise-info/${userid}`,
+    urlSuffix: `saving-typewise-infopg/${userid}`,
     payLoads: payload,
   });
 
   const SavingContributions: any = useFetchDropDownObjects({
-    urlSuffix: `saving-contributions-previous?userid=${userid}`,
+    urlSuffix: `saving-contributions-previouspgu/${userid}`,
     payLoads: payloadSaving,
   });
 
   const SavingFuture: any = useFetchDropDownObjects({
-    urlSuffix: `saving-contributions-next/${userid}`,
+    urlSuffix: `saving-contributions-nextpgu/${userid}`,
     payLoads: payloadFuture,
   });
 
@@ -285,8 +285,8 @@ const TotalAllocation = ({ userid }: TotalProps) => {
         (item) => item?.getBoundingClientRect().height || 0
       );
       const tallestHeight = Math.max(...heights);
-      if (lineData.length > 0 && tallestHeight < 350) {
-        setMaxHeight(450);
+      if (total_length > 0 && tallestHeight < 350) {
+        setMaxHeight(380);
       } else {
         setMaxHeight(tallestHeight);
       }

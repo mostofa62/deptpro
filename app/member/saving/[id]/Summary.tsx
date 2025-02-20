@@ -25,7 +25,7 @@ const Summary = ({saving_id, ProgressData}:DebtTransProps)=>{
       }
 
       const SavingContributions:any = useFetchDropDownObjects({
-        urlSuffix:`saving-contributions-previous?saving_id=${saving_id}`,
+        urlSuffix:`saving-contributions-previouspg/${saving_id}`,
         payLoads:payloadSaving
       })
 

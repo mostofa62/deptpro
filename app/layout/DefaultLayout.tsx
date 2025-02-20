@@ -67,11 +67,11 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     active_debt_account: 0,
   });
 
-  /*
+  
 
   const fetchTransactionData = useCallback(async () => {
     try {
-      const response = await axios.get<TransactionData>(`${url}header-summary-data/${user_id}`);
+      const response = await axios.get<TransactionData>(`${url}header-summary-datapg/${user_id}`);
       setTransactionData(response.data);
     } catch (error) {
       console.error('Error fetching transaction data:', error);
@@ -81,7 +81,7 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   useEffect(() => {
     fetchTransactionData();
   }, [fetchTransactionData, pathname]);
-  */
+  
 
   //alert(isTab)
 

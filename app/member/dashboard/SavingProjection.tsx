@@ -27,7 +27,7 @@ interface FuturePayLoad {
 }
 
 interface TotalProps {
-  userid: string;
+  userid: number;
 }
 
 const SavingProjection = ({ userid }: TotalProps) => {
@@ -47,7 +47,7 @@ const SavingProjection = ({ userid }: TotalProps) => {
   };
 
   const SavingFuture: any = useFetchDropDownObjects({
-    urlSuffix: `saving-contributions-next/${userid}`,
+    urlSuffix: `saving-contributions-nextpgu/${userid}`,
     payLoads: payloadFuture,
   });
 

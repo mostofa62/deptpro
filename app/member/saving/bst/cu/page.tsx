@@ -59,7 +59,7 @@ export default function InsuranceCreate() {
     }
 
     const SavingCategoryData:any = useFetchDropDownObjects({
-        urlSuffix:`savingcategory-dropdown/${user_id}`,
+        urlSuffix:`savingcategory-dropdownpg/${user_id}/boost`,
         payLoads:payload
     })
 
@@ -74,7 +74,7 @@ export default function InsuranceCreate() {
     const handleFormSubmit = async(values:any,{ resetForm,setSubmitting }:any)=>{
         //alert(JSON.stringify(values));
 
-        await axios.post(`${url}save-saving-boost`, 
+        await axios.post(`${url}save-saving-boostpg`, 
             {user_id,...values.fetchdata}, {
             
             headers: {
