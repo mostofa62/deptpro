@@ -51,6 +51,7 @@ const SavingGrid = ({category}:SavingProps)=>{
   
 
     const authCtx = useAuth();
+    const user_id = authCtx.userId;
 
     const [extraPayload, setExtraPayload] = useState<ExtraPayloadProps>({
       total_goal_amount:0,
@@ -113,7 +114,7 @@ const SavingGrid = ({category}:SavingProps)=>{
       const total_contribution = extraPayload.total_contribution;
       const total_monthly_saving = extraPayload.total_monthly_saving;
       
-      const deleteAction=useCallback(async(id:string, key:number=1)=>{
+      const deleteAction=useCallback(async(id:number, key:number=1)=>{
   
         const msg = key > 1 ?'Do you want to close this account?' :'Do you want to delete this account?';
         confirmAlert({
@@ -125,8 +126,8 @@ const SavingGrid = ({category}:SavingProps)=>{
               onClick: async()=>{ 
   
                 DeleteActionGlobal({        
-                  action:'delete-saving',        
-                  data:{'id':id, 'key':key}
+                  action:'delete-savingpg',        
+                  data:{'id':id, 'key':key, 'user_id':user_id}
                 }).then((deletedData)=>{
                     //console.log(deletedData)
                     AlertBox(deletedData.message, deletedData.deleted_done);

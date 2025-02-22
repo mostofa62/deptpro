@@ -117,7 +117,7 @@ const IncomeGrid = ({category}:IncomeProps)=>{
   
                 DeleteActionGlobal({        
                   action:'delete-incomepg',        
-                  data:{'id':id, 'key':key}
+                  data:{'id':id, 'key':key, 'user_id':user_id}
                 }).then((deletedData)=>{
                     //console.log(deletedData)
                     AlertBox(deletedData.message, deletedData.deleted_done);

@@ -129,7 +129,7 @@ const DebtGrid = ({category}:DebtProps)=>{
               onClick: async()=>{ 
   
                 DeleteActionGlobal({        
-                  action:'delete-debt',        
+                  action:'delete-debtpg',        
                   data:{'id':id, 'key':key}
                 }).then((deletedData)=>{
                     //console.log(deletedData)
