@@ -60,12 +60,12 @@ export default function InsuranceCreate({
     }
 
     const SavingCategoryData:any = useFetchDropDownObjects({
-        urlSuffix:`savingcategory-dropdown/${user_id}`,
+        urlSuffix:`savingcategory-dropdownpg/${user_id}`,
         payLoads:payload
     })
     const fetchDataCallback=useCallback(async()=>{
         //console.log(id);
-        const response = await axios.get(`${url}saving/${id}`);
+        const response = await axios.get(`${url}savingpg/${id}`);
         //return response.data.user;
         if(response.data.saving == null){
             router.push('/member/saving');
@@ -85,7 +85,7 @@ export default function InsuranceCreate({
     const handleFormSubmit = async(values:any,{ resetForm,setSubmitting }:any)=>{
         //alert(JSON.stringify(values));
 
-        await axios.post(`${url}save-saving-account/${id}`, 
+        await axios.post(`${url}edit-saving-accountpg/${id}`, 
             {user_id,...values.fetchdata}, {
             
             headers: {
@@ -223,7 +223,7 @@ export default function InsuranceCreate({
             isSearchable={true}
             isClearable={true}
             name="fetchdata.category"
-            dataOptions={SavingCategoryData.category}
+            dataOptions={SavingCategoryData.saving_category}
             errorMessage={errors.fetchdata &&
                 errors.fetchdata.category &&
                 touched.fetchdata &&
