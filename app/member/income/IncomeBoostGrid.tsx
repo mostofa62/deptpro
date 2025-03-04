@@ -271,7 +271,7 @@ const generateItems = useCallback((row) => [
           {
             id: 'actions',
             header: 'Actions',
-            cell:({row})=>(row.original.total_balance < 1 && <GridActionLinkFixed
+            cell:({row})=>(/*row.original.total_balance < 1 &&*/ <GridActionLinkFixed
               hoveredRowHeight={hoveredRowHeight} // Adjust or compute dynamically as needed
               items={generateItems(row)}
             />)
