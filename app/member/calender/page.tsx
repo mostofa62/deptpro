@@ -80,7 +80,7 @@ export default function CalenderPage() {
 
     const fetchDataCallback=useCallback(async()=>{
 
-        const urlSuffix = `calender-datapg/${userid}/${currentMonth}`
+        const urlSuffix = `calender-data/${userid}/${currentMonth}`
         //console.log(id);
         const response = await axios.get(`${url}${urlSuffix}`);
 
