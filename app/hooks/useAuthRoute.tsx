@@ -5,6 +5,7 @@ import Link from "next/link";
 import axios from "axios";
 import Image from 'next/image';
 import Logo from '../images/logo/logo.svg';
+import { getCookie } from 'cookies-next';
 
 import { useRouter, usePathname } from "next/navigation";
 
@@ -23,12 +24,15 @@ const UseAuthRoute = ({ children }: DefaultLayoutProps) => {
     const path = usePathname();
     let redirect:any = '/';
     let showChildren = true;
+    const isCookieSet  = !!getCookie('AUTH_DATA');
 
     const isLoggedIn = authCtx.isLoggedIn;
+
+    
    
 
    
-    if(isLoggedIn){
+    if(isLoggedIn && isCookieSet){
         //alert(parseInt(role));
         if(path == "/"){
             //alert(path)
@@ -48,6 +52,10 @@ const UseAuthRoute = ({ children }: DefaultLayoutProps) => {
             showChildren=false;
 
         }
+    }
+    else if(isLoggedIn && !isCookieSet){
+            
+      authCtx.logout()
     }
     
     

@@ -14,6 +14,7 @@ import loginSchema from "./loginSchema";
 import useAuth from "@/app/hooks/useAuth";
 import { setCookie } from 'cookies-next';
 import Link from "next/link";
+import Loading from "@/app/images/icon/loading";
 
 /*
 export const metadata = {
@@ -39,7 +40,7 @@ const Login=()=> {
   },[isLoggedIn,router])
   
 */
- 
+  const [loading,setLoading] = useState(false);
 
   const [loginStatus,setLoginStatus] = useState(0);
   const [loginMessage, setLoginMessage] = useState('');
@@ -52,7 +53,7 @@ const Login=()=> {
   
   const handleFormSubmit = async(values:any)=>{
 
-    
+    setLoading(true);
 
     await axios.post(`${url}member-loginpg`, 
     values.user, {
@@ -62,6 +63,8 @@ const Login=()=> {
     }
   }
 ) .then(function (response) {
+
+  
   
   if(response.data.login_status == 1){
     
@@ -92,11 +95,18 @@ const Login=()=> {
     */
     setLoginStatus(response.data.login_status);
     setLoginMessage('');
+
+    setLoading(false);
+    
     router.push('/member/dashboard');
     
 
 
   }else{
+
+
+    setLoading(false);
+    
     setLoginStatus(response.data.login_status);
     setLoginMessage(response.data.message);
     
@@ -107,8 +117,10 @@ const Login=()=> {
 })
 .catch(function (error) {
   //console.log(error);
+  setLoading(false);
   setLoginStatus(0);
   setLoginMessage(error);
+  
 });
 
 
@@ -139,6 +151,8 @@ const Login=()=> {
 
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
+
+              
               
               
               <h2 className="mb-3 text-2xl font-bold  text-[#0a4a82] sm:text-title-xl2">
@@ -260,11 +274,21 @@ type="password" name="user.password" placeholder="" />
 </div>
 
 <div className="mb-5">
-                  <input
+  <button 
+  type="submit"
+  className="flex justify-center items-center gap-1 w-full cursor-pointer rounded-lg border border-primary bg-[#0a4a82] p-4 text-[#f5f5f8] transition hover:bg-opacity-90 md:font-bold"
+  >
+ {loading ?
+              
+                <Loading width={50} />:<span>Sign In</span>
+              
+              }
+  </button>
+                  {/* <input
                     type="submit"
                     value="Sign In"
                     className="w-full cursor-pointer rounded-lg border border-primary bg-[#0a4a82] p-4 text-[#f5f5f8] transition hover:bg-opacity-90 md:font-bold"
-                  />
+                  /> */}
                 </div>
 </Form>
         )}

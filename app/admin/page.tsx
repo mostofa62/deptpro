@@ -14,6 +14,7 @@ import loginSchema from "./loginSchema";
 import useAuth from "@/app/hooks/useAuth";
 import { setCookie } from 'cookies-next';
 import Link from "next/link";
+import Loading from "../images/icon/loading";
 
 /*
 export const metadata = {
@@ -40,7 +41,7 @@ const Login=()=> {
   
 */
  
-
+  const [loading,setLoading] = useState(false);
   const [loginStatus,setLoginStatus] = useState(0);
   const [loginMessage, setLoginMessage] = useState('');
 
@@ -52,7 +53,7 @@ const Login=()=> {
   
   const handleFormSubmit = async(values:any)=>{
 
-    
+    setLoading(true);
 
     await axios.post(`${url}admin-loginpg`, 
     values.user, {
@@ -92,11 +93,13 @@ const Login=()=> {
     */
     setLoginStatus(response.data.login_status);
     setLoginMessage('');
+    setLoading(false);
     router.push('/admin/dashboard');
     
 
 
   }else{
+    setLoading(false);
     setLoginStatus(response.data.login_status);
     setLoginMessage(response.data.message);
     
@@ -107,6 +110,7 @@ const Login=()=> {
 })
 .catch(function (error) {
   //console.log(error);
+  setLoading(false);
   setLoginStatus(0);
   setLoginMessage(error);
 });
@@ -251,11 +255,22 @@ type="password" name="user.password" placeholder="" />
 </div>
 
 <div className="mb-5">
-                  <input
+                  {/* <input
                     type="submit"
                     value="Sign In"
                     className="w-full cursor-pointer rounded-lg border border-primary bg-[#0a4a82] p-4 text-[#f5f5f8] transition hover:bg-opacity-90 md:font-bold"
-                  />
+                  /> */}
+
+                  <button 
+                    type="submit"
+                    className="flex justify-center items-center gap-1 w-full cursor-pointer rounded-lg border border-primary bg-[#0a4a82] p-4 text-[#f5f5f8] transition hover:bg-opacity-90 md:font-bold"
+                    >
+                   {loading ?
+                                
+                                  <Loading width={50} />:<span>Sign In</span>
+                                
+                                }
+                    </button>
                 </div>
 </Form>
         )}
