@@ -99,7 +99,7 @@ const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen, transactio
 
         {/* User Info */}
         <div className="hidden lg:flex md:items-center">
-          <span className="text-white font-bold mr-4">{authCtx.activeMobileNumber}</span>
+          
           {authCtx.isLoggedIn && <DropdownUser />}
         </div>
       </div>
