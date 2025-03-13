@@ -44,6 +44,7 @@ interface IncomeSrcProps{
 export default function IncomeCreate() {
     const authCtx = useAuth();
     const user_id = authCtx.userId;
+    const admin_id = authCtx.adminId;
     
     const router = useRouter()
     const formRef = useRef<any>(null);
@@ -81,7 +82,7 @@ export default function IncomeCreate() {
         //alert(JSON.stringify(values));
 
         await axios.post(`${url}create-income`, 
-            {user_id,...values.fetchdata}, {
+            {user_id,admin_id,...values.fetchdata}, {
             
             headers: {
               'Content-Type': 'application/json'

@@ -8,7 +8,7 @@ const getUserRole = (req:NextRequest) => {
   let auth_data:any = req.cookies.get('AUTH_DATA')?.value;
   if(typeof auth_data != 'undefined'){
     auth_data = JSON.parse(auth_data)
-    return auth_data["role"];
+    return auth_data
   }
   else 
    return null;
@@ -26,9 +26,12 @@ export function middleware(request: NextRequest) {
     
 
     const url = request.nextUrl.clone();
-    const role = getUserRole(request);
+    const roleData = getUserRole(request);
+    
 
-    if (role!=null) {
+    if (roleData!=null) {
+      //console.log('roleData',roleData)
+      const role = roleData['role']
       
       if (url.pathname === '/member' || url.pathname === '/admin' || url.pathname === '/' || url.pathname === '') {
         // Redirect to the appropriate dashboard based on role

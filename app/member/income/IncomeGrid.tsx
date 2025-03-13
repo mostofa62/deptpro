@@ -44,6 +44,7 @@ const IncomeGrid = ({category}:IncomeProps)=>{
     const authCtx = useAuth();
 
     const user_id = authCtx.userId;
+    const admin_id = authCtx.adminId;
 
     const [extraPayload, setExtraPayload] = useState<ExtraPayloadProps>({
       total_net_income:0,
@@ -117,7 +118,7 @@ const IncomeGrid = ({category}:IncomeProps)=>{
   
                 DeleteActionGlobal({        
                   action:'delete-incomepg',        
-                  data:{'id':id, 'key':key, 'user_id':user_id}
+                  data:{'id':id, 'key':key, 'user_id':user_id,'admin_id':admin_id}
                 }).then((deletedData)=>{
                     //console.log(deletedData)
                     AlertBox(deletedData.message, deletedData.deleted_done);
@@ -147,7 +148,7 @@ const IncomeGrid = ({category}:IncomeProps)=>{
         });              
         
         
-},[data])
+},[data,admin_id, user_id])
 
 
 const generateItems = useCallback((row) => [

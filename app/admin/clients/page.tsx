@@ -9,7 +9,8 @@ import React, { useState } from 'react';
 import UserGrid from "./UserGrid";
 import {UserRoles, AdminRoles} from '@/app/data/AdminOptions.json';
 const url = process.env.NEXT_PUBLIC_API_URL;
-
+import {  useRouter } from "next/navigation";
+import { setCookie } from 'cookies-next';
 
 interface Tab {
   label: string;
@@ -27,12 +28,23 @@ export default function Clients() {
   const UserRole:any = UserRoles;
   const role:number = AdminRoles[0].value; 
 
+  const router = useRouter();
+
+  const logAsUser = (user_id:number, user_role:number)=>{
+    authCtx.logAsUser(user_id.toString(),user_role.toString())
+    setCookie('AUTH_DATA', {
+          'token':authCtx.token,
+          'role':user_role          
+        });
+    router.push('/member')
+  }
+
     const tabs: Tab[] = [
         
 
       { 
         label: 'members', 
-        content: <UserGrid role={UserRole[1].value} />
+        content: <UserGrid role={UserRole[1].value} logAsUser={logAsUser} />
       },
 
       { 

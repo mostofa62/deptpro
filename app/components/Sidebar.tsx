@@ -164,9 +164,7 @@ const Sidebar = ({
         */}
         <Link
           href={
-            Loguser && parseInt(Loguser) < 10
-              ? "/admin/dashboard"
-              : "/member/dashboard"
+           "/member/dashboard"
           }
         >
           <Image src={Logo} alt={app_name} className="" height={50} />
@@ -191,9 +189,7 @@ const Sidebar = ({
               <li key={1}>
                 <Link
                   href={
-                    Loguser && parseInt(Loguser) < 10
-                      ? "/admin/dashboard"
-                      : "/member/dashboard"
+                    "/member/dashboard"
                   }
                   className={`capitalize text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
                     pathname.slice(-9) == "dashboard" &&
@@ -204,39 +200,10 @@ const Sidebar = ({
                 </Link>
               </li>
 
-              {Loguser && parseInt(Loguser) < 10 && (
-                <>
-                  <li key={20}>
-                    <Link
-                      href={"/admin/clients"}
-                      className={`capitalize text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
-                        pathname.includes("clients") &&
-                        "bg-[#43ACD6] text-[#f5f5f8]"
-                      }`}
-                    >
-                      Clients
-                    </Link>
-                  </li>
-                </>
-              )}
+              
+             
 
-              {Loguser && parseInt(Loguser) < 2 && (
-                <>
-                  <li key={21}>
-                    <Link
-                      href={"/admin/admins"}
-                      className={`capitalize text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
-                        pathname.includes("admins") &&
-                        "bg-[#43ACD6] text-[#f5f5f8]"
-                      }`}
-                    >
-                      Admins
-                    </Link>
-                  </li>
-                </>
-              )}
-
-              {Loguser && parseInt(Loguser) >= 10 && (
+              
                 <>
                   <SidebarLinkGroup
                     activeCondition={
@@ -949,7 +916,7 @@ const Sidebar = ({
                     </li>
                   )}
                 </>
-              )}
+              
             </ul>
              
             <ul className="flex items-center justify-center gap-2.5 py-2 capitalize w-full bg-white bg-opacity-60 absolute bottom-0 left-0 rounded-t-lg border-t border-[#A7DAF0] backdrop-blur-md">
@@ -965,9 +932,7 @@ const Sidebar = ({
               <li key={2}>
                 <Link
                   href={
-                    Loguser && parseInt(Loguser) < 10
-                      ? "/admin/profile"
-                      : "/member/profile"
+                    "/member/profile"
                   }
                   className="flex items-center text-sm font-semibold md:font-medium duration-300 ease-in-out   hover:text-[#43ACD6]"
                 >

@@ -15,7 +15,7 @@ const per_page_list = PerPageList();
 const per_page = per_page_list[0];
 
 interface DataRow {
-    id:string;    
+    id:number;    
     name:string;
     email:string;
     phone: string;
@@ -27,13 +27,14 @@ interface DataRow {
 
 interface UserProps{
   role:number;
+  logAsUser?:(user_id:number, user_role:number)=>void
 }
-const UserGrid = ({role}:UserProps)=>{
+const UserGrid = ({role,logAsUser}:UserProps)=>{
     
 
     const authCtx = useAuth();
 
-    const userid:any  = authCtx.userId;
+    const userid:any  = authCtx.adminId;
 
     
 
@@ -84,7 +85,7 @@ const UserGrid = ({role}:UserProps)=>{
       
       })
 
-      const UserRole:any = UserRoles;
+      
 
       
       
@@ -135,7 +136,7 @@ const UserGrid = ({role}:UserProps)=>{
 },[data])
 
 
-const resultAction = useCallback(async(value:string|number,id:string,key:string)=>{
+const resultAction = useCallback(async(value:string|number,id:number,key:string)=>{
         
         
 
@@ -162,7 +163,7 @@ const resultAction = useCallback(async(value:string|number,id:string,key:string)
 
   
 
-},[]);
+},[userid]);
 
 
 const generateItems = useCallback((row) => [
@@ -189,9 +190,22 @@ const generateItems = useCallback((row) => [
 
 
 ], [deleteAction]);
+const UserRole:any = UserRoles;
+UserRole[1].value
+
+    
        
   
       const columns: ColumnDef<DataRow>[] = useMemo(() => [
+
+        {
+          id: 'usermode',
+          header: 'UserMode',
+          //visible: false,
+          //visible:logAsUser? true:false,
+          cell:({row})=>typeof logAsUser == 'function'? <button className='border p-2 bg-[#43acd6] text-white font-semibold' onClick={(e)=>logAsUser(row.original.id,row.original.role)}>Log in as User</button>:null
+          
+        },
       
           {
               accessorKey: 'id',

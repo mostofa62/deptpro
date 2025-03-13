@@ -45,6 +45,7 @@ export default function InsuranceCreate({
 
   const id = params.id;
   const user_id: any = authCtx.userId;
+  const admin_id: any = authCtx.adminId;
 
   const [activeTab, setActiveTab] = useState(0);
 
@@ -149,6 +150,7 @@ export default function InsuranceCreate({
       content: (
         <BillAccountUpdate
           user_id={user_id}
+          admin_id={admin_id}
           bill_acc_id={id}
           reminderDays={reminderDays}
           repeatFrequency={repeatFrequency}

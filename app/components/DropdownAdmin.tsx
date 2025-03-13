@@ -8,16 +8,16 @@ import axios from 'axios';
 import { useRouter } from "next/navigation";
 import useAuth from '@/app/hooks/useAuth';
 
-const DropdownUser = () => {
+const DropdownAdmin = () => {
 
   
   //logout user
   const authContext = useAuth();
   const {isLoggedIn} = authContext;
   const router = useRouter()
-  let Loguser:any = authContext.role;
-  let urlSuffix = 'member-logoutpg';
-  let redirect = '/member';
+  let Loguser:any = authContext.adminRole;
+  let urlSuffix = 'admin-logoutpg';
+  let redirect = '/admin';
 
   const [displayName, setDisplayName] = useState("");
 
@@ -95,7 +95,7 @@ const DropdownUser = () => {
           setDropdownOpen(!dropdownOpen)
         }}
         className="flex items-center gap-4"
-        href={'/member/dashboard'}
+        href={'/admin/dashboard'}
       >
         <span className="hidden text-right lg:block">
           {/*
@@ -147,7 +147,7 @@ const DropdownUser = () => {
           
           <li>
             <Link
-              href={'/member/profile'}
+              href={'/admin/profile'}
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out  hover:text-[#0a4a82] lg:text-base"
             >
               <svg
@@ -247,4 +247,4 @@ const DropdownUser = () => {
   );
 };
 
-export default DropdownUser;
+export default DropdownAdmin;

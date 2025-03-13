@@ -58,6 +58,7 @@ export default function IncomeUpdate({
   }) {
     const authCtx = useAuth();
     const user_id = authCtx.userId;
+    const admin_id = authCtx.adminId;
     const id = params.id
     
     const router = useRouter()
@@ -107,7 +108,7 @@ export default function IncomeUpdate({
         //alert(JSON.stringify(values));
 
         await axios.post(`${url}edit-income/${id}`, 
-            {user_id,...values.fetchdata}, {
+            {user_id,admin_id,...values.fetchdata}, {
             
             headers: {
               'Content-Type': 'application/json'

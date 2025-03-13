@@ -8,31 +8,24 @@ interface AuthContextType{
     displayName:string |undefined|null,
     isLoggedIn:boolean,
     userId:string|undefined|null,
+    adminId:string|undefined|null,
     role:string|undefined|null,
-    activeMobileNumber:string|undefined|null,
-    activeContactId:string|undefined|null,
-    
-    redirect:string|undefined|null,
-    focusElement:string|undefined|null,
-    boundaryReached:any,
+    adminRole:string|undefined|null,   
     
     
     login:(token:string, expirationTime:Date, role:string,displayName:string, userId:string)=>void,
+    loginAdmin:(token:string, expirationTime:Date, adminRole:string,displayName:string, adminId:string)=>void,
     logout:()=>void,
+    logoutAdmin:()=>void,
     
     selectedName:(displayName:string|undefined|null)=>void,
-    selectedMobile:(activeMobileNumber:string|undefined|null)=>void,
+
+    logAsUser:(userId:string, role:string)=>void
     
-    selectedContactId:(activeContactId:string|undefined|null)=>void,
-
-    setRedirect:(route:string|undefined|null)=>void,
-    setFocusElement:(focus_element:string|undefined|null)=>void
-
-    setBoundaryReached:(boundaryReached:any)=>void
 
     
 
-    cleanPreviousOnloggedIn:()=>void
+    
 
     
 
@@ -46,24 +39,18 @@ const AuthContext = createContext<AuthContextType>({
     displayName:null,
     isLoggedIn: false,
     role:null,
+    adminRole:null,
     userId:null,
-    activeMobileNumber:null,
-    activeContactId:null,
-    redirect:null,
-    focusElement:null,
-    boundaryReached:null,
+    adminId:null,   
     
     login:(token:string, expirationTime:Date, role:string,displayName:string, userId:string)=>{},
+    loginAdmin:(token:string, expirationTime:Date, adminRole:string,displayName:string, adminId:string)=>{},
     logout:()=>{},
+    logoutAdmin:()=>{},
     selectedName:(displayName:string|undefined|null) =>{},
-    selectedMobile:(activeMobileNumber:string|undefined|null)=>{},
-    selectedContactId:(activeContactId:string|undefined|null)=>{},   
+    logAsUser:(userId:string, role:string)=>{}
     
-    setRedirect:(route:string|undefined|null)=>{},
-    setFocusElement:(focus_element:string|undefined|null)=>{},
-    setBoundaryReached:(boundaryReached:any)=>{},
     
-    cleanPreviousOnloggedIn:()=>{}
 
 });
 /*
@@ -80,21 +67,24 @@ const removeAllFromStorage=()=>{
     if(typeof window !== 'undefined'){
         localStorage.removeItem('token');
         localStorage.removeItem('expirationTime');
-        localStorage.removeItem('Loguser');
+        localStorage.removeItem('userRole');
         localStorage.removeItem('DisplayName');
         localStorage.removeItem('userId');
-        localStorage.removeItem('MobileNumber');
-        localStorage.removeItem('ContactID')        
-        //data previous
-        localStorage.removeItem('data');
-        localStorage.removeItem('redirect');
-        localStorage.removeItem('focusElement');
-        localStorage.removeItem('last_section');
-        localStorage.removeItem('schedule_count');
-        localStorage.removeItem('boundaryReached');
-        
-        localStorage.removeItem('snowball');
-        localStorage.removeItem('snowball_count');
+        localStorage.removeItem('adminRole');
+        localStorage.removeItem('adminId');                    
+
+    }
+}
+
+const removeAllFromStorageAdmin=()=>{
+    if(typeof window !== 'undefined'){
+        localStorage.removeItem('token');
+        localStorage.removeItem('expirationTime');
+        localStorage.removeItem('adminRole');
+        localStorage.removeItem('DisplayName');
+        localStorage.removeItem('adminId'); 
+        localStorage.removeItem('userRole');
+        localStorage.removeItem('userId');                   
 
     }
 }
@@ -102,44 +92,36 @@ const removeAllFromStorage=()=>{
 
 const retriveStoredToken = ()=>{
 
-    //let storedToken,storedExpirationDate,remaintingTime;
-    //if(typeof window !== 'undefined'){
-        const storedToken  = typeof window !== 'undefined'?localStorage.getItem('token'):null;
-        const storedExpirationDate = typeof window !== 'undefined'?localStorage.getItem('expirationTime'):new Date().toString()
-        const role = typeof window !== 'undefined'?localStorage.getItem('Loguser'):null;
-        const displayName = typeof window !== 'undefined'?localStorage.getItem('DisplayName'):null;
-        const userId = typeof window !== 'undefined'?localStorage.getItem('userId'):null;
-        const activeMobileNumber = typeof window !== 'undefined'?localStorage.getItem('MobileNumber'):null;
-        const activeContactId = typeof window !== 'undefined'?localStorage.getItem('ContactID'):null;
-
-        const redirect = typeof window !== 'undefined'?localStorage.getItem('redirect'):null;
-        const focusElement = typeof window !== 'undefined'?localStorage.getItem('focusElement'):null;
-
-        const boundaryReached = typeof window !== 'undefined'?localStorage.getItem('boundaryReached'):null;
-        
-        //console.log(storedExpirationDate)
-        //const remaintingTime = calculateRemainingTime(storedExpirationDate);
-    
-    //}
-    
-    /*
-    if(remaintingTime <= 3600){
-        removeAllFromStorage();
-        return null;
-    }
-    */
-    
+    const storedToken  = typeof window !== 'undefined'?localStorage.getItem('token'):null;
+    const storedExpirationDate = typeof window !== 'undefined'?localStorage.getItem('expirationTime'):new Date().toString()
+    const role = typeof window !== 'undefined'?localStorage.getItem('userRole'):null;
+    const displayName = typeof window !== 'undefined'?localStorage.getItem('DisplayName'):null;
+    const userId = typeof window !== 'undefined'?localStorage.getItem('userId'):null;
+              
     return{
         token: storedToken,
         //duration: remaintingTime,
         role:role,
         displayName:displayName,
-        userId:userId,
-        mobileNumber:activeMobileNumber,
-        contactID:activeContactId,
-        redirect:redirect,
-        focusElement:focusElement,
-        boundaryReached:boundaryReached
+        userId:userId,        
+        
+    }
+};
+
+const retriveStoredTokenAdmin = ()=>{
+
+    const storedToken  = typeof window !== 'undefined'?localStorage.getItem('token'):null;
+    const storedExpirationDate = typeof window !== 'undefined'?localStorage.getItem('expirationTime'):new Date().toString()
+    const adminRole = typeof window !== 'undefined'?localStorage.getItem('adminRole'):null;
+    const displayName = typeof window !== 'undefined'?localStorage.getItem('DisplayName'):null;
+    const adminId = typeof window !== 'undefined'?localStorage.getItem('adminId'):null;
+              
+    return{
+        token: storedToken,
+        //duration: remaintingTime,
+        adminRole:adminRole,
+        displayName:displayName,
+        adminId:adminId,        
         
     }
 };
@@ -155,50 +137,33 @@ export const AuthContextProvider = (props:any)=>{
     //const [expTime, setExpTime] = useLocalStorage('expirationTime',tokenData?.duration);
     
     const tokenData = retriveStoredToken();
+    const tokenDataAdmin = retriveStoredTokenAdmin();
     
     
 
     let initialToken;
     let initUserId;
     let initDisplayName;
-    let initMobileNumber;
-    let initContactID;
-
-    let initFocusElement;
-    let initRedirect;
-    let initBoundaryReached;
+    let initAdminId;
     
-    if(tokenData){
-        initialToken = tokenData.token;
-        initUserId = tokenData.userId;
-        initDisplayName = tokenData.displayName;
-        initMobileNumber = tokenData.mobileNumber;
-        initContactID = tokenData.contactID;
-
-        initRedirect = tokenData.redirect;
-        initFocusElement = tokenData.focusElement;
-        initBoundaryReached = tokenData.boundaryReached;
-        
-        
-    }
+    
+    
+    initialToken = tokenData.token ? tokenData.token : tokenDataAdmin.token ;
+    initUserId = tokenData.userId ? tokenData.userId:null;
+    initDisplayName = tokenData.displayName ? tokenData.displayName:tokenDataAdmin.displayName;            
+    initAdminId = tokenDataAdmin.adminId ? tokenDataAdmin.adminId:null;    
+    
     const [token , setToken] = useState(initialToken);
     
     const [userId, setUserId] = useState(initUserId);
+    const [adminId, setAdminId] = useState(initAdminId);
     const [displayName, setDisplayName ] = useState(initDisplayName);
 
-    const [mobileNumber, setMobileNumber] = useState(initMobileNumber);
-
-    const [contactID, setContactID] = useState(initContactID);
-
-    const [redirect, setRedirect] = useState(initRedirect);
-    const [focusElement, setFocusElement] = useState(initFocusElement);
-
-    const [boundaryReached, setBoundaryReached] = useState(initBoundaryReached);
-
-    
+   
     
     const userIsLoggedIn = !!token;
     const role = tokenData?.role;
+    const adminRole = tokenDataAdmin?.adminRole
     
     
 
@@ -206,28 +171,36 @@ export const AuthContextProvider = (props:any)=>{
     
     
     const logoutHandler= useCallback(async()=>{
-
-            setToken(null);
-            
-        
+            setToken(null);                
             setDisplayName(null);
-            setMobileNumber(null);
-            setContactID(null);
-            setRedirect(null);
-            setFocusElement(null);
-            setBoundaryReached(null);
-            
-
+            setUserId(null);
+            setAdminId(null);
             if(hasCookie('AUTH_DATA')){
                 deleteCookie('AUTH_DATA')
-            }
-            
+            }            
             removeAllFromStorage();
+
             //if(logoutTimer){
             //    clearTimeout(logoutTimer);
             //}
                 
     },[]);
+
+    const logoutHandlerAdmin= useCallback(async()=>{
+        setToken(null);                
+        setDisplayName(null);
+        setAdminId(null);
+        setUserId(null);
+        if(hasCookie('AUTH_DATA')){
+            deleteCookie('AUTH_DATA')
+        }            
+        removeAllFromStorageAdmin();
+        
+        //if(logoutTimer){
+        //    clearTimeout(logoutTimer);
+        //}
+            
+},[]);
 
     const loginHandler = (
         token:string, 
@@ -243,15 +216,32 @@ export const AuthContextProvider = (props:any)=>{
             //console.log('here');
             localStorage.setItem('token',token);
             //localStorage.setItem('expirationTime',expirationTime.toString());
-            localStorage.setItem('Loguser',role);
+            localStorage.setItem('userRole',role);
             localStorage.setItem('DisplayName',displayName);
             localStorage.setItem('userId',userId);
             
-        }
-        //const remaintingTime =  calculateRemainingTime(expirationTime.toString());
+        }      
+    };
 
-        //logoutTimer= setTimeout(logoutHandler, remaintingTime);
-        //logoutTimer =  setTimeout(logoutHandler, 3000);
+    const loginHandlerAdmin = (
+        token:string, 
+        expirationTime:Date,
+        adminRole:string,
+        displayName:string,
+        adminId:string
+        )=>{
+        setToken(token);
+        setAdminId(adminId);
+        setDisplayName(displayName);
+        if(typeof window !== 'undefined'){
+            //console.log('here');
+            localStorage.setItem('token',token);
+            //localStorage.setItem('expirationTime',expirationTime.toString());
+            localStorage.setItem('adminRole',adminRole);
+            localStorage.setItem('DisplayName',displayName);
+            localStorage.setItem('adminId',adminId);
+            
+        }      
     };
 
     
@@ -271,84 +261,30 @@ export const AuthContextProvider = (props:any)=>{
         }
     }
 
-    const selectedMobileNumberhandler=(mobile_number:string | null|undefined)=>{
-        if(typeof window !== 'undefined' 
-        && typeof mobile_number != 'undefined'){
-            setMobileNumber(mobile_number);
-            if(mobile_number!==null){
-                localStorage.setItem('MobileNumber',mobile_number);
-            }
-        }
-    }
+  
 
-    const selectedContactIdhandler=(contact_id:string | null|undefined)=>{
-        if(typeof window !== 'undefined' 
-        && typeof contact_id != 'undefined'){
-            //console.log('contact type'+typeof contact_id);
-            setContactID(contact_id);
-            if(contact_id !== null){
-                localStorage.setItem('ContactID',contact_id);
-            }
-        }
-    }
+   
 
-    const setRedirectHandler = (re_direct:string|undefined|null)=>{
+    
+    const logAsUserHandler = (userId:string, role:string)=>{
+        //alert(userId)
         if(typeof window !== 'undefined' 
-        && typeof re_direct != 'undefined' 
-        ){
-            setRedirect(re_direct);
-            if(re_direct!==null){
-                localStorage.setItem('redirect',re_direct);
-            }
+            && typeof userId != 'undefined' 
+            && typeof role != 'undefined' 
+            ){
+                setUserId(userId)
+                localStorage.setItem('userId',userId);
+                localStorage.setItem('userRole',role);
         }
-    }
 
-    const setFocusElementHandler = (focus_element:string|undefined|null)=>{
-        if(typeof window !== 'undefined' 
-        && typeof focus_element != 'undefined' 
-        ){
-            setFocusElement(focus_element);
-            if(focus_element!==null){
-                localStorage.setItem('focusElement',focus_element);
-            }
-        }
     }
+   
 
-    const setBoundaryReachedHandler = (boundaryReached:any)=>{
-        if(typeof window !== 'undefined' 
-        && typeof boundaryReached != 'undefined' 
-        ){
-            setBoundaryReached(boundaryReached);
-            if(boundaryReached!==null){
-                localStorage.setItem('boundaryReached',boundaryReached);
-            }
-        }
-    }
+   
 
     
 
-    const  cleanPreviousOnloggedInHandler =()=>{
-        if(typeof window !== 'undefined'){
-            setMobileNumber(null);
-            setContactID(null);
-            setRedirect(null);
-            setFocusElement(null);
-            setBoundaryReached(null);
-                        
-            localStorage.removeItem('MobileNumber');
-            localStorage.removeItem('ContactID')        
-            //data previous
-            localStorage.removeItem('data');
-            localStorage.removeItem('redirect');
-            localStorage.removeItem('focusElement');
-            localStorage.removeItem('last_section');
-            localStorage.removeItem('schedule_count');
-            localStorage.removeItem('boundaryReached');
-            
-            localStorage.removeItem('snowball');
-            localStorage.removeItem('snowball_count');
-        }
-    }
+    
 
     
     
@@ -367,26 +303,17 @@ export const AuthContextProvider = (props:any)=>{
         role:role,
         displayName:displayName,
         userId:userId,
-        activeMobileNumber:mobileNumber,
-        activeContactId:contactID,
-
-        redirect:redirect,
-        focusElement:focusElement,
-        boundaryReached:boundaryReached,
+        adminId:adminId,
+        adminRole:adminRole,
         
         login:loginHandler,
         logout :logoutHandler,
+        loginAdmin:loginHandlerAdmin,
+        logoutAdmin:logoutHandlerAdmin,
         
         selectedName:selectedDisplayNamehandler,
-        selectedMobile:selectedMobileNumberhandler,
-        selectedContactId:selectedContactIdhandler,
-        
-        setRedirect:setRedirectHandler,
-        setFocusElement:setFocusElementHandler,
-        setBoundaryReached:setBoundaryReachedHandler,
-        
-
-        cleanPreviousOnloggedIn:cleanPreviousOnloggedInHandler
+        logAsUser:logAsUserHandler
+       
     };
     return <AuthContext.Provider value={contextValue}>
     {props.children}

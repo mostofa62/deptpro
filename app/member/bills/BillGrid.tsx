@@ -50,6 +50,8 @@ const BillGrid = ({ category }: BillProps) => {
 
   const authCtx = useAuth();
 
+  const admin_id = authCtx.adminId;
+
   const [data, setData] = useState<DataRow[]>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [pagination, setPagination] = useState<PaginationState>({
@@ -111,7 +113,7 @@ const BillGrid = ({ category }: BillProps) => {
             onClick: async () => {
               DeleteActionGlobal({
                 action: "delete-billpg",
-                data: { id: id, key: key },
+                data: { id: id, key: key ,'admin_id':admin_id },
               }).then((deletedData) => {
                 //console.log(deletedData)
                 AlertBox(deletedData.message, deletedData.deleted_done);
@@ -137,7 +139,7 @@ const BillGrid = ({ category }: BillProps) => {
         closeOnClickOutside: true,
       });
     },
-    [data]
+    [data,admin_id]
   );
 
   const generateItems = useCallback(

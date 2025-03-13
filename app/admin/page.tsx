@@ -76,7 +76,7 @@ const Login=()=> {
       //localStorage.setItem('expirationTime',expirationTime.getMilliseconds().toString());
     }*/
     
-    authContext.login(
+    authContext.loginAdmin(
       response.data.idToken, 
       expirationTime,
       response.data.role,
@@ -84,7 +84,10 @@ const Login=()=> {
       response.data.localId
     );
 
-    setCookie('AUTH_DATA', {'token':response.data.idToken,'role':response.data.role});
+    setCookie('AUTH_DATA', {
+      'token':response.data.idToken,
+      'role':response.data.role      
+    });
     /*
     if(response.data.role == 2){
       authContext.cleanPreviousOnloggedIn()

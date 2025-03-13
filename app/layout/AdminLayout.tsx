@@ -3,7 +3,7 @@
 
 import { ReactNode, useEffect, useState } from 'react';
 import AdminHeader from '@/app/components/AdminHeader';
-import Sidebar from '@/app/components/Sidebar';
+import SidebarAdmin from '@/app/components/SidebarAdmin';
 import UseAuthRoute from '@/app/hooks/useAuthRoute';
 import { useRouter, usePathname } from "next/navigation";
 import { RouteChangeListener } from '../components/utils/RouteChangeListener';
@@ -36,7 +36,7 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
       {/* <!-- ===== Page Wrapper Start ===== --> */}
       <div className="flex h-screen overflow-hidden bg-slate-800">
         {/* <!-- ===== Sidebar Start ===== --> */}
-        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        <SidebarAdmin sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         {/* <!-- ===== Sidebar End ===== --> */}
 
         {/* <!-- ===== Content Area Start ===== --> */}

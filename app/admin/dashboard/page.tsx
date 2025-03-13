@@ -14,7 +14,7 @@ const Roles ={
 
 export default function AdminDashBoard() {
     const authCtx = useAuth();
-    const user_id: any = authCtx.userId;
+    const user_id: any = authCtx.adminId;
     const payload = {
       role_counts: [],
       online_count:0,

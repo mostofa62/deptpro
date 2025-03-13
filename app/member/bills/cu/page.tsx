@@ -47,6 +47,7 @@ export default function InsuranceCreate() {
   const [fetchFomrData, setFetchFormData] = useState(DataSchema);
 
   const user_id = authCtx.userId;
+  const admin_id = authCtx.adminId;
 
   const payload: BillTypePayloads = {
     bill_types: [],
@@ -70,7 +71,7 @@ export default function InsuranceCreate() {
     await axios
       .post(
         `${url}save-bill-accountpg`,
-        { user_id, ...values.fetchdata },
+        { user_id,admin_id, ...values.fetchdata },
         {
           headers: {
             "Content-Type": "application/json",

@@ -18,16 +18,12 @@ import {
   DeleteActionGlobal,
 } from "@/app/components/grid/useFetchGridData";
 import { useRouter } from "next/navigation";
-interface BillProps {
-  bill_acc_id: number;
-  user_id: number;
-  tab_number: number;
-  setParentData?: (data: any) => void;
-}
+
 
 interface BillAccProps {
   bill_acc_id: number;
   user_id: number;
+  admin_id:number;
   fetchFomrData: DataSchemaType;
   repeatFrequency: any[];
   reminderDays: any[];
@@ -37,6 +33,7 @@ interface BillAccProps {
 const BillAccountUpdate = ({
   bill_acc_id,
   user_id,
+  admin_id,
   fetchFomrData,
   repeatFrequency,
   reminderDays,
@@ -57,7 +54,7 @@ const BillAccountUpdate = ({
     await axios
       .post(
         `${url}update-bill-accountpg/${bill_acc_id}`,
-        { user_id, ...values.fetchdata },
+        { user_id,admin_id, ...values.fetchdata },
         {
           headers: {
             "Content-Type": "application/json",
