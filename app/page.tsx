@@ -1,12 +1,12 @@
 "use client";
-import FullPageLayout from "@/app/layout/FullPageLayout"
-import Image from 'next/image';
-import Logo from '@/app/images/logo/logo.svg';
+import FullPageLayout from "@/app/layout/FullPageLayout";
+import Image from "next/image";
+import Logo from "@/app/images/logo/logo.svg";
 
 //import AuthContext from "@/app/context/auth-context";
 //import { Metadata, ResolvingMetadata } from 'next';
 import useAuth from "@/app/hooks/useAuth";
-import { setCookie } from 'cookies-next';
+import { setCookie } from "cookies-next";
 import Link from "next/link";
 
 /*
@@ -16,20 +16,9 @@ export const metadata = {
 }
 */
 const url = process.env.NEXT_PUBLIC_API_URL;
-const app_name:any = process.env.NEXT_PUBLIC_API_URL;
-  
-const Home=()=> {
-  
+const app_name: any = process.env.NEXT_PUBLIC_API_URL;
 
-  
-
-  
-
-  
-  
-  
-  
-
+const Home = () => {
   return (
     <FullPageLayout>
       <div className="rounded-sm border border-stroke bg-[#f5f5f8] shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -37,50 +26,41 @@ const Home=()=> {
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
               <a className="mb-5.5 inline-block justify-center p-5" href="/">
-              <Image src={Logo} alt={app_name} className="mx-20" height={150}  />
-              {/*<span className='text-[#f1e56c]'>{app_name}</span>*/}
+                <Image
+                  src={Logo}
+                  alt={app_name}
+                  className="mx-20"
+                  height={150}
+                />
+                {/*<span className='text-[#f1e56c]'>{app_name}</span>*/}
               </a>
 
-              
-
-              
-
-
-              <span className="mt-15 inline-block">
-               
-              </span>
+              <span className="mt-15 inline-block"></span>
             </div>
           </div>
 
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-              
-              
-              
-              <Link className="top-0 relative text-md font-bold  text-[#0a4a82]" href='/member'>
-              Client Login
+              <Link
+                className="top-0 relative text-md font-bold  text-[#0a4a82]"
+                href="/member"
+              >
+                Client Login
               </Link>
 
-              <Link className="top-0 left-5 relative text-md font-bold  text-[#0a4a82]" href='/admin'>
-              Admin Login
+              <Link
+                className="top-0 left-5 relative text-md font-bold  text-[#0a4a82]"
+                href="/admin"
+              >
+                Admin Login
               </Link>
-
-              
-        
-
-                
-                
-
-                
-              
             </div>
           </div>
         </div>
       </div>
-    
     </FullPageLayout>
-  )
-}
+  );
+};
 /*
 export async function generateMetadata() {
   // read route params then fetch data
@@ -92,6 +72,5 @@ export async function generateMetadata() {
   };
 }
 */
-
 
 export default Home;

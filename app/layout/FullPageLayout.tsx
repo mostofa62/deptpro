@@ -1,19 +1,17 @@
 "use client"; // This is a client component 👈🏽
-import { ReactNode, useState, useEffect } from 'react';
-import Header from '../components/Header';
-import Sidebar from '../components/Sidebar';
+import { ReactNode, useState, useEffect } from "react";
+import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
 //import useAuthRoute from '@/app/hooks/useAuthRoute';
 import { useRouter, usePathname } from "next/navigation";
-import UseAuthRoute from '@/app/hooks/useAuthRoute';
-import useAuth from '@/app/hooks/useAuth';
-
+import UseAuthRoute from "@/app/hooks/useAuthRoute";
+import useAuth from "@/app/hooks/useAuth";
 
 interface DefaultLayoutProps {
   children: ReactNode;
 }
 
 const FullPageLayout = ({ children }: DefaultLayoutProps) => {
-  
   const router = useRouter();
   const pathname = usePathname();
   const authCtx = useAuth();
@@ -27,13 +25,13 @@ const FullPageLayout = ({ children }: DefaultLayoutProps) => {
     
   },[])
   */
- /*
+  /*
   useEffect(()=>{
     /*
     if(typeof redirect !='undefined'){
       router.push(redirect);
     }*/
-   /*
+  /*
     if(!authCtx.isLoggedIn){
       router.push('/');
     }
@@ -43,28 +41,24 @@ const FullPageLayout = ({ children }: DefaultLayoutProps) => {
   //const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="dark:bg-boxdark-2 dark:text-bodydark">
+    <div className="bg-[#43ACD6]">
       {/* <!-- ===== Page Wrapper Start ===== --> */}
-      <div className="flex h-screen overflow-hidden">
+      <div className="sm:flex sm:h-screen lmd:h-screen sm:overflow-hidden">
         {/* <!-- ===== Sidebar Start ===== --> */}
-        
+
         {/* <!-- ===== Sidebar End ===== --> */}
 
         {/* <!-- ===== Content Area Start ===== --> */}
-        <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+        <div className="sm:relative sm:flex sm:flex-1 sm:flex-col sm:overflow-y-auto sm:overflow-x-hidden">
           {/* <!-- ===== Header Start ===== --> */}
-          
+
           {/* <!-- ===== Header End ===== --> */}
 
           {/* <!-- ===== Main Content Start ===== --> */}
           <main>
-            
-            <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
-              <UseAuthRoute>
-              {children}              
-              </UseAuthRoute>
+            <div className="sm:mx-auto md:max-w-screen-2xl sm:p-4 md:p-6 2xl:p-10 sm:flex sm:justify-center sm:items-center">
+              <UseAuthRoute>{children}</UseAuthRoute>
             </div>
-            
           </main>
           {/* <!-- ===== Main Content End ===== --> */}
         </div>
