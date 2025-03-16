@@ -21,37 +21,32 @@ const app_name: any = process.env.NEXT_PUBLIC_API_URL;
 const Home = () => {
   return (
     <FullPageLayout>
-      <div className="rounded-sm border border-stroke bg-[#f5f5f8] shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="flex flex-wrap items-center">
-          <div className="hidden w-full xl:block xl:w-1/2">
-            <div className="py-17.5 px-26 text-center">
-              <a className="mb-5.5 inline-block justify-center p-5" href="/">
-                <Image
-                  src={Logo}
-                  alt={app_name}
-                  className="mx-20"
-                  height={150}
-                />
-                {/*<span className='text-[#f1e56c]'>{app_name}</span>*/}
-              </a>
-
-              <span className="mt-15 inline-block"></span>
+      <div className="sm:flex sm:items-center sm:justify-center p-1.5 h-[calc(100vh)] md:h-[calc(100vh-12rem)]">
+        <div className="lmd:h-[calc(100vh-8rem)] md:h-[calc(100vh-12rem)] lg:h-[calc(100vh-12rem)] flex items-stretch sm:rounded-[50px] sm:my-[5%]  sm:shadow-[0_0_50px_rgba(0,0,0,0.3)]">
+          <div className="hidden lmd:block lg:block w-full xl:block md:w-1/2 xl:w-1/2 rounded-l-[50px]">
+            <div className="flex h-full w-full items-center justify-center px-10">
+              <div className=" h-45 w-45  rounded-full flex items-center justify-center bg-white">
+                <a href="/">
+                  <Image src={Logo} alt={app_name} height={100} />
+                </a>
+              </div>
             </div>
           </div>
 
-          <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
-            <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-              <Link
-                className="top-0 relative text-md font-bold  text-[#0a4a82]"
-                href="/member"
-              >
+          <div className="w-full  flex items-center justify-center border-[#E69A52]  xl:w-1/2 xl:border-l-2">
+            <div className="flex flex-col items-center justify-center gap-5 p-4 sm:p-12.5 xl:p-17.5">
+              <div className="sm:hidden w-full rounded-md flex items-center justify-center h-40 bg-[#43ACD6]">
+                <div className="h-35 w-35  rounded-full bg-white flex items-center justify-center shadow-[0_0_50px_rgba(0,0,0,0.3)]">
+                  <a href="/">
+                    <Image src={Logo} alt={app_name} height={100} />
+                  </a>
+                </div>
+              </div>
+              <Link className="text-lg font-bold  text-white" href="/member">
                 Client Login
               </Link>
 
-              <Link
-                className="top-0 left-5 relative text-md font-bold  text-[#0a4a82]"
-                href="/admin"
-              >
+              <Link className="text-lg font-bold  text-white" href="/admin">
                 Admin Login
               </Link>
             </div>

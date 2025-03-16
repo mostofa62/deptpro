@@ -121,7 +121,7 @@ const Login = () => {
         <div className="lmd:h-[calc(100vh-8rem)] md:h-[calc(100vh-12rem)] lg:h-[calc(100vh-12rem)] flex items-stretch sm:rounded-[50px] sm:my-[5%]  sm:shadow-[0_0_50px_rgba(0,0,0,0.3)]">
           <div className="hidden lmd:block lg:block w-full xl:block xl:w-1/2 rounded-l-[50px]">
             <div className="flex h-full items-center justify-center px-10">
-              <div className="h-70 w-70  rounded-full flex items-center justify-center bg-white">
+              <div className="h-65 w-65  rounded-full flex items-center justify-center bg-white">
                 <a href="/">
                   <Image src={Logo} alt={app_name} height={100} />
                 </a>
@@ -138,8 +138,8 @@ const Login = () => {
 
           <div className="w-full xl:w-1/2 bg-white h-[calc(100vh-4rem)] sm:h-auto rounded-xl sm:rounded-l-none  sm:rounded-r-[50px] md:rounded-r-[50px] shadow-[0_0_50px_rgba(0,0,0,0.3)]">
             <div className="flex flex-col items-center sm:mt-8 gap-2.5 sm:gap-1 w-full  sm:p-10.5 xl:p-12.5">
-              <div className="sm:hidden w-full rounded-md flex items-center justify-center h-32 bg-[#43ACD6]">
-                <div className="h-28 w-28  rounded-full bg-white flex items-center justify-center shadow-[0_0_50px_rgba(0,0,0,0.3)]">
+              <div className="sm:hidden w-full rounded-md flex items-center justify-center h-40 bg-[#43ACD6]">
+                <div className="h-35 w-35  rounded-full bg-white flex items-center justify-center shadow-[0_0_50px_rgba(0,0,0,0.3)]">
                   <a href="/">
                     <Image src={Logo} alt={app_name} height={100} />
                   </a>
