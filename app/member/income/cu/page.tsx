@@ -132,8 +132,8 @@ export default function IncomeCreate() {
                         
                         
                         DeleteActionGlobal({        
-                          action:'delete-income-source',        
-                          data:{'id':id, 'key':1}
+                          action:'delete-income-sourcepg',        
+                          data:{'id':id}
                         }).then((deletedData)=>{
                             
                             AlertBox(deletedData.message, deletedData.deleted_done);

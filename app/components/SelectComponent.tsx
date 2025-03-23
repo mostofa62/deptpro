@@ -46,7 +46,8 @@ const CustomOption = (props: any) => {
   const [isHovered, setIsHovered] = useState(false); // Track hover state for each option
 
   // Check if the option has the `bysystem` field and it is set to 1
-  const isBySystem = data.bysystem === 1;
+  const isBySystem = data.bysystem;
+  //console.log('isBySystem',isBySystem,data.bysystem)
 
   // Destructure the `deleteSelectedOption` from props
   const { deleteSelectedOption, setValue, onParentChange, fieldName } = innerProps;
@@ -137,7 +138,7 @@ const SelectComponent = (props: SelectProps) => {
         }
       }}
       options={props.options}
-      onBlur={() => {}}
+      onBlur={handleMenuToggle}
       menuIsOpen={menuIsOpen} // Pass the state to control whether the menu is open
       onMenuOpen={handleMenuToggle} // Open the menu
       onMenuClose={handleMenuToggle} // Close the menu

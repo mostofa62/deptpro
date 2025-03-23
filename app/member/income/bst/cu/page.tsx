@@ -1,7 +1,7 @@
 "use client";
 import DefaultLayout from "@/app/layout/DefaultLayout";
 import Link from "next/link";
-import { useState,useEffect, useRef } from "react";
+import { useState,useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import useAuth from '@/app/hooks/useAuth';
 import { useRouter } from "next/navigation";
@@ -21,6 +21,9 @@ import VideoComponent from "@/app/components/utils/VideoComponent";
 import HolderOne from "@/app/layout/HolderOne";
 import Tooltip from "@/app/components/ui/Tooltip";
 import DashGrid from "@/app/images/icon/dash-grid";
+import { confirmAlert } from "react-confirm-alert";
+import { AlertBox, DeleteActionGlobal } from "@/app/components/grid/useFetchGridData";
+import { removeConfirmAlert } from "@/app/components/utils/Util";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -35,6 +38,12 @@ interface PayLoads{
     income_list:Options[],
 }
 
+interface IncomeSrcProps{
+    label:string;
+    value:string;
+    bysystem:number;
+}
+
 export default function InsuranceCreate() {
     const authCtx = useAuth();
     const user_id = authCtx.userId;
@@ -43,10 +52,19 @@ export default function InsuranceCreate() {
     const formRef = useRef<any>(null);
 
     const [fetchFomrData,setFetchFormData] = useState(DataSchema);
+    const [minDate, setMinDate] = useState(null)
 
-    const [repeatFrequency, setRepeatFrequency] = useState([
-        DataSchema.repeat_boost
-    ])
+    const [incomeBoostSource, setIncomeBoostSource] = useState<IncomeSrcProps[]>([{
+            label:'',
+            value:'',
+            bysystem:0
+        }]);
+
+    // const [repeatFrequency, setRepeatFrequency] = useState([
+    //     DataSchema.repeat_boost
+    // ])
+
+    
     
     
 
@@ -60,6 +78,19 @@ export default function InsuranceCreate() {
         urlSuffix:`incomesourceboostpg-dropdown/${user_id}/boost`,
         payLoads:payload
     })
+
+    const IncomeBouseSourceData:IncomeSrcProps[] = IncomeSourceBoostData.income_boost_source;
+
+    useEffect(()=>{
+        setIncomeBoostSource(IncomeBouseSourceData)
+    },[IncomeBouseSourceData])
+
+    const repeatFrequency = [
+        DataSchema.repeat_boost,
+        ...IncomeSourceBoostData.repeat_frequency
+        
+    ]
+    
 
     
 
@@ -101,7 +132,60 @@ export default function InsuranceCreate() {
 
     const handleSubmit = ()=> {
         formRef.current?.handleSubmit();
-      }
+    }
+
+
+    const deleteAction=useCallback(async(data:IncomeSrcProps)=>{
+            //console.log(data)
+            const id = data.value;
+            const name = data.label;
+            const msg = `Do you want to delete this,${name}?`;
+    
+            confirmAlert({
+                      title: msg,
+                      message: 'Are you sure to do this?',
+                      buttons: [
+                        {
+                          label: 'Yes',
+                          onClick: async()=>{ 
+    
+                                                    //console.log('filter', filterSource,id)
+                            
+                            
+                            DeleteActionGlobal({        
+                              action:'delete-incomeboost-sourcepg',        
+                              data:{'id':id}
+                            }).then((deletedData)=>{
+                                
+                                AlertBox(deletedData.message, deletedData.deleted_done);
+                               
+            
+                                if(deletedData.deleted_done > 0){
+    
+                                    const filterSource:IncomeSrcProps[] = incomeBoostSource.filter((dt:IncomeSrcProps)=>dt.value!==id)
+    
+                                    
+                                    removeConfirmAlert()
+                                    setIncomeBoostSource(filterSource)
+                                }
+                            })
+                            
+                            
+                          }
+                        },
+                        {
+                          label: 'No',
+                          onClick: () => ()=>{                
+                            removeConfirmAlert()
+                          }
+                        }
+                      ],
+                      closeOnEscape: true,
+                      closeOnClickOutside: true,
+                    
+                    });
+    
+        },[incomeBoostSource])
 
     return(
         <>
@@ -177,10 +261,11 @@ export default function InsuranceCreate() {
                 touched.fetchdata.income &&
                 errors.fetchdata.income.label
             }
-            onParentChangeSelect ={(v:any,n:any)=>{ 
-                setRepeatFrequency([DataSchema.repeat_boost,v.repeat_boost])
-                setFieldValue('fetchdata.pay_date_boost',v.pay_date_boost)
-                setFieldValue('fetchdata.repeat_boost',v.repeat_boost)
+            onParentChangeSelect ={(v:any,n:any)=>{
+                setMinDate(v.pay_date_boost) 
+                //setRepeatFrequency([DataSchema.repeat_boost,v.repeat_boost])
+                //setFieldValue('fetchdata.pay_date_boost',v.pay_date_boost)
+                //setFieldValue('fetchdata.repeat_boost',v.repeat_boost)
                 
                 
             }}
@@ -263,6 +348,7 @@ export default function InsuranceCreate() {
                 }
 
                 toolTipText={<p className="flex flex-col whitespace-normal leading-tight"><span>Bonus, Commissions, Tips, Treasures</span></p>}
+                deleteSelectedOption={(data:IncomeSrcProps) => deleteAction(data)}
             />
 
    
@@ -283,7 +369,8 @@ export default function InsuranceCreate() {
 <div className="md:w-[50%] w-full">
 
 <FormikFieldInput 
-        type="date"            
+        type="date"
+        min={minDate ? minDate : ''}            
         label={DataLabel.pay_date_boost} 
         name={`fetchdata.pay_date_boost`}
         placeHolder={`${DataLabel.pay_date_boost}`}
