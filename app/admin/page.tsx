@@ -57,60 +57,61 @@ const Login = () => {
 
   const handleFormSubmit = async (values: any) => {
     setLoading(true);
-
-    await axios
-      .post(`${url}admin-loginpg`, values.user, {
+  
+    try {
+      const response = await axios.post(`${url}admin-loginpg`, values.user, {
         headers: {
           "Content-Type": "application/json",
         },
-      })
-      .then(function (response) {
-        if (response.data.login_status == 1) {
-          const expirationTime = new Date(
-            new Date().getTime() + +response.data.expiresIn * 1000
-          );
-          /*
-    if (typeof window !== 'undefined') {
-      localStorage.setItem("Loguser",response.data.role);
-      //localStorage.setItem('token',response.data.idToken);
-      //localStorage.setItem('expirationTime',expirationTime.getMilliseconds().toString());
-    }*/
-
-          authContext.loginAdmin(
-            response.data.idToken,
-            expirationTime,
-            response.data.role,
-            response.data.displayName,
-            response.data.localId
-          );
-
-          setCookie("AUTH_DATA", {
-            token: response.data.idToken,
-            role: response.data.role,
-          });
-          /*
-    if(response.data.role == 2){
-      authContext.cleanPreviousOnloggedIn()
-      router.push('/dashboard');
-    }
-    */
-          setLoginStatus(response.data.login_status);
-          setLoginMessage("");
-          setLoading(false);
-          router.push("/admin/dashboard");
-        } else {
-          setLoading(false);
-          setLoginStatus(response.data.login_status);
-          setLoginMessage(response.data.message);
-        }
-      })
-      .catch(function (error) {
-        //console.log(error);
-        setLoading(false);
-        setLoginStatus(0);
-        setLoginMessage(error);
       });
+  
+      if (response.data.login_status === 1) {
+        const expirationTime = new Date(
+          new Date().getTime() + +response.data.expiresIn * 1000
+        );
+  
+        authContext.loginAdmin(
+          response.data.idToken,
+          expirationTime,
+          response.data.role,
+          response.data.displayName,
+          response.data.localId
+        );
+  
+        setCookie("AUTH_DATA", {
+          token: response.data.idToken,
+          role: response.data.role,
+        });
+  
+        setLoginStatus(response.data.login_status);
+        setLoginMessage("");
+        router.push("/admin/dashboard");
+      } else {
+        setLoginStatus(response.data.login_status);
+        setLoginMessage(response.data.message || "Login failed. Please try again.");
+      }
+    } catch (error: any) {
+      setLoginStatus(0);
+  
+      if (error.response) {
+        // Server responded with error status (e.g., 401, 500)
+        setLoginMessage(
+          error.response.data?.message || "Something went wrong. Please try again later."
+        );
+      } else if (error.request) {
+        // Request was made but no response received (API server might be down)
+        setLoginMessage(
+          "Server is not responding. Please check your internet connection or try again later."
+        );
+      } else {
+        // Something unexpected happened
+        setLoginMessage(error.message || "An unexpected error occurred.");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
+  
 
   return (
     <FullPageLayout>

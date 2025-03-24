@@ -5,7 +5,7 @@ import axios from "axios";
 import { Formik } from 'formik';
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { DataLabel, DataSchema, ValidationSchema } from "./DataValidationSchema";
 
 import FormikFormHolder from "@/app/components/form/FormikFormHolder";
@@ -20,6 +20,9 @@ import DebtRocket from "@/app/images/icon/debtrocket";
 import HolderOne from "@/app/layout/HolderOne";
 import toast from 'react-hot-toast';
 import DashGrid from '@/app/images/icon/dash-grid';
+import { removeConfirmAlert } from '@/app/components/utils/Util';
+import { confirmAlert } from 'react-confirm-alert';
+import { AlertBox, DeleteActionGlobal } from '@/app/components/grid/useFetchGridData';
 
 
 
@@ -35,6 +38,12 @@ interface PayLoads{
     saving_strategy_type:Options[],    
 }
 
+interface SavingSrcProps{
+    label:string;
+    value:string;
+    bysystem:number;
+}
+
 export default function InsuranceCreate() {
     const authCtx = useAuth();
     const user_id = authCtx.userId;
@@ -43,6 +52,12 @@ export default function InsuranceCreate() {
 
     const [fetchFomrData,setFetchFormData] = useState(DataSchema);
     
+
+    const [savingSource, setSavingSource] = useState<SavingSrcProps[]>([{
+            label:'',
+            value:'',
+            bysystem:0
+        }]);
     
 
     const payload: PayLoads ={
@@ -57,6 +72,10 @@ export default function InsuranceCreate() {
         urlSuffix:`savingcategory-dropdownpg/${user_id}`,
         payLoads:payload
     })
+
+    useEffect(()=>{
+        setSavingSource(SavingCategoryData)
+    },[SavingCategoryData])
 
     
 
@@ -99,6 +118,58 @@ export default function InsuranceCreate() {
     const handleSubmit = ()=> {
         formRef.current?.handleSubmit();
       }
+
+    const deleteAction=useCallback(async(data:SavingSrcProps)=>{
+            //console.log(data)
+            const id = data.value;
+            const name = data.label;
+            const msg = `Do you want to delete this,${name}?`;
+    
+            confirmAlert({
+                      title: msg,
+                      message: 'Are you sure to do this?',
+                      buttons: [
+                        {
+                          label: 'Yes',
+                          onClick: async()=>{ 
+    
+                                                    //console.log('filter', filterSource,id)
+                            
+                            
+                            DeleteActionGlobal({        
+                              action:'delete-saving-sourcepg',        
+                              data:{'id':id}
+                            }).then((deletedData)=>{
+                                
+                                AlertBox(deletedData.message, deletedData.deleted_done);
+                               
+            
+                                if(deletedData.deleted_done > 0){
+    
+                                    const filterSource:SavingSrcProps[] = savingSource.filter((dt:SavingSrcProps)=>dt.value!==id)
+    
+                                    
+                                    removeConfirmAlert()
+                                    setSavingSource(filterSource)
+                                }
+                            })
+                            
+                            
+                          }
+                        },
+                        {
+                          label: 'No',
+                          onClick: () => ()=>{                
+                            removeConfirmAlert()
+                          }
+                        }
+                      ],
+                      closeOnEscape: true,
+                      closeOnClickOutside: true,
+                    
+                    });
+    
+        },[savingSource])
 
     return(
         <>
@@ -241,13 +312,15 @@ export default function InsuranceCreate() {
             isSearchable={true}
             isClearable={true}
             name="fetchdata.category"
-            dataOptions={SavingCategoryData.saving_category}
+            dataOptions={savingSource}
             errorMessage={errors.fetchdata &&
                 errors.fetchdata.category &&
                 touched.fetchdata &&
                 touched.fetchdata.category &&
                 errors.fetchdata.category.label
             }
+
+            deleteSelectedOption={(data:SavingSrcProps) => deleteAction(data)}
         />
 
     

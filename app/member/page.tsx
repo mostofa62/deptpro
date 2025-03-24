@@ -54,66 +54,61 @@ const Login = () => {
     email: "",
     password: "",
   };
-
+  
   const handleFormSubmit = async (values: any) => {
-    setLoading(true);
-
-    await axios
-      .post(`${url}member-loginpg`, values.user, {
+    try {
+      setLoading(true);
+  
+      const response = await axios.post(`${url}member-loginpg`, values.user, {
         headers: {
           "Content-Type": "application/json",
         },
-      })
-      .then(function (response) {
-        if (response.data.login_status == 1) {
-          const expirationTime = new Date(
-            new Date().getTime() + +response.data.expiresIn * 1000
-          );
-          /*
-    if (typeof window !== 'undefined') {
-      localStorage.setItem("Loguser",response.data.role);
-      //localStorage.setItem('token',response.data.idToken);
-      //localStorage.setItem('expirationTime',expirationTime.getMilliseconds().toString());
-    }*/
-
-          authContext.login(
-            response.data.idToken,
-            expirationTime,
-            response.data.role,
-            response.data.displayName,
-            response.data.localId
-          );
-
-          setCookie("AUTH_DATA", {
-            token: response.data.idToken,
-            role: response.data.role,
-          });
-          /*
-    if(response.data.role == 2){
-      authContext.cleanPreviousOnloggedIn()
-      router.push('/dashboard');
-    }
-    */
-          setLoginStatus(response.data.login_status);
-          setLoginMessage("");
-
-          setLoading(false);
-
-          router.push("/member/dashboard");
-        } else {
-          setLoading(false);
-
-          setLoginStatus(response.data.login_status);
-          setLoginMessage(response.data.message);
-        }
-      })
-      .catch(function (error) {
-        //console.log(error);
-        setLoading(false);
-        setLoginStatus(0);
-        setLoginMessage(error);
       });
+  
+      if (response.data.login_status === 1) {
+        const expirationTime = new Date(
+          new Date().getTime() + +response.data.expiresIn * 1000
+        );
+  
+        authContext.login(
+          response.data.idToken,
+          expirationTime,
+          response.data.role,
+          response.data.displayName,
+          response.data.localId
+        );
+  
+        setCookie("AUTH_DATA", {
+          token: response.data.idToken,
+          role: response.data.role,
+        });
+  
+        setLoginStatus(response.data.login_status);
+        setLoginMessage("");
+        router.push("/member/dashboard");
+      } else {
+        setLoginStatus(response.data.login_status);
+        setLoginMessage(response.data.message);
+      }
+    } catch (error: any) {
+      setLoginStatus(0);
+  
+      if (error.response) {
+        setLoginMessage(
+          error.response.data?.message || "Something went wrong. Please try again later."
+        );
+      } else if (error.request) {
+        setLoginMessage(
+          "Server is not responding. Please check your internet connection or try again later."
+        );
+      } else {
+        setLoginMessage(error.message || "An unexpected error occurred.");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
+  
 
   return (
     <FullPageLayout>
@@ -151,7 +146,8 @@ const Login = () => {
               </h2>
               <div className="h-6 lmd:my-3">
                 {(loginStatus > 1 || loginStatus < 1) && (
-                  <span className="font-semibold text-center text-[#B45454]">
+                  <span className="font-semibold break-words whitespace-normal
+ text-center text-[#B45454]">
                     {loginMessage}
                   </span>
                 )}
