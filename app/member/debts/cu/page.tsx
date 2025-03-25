@@ -1,7 +1,7 @@
 "use client";
 import DefaultLayout from "@/app/layout/DefaultLayout";
 import Link from "next/link";
-import { useState,useEffect, useRef } from "react";
+import { useState,useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import useAuth from '@/app/hooks/useAuth';
 import { useRouter } from "next/navigation";
@@ -19,21 +19,39 @@ import FormikFieldInput from "@/app/components/form/FormikFieldInput";
 import HolderOne from "@/app/layout/HolderOne";
 import DashGrid from "@/app/images/icon/dash-grid";
 import Setting from "@/app/images/icon/setting";
+import { removeConfirmAlert } from "@/app/components/utils/Util";
+import { AlertBox, DeleteActionGlobal } from "@/app/components/grid/useFetchGridData";
+import { confirmAlert } from "react-confirm-alert";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
+
+interface DebtTypeProps{
+    label:string;
+    value:string;
+    bysystem:number;
+}
 export default function InsuranceCreate() {
     const authCtx = useAuth();
     const router = useRouter()
     const formRef = useRef<any>(null);
 
     const [fetchFomrData,setFetchFormData] = useState(DataSchema);
-        
+    
+    const [debtType, setDebtType] = useState<DebtTypeProps[]>([{
+            label:'',
+            value:'',
+            bysystem:0
+        }]);
 
     const fetchdata = fetchFomrData;
 
     const user_id = authCtx.userId;
 
     const DeptTypeData = useFetchDropDownData({urlSuffix:`debttype-dropdownpg/${user_id}`});
+
+    useEffect(()=>{
+        setDebtType(DeptTypeData)
+    },[DeptTypeData])
 
     const handleFormSubmit = async(values:any,{ resetForm,setSubmitting }:any)=>{
         //alert(JSON.stringify(values));
@@ -70,6 +88,58 @@ export default function InsuranceCreate() {
     const handleSubmit = ()=> {
         formRef.current?.handleSubmit();
       }
+
+    const deleteAction=useCallback(async(data:DebtTypeProps)=>{
+            //console.log(data)
+            const id = data.value;
+            const name = data.label;
+            const msg = `Do you want to delete this,${name}?`;
+    
+            confirmAlert({
+                      title: msg,
+                      message: 'Are you sure to do this?',
+                      buttons: [
+                        {
+                          label: 'Yes',
+                          onClick: async()=>{ 
+    
+                                                    //console.log('filter', filterSource,id)
+                            
+                            
+                            DeleteActionGlobal({        
+                              action:'delete-debt-typepg',        
+                              data:{'id':id}
+                            }).then((deletedData)=>{
+                                
+                                AlertBox(deletedData.message, deletedData.deleted_done);
+                               
+            
+                                if(deletedData.deleted_done > 0){
+    
+                                    const filterSource:DebtTypeProps[] = debtType.filter((dt:DebtTypeProps)=>dt.value!==id)
+    
+                                    
+                                    removeConfirmAlert()
+                                    setDebtType(filterSource)
+                                }
+                            })
+                            
+                            
+                          }
+                        },
+                        {
+                          label: 'No',
+                          onClick: () => ()=>{                
+                            removeConfirmAlert()
+                          }
+                        }
+                      ],
+                      closeOnEscape: true,
+                      closeOnClickOutside: true,
+                    
+                    });
+    
+        },[debtType])
 
     return(
         <>
@@ -117,13 +187,15 @@ export default function InsuranceCreate() {
             isSearchable={true}
             isClearable={true}
             name="fetchdata.debt_type"
-            dataOptions={DeptTypeData}
+            dataOptions={debtType}
             errorMessage={errors.fetchdata &&
                 errors.fetchdata.debt_type &&
                 touched.fetchdata &&
                 touched.fetchdata.debt_type &&
                 errors.fetchdata.debt_type.label
             }
+
+            deleteSelectedOption={(data:DebtTypeProps) => deleteAction(data)}
         />
         
         

@@ -1,7 +1,7 @@
 "use client";
 import DefaultLayout from "@/app/layout/DefaultLayout";
 import Link from "next/link";
-import { useState,useEffect, useRef } from "react";
+import { useState,useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import useAuth from '@/app/hooks/useAuth';
 import { useRouter } from "next/navigation";
@@ -21,6 +21,9 @@ import VideoComponent from "@/app/components/utils/VideoComponent";
 import HolderOne from "@/app/layout/HolderOne";
 import Tooltip from "@/app/components/ui/Tooltip";
 import DashGrid from "@/app/images/icon/dash-grid";
+import { removeConfirmAlert } from "@/app/components/utils/Util";
+import { AlertBox, DeleteActionGlobal } from "@/app/components/grid/useFetchGridData";
+import { confirmAlert } from "react-confirm-alert";
 
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -36,6 +39,12 @@ interface PayLoads{
     boost_operation_type:Options[],     
 }
 
+interface SavingSrcProps{
+    label:string;
+    value:string;
+    bysystem:number;
+}
+
 export default function InsuranceCreate() {
     const authCtx = useAuth();
     const user_id = authCtx.userId;
@@ -47,6 +56,12 @@ export default function InsuranceCreate() {
     const [repeatFrequency, setRepeatFrequency] = useState([
         DataSchema.repeat_boost
     ])
+
+    const [savingSource, setSavingSource] = useState<SavingSrcProps[]>([{
+                label:'',
+                value:'',
+                bysystem:0
+            }]);
 
 
     const payload: PayLoads ={
@@ -62,6 +77,12 @@ export default function InsuranceCreate() {
         urlSuffix:`savingcategory-dropdownpg/${user_id}/boost`,
         payLoads:payload
     })
+
+    const saving_boost_source = SavingCategoryData.saving_boost_source
+
+    useEffect(()=>{
+        setSavingSource(saving_boost_source)
+    },[saving_boost_source])
 
     
 
@@ -106,6 +127,59 @@ export default function InsuranceCreate() {
     const handleSubmit = ()=> {
         formRef.current?.handleSubmit();
       }
+
+    const deleteAction=useCallback(async(data:SavingSrcProps)=>{
+                //console.log(data)
+                const id = data.value;
+                const name = data.label;
+                const msg = `Do you want to delete this,${name}?`;
+        
+                confirmAlert({
+                          title: msg,
+                          message: 'Are you sure to do this?',
+                          buttons: [
+                            {
+                              label: 'Yes',
+                              onClick: async()=>{ 
+        
+                                                        //console.log('filter', filterSource,id)
+                                
+                                
+                                DeleteActionGlobal({        
+                                  action:'delete-savingboost-sourcepg',        
+                                  data:{'id':id}
+                                }).then((deletedData)=>{
+                                    
+                                    AlertBox(deletedData.message, deletedData.deleted_done);
+                                   
+                
+                                    if(deletedData.deleted_done > 0){
+        
+                                        const filterSource:SavingSrcProps[] = savingSource.filter((dt:SavingSrcProps)=>dt.value!==id)
+        
+                                        
+                                        removeConfirmAlert()
+                                        setSavingSource(filterSource)
+                                    }
+                                })
+                                
+                                
+                              }
+                            },
+                            {
+                              label: 'No',
+                              onClick: () => ()=>{                
+                                removeConfirmAlert()
+                              }
+                            }
+                          ],
+                          closeOnEscape: true,
+                          closeOnClickOutside: true,
+                        
+                        });
+        
+            },[savingSource])
+    
 
     return(
         <>
@@ -303,13 +377,15 @@ export default function InsuranceCreate() {
             isSearchable={true}
             isClearable={true}
             name="fetchdata.saving_boost_source"
-            dataOptions={SavingCategoryData.saving_boost_source}
+            dataOptions={savingSource}
             errorMessage={errors.fetchdata &&
                 errors.fetchdata.saving_boost_source &&
                 touched.fetchdata &&
                 touched.fetchdata.saving_boost_source &&
                 errors.fetchdata.saving_boost_source.label
             }
+
+            deleteSelectedOption={(data:SavingSrcProps) => deleteAction(data)}
 
             toolTipText={<p className="flex flex-col whitespace-normal leading-normal">
                 <span>Bonus, Commissions, Tips, Treasures</span>
