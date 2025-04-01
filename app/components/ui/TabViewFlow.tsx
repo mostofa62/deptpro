@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import CardHolderDefault from './CardHolderDefault';
+import React, { useState } from "react";
+import CardHolderDefault from "./CardHolderDefault";
 
 interface Tab {
   label: string;
@@ -9,23 +9,34 @@ interface Tab {
 interface TabProps {
   tabs: Tab[];
   title?: string;
-  flow?: 'horizontal' | 'vertical';
+  flow?: "horizontal" | "vertical";
   onChageTab: (index: number) => void;
 }
 
-const TabView = ({ tabs, title, onChageTab, flow = 'horizontal' }: TabProps) => {
+const TabView = ({
+  tabs,
+  title,
+  onChageTab,
+  flow = "horizontal",
+}: TabProps) => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
     <CardHolderDefault>
       <div className="w-full">
-        {title && <span className="text-md capitalize font-medium">{title}</span>}
+        {title && (
+          <span className="text-md capitalize font-medium">{title}</span>
+        )}
 
-        <div className={`flex ${flow === 'vertical' ? 'flex-row gap-4' : 'flex-col'}`}>
+        <div
+          className={`flex ${
+            flow === "vertical" ? "flex-row gap-4" : "flex-col"
+          }`}
+        >
           {/* Tab Labels */}
           <div
             className={`flex ${
-              flow === 'vertical' ? 'flex-col w-1/4' : 'flex-row'
+              flow === "vertical" ? "flex-col w-1/4 mt-8" : "flex-row"
             }`}
           >
             {tabs.map((tab, index) => (
@@ -33,9 +44,9 @@ const TabView = ({ tabs, title, onChageTab, flow = 'horizontal' }: TabProps) => 
                 key={index}
                 className={`px-4 py-2 font-medium text-md focus:outline-none capitalize ${
                   activeTab === index
-                    ? 'border-b-4 border-blue-500 text-blue-600'
-                    : 'border-b-2 border-transparent text-gray-600 hover:text-blue-500'
-                } ${flow === 'vertical' ? 'text-left w-full' : ''}`}
+                    ? "border-b-4 border-blue-500 text-blue-600"
+                    : "border-b-2 border-transparent text-gray-600 hover:text-blue-500"
+                } ${flow === "vertical" ? "text-left w-full" : ""}`}
                 onClick={() => {
                   setActiveTab(index);
                   onChageTab(index);

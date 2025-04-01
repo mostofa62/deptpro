@@ -1,30 +1,30 @@
-import TooltipOne from '@/app/components/ui/TooltipOne';
-import React, { useState } from 'react';
+import TooltipOne from "@/app/components/ui/TooltipOne";
+import React, { useState } from "react";
 
-type Crypto = 'BTC' | 'ETH' | 'BNB' | 'SOL' | 'XRP' | 'USDT';
+type Crypto = "BTC" | "ETH" | "BNB" | "SOL" | "XRP" | "USDT";
 
-type InvestType = 'invest' | 'invested';
+type InvestType = "invest" | "invested";
 
 const CryptoReturnCalculator: React.FC = () => {
-  const [investType, setInvestType] = useState<InvestType>('invest');
-  const [coin, setCoin] = useState<Crypto>('BTC');
-  const [amount, setAmount] = useState<number | ''>('');
-  const [futurePrice, setFuturePrice] = useState<number | ''>('');
-  const [date, setDate] = useState<string>('');
-  const [result, setResult] = useState<string>('');
+  const [investType, setInvestType] = useState<InvestType>("invest");
+  const [coin, setCoin] = useState<Crypto>("BTC");
+  const [amount, setAmount] = useState<number | "">("");
+  const [futurePrice, setFuturePrice] = useState<number | "">("");
+  const [date, setDate] = useState<string>("");
+  const [result, setResult] = useState<string>("");
 
   const calculateReturn = async () => {
     const currentPrice = await fetchCurrentPrice(coin);
 
-    if (investType === 'invest') {
-      if (typeof amount === 'number' && typeof futurePrice === 'number') {
+    if (investType === "invest") {
+      if (typeof amount === "number" && typeof futurePrice === "number") {
         const coinsOwned = amount / currentPrice;
         const resultValue = coinsOwned * futurePrice;
         displayResult(investType, amount, coin, futurePrice, date, resultValue);
       }
     } else {
       const historicalPrice = await fetchHistoricalPrice(coin, new Date(date));
-      if (typeof amount === 'number' && typeof futurePrice === 'number') {
+      if (typeof amount === "number" && typeof futurePrice === "number") {
         const coinsOwned = amount / historicalPrice;
         const resultValue = coinsOwned * futurePrice;
         displayResult(investType, amount, coin, futurePrice, date, resultValue);
@@ -40,17 +40,25 @@ const CryptoReturnCalculator: React.FC = () => {
     date: string,
     resultValue: number
   ) => {
-    let resultText = '';
-    if (investType === 'invest') {
-      resultText = `If you invest $${amount.toFixed(2)} in ${coin} and it goes to $${futurePrice.toFixed(2)},`;
+    let resultText = "";
+    if (investType === "invest") {
+      resultText = `If you invest $${amount.toFixed(
+        2
+      )} in ${coin} and it goes to $${futurePrice.toFixed(2)},`;
     } else {
-      resultText = `If you invested $${amount.toFixed(2)} in ${coin} on ${new Date(date).toDateString()} and it goes to $${futurePrice.toFixed(2)},`;
+      resultText = `If you invested $${amount.toFixed(
+        2
+      )} in ${coin} on ${new Date(
+        date
+      ).toDateString()} and it goes to $${futurePrice.toFixed(2)},`;
     }
 
     resultText += ` it would be worth $${resultValue.toFixed(2)}.<br>`;
     const profit = resultValue - amount;
     const returnPercentage = (profit / amount) * 100;
-    resultText += `Total profit: $${profit.toFixed(2)} (${returnPercentage.toFixed(2)}%)`;
+    resultText += `Total profit: $${profit.toFixed(
+      2
+    )} (${returnPercentage.toFixed(2)}%)`;
 
     setResult(resultText);
   };
@@ -91,26 +99,39 @@ const CryptoReturnCalculator: React.FC = () => {
     <div className="min-h-screen bg-gray-50">
       <div className="bg-white p-8 rounded-md shadow-md w-full border flex flex-col gap-1">
         <h1 className="text-center text-[#42acd8] font-semibold text-2xl mb-1 flex gap-2 items-center justify-center">
-            Crypto Return Calculator
-            
+          Crypto Return Calculator
         </h1>
 
-        <p className='flex gap-2 items-center justify-center'>
-            <span>Estimate the value of buying and selling crypto</span>
+        <p className="flex gap-2 items-center justify-center">
+          <span>Estimate the value of buying and selling crypto</span>
 
-            <TooltipOne text={<div className='flex flex-col gap-1 items-start justify-center'>
-                <p className="whitespace-normal leading-normal">Disclosure: This is an estimate for educational purposes only.</p>
-                <p className="whitespace-normal leading-normal">Please contact your crypto stock-trading advisors for full details and results.</p>            
-            </div>} />
+          <TooltipOne
+            text={
+              <div className="flex flex-col gap-1 items-start justify-center">
+                <p className="whitespace-normal leading-normal">
+                  Disclosure: This is an estimate for educational purposes only.
+                </p>
+                <p className="whitespace-normal leading-normal">
+                  Please contact your crypto stock-trading advisors for full
+                  details and results.
+                </p>
+              </div>
+            }
+          />
         </p>
 
         <div className="mb-4 mt-4">
-          <label htmlFor="investType" className="block text-black font-semibold mb-2">If You:</label>
+          <label
+            htmlFor="investType"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
+            If You:
+          </label>
           <select
             id="investType"
             value={investType}
             onChange={(e) => setInvestType(e.target.value as InvestType)}
-            className="w-full p-3 border-2 border-blue-500 rounded-xl mb-4"
+            className="w-full p-3 border rounded-md mb-4 focus:border-[#42acd8]  focus:outline-none focus:ring-[#42acd8]"
           >
             <option value="invest">Invest</option>
             <option value="invested">Invested</option>
@@ -118,12 +139,17 @@ const CryptoReturnCalculator: React.FC = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="coin" className="block text-black font-semibold mb-2">Cryptocurrency:</label>
+          <label
+            htmlFor="coin"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Cryptocurrency:
+          </label>
           <select
             id="coin"
             value={coin}
             onChange={(e) => setCoin(e.target.value as Crypto)}
-            className="w-full p-3 border-2 border-blue-500 rounded-xl mb-4"
+            className="w-full p-3 border focus:border-[#42acd8]  focus:outline-none focus:ring-[#42acd8] rounded-md mb-4"
           >
             <option value="BTC">Bitcoin (BTC)</option>
             <option value="ETH">Ethereum (ETH)</option>
@@ -135,32 +161,51 @@ const CryptoReturnCalculator: React.FC = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="amount" className="block text-black font-semibold mb-2">Total Investment ($):</label>
+          <label
+            htmlFor="amount"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Total Investment ($):
+          </label>
           <input
             type="number"
             id="amount"
             value={amount}
-            onChange={(e) => setAmount(e.target.value ? parseFloat(e.target.value) : '')}
+            onChange={(e) =>
+              setAmount(e.target.value ? parseFloat(e.target.value) : "")
+            }
             placeholder="Enter amount"
-            className="w-full p-3 border-2 border-blue-500 rounded-xl mb-4"
+            className="w-full p-3 border focus:border-[#42acd8]  focus:outline-none focus:ring-[#42acd8] rounded-md"
           />
         </div>
 
         <div className="mb-4">
-          <label htmlFor="futurePrice" className="block text-black font-semibold mb-2">And it goes to ($):</label>
+          <label
+            htmlFor="futurePrice"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
+            And it goes to ($):
+          </label>
           <input
             type="number"
             id="futurePrice"
             value={futurePrice}
-            onChange={(e) => setFuturePrice(e.target.value ? parseFloat(e.target.value) : '')}
+            onChange={(e) =>
+              setFuturePrice(e.target.value ? parseFloat(e.target.value) : "")
+            }
             placeholder="Enter future price"
-            className="w-full p-3 border-2 border-blue-500 rounded-xl mb-4"
+            className="w-full p-3 border focus:border-[#42acd8]  focus:outline-none focus:ring-[#42acd8] rounded-md"
           />
         </div>
 
-        {investType === 'invested' && (
+        {investType === "invested" && (
           <div className="mb-4">
-            <label htmlFor="date" className="block text-black font-semibold mb-2">Purchase Date:</label>
+            <label
+              htmlFor="date"
+              className="block text-black font-semibold mb-2"
+            >
+              Purchase Date:
+            </label>
             <input
               type="date"
               id="date"

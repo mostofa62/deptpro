@@ -1,6 +1,7 @@
 import CardHolder from "@/app/components/ui/CardHolder";
 import {
   formatLargeNumber,
+  generateUniqueColors,
   hashString,
   hslToHex,
 } from "@/app/components/utils/Util";
@@ -146,6 +147,13 @@ const SavingProjection = ({ userid }: TotalProps) => {
 
   const [maxHeight, setMaxHeight] = useState<number>(450);
 
+  let uniquecolors_savings: any = [];
+  if (lineData.length > 0 && lineData[0]) {
+    const savings_ids = Object.keys(lineData[0]).map((item: any) => item);
+
+    uniquecolors_savings = generateUniqueColors(savings_ids);
+  }
+
   return (
     <>
       {lineData.length > 0 && (
@@ -183,7 +191,7 @@ const SavingProjection = ({ userid }: TotalProps) => {
                             ? 3
                             : 1
                         }
-                        stroke={getColorForDebtType(key)} // Ensure this function is defined elsewhere
+                        stroke={uniquecolors_savings[key]} // Ensure this function is defined elsewhere
                         activeDot={{ r: 5 }}
                       />
                     ))}

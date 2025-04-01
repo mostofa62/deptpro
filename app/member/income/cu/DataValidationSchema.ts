@@ -45,7 +45,9 @@ export const DataLabel = {
   total_monthly_net_income:'Total Monthly Net Income',
   total_monthly_gross_income:'Total Monthly  Gross Income',
 
-  total_yearly_net_income:'Total Yearly Net Income'
+  total_yearly_net_income:'Total Yearly Net Income',
+
+  net_income_boost_monthly:'Monthly Income Boost'
 
   //close:'Close Account?'
   

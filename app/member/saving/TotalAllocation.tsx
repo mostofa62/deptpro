@@ -297,13 +297,26 @@ const TotalAllocation = ({ userid }: TotalProps) => {
 
   const uniquecolors = generateUniqueColors(ids);
 
-  const idsline = lineData.map((item: any) => item._id);
+  //const idsline = lineData.map((item: any) => item._id);
+
+  let uniquecolors_savings: any = [];
+  if (lineData.length > 0 && lineData[0]) {
+    const savings_ids = Object.keys(lineData[0]).map((item: any) => item);
+
+    uniquecolors_savings = generateUniqueColors(savings_ids);
+  }
 
   // const uniquecolorsLine = generateUniqueColors(idsline);
 
   return (
     <div className="flex flex-col py-2 lg:flex-row gap-2.5">
-      <div className={isTab && !isMobile ? `flex flex-row gap-2`:`flex flex-col gap-2.5 lg:flex-row lg:w-[60%] lg:gap-2.5`} >
+      <div
+        className={
+          isTab && !isMobile
+            ? `flex flex-row gap-2`
+            : `flex flex-col gap-2.5 lg:flex-row lg:w-[60%] lg:gap-2.5`
+        }
+      >
         <div
           className="w-full md:w-[45%]"
           ref={(el) => (itemRefs.current[0] = el)}
@@ -444,7 +457,7 @@ const TotalAllocation = ({ userid }: TotalProps) => {
                               ? 3
                               : 1
                           }
-                          stroke={getColorForDebtType(key)} // Ensure this function is defined elsewhere
+                          stroke={uniquecolors_savings[key]} // Ensure this function is defined elsewhere
                           activeDot={{ r: 5 }}
                         />
                       ))}

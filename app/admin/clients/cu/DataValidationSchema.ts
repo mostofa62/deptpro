@@ -6,7 +6,7 @@ export const DataSchema = {
   email:'',
   phone:'',
   password:'',
-
+  role:{'label':'','value':''},
 };
 
 export const DataLabel = {
@@ -15,7 +15,8 @@ export const DataLabel = {
   email:'Email',
   phone:'Phone',
   password:'Password',
-  created_at:'Date added'
+  created_at:'Date added',
+  role:'Role'
 }
 
 export const ValidationSchema =  object().shape({
@@ -68,6 +69,11 @@ export const ValidationSchema =  object().shape({
               .required(`${DataLabel.password} is required`)
       }
     }),
+
+    role:object().shape({
+                    value: string().required(),
+                    label: string().required(`${DataLabel.role} is required`)
+                  }),
     
               
              

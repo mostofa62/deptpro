@@ -7,7 +7,11 @@ import DefaultLayout from "@/app/layout/DefaultLayout";
 import { useCallback, useEffect, useState } from "react";
 
 import ProgressBarTwo from "@/app/components/ui/ProgressBarTwo";
-import { hashString, hslToHex } from "@/app/components/utils/Util";
+import {
+  generateUniqueColors,
+  hashString,
+  hslToHex,
+} from "@/app/components/utils/Util";
 import TreasureBox from "@/app/images/icon/treasurebox";
 import axios from "axios";
 import dynamic from "next/dynamic";
@@ -65,7 +69,7 @@ export default function DashBoard() {
   const [transactioData, setTransactionData] = useState({
     debt_list: [],
     debt_total_balance: 0,
-    total_net_income: 0,    
+    total_net_income: 0,
     total_wealth: 0,
     total_saving: 0,
     debt_to_wealth: 0,
@@ -97,6 +101,44 @@ export default function DashBoard() {
       d.amount.toString().length > 4 ? d.amount.toString().length : 4
     )
   );
+
+  const debt_ids = transactioData.debt_list.map((item: any) => item.id);
+
+  const uniquecolors_debt = generateUniqueColors(debt_ids);
+
+  const [isHovered, setIsHovered] = useState(false);
+  const wealthScore = transactioData.debt_to_wealth;
+
+  // Determine wealth score message
+  const getWealthScoreMessage = (score: number) => {
+    if (score >= 80) {
+      return {
+        result: "Wealth Score 80-100",
+        recommendation:
+          "Fantastic! Continue allocating wisely between savings and debt repayment.",
+      };
+    } else if (score >= 60) {
+      return {
+        result: "Wealth Score 60-79",
+        recommendation:
+          "Good progress! Boost your score by increasing your savings rate or paying down debt faster.",
+      };
+    } else if (score >= 40) {
+      return {
+        result: "Wealth Score 40-59",
+        recommendation:
+          "Fair. Reduce discretionary spending allocating more to savings and debt repayment as possible.",
+      };
+    } else {
+      return {
+        result: "Wealth Score 0-39",
+        recommendation:
+          "Rethink your approach. Decrease any discretionary income possible. Apply any extra toward debt payoff & savings.",
+      };
+    }
+  };
+
+  const { result, recommendation } = getWealthScoreMessage(wealthScore);
 
   return (
     <>
@@ -151,12 +193,33 @@ export default function DashBoard() {
                 </div>
 
                 <div className="w-full md:w-[25%] flex items-center justify-center">
-                  <TreasureBox
-                    height={isMobile ? 140 : 180}
-                    treasureValue={transactioData.debt_to_wealth}
-                    fontSize={isMobile ? 35 : 50}
-                    color="#47E535"
-                  />
+                  <div
+                    className="relative inline-block cursor-pointer"
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                  >
+                    {/* Tooltip */}
+                    <div
+                      className={` absolute left-1/2 top-[-60px] w-72 -translate-x-1/2 flex flex-col rounded-lg bg-[#43ACD6] p-3 text-white  shadow-lg transition-all duration-300 ease-in-out ${
+                        isHovered
+                          ? "opacity-100 scale-100 translate-y-0 visible"
+                          : "opacity-0 scale-95 translate-y-20 invisible"
+                      }`}
+                    >
+                      <p className="font-bold">
+                        Wealth Score Result: {wealthScore}
+                      </p>
+                      <p className="font-semibold">{result}</p>
+                      <p className="text-sm">{recommendation}</p>
+                    </div>
+                    <TreasureBox
+                      height={isMobile ? 140 : 180}
+                      treasureValue={wealthScore}
+                      fontSize={isMobile ? 35 : 50}
+                      color="#47E535"
+                    />
+                    {/* {isHovered ? "yes" : "no"} */}
+                  </div>
                 </div>
               </div>
             </CardHolder>
@@ -186,14 +249,10 @@ export default function DashBoard() {
                             <div
                               key={i}
                               style={{ color: `${gdata.color}` }}
-                              className={`flex gap-2 w-[90%] font-semibold text-[14px]`}
+                              className={`flex w-[90%] font-semibold text-[14px]`}
                             >
-                              <span className="w-[40%] text-right">
-                                {gdata.range}
-                              </span>
-                              <span className="w-[60%] text-left">
-                                {gdata.name}
-                              </span>
+                              <span className="w-[30%]">{gdata.name}</span>
+                              <span className="w-[50%]">{gdata.range}</span>
                             </div>
                           );
                         })}
@@ -216,7 +275,7 @@ export default function DashBoard() {
                         <DataProgress
                           title={dp.title}
                           progress={dp.progress}
-                          color={getColorForDebtType(dp.id)}
+                          color={uniquecolors_debt[dp.id]}
                           amount={dp.amount}
                           maxProgressLength={maxProgressLength}
                           maxAmountLength={maxAmountLength}
