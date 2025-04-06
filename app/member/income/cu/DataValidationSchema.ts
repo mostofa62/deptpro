@@ -42,10 +42,11 @@ export const DataLabel = {
   total_gross_income:'Total Gross Income',
   total_net_income:'Total Net Income',
 
-  total_monthly_net_income:'Total Monthly Net Income',
-  total_monthly_gross_income:'Total Monthly  Gross Income',
+  monthly_net_income:'Monthly Net Income',
+  monthly_gross_income:'Monthly  Gross Income',
 
-  total_yearly_net_income:'Total Yearly Net Income',
+  yearly_net_income:'Yearly Net Income',
+  yearly_gross_income:'Yearly Gross Income',
 
   net_income_boost_monthly:'Monthly Income Boost'
 
@@ -97,6 +98,12 @@ export const ValidationSchema =  object().shape({
               income_source:object().shape({
                 value: string().required(),
                 label: string().required(`${DataLabel.income_source} is required`)
+              }),
+
+              repeat:object().shape({
+                value: number()
+                .moreThan(0, `${DataLabel.repeat} is required`), // use label message here
+                label: string().required(`${DataLabel.repeat} is required`)
               }),
 
              

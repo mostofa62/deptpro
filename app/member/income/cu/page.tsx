@@ -352,7 +352,7 @@ export default function IncomeCreate() {
             errors.fetchdata.repeat &&
             touched.fetchdata &&
             touched.fetchdata.repeat &&
-            errors.fetchdata.repeat.label
+            errors.fetchdata.repeat.value
         }
     />
         
