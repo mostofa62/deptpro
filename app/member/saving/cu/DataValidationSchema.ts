@@ -129,6 +129,12 @@ export const ValidationSchema =  object().shape({
                 label: string().required(`${DataLabel.interest_type} is required`)
               }),
 
+              repeat:object().shape({
+                value: number()
+                .moreThan(0, `${DataLabel.repeat} is required`), // use label message here
+                label: string().required(`${DataLabel.repeat} is required`)
+              }),
+
              
 
               goal_amount: number().min(0,`${DataLabel.goal_amount} least 0`)              
