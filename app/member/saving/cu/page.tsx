@@ -91,8 +91,8 @@ export default function InsuranceCreate() {
   ) => {
     //alert(JSON.stringify(values));
 
-    await axios
-      .post(
+    try {
+      const response = await axios.post(
         `${url}save-saving-accountpg`,
         { user_id, ...values.fetchdata },
         {
@@ -100,24 +100,31 @@ export default function InsuranceCreate() {
             "Content-Type": "application/json",
           },
         }
-      )
-      .then(function (response) {
-        //console.log(response);
+      );
 
-        if (response.data.result > 0) {
-          setSubmitting(false);
-          toast.success(response.data.message);
-          //resetForm();
-          router.push("/member/saving");
-        } else {
-          setSubmitting(true);
-          toast.error(response.data.message);
-        }
-      })
-      .catch(function (error) {
-        toast.error(error);
-        //console.log(error);
-      });
+      if (response.data.result > 0) {
+        setSubmitting(false);
+        toast.success(response.data.message);
+        // resetForm();
+        router.push("/member/saving");
+      } else {
+        setSubmitting(true);
+        toast.error(response.data.message);
+      }
+    } catch (error: any) {
+      if (error.response) {
+        toast.error(
+          error.response.data?.message ||
+            "Something went wrong. Please try again later."
+        );
+      } else if (error.request) {
+        toast.error(
+          "Server is not responding. Please check your internet connection or try again later."
+        );
+      } else {
+        toast.error(error.message || "An unexpected error occurred.");
+      }
+    }
   };
 
   const handleSubmit = () => {

@@ -243,7 +243,7 @@ export default function DashBoard() {
                       />
                     </div>
                     <div className="w-[100%] ml-3">
-                      <div className="flex flex-col justify-center items-center mt-6 gap-0.5">
+                      <div className="flex flex-col justify-center items-center lmd:mt-6 md:mt-6 gap-0.5">
                         {GaugeData.map((gdata, i) => {
                           return (
                             <div
@@ -251,8 +251,12 @@ export default function DashBoard() {
                               style={{ color: `${gdata.color}` }}
                               className={`flex w-[90%] font-semibold text-[14px]`}
                             >
-                              <span className="w-[30%]">{gdata.name}</span>
-                              <span className="w-[50%]">{gdata.range}</span>
+                              <span className="lmd:w-[30%] md:w-[30%] w-full">
+                                {gdata.name}
+                              </span>
+                              <span className="lmd:w-[50%] md:w-[50%] w-full">
+                                {gdata.range}
+                              </span>
                             </div>
                           );
                         })}

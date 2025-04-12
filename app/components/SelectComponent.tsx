@@ -1,7 +1,7 @@
-import { useField } from 'formik';
-import { useState } from 'react';
-import { components } from 'react-select';
-import CreatableSelect from 'react-select/creatable';
+import { useField } from "formik";
+import { useState } from "react";
+import { components } from "react-select";
+import CreatableSelect from "react-select/creatable";
 
 interface SelectProps {
   defaultValueArray: any;
@@ -13,11 +13,12 @@ interface SelectProps {
   options: Array<Object>;
   onParentChange: (value: any, name: any) => void;
   onBlur?: (e: any) => void;
-  deleteSelectedOption?: (data: any) => void;  // Optional delete function
+  deleteSelectedOption?: (data: any) => void; // Optional delete function
 }
 
 const containerStyle = "flex flex-col gap-4 w-full bg-white dark:bg-form-input";
-const controlStyles = "z-25 w-full appearance-none rounded border border-stroke bg-transparent pt-1 px-8 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input";
+const controlStyles =
+  "z-25 w-full appearance-none rounded border border-stroke bg-transparent pt-1 px-8 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input";
 const valueContainerStyle = "text-black dark:text-white";
 const placeholderStyle = "text-center text-black dark:text-white";
 const singleValueStyle = "text-black dark:text-white";
@@ -25,19 +26,19 @@ const singleValueStyle = "text-black dark:text-white";
 const customStyles = {
   control: (provided: any, state: any) => ({
     ...provided,
-    boxShadow: 'none',
-    borderColor: state.isFocused ? '#0a4a82' : '#DFDFDF', // Change the border color here
-    '&:hover': {
-      borderColor: state.isFocused ? '#0a4a82' : '#DFDFDF', // Change the border color on hover
+    boxShadow: "none",
+    borderColor: state.isFocused ? "#0a4a82" : "#DFDFDF", // Change the border color here
+    "&:hover": {
+      borderColor: state.isFocused ? "#0a4a82" : "#DFDFDF", // Change the border color on hover
     },
   }),
   input: (provided: any) => ({
     ...provided,
-    boxShadow: 'none', // Remove the outline from the input element
+    boxShadow: "none", // Remove the outline from the input element
   }),
   option: (provided: any, state: any) => ({
     ...provided,
-    marginLeft: state.data.isChild ? '10px' : '0px', // Indent children
+    marginLeft: state.data.isChild ? "10px" : "0px", // Indent children
   }),
 };
 
@@ -50,7 +51,8 @@ const CustomOption = (props: any) => {
   //console.log('isBySystem',isBySystem,data.bysystem)
 
   // Destructure the `deleteSelectedOption` from props
-  const { deleteSelectedOption, setValue, onParentChange, fieldName } = innerProps;
+  const { deleteSelectedOption, setValue, onParentChange, fieldName } =
+    innerProps;
 
   return (
     <components.Option {...props}>
@@ -61,16 +63,18 @@ const CustomOption = (props: any) => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <span style={{ fontWeight: data.isChild ? 'normal' : '500' }}>{data.label}</span>
+        <span style={{ fontWeight: data.isChild ? "normal" : "500" }}>
+          {data.label}
+        </span>
         {!isBySystem && isHovered && (
           <svg
             className="w-5 h-5 text-[#ff0000] cursor-pointer"
             onClick={(e) => {
-              e.stopPropagation()
+              e.stopPropagation();
               if (deleteSelectedOption) {
                 deleteSelectedOption(data);
-                setValue(null);  // Call delete function if passed
-                onParentChange(null, fieldName)
+                setValue(null); // Call delete function if passed
+                onParentChange(null, fieldName);
               }
               //console.log(`Delete option: ${data.label}`);
             }}
@@ -108,13 +112,12 @@ const SelectComponent = (props: SelectProps) => {
         Option: (props) => (
           <CustomOption
             {...props} // Ensure all props (including data) are passed
-            innerProps={{ 
-              ...props.innerProps, 
-              deleteSelectedOption, 
+            innerProps={{
+              ...props.innerProps,
+              deleteSelectedOption,
               setValue,
               onParentChange,
-              fieldName:field.name
-               
+              fieldName: field.name,
             }} // Pass deleteSelectedOption inside innerProps
           />
         ),
@@ -129,7 +132,7 @@ const SelectComponent = (props: SelectProps) => {
       value={state?.value}
       onChange={(value, action) => {
         setTouched(true);
-        if (action.action === 'clear') {
+        if (action.action === "clear") {
           setValue(props.defaultValueArray);
           props.onParentChange(props.defaultValueArray, action.name);
         } else {
@@ -138,7 +141,7 @@ const SelectComponent = (props: SelectProps) => {
         }
       }}
       options={props.options}
-      onBlur={handleMenuToggle}
+      //onBlur={handleMenuToggle}
       menuIsOpen={menuIsOpen} // Pass the state to control whether the menu is open
       onMenuOpen={handleMenuToggle} // Open the menu
       onMenuClose={handleMenuToggle} // Close the menu

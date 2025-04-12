@@ -49,6 +49,7 @@ export const DataLabel = {
                   async function (value) {
                     const { bill, type } = this.parent;
                     if (!bill || !bill.value || !value || !type || !type.value ) return true; // Skip validation if fields are not set
+                    if(type && type.value && type.value < 2) return true;
 
                     try {
                       const response = await axios.post(`${url}bill-amount-validationpg`, {
