@@ -64,15 +64,25 @@ export function middleware(request: NextRequest) {
         }
       }
     }else {
+
+      
+      
       // Handle the case where no role is found
       if (url.pathname.startsWith('/admin') && url.pathname !== '/admin') {
         url.pathname = '/admin'; // Redirect to default admin path
         return NextResponse.redirect(url);
       }
       if (url.pathname.startsWith('/member') && url.pathname !== '/member') {
-        url.pathname = '/member'; // Redirect to default member path
-        return NextResponse.redirect(url);
+        const isRegistration = url.pathname.endsWith('registration');
+        const targetPath = isRegistration ? '/member/registration' : '/member';
+
+        if (url.pathname !== targetPath) {
+          url.pathname = targetPath;
+          return NextResponse.redirect(url);
+        }
       }
+
+      
       // If the path is '/', redirect to a default page
       if (url.pathname === '/' && url.pathname !== '/'  || url.pathname === '') {
         url.pathname = '/'; // Redirect to member path by default

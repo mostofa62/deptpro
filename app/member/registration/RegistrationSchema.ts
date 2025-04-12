@@ -1,6 +1,6 @@
 import { object, array, string, number, StringSchema } from "yup";
 import axios from "axios";
-const url = process.env.api_url;
+const url = process.env.NEXT_PUBLIC_API_URL;
 export const DataSchema = {
     name:'',
     email:'',
