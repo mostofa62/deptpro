@@ -63,6 +63,18 @@ export function middleware(request: NextRequest) {
           return NextResponse.redirect(url);
         }
       }
+      if(url.pathname.endsWith('registration')){
+
+        console.log('here', role)
+
+        if (role < 10) {
+          url.pathname = '/admin/dashboard';
+        } else if (role >= 10) {
+          url.pathname = '/member/dashboard';
+        }
+        return NextResponse.redirect(url);
+
+      }
     }else {
 
       
