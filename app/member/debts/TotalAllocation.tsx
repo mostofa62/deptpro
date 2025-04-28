@@ -203,6 +203,11 @@ const TotalAllocation = ({userid}:TotapProps) => {
     const ids = data.map((item :any)=> item.id);
     
     const uniquecolors = generateUniqueColors(ids);
+
+    const debt_type_keys = Object.keys(debt_type_names);
+
+    const uniquecolors_debt = generateUniqueColors(debt_type_keys);
+
     return (
     <div className="flex flex-col lg:flex-row gap-2.5">
         <div className="w-full lg:w-[40%]" ref={el => (itemRefs.current[0] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
@@ -291,7 +296,7 @@ const TotalAllocation = ({userid}:TotapProps) => {
                   dataKey={key}
                   dot={false}
                   strokeWidth={highlightedKey!=null && highlightedKey === key ?3:1}
-                  stroke={uniquecolors[key]} // Ensure this function is defined elsewhere
+                  stroke={uniquecolors_debt[key]} // Ensure this function is defined elsewhere
                   activeDot={{ r: 5 }}
                 />
               ))}
