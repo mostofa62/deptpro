@@ -142,24 +142,26 @@ export const ValidationSchema =  object().shape({
                 label: string().required(`${DataLabel.debt_type} is required`)
               }),
 
-              balance: number().min(0,`${DataLabel.balance} least 0`)              
-              .required(`${DataLabel.balance} is required`),/*
+              balance: number().min(1,`${DataLabel.balance} least 1`)              
+              .required(`${DataLabel.balance} is required`)
               .test(
                 'is-less-than-limits',
-                `${DataLabel.current_balance} cannot exceed ${DataLabel.credit_limit} or ${DataLabel.beginning_balance}`,
+                `${DataLabel.balance} cannot exceed ${DataLabel.highest_balance}`,
                 function (value) {
-                  const { credit_limit, beginning_balance } = this.parent;
-                  return value <= credit_limit && value <= beginning_balance;
+                  const { highest_balance } = this.parent;
+                  return value <= highest_balance;
                 }
-              ),*/
+              ),
 
-              highest_balance: number().min(0,`${DataLabel.highest_balance} least 0`)              
+              highest_balance: number().min(1,`${DataLabel.highest_balance} least 1`)              
               .required(`${DataLabel.highest_balance} is required`),
 
-              minimum_payment: number().min(0,`${DataLabel.minimum_payment} least 0`)              
+              /*
+              minimum_payment: number().min(1,`${DataLabel.minimum_payment} least 1`)              
               .required(`${DataLabel.minimum_payment} is required`),
+              */
 
-              monthly_payment: number().min(0,`${DataLabel.monthly_payment} least 0`)              
+              monthly_payment: number().min(1,`${DataLabel.monthly_payment} least 1`)              
               .required(`${DataLabel.monthly_payment} is required`),
 
               // credit_limit: number().min(0,`${DataLabel.credit_limit} least 0`)              
@@ -167,7 +169,7 @@ export const ValidationSchema =  object().shape({
 
               credit_limit: 
               number()
-              .min(0, `${DataLabel.credit_limit} must be at least 0`)
+              .min(1, `${DataLabel.credit_limit} must be at least 1`)
               .required(`${DataLabel.credit_limit} is required`)
               .test(
                 'credit-limit-check',
@@ -217,25 +219,33 @@ export const ValidationSchemaUpdate =  object().shape({
                 label: string().required(`${DataLabelUpdate.debt_type} is required`)
               }),
 
-              balance: number().min(0,`${DataLabelUpdate.balance} least 0`)              
-              .required(`${DataLabelUpdate.balance} is required`),/*
+              balance: number().min(1,`${DataLabelUpdate.balance} least 1`)              
+              .required(`${DataLabelUpdate.balance} is required`)
               .test(
                 'is-less-than-limits',
-                `${DataLabel.current_balance} cannot exceed ${DataLabel.credit_limit} or ${DataLabel.beginning_balance}`,
+                `${DataLabel.balance} cannot exceed ${DataLabel.highest_balance}`,
                 function (value) {
-                  const { credit_limit, beginning_balance } = this.parent;
-                  return value <= credit_limit && value <= beginning_balance;
+                  const { highest_balance } = this.parent;
+                  return value <= highest_balance;
                 }
-              ),*/
+              ),
 
-              highest_balance: number().min(0,`${DataLabelUpdate.highest_balance} least 0`)              
+              highest_balance: number().min(1,`${DataLabelUpdate.highest_balance} least 1`)              
               .required(`${DataLabelUpdate.highest_balance} is required`),
 
-              monthly_payment: number().min(0,`${DataLabelUpdate.monthly_payment} least 0`)              
+              monthly_payment: number().min(1,`${DataLabelUpdate.monthly_payment} least 1`)              
               .required(`${DataLabelUpdate.monthly_payment} is required`),
 
-              credit_limit: number().min(0,`${DataLabelUpdate.credit_limit} least 0`)              
-              .required(`${DataLabelUpdate.credit_limit} is required`),
+              credit_limit: number().min(1,`${DataLabelUpdate.credit_limit} least 1`)              
+              .required(`${DataLabelUpdate.credit_limit} is required`)
+              .test(
+                'credit-limit-check',
+                `${DataLabel.credit_limit} must be greater than or equal to ${DataLabel.highest_balance}`,
+                function (value) {
+                  const { highest_balance } = this.parent;
+                  return value >= highest_balance;
+                }
+              ),
 
               interest_rate: number().min(0,`${DataLabelUpdate.interest_rate} least 0`)              
               .required(`${DataLabelUpdate.interest_rate} is required`),
