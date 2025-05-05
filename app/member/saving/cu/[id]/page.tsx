@@ -474,19 +474,36 @@ export default function InsuranceCreate({
 
                   <div className="flex flex-col md:flex-row md:mt-[15px]">
                     <div className="w-full md:w-[32%]">
-                      <FormikFieldInput
-                        label={DataLabel.note}
-                        name={`fetchdata.note`}
-                        placeHolder={`${DataLabel.note}`}
-                        errorMessage={
-                          errors.fetchdata &&
-                          errors.fetchdata.note &&
-                          touched.fetchdata &&
-                          touched.fetchdata.note &&
-                          errors.fetchdata.note
-                        }
-                      />
-                    </div>
+                                          <FormikFieldInput
+                                            type="number"
+                                            step="any"
+                                            min={0}
+                                            label={`${DataLabel.financial_freedom_target}`}
+                                            name={`fetchdata.financial_freedom_target`}
+                                            placeHolder={`${DataLabel.financial_freedom_target}`}
+                                            errorMessage={
+                                              errors.fetchdata &&
+                                              errors.fetchdata.financial_freedom_target &&
+                                              touched.fetchdata &&
+                                              touched.fetchdata.financial_freedom_target &&
+                                              errors.fetchdata.financial_freedom_target
+                                            }                        
+                                          />
+                                        </div>
+                                        <div className="w-full md:ml-[24px] md:w-[32%]">
+                                          <FormikFieldInput
+                                            label={DataLabel.note}
+                                            name={`fetchdata.note`}
+                                            placeHolder={`${DataLabel.note}`}
+                                            errorMessage={
+                                              errors.fetchdata &&
+                                              errors.fetchdata.note &&
+                                              touched.fetchdata &&
+                                              touched.fetchdata.note &&
+                                              errors.fetchdata.note
+                                            }
+                                          />
+                                        </div>
                   </div>
 
                   {/*

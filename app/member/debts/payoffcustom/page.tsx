@@ -31,7 +31,12 @@ import {
   MouseSensor,
   TouchSensor,
   DragEndEvent,
+  closestCenter,
 } from "@dnd-kit/core";
+import {
+  restrictToVerticalAxis,
+} from "@dnd-kit/modifiers";
+
 import { SortableContext, arrayMove, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import IconDragVertical from "@/app/images/icon/drag-vertical";
@@ -60,9 +65,12 @@ const Debt = () => {
   const authCtx = useAuth();
   const userid = authCtx.userId;
   const [tableData, setTableData] = useState<DataRow[]>([]);
-  const [currentPage, setCurrentPage] = useState(0); // Page index (0-based)
+  
   const [totalPages, setTotalPages] = useState(0);
   const [pageCount, setPageCount] = useState(0);
+
+  const [activeId, setActiveId] = useState<number | null>(null);
+  const [overId, setOverId] = useState<number | null>(null);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -70,6 +78,42 @@ const Debt = () => {
     pageIndex: 0,
     pageSize: per_page,
   });
+
+  const moveRow = (fromIndex: number, toIndex: number) => {
+    if (toIndex < 0 || toIndex >= tableData.length) return;
+  
+    const newData = arrayMove(tableData, fromIndex, toIndex);
+  
+    // Get source and destination rows in new position
+    const sourceRow = newData[toIndex];        // Moved row
+    const destinationRow = newData[fromIndex]; // Swapped-with row
+  
+    // Swap their custom_payoff_order
+    [sourceRow.custom_payoff_order, destinationRow.custom_payoff_order] = [
+      destinationRow.custom_payoff_order,
+      sourceRow.custom_payoff_order,
+    ];
+  
+    setTableData(newData);
+  
+    const rowsToUpdate = [
+      {
+        id: sourceRow.id,
+        custom_payoff_order: sourceRow.custom_payoff_order,
+      },
+      {
+        id: destinationRow.id,
+        custom_payoff_order: destinationRow.custom_payoff_order,
+      },
+    ];
+  
+    axios
+      .post(`${url}update-payoff-orderpg`, rowsToUpdate)
+      .then((res) => console.log(res.data.message))
+      .catch((err) => console.error("Error updating payoff order:", err));
+  };
+  
+  
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -98,12 +142,48 @@ const Debt = () => {
   }, [fetchData]);
 
   const columns: ColumnDef<DataRow>[] = [
+    /*
     {
       id: "drag", // Unique identifier for the drag column
       header: "", // No header label
       cell: ({ row }) => <IconDragVertical width={20} height={20} />,
     },
-    { accessorKey: "custom_payoff_order", header: "Order" },
+    */
+
+    {
+      id: "actions",
+      header: "",
+      cell: ({ row }) => {
+        const index = tableData.findIndex((r) => r.id === row.original.id);
+    
+        return (
+          <div className="flex gap-2">
+            <button
+              onClick={() => moveRow(index, index - 1)}
+              disabled={index === 0}
+              className="text-sm text-[#43acd6] font-bold disabled:opacity-50"
+            >
+              <svg width={15} height={15} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="size-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+              </svg>
+
+            </button>
+            <button
+              onClick={() => moveRow(index, index + 1)}
+              disabled={index === tableData.length - 1}
+              className="text-sm text-[#43acd6] font-bold disabled:opacity-50"
+            >
+              <svg width={15} height={15} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="size-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
+              </svg>
+
+            </button>
+          </div>
+        );
+      },
+    },
+    
+    /*{ accessorKey: "custom_payoff_order", header: "Order" },*/
     { accessorKey: "name", header: "Name" },
     { accessorKey: "debt_type", header: "Debt Type" },
     {
@@ -212,27 +292,22 @@ const Debt = () => {
           .post(`${url}update-payoff-orderpg`, rowsToUpdate)
           .then((response) => {
             console.log(response.data.message);
+            
           })
           .catch((error) => {
             console.error("Error updating payoff order:", error);
           });
+
+          //handleDragEnd(event);
+          setActiveId(null);
+          setOverId(null);
       }
     }
   };
 
   const rows = table.getRowModel().rows;
 
-  const pageNumbers = getPageNumbers(
-    table.getPageCount(),
-    pagination.pageIndex
-  );
 
-  const handlePageChange = (pageIndex: number) => {
-    setPagination((old) => ({
-      ...old,
-      pageIndex,
-    }));
-  };
 
   return (
     <DefaultLayout>
@@ -249,7 +324,17 @@ const Debt = () => {
         />
 
         <div className="mt-10 p-2 flex flex-col gap-5">
-          <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
+          <DndContext 
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          modifiers={[restrictToVerticalAxis]}
+          onDragStart={(event) => {
+            setActiveId(Number(event.active.id));
+          }}
+          onDragOver={(event) => {
+            setOverId(Number(event.over?.id));
+          }} 
+          onDragEnd={handleDragEnd}>
             <SortableContext items={tableData.map((row) => row.id)}>
               {isMobile || isTab ? (
                 <div className="flex flex-col gap-3">
@@ -346,6 +431,8 @@ const Debt = () => {
                                 key={row.id}
                                 row={row}
                                 getVisibleCells={() => row.getVisibleCells()}
+                                activeId={activeId}
+                                overId={overId}
                               />
                             ))
                         ) : (
@@ -387,12 +474,30 @@ const Debt = () => {
 const SortableRow: React.FC<{
   row: Row<DataRow>;
   getVisibleCells: () => Cell<DataRow, unknown>[];
-}> = ({ row, getVisibleCells }) => {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: row.original.id });
+  activeId: number | null;
+  overId: number | null;
+}> = ({ row, getVisibleCells, activeId, overId }) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: row.original.id });
+
+  const isActiveDragging = row.original.id === activeId;
+  const isSwapping = row.original.id === overId;
+
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    backgroundColor: isActiveDragging
+      ? "#43acd6"
+      : isSwapping
+      ? "#c3f0ca"
+      : "white",
+    color: isActiveDragging ? "#ffffff !important" : "black",
   };
 
   return (
@@ -407,6 +512,7 @@ const SortableRow: React.FC<{
     </tr>
   );
 };
+
 
 const SortableDiv: React.FC<{
   row: Row<DataRow>;

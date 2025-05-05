@@ -24,6 +24,8 @@ export const DataSchema = {
     
     repeat:{'label':'None','value':0},
 
+    financial_freedom_target:0,
+
     note:''
       
 
@@ -51,6 +53,8 @@ export const DataLabel = {
   increase_contribution_by:'Increase Contribution By',
  
   repeat:'Repeat', 
+
+  financial_freedom_target:'Financial Freedom Target',
   
   note:'Note',
 
@@ -99,7 +103,9 @@ export const DataLabelView = {
 
   total_balance_xyz:'Total Balance With Boost',
   
-  note:'Note'
+  note:'Note',
+
+  financial_freedom_target:'Financial Freedom Target'
   
 }
 
@@ -149,6 +155,8 @@ export const ValidationSchema =  object().shape({
 
               interest: number().min(0,`${DataLabel.interest} least 0`)              
               .required(`${DataLabel.interest} is required`),
+              
+              financial_freedom_target: number().min(0,`${DataLabel.interest} least 0`),
 
               starting_amount: number().min(0,`${DataLabel.starting_amount} least 0`)              
               .required(`${DataLabel.starting_amount} is required`),
