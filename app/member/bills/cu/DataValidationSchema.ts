@@ -17,7 +17,7 @@ export interface DataSchemaType  {
   repeat_count:OptionType;
   repeat_frequency:OptionType;
   reminder_days:OptionType;    
-
+  updated_at:string;
 };
 export const DataSchema = {
     name:'',
@@ -29,7 +29,8 @@ export const DataSchema = {
     // repeat:0,
     repeat_count:{'label':'None','value':0},
     repeat_frequency:{'label':'None','value':0},
-    reminder_days:{'label':'Disabled','value':0}    
+    reminder_days:{'label':'Disabled','value':0},
+    updated_at:''    
 
 };
 
@@ -60,7 +61,9 @@ export const DataLabelView = {
   // repeat:'Repeat?',
   //repeat_count:'Every',
   repeat_frequency:'Repeat',
-  reminder_days:'Reminder Notifications SMS-Email*'
+  reminder_days:'Reminder Notifications SMS-Email*',
+  created_at:'Opening Date',
+  updated_at:'Updated Date'
 }
 
 export const ValidationSchema =  object().shape({

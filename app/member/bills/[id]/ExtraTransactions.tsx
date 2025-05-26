@@ -34,7 +34,8 @@ interface DataRow {
     amount: number;       
     due_date_word:string;
     type:string;
-    type_number:number;   
+    type_number:number;
+    repeat_frequency:string;   
 }
 
 const ExtraTransactions = ({bill_id}:DebtProps)=>{
@@ -200,6 +201,11 @@ const ExtraTransactions = ({bill_id}:DebtProps)=>{
                 cell: info => <p>{info.row.original.type_number>1 &&<span>-</span>}<span className='ml-1'>$</span><span>{Intl.NumberFormat('en-US', {
                   minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>
                 
+            },
+
+            {
+              accessorKey: 'repeat_frequency',
+              header: DataLabel.repeat_frequency,
             },
 
             // {

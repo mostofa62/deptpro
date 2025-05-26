@@ -20,10 +20,11 @@ export const DataLabel = {
     bill:'Bill Account',  
     amount:'Bill Amount',
     type:'Type',
-    due_date:'Due Date',
+    due_date:'Next Due Date',
     //comment:'Comment'
     note:'Note',
-    current_amount:'Current Balance'
+    current_amount:'Current Balance',
+    repeat_frequency:'Repeat'
     
   }
   

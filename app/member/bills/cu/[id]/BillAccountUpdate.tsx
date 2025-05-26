@@ -132,9 +132,15 @@ const BillAccountUpdate = ({
             setFieldTouched,
           }) => (
             <Form className="flex flex-col md:mt-1">
-              <p className="text-sm md:text-[16px] text-center md:text-left lmd:text-left uppercase font-medium">
-                Account Details
+              <p className="text-sm flex flex-col md:flex-row md:items-center gap-5 md:text-[16px] uppercase font-medium">
+                <span className="text-center md:text-left">Account Details</span>
+                {fetchdata.updated_at &&
+                <span className="border border-[#C1FF72] flex gap-2 md:text-right md:ml-auto">
+                  <span className="bg-[#C1FF72] text-black captalize px-2">last updated</span><span className="px-2 text-black">{fetchdata.updated_at}</span>
+                </span>
+          }
               </p>
+
 
               <hr className="mt-1 md:mt-2 border-stroke" />
 
