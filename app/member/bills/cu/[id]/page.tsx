@@ -165,6 +165,7 @@ export default function InsuranceCreate({
       content: (
         <BillTransactions
           user_id={user_id}
+          admin_id={admin_id}
           bill_acc_id={id}
           reloadGrid={reloadGrid}
           onPayment={onPaymentHandler}
@@ -227,6 +228,8 @@ export default function InsuranceCreate({
                       amount={transactionData.amount}
                       pay_date={transactionData.due_date}
                       cleanData={cleanData}
+                      admin_id={admin_id}
+                      user_id={user_id}
                     />
                   </div>
                 )}

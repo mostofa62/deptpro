@@ -13,6 +13,8 @@ interface paymentProps {
   amount: number;
   pay_date: string;
   cleanData: () => void;
+  admin_id:number;
+  user_id:number;
 }
 
 const url = process.env.NEXT_PUBLIC_API_URL;
@@ -22,6 +24,8 @@ const BillPayment = ({
   amount,
   pay_date,
   cleanData,
+  admin_id,
+  user_id
 }: paymentProps) => {
   const [fetchFomrData, setFetchFormData] = useState({ amount, pay_date });
 
@@ -35,7 +39,7 @@ const BillPayment = ({
     await axios
       .post(
         `${url}pay-billpg/${bill_acc_id}`,
-        { trans_id, ...values.fetchdata },
+        { trans_id,user_id, admin_id,...values.fetchdata },
         {
           headers: {
             "Content-Type": "application/json",

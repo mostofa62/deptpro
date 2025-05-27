@@ -40,6 +40,7 @@ interface paymentProps {
 interface BillProps {
   bill_acc_id: number;
   user_id: number;
+  admin_id:number;
   reloadGrid: boolean;
   onPayment: (data: any) => void;
   onEdit: (data: any) => void;
@@ -67,6 +68,7 @@ interface DataRow {
 const BillTransactions = ({
   bill_acc_id,
   user_id,
+  admin_id,
   reloadGrid,
   onPayment,
   onEdit,
@@ -164,8 +166,8 @@ const BillTransactions = ({
           label: "Yes",
           onClick: async () => {
             DeleteActionGlobal({
-              action: `delete-bill-transaction/${bill_acc_id}`,
-              data: { id: id },
+              action: `delete-bill-transactionpg/${bill_acc_id}`,
+              data: { id: id, admin_id:admin_id },
             }).then((deletedData) => {
               //console.log(deletedData)
               AlertBox(deletedData.message, deletedData.deleted_done);
