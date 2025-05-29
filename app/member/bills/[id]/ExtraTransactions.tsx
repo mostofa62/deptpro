@@ -33,6 +33,7 @@ interface DataRow {
     id:number; 
     amount: number;       
     due_date_word:string;
+    pay_date_word:string;
     type:string;
     type_number:number;
     repeat_frequency:string;   
@@ -173,7 +174,10 @@ const ExtraTransactions = ({bill_id}:DebtProps)=>{
             },
 
            
-            
+            {
+              accessorKey: 'pay_date_word',
+              header: DataLabel.pay_date,
+            },
             {
               accessorKey: 'due_date_word',
               header: DataLabel.due_date,

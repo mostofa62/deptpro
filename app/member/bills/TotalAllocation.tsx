@@ -82,6 +82,17 @@ interface ProjectionPayload{
 interface TotapProps{
   userid:number;
 }
+
+const BillLineLabel: Record<string, string> = {
+  total_bill: 'Total Monthly Bill',
+};
+
+
+interface Entry {
+  dataKey: string;
+  value: number;
+  stroke: string;
+}
 const TotalAllocation = ({userid}:TotapProps) => {
 
   const isMobile = useMediaQuery({ maxWidth: 768 });
@@ -150,12 +161,28 @@ const TotalAllocation = ({userid}:TotapProps) => {
       return (
         <div className="bg-white border p-2 rounded shadow-lg text-sm">
           <div><strong>Month:</strong> {label}</div>
-          {payload.map((entry:any, index:number) => (
-            <div key={`item-${index}`} style={{ color: entry.stroke }}>
-              <strong>{bill_type_names && bill_type_names[entry.dataKey]}:</strong> ${Intl.NumberFormat('en-US', {
-      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(entry.value)}
+         {payload.map((entry: Entry, index: number) => {
+          const label =
+          bill_type_names?.[entry.dataKey as string] || BillLineLabel?.[entry.dataKey as string];
+
+
+          if (!entry.dataKey || !label) return null;
+
+          const styles = BillLineLabel?.[entry.dataKey as string]
+        ? { color: entry.stroke, border: `1px solid ${entry.stroke}`, padding:'2px' }
+        : { color: entry.stroke };
+
+          return (
+            <div key={`item-${index}`} style={styles}>
+              <strong>{label}:</strong>{' '}
+              ${Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(entry.value)}
             </div>
-          ))}
+          );
+        })}
+
         </div>
       );
     };
@@ -213,6 +240,11 @@ const TotalAllocation = ({userid}:TotapProps) => {
     const ids = data.map((item :any)=> item.id);
         
     const uniquecolors = generateUniqueColors(ids);
+    const keys_charts = chartData && chartData.length > 0
+  ? Object.keys(chartData[0]).map((item: string) => item)
+  : [];
+
+    const uniquecolorsline = generateUniqueColors(keys_charts);
     return (
       <div className="flex flex-col lg:flex-row gap-2.5">
         <div className="w-full lg:w-[40%]" ref={el => (itemRefs.current[0] = el)} style={{ height: maxHeight ? `${maxHeight}px` : 'auto' }}>
@@ -299,7 +331,7 @@ const TotalAllocation = ({userid}:TotapProps) => {
                   dataKey={key}
                   dot={false}
                   strokeWidth={highlightedKey!=null && highlightedKey === key ?3:1}
-                  stroke={uniquecolors[key]} // Ensure this function is defined elsewhere
+                  stroke={uniquecolorsline[key]} // Ensure this function is defined elsewhere
                   activeDot={{ r: 5 }}
                 />
               ))}

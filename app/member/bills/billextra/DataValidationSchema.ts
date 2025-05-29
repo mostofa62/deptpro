@@ -21,6 +21,7 @@ export const DataLabel = {
     amount:'Bill Amount',
     type:'Type',
     due_date:'Next Due Date',
+    pay_date:'Pay Date',
     //comment:'Comment'
     note:'Note',
     current_amount:'Current Balance',
