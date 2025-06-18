@@ -159,7 +159,7 @@ const SavingBoostContributions = ({saving_id}:SavingProps)=>{
 
             {
               accessorKey: 'total_balance',
-              header: 'Total Balance',
+              header: 'Accumulated Balance',
               cell: info => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
                 minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.row.original.total_balance)}</span></p>
               

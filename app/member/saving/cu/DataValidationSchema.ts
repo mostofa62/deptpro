@@ -62,12 +62,12 @@ export const DataLabel = {
 
   next_contribution_date:'Next Contribution Date',
 
-  total_balance:'Total Balance',
+  total_balance:'Accumulated Balance',
 
   monthly_saving_boost:'Savings Boost',
   
-  monthly_saving:'Total Monthly Savings',
-  total_balance_xyz:'Total Savings',
+  monthly_saving:'Accumulated Monthly Savings',
+  total_balance_xyz:'Accumulated Savings',
   
 }
 
@@ -99,9 +99,9 @@ export const DataLabelView = {
   
   //progress:'Progress',
   
-  total_balance:'Total Balance',
+  total_balance:'Accumulated Balance',
 
-  total_balance_xyz:'Total Balance With Boost',
+  total_balance_xyz:'Accumulated Balance With Boost',
   
   note:'Note',
 

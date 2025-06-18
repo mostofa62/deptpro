@@ -39,8 +39,8 @@ export const DataLabel = {
 
   note:'Note',
 
-  total_gross_income:'Total Gross Income',
-  total_net_income:'Total Net Income',
+  total_gross_income:'Accumulated Gross Income',
+  total_net_income:'Accumulated Net Income',
 
   monthly_net_income:'Monthly Net Income',
   monthly_gross_income:'Monthly  Gross Income',
@@ -71,9 +71,9 @@ export const DataLabelView = {
 
   
   
-
-  total_gross_income:'Total Gross Income',
-  total_net_income:'Total Net Income',
+  total_net_income:'Accumulated Net Income',
+  total_gross_income:'Accumulated Gross Income',
+  
 
 
   pay_date_word:'Pay Day',

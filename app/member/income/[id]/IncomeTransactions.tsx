@@ -146,22 +146,24 @@ const IncomeTransactions = ({income_id}:IncomeProps)=>{
               
             // },
 
+            {
+              accessorKey: 'total_net_for_period',
+              header: 'Accumulated Net Income',
+              cell: info => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.row.original.total_net_for_period)}</span></p>
+              
+            },
+
 
             {
               accessorKey: 'total_gross_for_period',
-              header: 'Total Gross Income',
+              header: 'Accumulated Gross Income',
               cell: info => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
                 minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.row.original.total_gross_for_period)}</span></p>
               
             },
 
-            {
-              accessorKey: 'total_net_for_period',
-              header: 'Total Net Income',
-              cell: info => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
-                minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.row.original.total_net_for_period)}</span></p>
-              
-            },
+            
 
            
             

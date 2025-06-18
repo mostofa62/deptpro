@@ -178,7 +178,7 @@ export default function DashBoard() {
                   <ProgressBarTwo
                     progress={30}
                     amount={transactioData.total_wealth}
-                    title="monthly wealth"
+                    title="monthly bill"
                     progressColor="#fe992c"
                   />
                 </div>

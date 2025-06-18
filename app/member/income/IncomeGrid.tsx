@@ -299,6 +299,7 @@ const IncomeGrid = ({ category }: IncomeProps) => {
         accessorKey: "income_source",
         header: "Income Source",
       },
+      /*
       {
         accessorKey: "gross_income",
         header: "Gross Input",
@@ -307,6 +308,47 @@ const IncomeGrid = ({ category }: IncomeProps) => {
       {
         accessorKey: "net_income",
         header: "Net Input",
+      },
+      */
+
+      
+
+      {
+        accessorKey: "total_monthly_net_income",
+        header: DataLabel.monthly_net_income,
+        cell: (info) => (
+          <p>
+            <span>$</span>
+            <span>
+              {Intl.NumberFormat("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(info.getValue<number>())}
+            </span>
+          </p>
+        ),
+        /*
+            footer: (props) => {
+              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
+                return sum + row.original.monthly_payment;
+              }, 0);
+              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
+            },
+            */
+        footer: (props) => (
+          <div className="flex flex-col items-center justify-center">
+            <p className="capitalize font-semibold">accumulated monthly net income</p>
+            <p>
+              <span>$</span>
+              <span>
+                {Intl.NumberFormat("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                }).format(total_net_income)}
+              </span>
+            </p>
+          </div>
+        ),
       },
 
       {
@@ -333,7 +375,7 @@ const IncomeGrid = ({ category }: IncomeProps) => {
             */
         footer: (props) => (
           <div className="flex flex-col items-center justify-center">
-            <p className="capitalize font-semibold">total monthly gross income</p>
+            <p className="capitalize font-semibold">accumulated monthly gross income</p>
             <p>
               <span>$</span>
               <span>
@@ -348,8 +390,8 @@ const IncomeGrid = ({ category }: IncomeProps) => {
       },
 
       {
-        accessorKey: "total_monthly_net_income",
-        header: DataLabel.monthly_net_income,
+        accessorKey: "net_income_boost_monthly",
+        header: DataLabel.net_income_boost_monthly,
         cell: (info) => (
           <p>
             <span>$</span>
@@ -360,28 +402,6 @@ const IncomeGrid = ({ category }: IncomeProps) => {
               }).format(info.getValue<number>())}
             </span>
           </p>
-        ),
-        /*
-            footer: (props) => {
-              const total = props.table.getCoreRowModel().rows.reduce((sum, row) => {
-                return sum + row.original.monthly_payment;
-              }, 0);
-              return <p><span>$</span><span className="px-2">{total.toFixed(2)}</span></p>;
-            },
-            */
-        footer: (props) => (
-          <div className="flex flex-col items-center justify-center">
-            <p className="capitalize font-semibold">total monthly net income</p>
-            <p>
-              <span>$</span>
-              <span>
-                {Intl.NumberFormat("en-US", {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                }).format(total_net_income)}
-              </span>
-            </p>
-          </div>
         ),
       },
 
@@ -400,21 +420,7 @@ const IncomeGrid = ({ category }: IncomeProps) => {
         header: "Repeat",
       },
 
-      {
-        accessorKey: "total_gross_income",
-        header: DataLabel.total_gross_income,
-        cell: (info) => (
-          <p>
-            <span>$</span>
-            <span>
-              {Intl.NumberFormat("en-US", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }).format(info.getValue<number>())}
-            </span>
-          </p>
-        ),
-      },
+      
 
       {
         accessorKey: "total_net_income",
@@ -433,8 +439,8 @@ const IncomeGrid = ({ category }: IncomeProps) => {
       },
 
       {
-        accessorKey: "total_yearly_gross_income",
-        header: DataLabel.yearly_gross_income,
+        accessorKey: "total_gross_income",
+        header: DataLabel.total_gross_income,
         cell: (info) => (
           <p>
             <span>$</span>
@@ -445,21 +451,6 @@ const IncomeGrid = ({ category }: IncomeProps) => {
               }).format(info.getValue<number>())}
             </span>
           </p>
-        ),
-
-        footer: (props) => (
-          <div className="flex flex-col items-center justify-center">
-            <p className="capitalize font-semibold">total yearly gross income</p>
-            <p>
-              <span>$</span>
-              <span>
-                {Intl.NumberFormat("en-US", {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                }).format(total_gross_income_yearly)}
-              </span>
-            </p>
-          </div>
         ),
       },
 
@@ -480,7 +471,7 @@ const IncomeGrid = ({ category }: IncomeProps) => {
 
         footer: (props) => (
           <div className="flex flex-col items-center justify-center">
-            <p className="capitalize font-semibold">total yearly net income</p>
+            <p className="capitalize font-semibold">accumulated yearly net income</p>
             <p>
               <span>$</span>
               <span>
@@ -493,9 +484,10 @@ const IncomeGrid = ({ category }: IncomeProps) => {
           </div>
         ),
       },
+
       {
-        accessorKey: "net_income_boost_monthly",
-        header: DataLabel.net_income_boost_monthly,
+        accessorKey: "total_yearly_gross_income",
+        header: DataLabel.yearly_gross_income,
         cell: (info) => (
           <p>
             <span>$</span>
@@ -507,7 +499,25 @@ const IncomeGrid = ({ category }: IncomeProps) => {
             </span>
           </p>
         ),
+
+        footer: (props) => (
+          <div className="flex flex-col items-center justify-center">
+            <p className="capitalize font-semibold">accumulated yearly gross income</p>
+            <p>
+              <span>$</span>
+              <span>
+                {Intl.NumberFormat("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                }).format(total_gross_income_yearly)}
+              </span>
+            </p>
+          </div>
+        ),
       },
+
+      
+      
 
       {
         id: "actions",
