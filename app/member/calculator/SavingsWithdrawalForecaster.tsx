@@ -183,7 +183,7 @@ const SavingsWithdrawalForecaster: React.FC = () => {
     freeWithdrawal: { data: [], finalBalance: 0 },
   });
 
-  const calculateSavings = (inputs: InputsState) => {
+  const calculateSavings = useCallback((inputs: InputsState) => {
     const {
       existingBalance,
       newContributions,
@@ -272,7 +272,7 @@ const SavingsWithdrawalForecaster: React.FC = () => {
       deferredWithdrawal,
       freeWithdrawal,
     };
-  };
+  },[]);
 
   const calculateAccount = (
     initialBalance: number,

@@ -5,20 +5,7 @@ import SavingsWithdrawalForecaster from "../SavingsWithdrawalForecaster";
 
 export default function Page() {
   return (
-    <DefaultLayout>
-      <div className="flex flex-col">
-        <HolderOne
-          title="calculators"
-          linkItems={
-            [
-              //   {
-              //     link:'/',
-              //     title:''
-              //   },
-            ]
-          }
-        />
-      </div>
+    <DefaultLayout>      
       <div className="my-4">
         <SavingsWithdrawalForecaster />
       </div>

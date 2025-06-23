@@ -79,7 +79,7 @@ interface Entry {
 // const SavingLineLabel: Record<string, string> = {
 //   total_balance: "Total Balance",
 // };
-
+const url = process.env.NEXT_PUBLIC_API_URL;
 const TotalAllocation = ({ userid }: TotalProps) => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const isTab = useMediaQuery({ maxWidth: 900 });
@@ -362,7 +362,15 @@ const TotalAllocation = ({ userid }: TotalProps) => {
                   </LineChart>
                 </ResponsiveContainer>
               </div>
+              {/* debuggin purpose comment in production */}
+              <div className="flex items-center justify-center mt-[-5px] text-sm capitalize">
+                <a className="border px-2" target="_blank" href={`${url}saving-contributions-nextpgdata/${userid}`}>
+                        projection details
+                </a>
+              </div>
+              {/* debuggin purpose comment in production */}
             </div>
+            
           </CardHolder>
         )}
       </div>

@@ -793,7 +793,21 @@ const Sidebar = ({
                     );
                   }}
                 </SidebarLinkGroup>
-                {/*
+                
+                
+                
+
+                <li key={50}>
+                  <Link
+                    href={"/member/calender"}
+                    className={`capitalize text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
+                      pathname.slice(-8) == "calender" &&
+                      "bg-[#43ACD6] text-[#f5f5f8]"
+                    }`}
+                  >
+                    Calender
+                  </Link>
+                </li>
                 <SidebarLinkGroup
                   activeCondition={
                     pathname === "/calculator" ||
@@ -868,6 +882,71 @@ const Sidebar = ({
                                 <p>Savings & Withdrawal Forecaster</p>
                               </Link>
                             </li>
+
+                            <li key={603}>
+                              <Link
+                                href={"/member/calculator/stockcalculator"}
+                                className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out   hover:text-[#43ACD6] ${
+                                  pathname.slice(-15) == "stockcalculator"
+                                    ? "text-[#43ACD6]"
+                                    : "text-[#4F4F4F]"
+                                }`}
+                              >
+                                <p>Stock Calculator</p>
+                              </Link>
+                            </li>
+
+                            <li key={604}>
+                              <Link
+                                href={"/member/calculator/cryptoreturn"}
+                                className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out   hover:text-[#43ACD6] ${
+                                  pathname.slice(-12) == "cryptoreturn"
+                                    ? "text-[#43ACD6]"
+                                    : "text-[#4F4F4F]"
+                                }`}
+                              >
+                                <p>Crypto Calculator</p>
+                              </Link>
+                            </li>
+
+                            <li key={605}>
+                              <Link
+                                href={"/member/calculator/mortgage"}
+                                className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out   hover:text-[#43ACD6] ${
+                                  pathname.slice(-8) == "mortgage"
+                                    ? "text-[#43ACD6]"
+                                    : "text-[#4F4F4F]"
+                                }`}
+                              >
+                                <p>Amortization Mortgage & Loan Calculator</p>
+                              </Link>
+                            </li>
+
+                            <li key={606}>
+                              <Link
+                                href={"/member/calculator/creditcardpayment"}
+                                className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out   hover:text-[#43ACD6] ${
+                                  pathname.slice(-17) == "creditcardpayment"
+                                    ? "text-[#43ACD6]"
+                                    : "text-[#4F4F4F]"
+                                }`}
+                              >
+                                <p>Credit Card Payment Calculator</p>
+                              </Link>
+                            </li>
+
+                            <li key={607}>
+                              <Link
+                                href={"/member/calculator/lifeinsurance"}
+                                className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out   hover:text-[#43ACD6] ${
+                                  pathname.slice(-13) == "lifeinsurance"
+                                    ? "text-[#43ACD6]"
+                                    : "text-[#4F4F4F]"
+                                }`}
+                              >
+                                <p>Life Insurance Needs Calculator</p>
+                              </Link>
+                            </li>
                           </ul>
                         </div>
                         
@@ -875,20 +954,7 @@ const Sidebar = ({
                     );
                   }}
                 </SidebarLinkGroup>
-                */}
-
-                <li key={50}>
-                  <Link
-                    href={"/member/calender"}
-                    className={`capitalize text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
-                      pathname.slice(-8) == "calender" &&
-                      "bg-[#43ACD6] text-[#f5f5f8]"
-                    }`}
-                  >
-                    Calender
-                  </Link>
-                </li>
-
+                {/*
                 <li key={51}>
                   <Link
                     href={"/member/calculator"}
@@ -900,6 +966,7 @@ const Sidebar = ({
                     Calculators
                   </Link>
                 </li>
+                */}
 
                 <li key={52}>
                   <Link
