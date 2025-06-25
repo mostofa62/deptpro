@@ -1,5 +1,5 @@
 import CardHolder from "@/app/components/ui/CardHolder";
-import { formatLargeNumber, hashString, hslToHex } from "@/app/components/utils/Util";
+import { formatLargeNumber, generateUniqueColors, hashString, hslToHex } from "@/app/components/utils/Util";
 import useFetchDropDownObjects from "@/app/hooks/useFetchDropDownObjects";
 import { useState } from "react";
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
@@ -9,11 +9,24 @@ import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, X
 interface ProjectionPayload{
 
     bill_type_ammortization:any[],
-    bill_type_names:{[key:string]:string}
+    bill_type_names:{[key:string]:string},
+    bill_type_bill_counts:{id:string,count:number,balance:number,label:string}[],
+    total_bill_type:number,
+    total_balance:number,
 }
 
 interface TotalPros{
   userid:number;
+}
+
+const BillLineLabel: Record<string, string> = {
+  total_bill: 'Total Monthly Bill',
+};
+
+interface Entry {
+  dataKey: string;
+  value: number;
+  stroke: string;
 }
 
 const BillProjection = ({userid}:TotalPros) => {
@@ -34,7 +47,10 @@ const BillProjection = ({userid}:TotalPros) => {
 
     const projectPayload:ProjectionPayload={
       bill_type_ammortization:[],
-      bill_type_names:{}
+      bill_type_names:{},
+      bill_type_bill_counts:[],
+      total_bill_type:0,
+      total_balance:0,   
     }
     
 
@@ -48,7 +64,6 @@ const BillProjection = ({userid}:TotalPros) => {
   })
 
     
-
     const chartData = BillProjection.bill_type_ammortization;
 
     const bill_type_names = BillProjection.bill_type_names;
@@ -59,12 +74,28 @@ const BillProjection = ({userid}:TotalPros) => {
       return (
         <div className="bg-white border p-2 rounded shadow-lg text-sm">
           <div><strong>Month:</strong> {label}</div>
-          {payload.map((entry:any, index:number) => (
-            <div key={`item-${index}`} style={{ color: entry.stroke }}>
-              <strong>{bill_type_names && bill_type_names[entry.dataKey]}:</strong> ${Intl.NumberFormat('en-US', {
-      minimumFractionDigits: 2,maximumFractionDigits: 2}).format(entry.value)}
+         {payload.map((entry: Entry, index: number) => {
+          const label =
+          bill_type_names?.[entry.dataKey as string] || BillLineLabel?.[entry.dataKey as string];
+
+
+          if (!entry.dataKey || !label) return null;
+
+          const styles = BillLineLabel?.[entry.dataKey as string]
+        ? { color: entry.stroke, border: `1px solid ${entry.stroke}`, padding:'2px' }
+        : { color: entry.stroke };
+
+          return (
+            <div key={`item-${index}`} style={styles}>
+              <strong>{label}:</strong>{' '}
+              ${Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(entry.value)}
             </div>
-          ))}
+          );
+        })}
+
         </div>
       );
     };
@@ -80,20 +111,16 @@ const BillProjection = ({userid}:TotalPros) => {
           ))}
         </div>
       );
-    };
-
-    
-
-    
-
-    const getColorForDebtType = (key:string)=>{
-      const hue = Math.abs(hashString(key)) % 360;
-      return hslToHex(hue, 70, 50);
-    
-    }
+    };    
     
 
     const [maxHeight, setMaxHeight] = useState<number>(450);
+
+    const keys_charts = chartData && chartData.length > 0
+      ? Object.keys(chartData[0]).map((item: string) => item)
+      : [];
+    
+    const uniquecolorsline = generateUniqueColors(keys_charts);
 
     
     return (
@@ -126,7 +153,7 @@ const BillProjection = ({userid}:TotalPros) => {
                   dataKey={key}
                   dot={false}
                   strokeWidth={highlightedKey!=null && highlightedKey === key ?3:1}
-                  stroke={getColorForDebtType(key)} // Ensure this function is defined elsewhere
+                  stroke={uniquecolorsline[key]} // Ensure this function is defined elsewhere
                   activeDot={{ r: 5 }}
                 />
               ))}

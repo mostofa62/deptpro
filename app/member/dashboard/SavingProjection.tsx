@@ -20,15 +20,32 @@ import {
 
 interface FuturePayLoad {
   projection_list: {
-    total_balance: number;
-    contribution: number;
+    //total_balance: number;
+    //contribution: number;
+    data: {
+      [key: string]: {
+        balance: number;
+        total_contribution: number;
+        period: number;
+        total_interest: number;
+        total_period_contribution: number;
+        total_boosts: number;
+      };
+    };
     month: string;
     month_word: string;
   }[];
+  saving_account_names: { [key: string]: string };
 }
 
 interface TotalProps {
   userid: number;
+}
+
+interface Entry {
+  dataKey: string;
+  value: number;
+  stroke: string;
 }
 
 const SavingProjection = ({ userid }: TotalProps) => {
@@ -45,6 +62,7 @@ const SavingProjection = ({ userid }: TotalProps) => {
 
   const payloadFuture: FuturePayLoad = {
     projection_list: [],
+    saving_account_names: {},
   };
 
   const SavingFuture: any = useFetchDropDownObjects({
@@ -54,44 +72,9 @@ const SavingProjection = ({ userid }: TotalProps) => {
 
   const lineData = SavingFuture.projection_list;
 
-  // Create a mapping from bill_type_id to bill_type_name
-  /*
-    const billTypeNameMap = chartData.reduce((acc:any, data:any) => {
-      data.bill_names.forEach((d:any) => {
-        const [id, name] = Object.entries(d)[0];
-        acc[id] = name;
-      });
-      return acc;
-    }, {});
-    */
+  const saving_account_names = SavingFuture.saving_account_names;
 
-  // Tooltip formatter function
-  /* const CustomTooltipLine = ({ payload,label }:any) => {
-      if (!payload || payload.length === 0) return null;
-      return (
-        <div className="bg-white border p-2 rounded shadow-lg text-sm">
-          <div><strong>Month:</strong> {label}</div>
-          {payload.map((entry:any, index:number) => (
-            <div key={`item-${index}`} style={{ color: entry.stroke }}>
-              <strong>{bill_type_names[entry.dataKey]}:</strong> $ {entry.value.toFixed(2)}
-            </div>
-          ))}
-        </div>
-      );
-    }; */
-
-  // Legend formatter function
-  /* const CustomLegendLine = ({ payload }:any) => {
-      return (
-        <div className="flex gap-4 justify-center items-center text-sm">
-          {payload.map((entry:any, index:number) => (
-            <span onMouseEnter={(event)=>handleLegendMouseEnter(entry.value,event)} onMouseLeave={handleLegendMouseLeave} className="font-semibold" key={`legend-item-${index}`} style={{ color: entry.color }}>
-              {bill_type_names[entry.value]}
-            </span>
-          ))}
-        </div>
-      );
-    }; */
+  
 
   const getColorForDebtType = (key: string) => {
     const hue = Math.abs(hashString(key)) % 360;
@@ -110,18 +93,33 @@ const SavingProjection = ({ userid }: TotalProps) => {
         <div>
           <strong>Month:</strong> {label}
         </div>
-        {payload.map((entry: any, index: number) => (
-          <div key={`item-${index}`} style={{ color: entry.stroke }}>
-            <strong>
-              {dataLabel[entry.dataKey as keyof typeof dataLabel]}:
-            </strong>{" "}
-            $
-            {Intl.NumberFormat("en-US", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            }).format(entry.value)}
-          </div>
-        ))}
+
+        {payload.map((entry: Entry, index: number) => {
+          const label = saving_account_names?.[entry.dataKey as string]; /*||
+            SavingLineLabel?.[entry.dataKey as string]*/
+
+          //console.log("entry", entry);
+
+          if (!entry.dataKey || !label) return null;
+
+          const styles = /*SavingLineLabel?.[entry.dataKey as string]
+            ? {
+                color: entry.stroke,
+                border: `1px solid ${entry.stroke}`,
+                padding: "2px",
+              }
+            :*/ { color: entry.stroke };
+
+          return (
+            <div key={`item-${index}`} style={styles}>
+              <strong>{label}:</strong> $
+              {Intl.NumberFormat("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(entry.value)}
+            </div>
+          );
+        })}
       </div>
     );
   };
@@ -138,13 +136,15 @@ const SavingProjection = ({ userid }: TotalProps) => {
             key={`legend-item-${index}`}
             style={{ color: entry.color }}
           >
-            {dataLabel[entry.dataKey as keyof typeof dataLabel]}
+            {
+              saving_account_names && saving_account_names[entry.value] /*||
+              SavingLineLabel[entry.value]*/
+            }
           </span>
         ))}
       </div>
     );
   };
-
   const [maxHeight, setMaxHeight] = useState<number>(450);
 
   let uniquecolors_savings: any = [];
@@ -179,7 +179,10 @@ const SavingProjection = ({ userid }: TotalProps) => {
 
                   {/* Render Line components for each unique dataKey (e.g., BB, TEACHER_FEE, etc.) */}
                   {Object.keys(lineData[0])
-                    .filter((key) => key !== "month_word" && key !== "month")
+                    .filter((key) => key !== "month_word" && 
+                    key !== "month" && 
+                    key !== "total_balance"
+                  )
                     .map((key, index) => (
                       <Line
                         key={key}
