@@ -43,6 +43,7 @@ import IconDragVertical from "@/app/images/icon/drag-vertical";
 import GridPaginationHolder from "@/app/components/grid/GridPaginationHolder";
 import { useMediaQuery } from "react-responsive";
 import DashGrid from "@/app/images/icon/dash-grid";
+import toast from "react-hot-toast";
 
 const per_page_list = PerPageList();
 const per_page = per_page_list[0];
@@ -100,16 +101,21 @@ const Debt = () => {
       {
         id: sourceRow.id,
         custom_payoff_order: sourceRow.custom_payoff_order,
+        name:sourceRow.name
       },
       {
         id: destinationRow.id,
         custom_payoff_order: destinationRow.custom_payoff_order,
+        name:destinationRow.name
       },
     ];
   
     axios
       .post(`${url}update-payoff-orderpg`, rowsToUpdate)
-      .then((res) => console.log(res.data.message))
+      .then((res) => {
+        console.log(res.data.message);
+        toast.success(res.data.message);
+      })
       .catch((err) => console.error("Error updating payoff order:", err));
   };
   
@@ -282,16 +288,19 @@ const Debt = () => {
           {
             id: sourceRow.id,
             custom_payoff_order: sourceRow.custom_payoff_order,
+            name:sourceRow.name
           },
           {
             id: destinationRow.id,
             custom_payoff_order: destinationRow.custom_payoff_order,
+            name:destinationRow.name
           },
         ];
         axios
           .post(`${url}update-payoff-orderpg`, rowsToUpdate)
           .then((response) => {
-            console.log(response.data.message);
+            //console.log(response.data.message);
+            toast.success(response.data.message);
             
           })
           .catch((error) => {
