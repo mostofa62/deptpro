@@ -306,25 +306,6 @@ export default function InsuranceCreate() {
 
                   <div className="flex flex-col md:flex-row md:mt-[15px]">
                     <div className="w-full md:w-[32%]">
-                      <FormikFieldInput
-                        type="number"
-                        step="any"
-                        min={0}
-                        label={`${DataLabel.goal_amount}`}
-                        name={`fetchdata.goal_amount`}
-                        placeHolder={`${DataLabel.goal_amount}`}
-                        errorMessage={
-                          errors.fetchdata &&
-                          errors.fetchdata.goal_amount &&
-                          touched.fetchdata &&
-                          touched.fetchdata.goal_amount &&
-                          errors.fetchdata.goal_amount
-                        }
-                        inputPreix={`$`}
-                      />
-                    </div>
-
-                    <div className="w-full md:ml-[24px] md:w-[32%]">
                       <FormikSelectInput
                         label={DataLabel.savings_strategy}
                         defaultValue={fetchdata.savings_strategy}
@@ -340,6 +321,24 @@ export default function InsuranceCreate() {
                           touched.fetchdata.savings_strategy &&
                           errors.fetchdata.savings_strategy.value
                         }
+                      />
+                    </div>
+                    <div className="w-full md:ml-[24px] md:w-[32%]">
+                      <FormikFieldInput
+                        type="number"
+                        step="any"
+                        min={0}
+                        label={`${DataLabel.goal_amount}`}
+                        name={`fetchdata.goal_amount`}
+                        placeHolder={`${DataLabel.goal_amount}`}
+                        errorMessage={
+                          errors.fetchdata &&
+                          errors.fetchdata.goal_amount &&
+                          touched.fetchdata &&
+                          touched.fetchdata.goal_amount &&
+                          errors.fetchdata.goal_amount
+                        }
+                        inputPreix={`$`}
                       />
                     </div>
 
@@ -522,8 +521,7 @@ export default function InsuranceCreate() {
                   </div>
 
                   <div className="flex flex-col md:flex-row md:mt-[15px]">
-
-                  <div className="w-full md:w-[32%]">
+                    <div className="w-full md:w-[32%]">
                       <FormikFieldInput
                         type="number"
                         step="any"
@@ -537,7 +535,7 @@ export default function InsuranceCreate() {
                           touched.fetchdata &&
                           touched.fetchdata.financial_freedom_target &&
                           errors.fetchdata.financial_freedom_target
-                        }                        
+                        }
                       />
                     </div>
                     <div className="w-full md:ml-[24px] md:w-[32%]">

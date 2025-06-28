@@ -143,13 +143,21 @@ export const ValidationSchema =  object().shape({
 
              
 
-              goal_amount: number().min(0,`${DataLabel.goal_amount} least 0`)              
-              .required(`${DataLabel.goal_amount} is required`).test(
-                'is-greater-than-starting',
-                `${DataLabel.goal_amount} should greater than ${DataLabel.starting_amount}`,
+              goal_amount: number()
+              .min(0, `${DataLabel.goal_amount} least 0`)
+              .required(`${DataLabel.goal_amount} is required`)
+              .test(
+                'is-greater-than-starting-if-strategy-valid',
+                `${DataLabel.goal_amount} should be greater than ${DataLabel.starting_amount}`,
                 function (value) {
-                  const { starting_amount } = this.parent;
-                  return value > starting_amount;
+                  const { starting_amount, savings_strategy } = this.parent;
+                  const savings_strategy_value = parseInt(savings_strategy?.value ?? '0', 10);
+                  
+                  if (savings_strategy_value > 1) {
+                    return value > starting_amount;
+                  }
+
+                  return true; // If strategy is not >1, pass validation
                 }
               ),
 
