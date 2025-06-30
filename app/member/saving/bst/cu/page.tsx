@@ -33,7 +33,7 @@ interface Options{
 }
 interface PayLoads{
     
-    //repeat_frequency:Options[],
+    repeat_frequency:Options[],
     saving_boost_source:Options[],
     saving_list:Options[]
     boost_operation_type:Options[],     
@@ -52,10 +52,7 @@ export default function InsuranceCreate() {
     const formRef = useRef<any>(null);
 
     const [fetchFomrData,setFetchFormData] = useState(DataSchema);
-
-    const [repeatFrequency, setRepeatFrequency] = useState([
-        DataSchema.repeat_boost
-    ])
+    const [minDate, setMinDate] = useState(null)    
 
     const [savingSource, setSavingSource] = useState<SavingSrcProps[]>([{
                 label:'',
@@ -66,7 +63,7 @@ export default function InsuranceCreate() {
 
     const payload: PayLoads ={
           
-        //repeat_frequency: [],
+        repeat_frequency: [],
         saving_boost_source:[],
         saving_list:[],
         boost_operation_type:[]            
@@ -79,6 +76,12 @@ export default function InsuranceCreate() {
     })
 
     const saving_boost_source = SavingCategoryData.saving_boost_source
+
+    const repeatFrequency = [
+        DataSchema.repeat_boost,
+        ...SavingCategoryData.repeat_frequency
+        
+    ]
 
     useEffect(()=>{
         setSavingSource(saving_boost_source)
@@ -278,10 +281,11 @@ export default function InsuranceCreate() {
                 touched.fetchdata.saving &&
                 errors.fetchdata.saving.label
             }
-            onParentChangeSelect ={(v:any,n:any)=>{ 
-                setRepeatFrequency([DataSchema.repeat_boost,v.repeat_boost])
-                setFieldValue('fetchdata.pay_date_boost',v.pay_date_boost)
-                setFieldValue('fetchdata.repeat_boost',v.repeat_boost)
+            onParentChangeSelect ={(v:any,n:any)=>{
+                setMinDate(v.pay_date_boost) 
+                //setRepeatFrequency([DataSchema.repeat_boost,v.repeat_boost])
+                //setFieldValue('fetchdata.pay_date_boost',v.pay_date_boost)
+                //setFieldValue('fetchdata.repeat_boost',v.repeat_boost)
                 
                 
             }}
@@ -403,8 +407,7 @@ export default function InsuranceCreate() {
 
     <FormikFieldInput 
         type="date"
-        readOnly
-        disabled              
+        min={minDate ? minDate : ''}                     
         label={DataLabel.pay_date_boost} 
         name={`fetchdata.pay_date_boost`}
         placeHolder={`${DataLabel.pay_date_boost}`}
