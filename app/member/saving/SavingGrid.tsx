@@ -265,6 +265,10 @@ const generateItems = useCallback((row) => [
             */
            //footer:(props)=><p><span>$</span><span className="px-2">{total_goal_amount.toFixed(2)}</span></p>
           },
+          {
+            accessorKey: 'interest_type.label',
+            header: DataLabel.interest_type,
+          },
 
           {
             accessorKey: 'total_balance_xyz',

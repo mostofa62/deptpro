@@ -159,18 +159,22 @@ const TableView = ({
                       }
                       </tbody>
                       {tableRows.length > 0 && 
-                      <tfoot>
-                        {table.getFooterGroups().map(footerGroup => (
-                          <tr key={footerGroup.id}>
-                            {footerGroup.headers.map(header => (
-                              <td key={header.id}>
-                                {flexRender(header.column.columnDef.footer, header.getContext())}
-                              </td>
-                            ))}
-                          </tr>
-                        ))}
-                      </tfoot>
-                    }
+              table.getFooterGroups().some(group => 
+                group.headers.some(header => header.column.columnDef.footer)
+              ) && (
+                <tfoot>
+                  {table.getFooterGroups().map(footerGroup => (
+                    <tr key={footerGroup.id}>
+                      {footerGroup.headers.map(header => (
+                        <td key={header.id}>
+                          {flexRender(header.column.columnDef.footer, header.getContext())}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tfoot>
+            )}
+
                       
               
             </table>
