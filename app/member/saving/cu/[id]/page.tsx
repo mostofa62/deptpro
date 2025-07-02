@@ -59,6 +59,7 @@ export default function InsuranceCreate({
 }) {
   const authCtx = useAuth();
   const user_id = authCtx.userId;
+  const admin_id = authCtx.adminId;
   const router = useRouter();
   const formRef = useRef<any>(null);
 
@@ -99,7 +100,7 @@ export default function InsuranceCreate({
       router.push("/member/saving");
     }
     setFetchFormData(response.data.saving);
-  }, [id]);
+  }, [id,router]);
   useEffect(() => {
     fetchDataCallback();
   }, [fetchDataCallback]);
@@ -114,7 +115,7 @@ export default function InsuranceCreate({
     await axios
       .post(
         `${url}edit-saving-accountpg/${id}`,
-        { user_id, ...values.fetchdata },
+        { user_id,admin_id, ...values.fetchdata },
         {
           headers: {
             "Content-Type": "application/json",
@@ -318,6 +319,7 @@ export default function InsuranceCreate({
 
                     <div className="w-full md:ml-[24px] md:w-[32%]">
                       <FormikSelectInput
+                        disabled
                         label={DataLabel.savings_strategy}
                         defaultValue={fetchdata.savings_strategy}
                         placeHolder={``}

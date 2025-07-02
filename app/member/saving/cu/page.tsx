@@ -52,6 +52,7 @@ interface SavingSrcProps {
 export default function InsuranceCreate() {
   const authCtx = useAuth();
   const user_id = authCtx.userId;
+  const admin_id = authCtx.adminId;
   const router = useRouter();
   const formRef = useRef<any>(null);
 
@@ -94,7 +95,7 @@ export default function InsuranceCreate() {
     try {
       const response = await axios.post(
         `${url}save-saving-accountpg`,
-        { user_id, ...values.fetchdata },
+        { user_id,admin_id, ...values.fetchdata },
         {
           headers: {
             "Content-Type": "application/json",
@@ -321,6 +322,11 @@ export default function InsuranceCreate() {
                           touched.fetchdata.savings_strategy &&
                           errors.fetchdata.savings_strategy.value
                         }
+                        onParentChangeSelect ={(v:any,n:any)=>{
+                          if(v.value < 2){
+                            setFieldValue('fetchdata.goal_amount',0)
+                          }
+                        }}
                       />
                     </div>
                     <div className="w-full md:ml-[24px] md:w-[32%]">
