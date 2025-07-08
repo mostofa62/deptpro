@@ -33,6 +33,7 @@ interface DataRow {
     contribution_date_word:string;
     next_contribution_date_word:string;    
     month_word:string;
+    total_contribution:number;
     
 }
 
@@ -132,14 +133,20 @@ const SavingContributions = ({saving_id}:SavingProps)=>{
             }, 
             
             
-            
+            {
+              accessorKey: 'contribution',
+              header: ' Contribution',
+              cell: info => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.row.original.contribution)}</span></p>
+              
+            },
             
 
             {
-              accessorKey: 'contribution',
-              header: 'Contribution',
+              accessorKey: 'total_contribution',
+              header: 'Total Contribution',
               cell: info => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
-                minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.row.original.contribution)}</span></p>
+                minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.row.original.total_contribution)}</span></p>
               
             },
 
