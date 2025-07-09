@@ -34,6 +34,7 @@ interface DataRow {
     contribution_date_word:string;
     next_contribution_date_word:string;    
     month_word:string;
+    total_contribution:number;
     
 }
 
@@ -151,6 +152,14 @@ const SavingBoostContributions = ({saving_id}:SavingProps)=>{
               header: 'Contribution',
               cell: info => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
                 minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.row.original.contribution)}</span></p>
+              
+            },
+
+            {
+              accessorKey: 'total_contribution',
+              header: 'Total Contribution',
+              cell: info => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.row.original.total_contribution)}</span></p>
               
             },
 
