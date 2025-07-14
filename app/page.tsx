@@ -43,12 +43,13 @@ const Home = () => {
                 </div>
               </div>
               <Link className="text-lg font-bold  text-white" href="/member">
-                Client Login
+                Log In
               </Link>
-
+              {/*
               <Link className="text-lg font-bold  text-white" href="/admin">
                 Admin Login
               </Link>
+              */}
             </div>
           </div>
         </div>

@@ -47,7 +47,7 @@ const HeaderSummary = ({transactionData}:TransactionProps) => {
       label: "monthly + cashflow",
       prefix: "$",
       suffix: "",
-      href: "/member/income",
+      href: "/member/cashflow",
     },
     monthly_budget: {
       label: "monthly debt budget",

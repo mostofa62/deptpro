@@ -71,6 +71,7 @@ export default function InsuranceCreate() {
     
         
     const user_id:any = authCtx.userId;
+    const admin_id:any = authCtx.adminId;
 
    
     
@@ -124,6 +125,7 @@ export default function InsuranceCreate() {
                                    
                     <BoostEntry                    
                     user_id={user_id}
+                    admin_id={admin_id}
                     editData={editData}
                     cleanData={cleanData}                                                          
                      />                                                         

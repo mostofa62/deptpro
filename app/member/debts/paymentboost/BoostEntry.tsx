@@ -15,11 +15,12 @@ const url = process.env.NEXT_PUBLIC_API_URL;
 
 interface BoostProps{    
     user_id:number;
+    admin_id:number;
     editData:any;
     cleanData:()=>void    
 }
 
-const BoostEntry=({user_id, editData,cleanData}:BoostProps)=>{
+const BoostEntry=({user_id,admin_id, editData,cleanData}:BoostProps)=>{
 
     const appCtx = useApp();
     
@@ -42,7 +43,7 @@ const BoostEntry=({user_id, editData,cleanData}:BoostProps)=>{
 
 
         await axios.post(link, 
-            {user_id,...values.fetchdata}, {
+            {user_id,admin_id,...values.fetchdata}, {
             
             headers: {
               'Content-Type': 'application/json'
