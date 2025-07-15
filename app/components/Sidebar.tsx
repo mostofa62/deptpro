@@ -473,7 +473,7 @@ const Sidebar = ({
                               </Link>
                             </li>
 
-                            <li key={104}>
+                            <li key={110}>
                               <Link
                                 href={"/member/debts/payoffstrategy"}
                                 className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out  hover:text-[#43ACD6] ${
@@ -488,7 +488,7 @@ const Sidebar = ({
                               </Link>
                             </li>
 
-                            <li key={105}>
+                            <li key={112}>
                               <Link
                                 href={"/member/debts/payoffcustom"}
                                 className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out  hover:text-[#43ACD6] ${
@@ -967,6 +967,18 @@ const Sidebar = ({
                   </Link>
                 </li>
                 */}
+
+                <li key={51}>
+                  <Link
+                    href={"/member/cashflow"}
+                    className={`capitalize text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-[#43ACD6] duration-300 ease-in-out hover:bg-[#43ACD6] hover:text-[#f5f5f8] dark:hover:bg-meta-4 ${
+                      pathname.slice(-8) == "cashflow" &&
+                      "bg-[#43ACD6] text-[#f5f5f8]"
+                    }`}
+                  >
+                    cashflow
+                  </Link>
+                </li>
 
                 <li key={52}>
                   <Link
