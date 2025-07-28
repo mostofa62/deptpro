@@ -25,7 +25,7 @@ interface DataRow {
     balance: number,
     interest: number,
     month: string,
-    principle: number,
+    principal: number,
     snowball_amount: number,
     total_payment: number
 }
@@ -150,7 +150,7 @@ const DebtAmortization = ({debt_acc_id, user_id,tab_number}:DebtProps)=>{
             
             
             {
-                accessorKey: 'principle',
+                accessorKey: 'principal',
                 header: 'Principal',
                 cell: info => <p><span>$</span><span>{Intl.NumberFormat('en-US', {
                   minimumFractionDigits: 2,maximumFractionDigits: 2}).format(info.getValue<number>())}</span></p>,

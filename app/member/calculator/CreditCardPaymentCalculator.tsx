@@ -125,11 +125,11 @@ const CreditCardCalculator = () => {
   return (
     <div className="bg-white p-8 rounded-md shadow-md w-full border flex flex-col gap-2">
       <h1 className="text-center text-[#42acd8] font-semibold text-2xl mb-1 flex gap-2 items-center justify-center">
-        Mortgage & Loan Amortization Calculator
+        Credit Card Payment Calculator
       </h1>
 
       <p className="flex gap-2 items-center justify-center">
-        <span>Credit Card Payment Calculator</span>
+        <span>Estimate how long it will take to pay off your credit card</span>
         <span>
           <TooltipOne
             text={

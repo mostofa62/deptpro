@@ -111,29 +111,37 @@ export default function DashBoard() {
 
   // Determine wealth score message
   const getWealthScoreMessage = (score: number) => {
-    if (score >= 80) {
+
+    if(score > 100){
       return {
-        result: "Wealth Score 80-100",
+        result: "Wealth Score > 100",
         recommendation:
-          "Fantastic! Continue allocating wisely between savings and debt repayment.",
+          "Excellent - You're saving and earning more than you spend or owe.",
       };
-    } else if (score >= 60) {
+    }
+    else if (score >= 70 && score <= 100) {
       return {
-        result: "Wealth Score 60-79",
+        result: "Wealth Score 70-100",
         recommendation:
-          "Good progress! Boost your score by increasing your savings rate or paying down debt faster.",
+          "Good - You're managing your finances well.",
       };
-    } else if (score >= 40) {
+    } else if (score >= 40 && score < 70) {
       return {
-        result: "Wealth Score 40-59",
+        result: "Wealth Score 40-70",
         recommendation:
-          "Fair. Reduce discretionary spending allocating more to savings and debt repayment as possible.",
+          "Fair - Needs improvement. High expenses or debt.",
+      };
+    } else if (score >= 0 && score < 40) {
+      return {
+        result: "Wealth Score 0-40",
+        recommendation:
+          "Poor - Financial stress, low savings or high obligations.",
       };
     } else {
       return {
-        result: "Wealth Score 0-39",
+        result: "Wealth Score < 0",
         recommendation:
-          "Rethink your approach. Decrease any discretionary income possible. Apply any extra toward debt payoff & savings.",
+          "Critical - Expenses and debts exceed your income and savings",
       };
     }
   };
