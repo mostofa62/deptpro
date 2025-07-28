@@ -1,65 +1,59 @@
-import { useEffect, useRef, useState, useContext } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import UserOne from '../images/user/user-01.png';
+import { useEffect, useRef, useState, useContext } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import UserOne from "../images/user/user-01.png";
 const url = process.env.NEXT_PUBLIC_API_URL;
-import axios from 'axios';
+import axios from "axios";
 
 import { useRouter } from "next/navigation";
-import useAuth from '@/app/hooks/useAuth';
+import useAuth from "@/app/hooks/useAuth";
 
 const DropdownUser = () => {
-
-  
   //logout user
   const authContext = useAuth();
-  const {isLoggedIn} = authContext;
-  const router = useRouter()
-  let Loguser:any = authContext.role;
-  let urlSuffix = 'member-logoutpg';
-  let redirect = '/member';
+  const { isLoggedIn } = authContext;
+  const router = useRouter();
+  let Loguser: any = authContext.role;
+  let urlSuffix = "member-logoutpg";
+  let redirect = "/";
 
   const [displayName, setDisplayName] = useState("");
 
-  useEffect(()=>{
-    if(authContext.displayName){
+  useEffect(() => {
+    if (authContext.displayName) {
       setDisplayName(authContext.displayName);
     }
-  },[authContext.displayName])
+  }, [authContext.displayName]);
 
-  const logoutHandler = async()=>{
-    
-    await axios.post(`${url}${urlSuffix}`, 
-    {token:authContext.token }, {
-    
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }
-) .then(function (response) {
-      authContext.logout();
-      router.push(redirect);
-    
-})
-.catch(function (error) {
-  //console.log(error);
-});
-
-
-
+  const logoutHandler = async () => {
+    await axios
+      .post(
+        `${url}${urlSuffix}`,
+        { token: authContext.token },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then(function (response) {
+        authContext.logout();
+        router.push(redirect);
+      })
+      .catch(function (error) {
+        //console.log(error);
+      });
   };
 
-  
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
 
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
-  
+
   //if (typeof window !== 'undefined') {
   //Loguser = localStorage.getItem('Loguser');
   //}
-  
+
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
@@ -72,8 +66,8 @@ const DropdownUser = () => {
         return;
       setDropdownOpen(false);
     };
-    document.addEventListener('click', clickHandler);
-    return () => document.removeEventListener('click', clickHandler);
+    document.addEventListener("click", clickHandler);
+    return () => document.removeEventListener("click", clickHandler);
   });
 
   // close if the esc key is pressed
@@ -82,20 +76,20 @@ const DropdownUser = () => {
       if (!dropdownOpen || keyCode !== 27) return;
       setDropdownOpen(false);
     };
-    document.addEventListener('keydown', keyHandler);
-    return () => document.removeEventListener('keydown', keyHandler);
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
   });
 
   return (
     <div className="relative">
       <Link
         ref={trigger}
-        onClick={(e:any) =>{
+        onClick={(e: any) => {
           e.preventDefault();
-          setDropdownOpen(!dropdownOpen)
+          setDropdownOpen(!dropdownOpen);
         }}
         className="flex items-center gap-4"
-        href={'/member/dashboard'}
+        href={"/member/dashboard"}
       >
         <span className="hidden text-right lg:block">
           {/*
@@ -116,7 +110,7 @@ const DropdownUser = () => {
 
         <svg
           className={`fill-current sm:block text-white ${
-            dropdownOpen ? 'rotate-180' : ''
+            dropdownOpen ? "rotate-180" : ""
           }`}
           width="12"
           height="8"
@@ -139,38 +133,37 @@ const DropdownUser = () => {
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
         className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke shadow-default bg-white dark:border-strokedark dark:bg-boxdark ${
-          dropdownOpen === true ? 'block' : 'hidden'
+          dropdownOpen === true ? "block" : "hidden"
         }`}
       >
         {
-        <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
-          
-          <li>
-            <Link
-              href={'/member/profile'}
-              className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out  hover:text-[#0a4a82] lg:text-base"
-            >
-              <svg
-                className="fill-current"
-                width="22"
-                height="22"
-                viewBox="0 0 22 22"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+          <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
+            <li>
+              <Link
+                href={"/member/profile"}
+                className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out  hover:text-[#0a4a82] lg:text-base"
               >
-                <path
-                  d="M11 9.62499C8.42188 9.62499 6.35938 7.59687 6.35938 5.12187C6.35938 2.64687 8.42188 0.618744 11 0.618744C13.5781 0.618744 15.6406 2.64687 15.6406 5.12187C15.6406 7.59687 13.5781 9.62499 11 9.62499ZM11 2.16562C9.28125 2.16562 7.90625 3.50624 7.90625 5.12187C7.90625 6.73749 9.28125 8.07812 11 8.07812C12.7188 8.07812 14.0938 6.73749 14.0938 5.12187C14.0938 3.50624 12.7188 2.16562 11 2.16562Z"
-                  fill=""
-                />
-                <path
-                  d="M17.7719 21.4156H4.2281C3.5406 21.4156 2.9906 20.8656 2.9906 20.1781V17.0844C2.9906 13.7156 5.7406 10.9656 9.10935 10.9656H12.925C16.2937 10.9656 19.0437 13.7156 19.0437 17.0844V20.1781C19.0094 20.8312 18.4594 21.4156 17.7719 21.4156ZM4.53748 19.8687H17.4969V17.0844C17.4969 14.575 15.4344 12.5125 12.925 12.5125H9.07498C6.5656 12.5125 4.5031 14.575 4.5031 17.0844V19.8687H4.53748Z"
-                  fill=""
-                />
-              </svg>
-              My Profile
-            </Link>
-          </li>
-          {/*
+                <svg
+                  className="fill-current"
+                  width="22"
+                  height="22"
+                  viewBox="0 0 22 22"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M11 9.62499C8.42188 9.62499 6.35938 7.59687 6.35938 5.12187C6.35938 2.64687 8.42188 0.618744 11 0.618744C13.5781 0.618744 15.6406 2.64687 15.6406 5.12187C15.6406 7.59687 13.5781 9.62499 11 9.62499ZM11 2.16562C9.28125 2.16562 7.90625 3.50624 7.90625 5.12187C7.90625 6.73749 9.28125 8.07812 11 8.07812C12.7188 8.07812 14.0938 6.73749 14.0938 5.12187C14.0938 3.50624 12.7188 2.16562 11 2.16562Z"
+                    fill=""
+                  />
+                  <path
+                    d="M17.7719 21.4156H4.2281C3.5406 21.4156 2.9906 20.8656 2.9906 20.1781V17.0844C2.9906 13.7156 5.7406 10.9656 9.10935 10.9656H12.925C16.2937 10.9656 19.0437 13.7156 19.0437 17.0844V20.1781C19.0094 20.8312 18.4594 21.4156 17.7719 21.4156ZM4.53748 19.8687H17.4969V17.0844C17.4969 14.575 15.4344 12.5125 12.925 12.5125H9.07498C6.5656 12.5125 4.5031 14.575 4.5031 17.0844V19.8687H4.53748Z"
+                    fill=""
+                  />
+                </svg>
+                My Profile
+              </Link>
+            </li>
+            {/*
           <li>
             <Link
               href="#"
@@ -218,10 +211,12 @@ const DropdownUser = () => {
             </Link>
           </li>
         */}
-      
-        </ul>
-      }
-        <button onClick={logoutHandler} className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-[#0a4a82] lg:text-base">
+          </ul>
+        }
+        <button
+          onClick={logoutHandler}
+          className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-[#0a4a82] lg:text-base"
+        >
           <svg
             className="fill-current"
             width="22"

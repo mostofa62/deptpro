@@ -44,8 +44,8 @@ const Sidebar = ({
 
   let Loguser: any = authCtx.role;
   let urlSuffix =
-    Loguser && parseInt(Loguser) < 10 ? "admin-logout" : "member-logout";
-  let redirect = Loguser && parseInt(Loguser) < 10 ? "/admin" : "/member";
+    Loguser && parseInt(Loguser) < 10 ? "admin-logoutpg" : "member-logoutpg";
+  let redirect = Loguser && parseInt(Loguser) < 10 ? "/admin" : "/";
 
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
@@ -793,9 +793,6 @@ const Sidebar = ({
                     );
                   }}
                 </SidebarLinkGroup>
-                
-                
-                
 
                 <li key={50}>
                   <Link
@@ -850,7 +847,7 @@ const Sidebar = ({
                             />
                           </svg>
                         </Link>
-                        
+
                         <div
                           className={`translate transform overflow-hidden ${
                             !open && "hidden"
@@ -949,7 +946,6 @@ const Sidebar = ({
                             </li>
                           </ul>
                         </div>
-                        
                       </React.Fragment>
                     );
                   }}
@@ -1071,7 +1067,7 @@ const Sidebar = ({
             <ul className="flex items-center justify-center gap-2.5 py-2 capitalize w-full bg-white bg-opacity-60 absolute bottom-0 left-0 rounded-t-lg border-t border-[#A7DAF0] backdrop-blur-md">
               <li key={1}>
                 <Link
-                  href={"/"}
+                  href={"/member/dashboard"}
                   className="flex items-center text-sm font-semibold md:font-medium duration-300 ease-in-out   hover:text-[#43ACD6]"
                 >
                   Home

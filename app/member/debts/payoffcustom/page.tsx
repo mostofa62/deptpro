@@ -33,9 +33,7 @@ import {
   DragEndEvent,
   closestCenter,
 } from "@dnd-kit/core";
-import {
-  restrictToVerticalAxis,
-} from "@dnd-kit/modifiers";
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 
 import { SortableContext, arrayMove, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -66,7 +64,7 @@ const Debt = () => {
   const authCtx = useAuth();
   const userid = authCtx.userId;
   const [tableData, setTableData] = useState<DataRow[]>([]);
-  
+
   const [totalPages, setTotalPages] = useState(0);
   const [pageCount, setPageCount] = useState(0);
 
@@ -82,34 +80,34 @@ const Debt = () => {
 
   const moveRow = (fromIndex: number, toIndex: number) => {
     if (toIndex < 0 || toIndex >= tableData.length) return;
-  
+
     const newData = arrayMove(tableData, fromIndex, toIndex);
-  
+
     // Get source and destination rows in new position
-    const sourceRow = newData[toIndex];        // Moved row
+    const sourceRow = newData[toIndex]; // Moved row
     const destinationRow = newData[fromIndex]; // Swapped-with row
-  
+
     // Swap their custom_payoff_order
     [sourceRow.custom_payoff_order, destinationRow.custom_payoff_order] = [
       destinationRow.custom_payoff_order,
       sourceRow.custom_payoff_order,
     ];
-  
+
     setTableData(newData);
-  
+
     const rowsToUpdate = [
       {
         id: sourceRow.id,
         custom_payoff_order: sourceRow.custom_payoff_order,
-        name:sourceRow.name
+        name: sourceRow.name,
       },
       {
         id: destinationRow.id,
         custom_payoff_order: destinationRow.custom_payoff_order,
-        name:destinationRow.name
+        name: destinationRow.name,
       },
     ];
-  
+
     axios
       .post(`${url}update-payoff-orderpg`, rowsToUpdate)
       .then((res) => {
@@ -118,8 +116,6 @@ const Debt = () => {
       })
       .catch((err) => console.error("Error updating payoff order:", err));
   };
-  
-  
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -161,7 +157,7 @@ const Debt = () => {
       header: "",
       cell: ({ row }) => {
         const index = tableData.findIndex((r) => r.id === row.original.id);
-    
+
         return (
           <div className="flex gap-2">
             <button
@@ -169,26 +165,50 @@ const Debt = () => {
               disabled={index === 0}
               className="text-sm text-[#43acd6] font-bold disabled:opacity-50"
             >
-              <svg width={15} height={15} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="size-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+              <svg
+                width={15}
+                height={15}
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={3}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"
+                />
               </svg>
-
             </button>
             <button
               onClick={() => moveRow(index, index + 1)}
               disabled={index === tableData.length - 1}
               className="text-sm text-[#43acd6] font-bold disabled:opacity-50"
             >
-              <svg width={15} height={15} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="size-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
+              <svg
+                width={15}
+                height={15}
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={3}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"
+                />
               </svg>
-
             </button>
           </div>
         );
       },
     },
-    
+
     /*{ accessorKey: "custom_payoff_order", header: "Order" },*/
     { accessorKey: "name", header: "Name" },
     { accessorKey: "debt_type", header: "Debt Type" },
@@ -288,12 +308,12 @@ const Debt = () => {
           {
             id: sourceRow.id,
             custom_payoff_order: sourceRow.custom_payoff_order,
-            name:sourceRow.name
+            name: sourceRow.name,
           },
           {
             id: destinationRow.id,
             custom_payoff_order: destinationRow.custom_payoff_order,
-            name:destinationRow.name
+            name: destinationRow.name,
           },
         ];
         axios
@@ -301,22 +321,19 @@ const Debt = () => {
           .then((response) => {
             //console.log(response.data.message);
             toast.success(response.data.message);
-            
           })
           .catch((error) => {
             console.error("Error updating payoff order:", error);
           });
 
-          //handleDragEnd(event);
-          setActiveId(null);
-          setOverId(null);
+        //handleDragEnd(event);
+        setActiveId(null);
+        setOverId(null);
       }
     }
   };
 
   const rows = table.getRowModel().rows;
-
-
 
   return (
     <DefaultLayout>
@@ -333,17 +350,18 @@ const Debt = () => {
         />
 
         <div className="mt-10 p-2 flex flex-col gap-5">
-          <DndContext 
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          modifiers={[restrictToVerticalAxis]}
-          onDragStart={(event) => {
-            setActiveId(Number(event.active.id));
-          }}
-          onDragOver={(event) => {
-            setOverId(Number(event.over?.id));
-          }} 
-          onDragEnd={handleDragEnd}>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            modifiers={[restrictToVerticalAxis]}
+            onDragStart={(event) => {
+              setActiveId(Number(event.active.id));
+            }}
+            onDragOver={(event) => {
+              setOverId(Number(event.over?.id));
+            }}
+            onDragEnd={handleDragEnd}
+          >
             <SortableContext items={tableData.map((row) => row.id)}>
               {isMobile || isTab ? (
                 <div className="flex flex-col gap-3">
@@ -521,7 +539,6 @@ const SortableRow: React.FC<{
     </tr>
   );
 };
-
 
 const SortableDiv: React.FC<{
   row: Row<DataRow>;
