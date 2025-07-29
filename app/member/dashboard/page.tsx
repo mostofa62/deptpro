@@ -71,6 +71,7 @@ export default function DashBoard() {
     debt_total_balance: 0,
     total_net_income: 0,
     total_wealth: 0,
+    bill_paid_total:0,
     total_saving: 0,
     debt_to_wealth: 0,
     credit_ratio: 0,
@@ -185,7 +186,7 @@ export default function DashBoard() {
                 <div className="w-full md:w-[14%] flex items-center justify-center">
                   <ProgressBarTwo
                     progress={30}
-                    amount={transactioData.total_wealth}
+                    amount={transactioData.bill_paid_total}
                     title="monthly bill"
                     progressColor="#fe992c"
                   />
