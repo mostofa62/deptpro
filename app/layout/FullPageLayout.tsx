@@ -56,7 +56,7 @@ const FullPageLayout = ({ children }: DefaultLayoutProps) => {
 
           {/* <!-- ===== Main Content Start ===== --> */}
           <main>
-            <div className="sm:mx-auto md:max-w-screen-2xl sm:p-4 md:p-6 2xl:p-10 sm:flex sm:justify-center sm:items-center">
+            <div className="sm:mx-auto md:max-w-screen-2xl xl:mx-auto sm:p-4 md:px-15 md:py-6 lg:px-10 lg:py-5 xl:px-8 xl:py-5 2xl:px-10 2xl:py-5">
               <UseAuthRoute>{children}</UseAuthRoute>
             </div>
           </main>

@@ -86,7 +86,7 @@ export function middleware(request: NextRequest) {
       }
       if (url.pathname.startsWith('/member') && url.pathname !== '/member') {
         const isRegistration = url.pathname.endsWith('registration');
-        const targetPath = isRegistration ? '/member/registration' : '/member';
+        const targetPath = isRegistration ? '/registration' : '/member';
 
         if (url.pathname !== targetPath) {
           url.pathname = targetPath;

@@ -112,8 +112,8 @@ const Login = () => {
 
   return (
     <FullPageLayout>
-      <div className="sm:flex sm:items-center sm:justify-center p-1.5">
-        <div className="lmd:h-[calc(100vh-8rem)] md:h-[calc(100vh-12rem)] lg:h-[calc(100vh-12rem)] flex items-stretch sm:rounded-[50px] sm:my-[5%]  sm:shadow-[0_0_50px_rgba(0,0,0,0.3)]">
+      
+        <div className="lmd:h-[calc(100vh-8rem)] md:h-[calc(100vh-12rem)] lg:h-screen flex items-stretch sm:rounded-[50px] sm:my-[5%]  sm:shadow-[0_0_50px_rgba(0,0,0,0.3)]">
           <div className="hidden lmd:block lg:block w-full xl:block xl:w-1/2 rounded-l-[50px]">
             <div className="flex h-full items-center justify-center px-10">
               <div className="h-65 w-65  rounded-full flex items-center justify-center bg-white">
@@ -131,10 +131,10 @@ const Login = () => {
             <div className="hidden text-[#E69A52] w-1.5"></div>
           </div>
 
-          <div className="w-full xl:w-1/2 bg-white h-[calc(100vh-4rem)] sm:h-auto rounded-xl sm:rounded-l-none  sm:rounded-r-[50px] md:rounded-r-[50px] shadow-[0_0_50px_rgba(0,0,0,0.3)]">
-            <div className="flex flex-col items-center sm:mt-8 gap-2.5 sm:gap-1 w-full  sm:p-10.5 xl:p-12.5">
+          <div className="w-full xl:w-1/2 bg-white h-[100vh] sm:h-auto rounded-xl sm:rounded-l-none  sm:rounded-r-[50px] md:rounded-r-[50px] shadow-[0_0_50px_rgba(0,0,0,0.3)] flex">
+            <div className="flex flex-col md:justify-center sm:mt-8 gap-2.5 sm:gap-1 w-full  sm:p-10.5 xl:p-12.5">
               <div className="sm:hidden w-full rounded-md flex items-center justify-center h-40 bg-[#43ACD6]">
-                <div className="h-35 w-35  rounded-full bg-white flex items-center justify-center shadow-[0_0_50px_rgba(0,0,0,0.3)]">
+                <div className="w-40 aspect-square rounded-full bg-white flex items-center justify-center shadow-[0_0_50px_rgba(0,0,0,0.3)]">
                   <a href="/">
                     <Image src={Logo} alt={app_name} height={100} />
                   </a>
@@ -292,15 +292,15 @@ const Login = () => {
               />
 
               <Link
-                className="top-8 sm:top-4 lmd:top-12 relative text-[18px] sm:text-md text-center capitalize font-bold text-[#43ACD6]"
-                href="/member/registration"
+                className="mt-5 sm:mt-5 md:mt-6 lmd:mt-8 lg:mt-10 text-[18px] sm:text-md text-center capitalize font-bold text-[#43ACD6]"
+                href="/registration"
               >
                 signup
               </Link>
             </div>
           </div>
         </div>
-      </div>
+      
     </FullPageLayout>
   );
 };

@@ -293,7 +293,7 @@ const Registration = () => {
 
               <Link
                 className="top-1 ml-[20%] relative text-md font-bold  text-[#0a4a82]"
-                href="/member"
+                href="/"
               >
                 Already Registerd, Login
               </Link>
