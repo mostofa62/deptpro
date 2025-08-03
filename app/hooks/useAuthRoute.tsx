@@ -1,66 +1,55 @@
 "use client";
 import useAuth from "./useAuth";
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
-import Image from 'next/image';
-import Logo from '../images/logo/logo.svg';
-import { getCookie } from 'cookies-next';
+import Image from "next/image";
+import Logo from "../images/logo/logo.svg";
+import { getCookie } from "cookies-next";
 
 import { useRouter, usePathname } from "next/navigation";
+import Loading from "../loading";
 
 interface DefaultLayoutProps {
-    children: ReactNode;
+  children: ReactNode;
 }
 const url = process.env.url;
-  
+
 //const useProtection = (path:string) => {
 const UseAuthRoute = ({ children }: DefaultLayoutProps) => {
+  const authCtx = useAuth();
+  const role: any = authCtx.role;
+  const router = useRouter();
+  const path = usePathname();
+  let redirect: any = "/";
+  let showChildren = true;
+  const isCookieSet = !!getCookie("AUTH_DATA");
 
-        
-    const authCtx = useAuth();
-    const role:any = authCtx.role;
-    const router = useRouter();
-    const path = usePathname();
-    let redirect:any = '/';
-    let showChildren = true;
-    const isCookieSet  = !!getCookie('AUTH_DATA');
+  const isLoggedIn = authCtx.isLoggedIn;
 
-    const isLoggedIn = authCtx.isLoggedIn;
-
-    
-   
-
-   
-    if(isLoggedIn && isCookieSet){
-        //alert(parseInt(role));
-        if(path == "/"){
-            //alert(path)
-            redirect = parseInt(role) < 10 ?"/admin/dashboard":"/member/dashboard";
-            showChildren=false;
-
-        }
-        //console.log(path.substring(1,4))
-        if(parseInt(role) < 10 && path.includes('member')){
-            redirect = "/admin/dashboard";
-            showChildren=false;
-
-        }
-
-        if(parseInt(role) >=10 && path.substring(1,6)=='admin'){
-            redirect = "/member/dashboard";
-            showChildren=false;
-
-        }
+  if (isLoggedIn && isCookieSet) {
+    //alert(parseInt(role));
+    if (path == "/") {
+      //alert(path)
+      redirect = parseInt(role) < 10 ? "/admin/dashboard" : "/member/dashboard";
+      showChildren = false;
     }
-    else if(isLoggedIn && !isCookieSet){
-            
-      authCtx.logout()
+    //console.log(path.substring(1,4))
+    if (parseInt(role) < 10 && path.includes("member")) {
+      redirect = "/admin/dashboard";
+      showChildren = false;
     }
-    
-    
 
-   //router.push(redirect);
+    if (parseInt(role) >= 10 && path.substring(1, 6) == "admin") {
+      redirect = "/member/dashboard";
+      showChildren = false;
+    }
+  } else if (isLoggedIn && !isCookieSet) {
+    authCtx.logout();
+  }
+
+  //router.push(redirect);/
+  /*
     const redirect_dom =<div className="dark:bg-boxdark-2 dark:text-bodydark">
       <div className="flex h-screen overflow-hidde">
         
@@ -90,14 +79,16 @@ Get me there
       </div>
      </div>
     
-       
-    
+       */
+  const redirect_dom = (
+    <div className="dark:bg-boxdark-2 dark:text-bodydark">
+      <div className="flex h-screen overflow-hidde">
+        <Loading />
+      </div>
+    </div>
+  );
 
-    return(
-        <>        
-        {showChildren ? <>{children}</>:redirect_dom}
-        </>
-    )
+  return <>{showChildren ? <>{children}</> : redirect_dom}</>;
 };
-  
+
 export default UseAuthRoute;
