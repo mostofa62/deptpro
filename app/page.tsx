@@ -112,8 +112,8 @@ const Login = () => {
 
   return (
     <FullPageLayout>
-      
-        <div className="lmd:h-[calc(100vh-8rem)] md:h-[calc(100vh-12rem)] lg:h-screen flex items-stretch sm:rounded-[50px] sm:my-[5%]  sm:shadow-[0_0_50px_rgba(0,0,0,0.3)]">
+      <div className="md:w-2/3 lg:w-2/3 lmd:w-full mx-auto">
+        <div className="lmd:h-[calc(100vh-10rem)] md:h-[calc(100vh-12rem)] lg:h-screen flex items-stretch sm:rounded-[50px] sm:my-[5%]  sm:shadow-[0_0_50px_rgba(0,0,0,0.3)]">
           <div className="hidden lmd:block lg:block w-full xl:block xl:w-1/2 rounded-l-[50px]">
             <div className="flex h-full items-center justify-center px-10">
               <div className="h-65 w-65  rounded-full flex items-center justify-center bg-white">
@@ -300,7 +300,7 @@ const Login = () => {
             </div>
           </div>
         </div>
-      
+      </div>
     </FullPageLayout>
   );
 };

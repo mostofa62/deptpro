@@ -27,6 +27,7 @@ import {
   ValidationSchema,
 } from "./RegistrationSchema";
 import CheckComponent from "@/app/components/CheckComponent";
+import Loading from "@/app/images/icon/loading";
 /*
 export const metadata = {
   title: 'Registration',
@@ -41,6 +42,8 @@ const Registration = () => {
   const isLoggedIn = authContext.isLoggedIn;
   const router = useRouter();
 
+  const [loading, setLoading] = useState(false);
+
   /*
   useEffect(()=>{
     if(isLoggedIn){
@@ -52,8 +55,10 @@ const Registration = () => {
   const [error, setError] = useState(0);
   const [errMessage, setErrMessage] = useState("");
   const user = DataSchema;
+  
 
   const handleFormSubmit = async (values: any, { resetForm }: any) => {
+    setLoading(true);
     await axios
       .post(`${url}member-registrationpg`, values.user, {
         headers: {
@@ -77,52 +82,71 @@ const Registration = () => {
         setError(0);
         setErrMessage(error);
       });
+
+      setLoading(false);
   };
 
   return (
     <FullPageLayout>
-      <div className="rounded-sm border border-stroke bg-[#f5f5f8] shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="flex flex-wrap items-center">
-          <div className="hidden w-full xl:block xl:w-1/4">
-            <div className="py-15 px-10 text-center">
-              <a className="mb-5.5 inline-block justify-center " href="/">
-                <Image
-                  src={Logo}
-                  alt={app_name}
-                  className="mx-5"
-                  height={150}
-                />
-                {/*<span className='text-[#f1e56c]'>{app_name}</span>*/}
-              </a>
+      <div className="md:w-2/3 lg:w-2/3 lmd:w-full mx-auto">
+      
+        <div className="flex items-stretch sm:rounded-[50px] sm:my-[5%]  sm:shadow-[0_0_50px_rgba(0,0,0,0.3)]">          
 
-              <span className="mt-15 inline-block"></span>
+          <div className="hidden lmd:block lg:block w-full xl:block xl:w-1/2 rounded-l-[50px]">
+            <div className="flex h-full items-center justify-center px-10">
+              <div className="h-65 w-65  rounded-full flex items-center justify-center bg-white">
+                <a href="/">
+                  <Image src={Logo} alt={app_name} height={100} />
+                </a>
+              </div>
             </div>
           </div>
 
-          <div className="w-full border-stroke dark:border-strokedark xl:w-3/4 xl:border-l-2">
-            <div className="w-3/4 ml-[10%] xl:py-4">
-              <h2 className="mb-1 font-bold  text-[#0a4a82] sm:text-[15px]">
+          <div className="hidden sm:flex sm:bg-[#E69A52] sm:w-1.5 shadow-[0_0_50px_rgba(0,0,0,0.3)]">
+            <div className="absolute mt-5 px-5 py-2 rounded-r-[50px] text-white capitalize font-semibold bg-[#43ACD6] ring-1 shadow">
+              welcome back
+            </div>
+            <div className="hidden text-[#E69A52] w-1.5"></div>
+          </div>
+
+          <div className="w-full xl:w-3/4 bg-white h-[100vh] sm:h-auto rounded-xl sm:rounded-l-none  sm:rounded-r-[50px] md:rounded-r-[50px] shadow-[0_0_50px_rgba(0,0,0,0.3)] flex">
+            <div className="flex flex-col md:justify-center sm:mt-8 gap-2.5 sm:gap-1 w-full  sm:p-10.5 xl:p-12.5">
+
+              <div className="sm:hidden w-full rounded-md flex items-center justify-center h-40 bg-[#43ACD6]">
+                <div className="w-40 aspect-square rounded-full bg-white flex items-center justify-center shadow-[0_0_50px_rgba(0,0,0,0.3)]">
+                  <a href="/">
+                    <Image src={Logo} alt={app_name} height={100} />
+                  </a>
+                </div>
+              </div>
+
+              <h2 className="capitalize text-center font-bold text-[18px] sm:text-md mt-8 lmd:mt-18 sm:mt-0 text-[#43ACD6]">
                 Registration
               </h2>
 
-              {error < 1 && errMessage.length > 1 ? (
-                <span className="my-1 py-1 px-3 font-[10px] text-[#ffffff] bg-[#32b332]">
-                  {errMessage}
-                  <span
-                    className="relative top-0 left-2 p-2 cursor-pointer"
-                    onClick={() => {
-                      setErrMessage("");
-                      setError(0);
-                    }}
-                  >
-                    x
-                  </span>
-                </span>
-              ) : (
-                <span className="my-1 font-semibold text-[#B45454]">
-                  {errMessage}
-                </span>
-              )}
+
+              <div className="h-6 lmd:my-3">
+
+                  {error < 1 && errMessage.length > 1 ? (
+                    <span className="my-1 py-1 px-3 font-[10px] text-[#ffffff] bg-[#32b332]">
+                      {errMessage}
+                      <span
+                        className="relative top-0 left-2 p-2 cursor-pointer"
+                        onClick={() => {
+                          setErrMessage("");
+                          setError(0);
+                        }}
+                      >
+                        x
+                      </span>
+                    </span>
+                  ) : (
+                    <span className="my-1 font-semibold text-[#B45454]">
+                      {errMessage}
+                    </span>
+                  )}
+
+              </div>
 
               <Formik
                 initialValues={{ user }}
@@ -140,38 +164,34 @@ const Registration = () => {
                   setFieldValue,
                   setFieldTouched,
                 }) => (
-                  <Form>
-                    <div className="mb-2">
-                      <label className="mb-2.5 block font-medium">
-                        {DataLabel.name}
-                      </label>
-                      <div className="relative">
+                  <Form className="mt-3 flex flex-col w-full px-2 sm:px-0 sm:w-auto gap-4 sm:gap-2.5 lmd:gap-5">
+                    <div className="">                     
+                      <div className="relative flex flex-col gap-2">
                         <Field
-                          className="w-full rounded-sm border border-stroke bg-transparent py-1 pl-6 pr-10 outline-none focus:border-[#0a4a82] focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-[#0a4a82]"
+                          className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-2 pr-10 outline-none focus:border-[#43ACD6] focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-[#43ACD6]"
                           type="text"
                           name="user.name"
-                          placeholder=""
+                          placeholder={DataLabel.name}
                         />
-                        {errors.user &&
-                          errors.user.name &&
-                          touched.user &&
-                          touched.user.name && (
-                            <span className="mt-3 font-semibold text-[#B45454]">
-                              {errors.user.name}
-                            </span>
-                          )}
+                        <div className="h-6">
+                          {errors.user &&
+                            errors.user.name &&
+                            touched.user &&
+                            touched.user.name && (
+                              <span className="mt-3 font-semibold text-[#B45454]">
+                                {errors.user.name}
+                              </span>
+                            )}
+                        </div>
                       </div>
                     </div>
 
-                    <div className="mb-2">
-                      <label className="mb-2.5 block font-medium">
-                        {DataLabel.email}
-                      </label>
-                      <div className="relative">
+                    <div className="">                     
+                      <div className="relative flex flex-col gap-2">
                         <Field
-                          className="w-full rounded-sm border border-stroke bg-transparent py-1 pl-6 pr-10 outline-none focus:border-[#0a4a82] focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-[#0a4a82]"
+                          className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-2 pr-10 outline-none focus:border-[#43ACD6] focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-[#43ACD6]"
                           name="user.email"
-                          placeholder="provide userid or email"
+                          placeholder={DataLabel.email}
                           onChange={(event: any) => {
                             //console.log(event.target.value)
                             handleChange("user.email")(event);
@@ -183,28 +203,28 @@ const Registration = () => {
                             }
                           }}
                         />
-                        {errors.user &&
-                          errors.user.email &&
-                          touched.user &&
-                          touched.user.email && (
-                            <span className="mt-5 font-semibold text-[#B45454]">
-                              {errors.user.email}
-                            </span>
-                          )}
+                        <div className="h-6">
+                          {errors.user &&
+                            errors.user.email &&
+                            touched.user &&
+                            touched.user.email && (
+                              <span className="mt-5 font-semibold text-[#B45454]">
+                                {errors.user.email}
+                              </span>
+                            )}
+                        </div>
                       </div>
                     </div>
 
-                    <div className="mb-2">
-                      <label className="mb-2.5 block font-medium">
-                        {DataLabel.phone}
-                      </label>
-                      <div className="relative">
+                    <div className="">                      
+                      <div className="relative flex flex-col gap-2">
                         <Field
-                          className="w-full rounded-sm border border-stroke bg-transparent py-1 pl-6 pr-10 outline-none focus:border-[#0a4a82] focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-[#0a4a82]"
+                          className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-2 pr-10 outline-none focus:border-[#43ACD6] focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-[#43ACD6]"
                           type="text"
                           name="user.phone"
-                          placeholder=""
+                          placeholder={DataLabel.phone}
                         />
+                        <div className="h-6">
                         {errors.user &&
                           errors.user.phone &&
                           touched.user &&
@@ -213,33 +233,33 @@ const Registration = () => {
                               {errors.user.phone}
                             </span>
                           )}
+                        </div>
                       </div>
                     </div>
 
-                    <div className="mb-6">
-                      <label className="mb-2.5 block font-medium">
-                        {DataLabel.password}
-                      </label>
-                      <div className="relative">
+                    <div className="">                      
+                      <div className="relative flex flex-col gap-2">
                         <Field
-                          className="w-full rounded-sm border border-stroke bg-transparent py-1 pl-6 pr-10 outline-none focus:border-[#0a4a82] focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-[#0a4a82]"
+                          className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-2 pr-10 outline-none focus:border-[#43ACD6] focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-[#43ACD6]"
                           type="password"
                           name="user.password"
-                          placeholder=""
+                          placeholder={DataLabel.password}
                         />
-                        {errors.user &&
-                          errors.user.password &&
-                          touched.user &&
-                          touched.user.password && (
-                            <span className="mt-3 font-semibold text-[#B45454]">
-                              {errors.user.password}
-                            </span>
-                          )}
+                        <div className="h-6">
+                          {errors.user &&
+                            errors.user.password &&
+                            touched.user &&
+                            touched.user.password && (
+                              <span className="mt-3 font-semibold text-[#B45454]">
+                                {errors.user.password}
+                              </span>
+                            )}
+                        </div>
                       </div>
                     </div>
 
-                    <div className="mb-6">
-                      <div className="relative">
+                    <div className="">
+                      <div className="relative top-7 lmd:top-9 flex flex-col gap-2">
                         <Field
                           component={CheckComponent}
                           name="user.disclosure"
@@ -280,27 +300,38 @@ const Registration = () => {
                       </div>
                     </div>
 
-                    <div className="mb-5 flex flex-row items-center">
-                      <input
+                    <div className="mt-5 lmd:mt-8 sm:mt-3 md:mt-10">
+                      <button
+                                              type="submit"
+                                              className="text-[18px] sm:text-md flex justify-center items-center gap-1 w-full cursor-pointer rounded-lg border  bg-[#43ACD6] p-4 text-[#f5f5f8] transition hover:bg-opacity-90 md:font-bold"
+                                            >
+                                              {loading ? (
+                                                <Loading width={50} stroke="#E69A52" />
+                                              ) : (
+                                                <span className="capitalize">register</span>
+                                              )}
+                                            </button>
+                      {/* <input
                         type="submit"
                         value="Register"
                         className="w-[50%] ml-[10%] cursor-pointer rounded-sm border border-primary bg-[#0a4a82] p-1 text-[#f5f5f8] transition hover:bg-opacity-90 md:font-medium"
-                      />
+                      /> */}
                     </div>
                   </Form>
                 )}
               />
 
               <Link
-                className="top-1 ml-[20%] relative text-md font-bold  text-[#0a4a82]"
+                className="mt-5 sm:mt-5 md:mt-6 lmd:mt-8 lg:mt-10 text-[18px] sm:text-md text-center capitalize font-bold text-[#43ACD6]"
                 href="/"
               >
-                Already Registerd, Login
+                already registerd, login
               </Link>
             </div>
           </div>
         </div>
       </div>
+      
     </FullPageLayout>
   );
 };
