@@ -57,6 +57,12 @@ interface DataRow {
   custom_payoff_order: number;
 }
 
+const SortableCardPlaceholder: React.FC<{ row: DataRow }> = ({ row }) => {
+  return (
+    <div className="rounded-xl border-4 border-dashed border-blue-300 p-4 bg-blue-50 opacity-50 w-full h-full transition-all duration-300" />
+  );
+};
+
 const SortableCardFull: React.FC<{
   row: DataRow;
   activeId: number | null;
@@ -71,34 +77,31 @@ const SortableCardFull: React.FC<{
     isDragging,
   } = useSortable({ id: row.id });
 
+  const isActive = row.id === activeId;
+  const isOver = row.id === overId;
+
   const style = {
-    transform: CSS.Transform.toString(transform)
-      ? `${CSS.Transform.toString(transform)} scale(${isDragging ? 1.05 : 1})`
-      : undefined,
-    transition: isDragging
-      ? "transform 0.15s ease-out"
-      : "transform 0.25s cubic-bezier(0.25, 1, 0.5, 1)",
-    zIndex: isDragging ? 50 : row.id === overId ? 25 : 1,
+    transform: CSS.Transform.toString(transform),
+    transition: isDragging ? "none" : transition, // No transition while dragging
+    zIndex: isDragging ? 50 : 1,
   };
+
+  // Placeholder for drop area
+  if (isOver && !isActive) return <SortableCardPlaceholder row={row} />;
 
   return (
     <div
       ref={setNodeRef}
-      style={style}
       {...attributes}
       {...listeners}
-      className={`rounded-2xl border bg-white p-4 cursor-grab active:cursor-grabbing
+      style={style}
+      className={`
+        rounded-xl border p-4 cursor-grab active:cursor-grabbing shadow-md
         transition-all duration-300 ease-out
-        ${
-          isDragging
-            ? "shadow-2xl scale-[1.03] rotate-[1deg]"
-            : "shadow-md hover:shadow-lg hover:scale-[1.01]"
-        }
-        ${row.id === activeId ? "bg-blue-500 text-white" : ""}
-        ${row.id === overId ? "bg-blue-50" : ""}
+        ${isActive ? "bg-blue-500 text-white shadow-2xl scale-105" : "bg-white"}
       `}
     >
-      <div className="flex flex-col gap-2 select-none">
+      <div className="flex flex-col gap-2">
         <div className="flex justify-between items-center mb-2">
           <div className="font-semibold text-lg">{row.name}</div>
           <span className="text-sm text-gray-500 capitalize">
@@ -108,32 +111,17 @@ const SortableCardFull: React.FC<{
 
         <div className="grid grid-cols-2 gap-2 mt-2 text-sm">
           <div>
-            <span className="font-medium">Balance:</span>{" "}
-            <span>${row.balance.toFixed(2)}</span>
+            <span className="font-medium">Balance:</span> $
+            {row.balance.toFixed(2)}
           </div>
           <div>
-            <span className="font-medium">Payment:</span>{" "}
-            <span>${row.monthly_payment.toFixed(2)}</span>
+            <span className="font-medium">Payment:</span> $
+            {row.monthly_payment.toFixed(2)}
           </div>
           <div>
-            <span className="font-medium">Interest:</span>{" "}
-            <span>${row.monthly_interest.toFixed(2)}</span>
+            <span className="font-medium">Interest:</span> $
+            {row.monthly_interest.toFixed(2)}
           </div>
-        </div>
-
-        <div className="flex justify-between mt-4">
-          <button
-            onClick={() => console.log("Move Up")}
-            className="text-xs px-3 py-1 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-600"
-          >
-            ↑ Move Up
-          </button>
-          <button
-            onClick={() => console.log("Move Down")}
-            className="text-xs px-3 py-1 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-600"
-          >
-            ↓ Move Down
-          </button>
         </div>
       </div>
     </div>
@@ -435,7 +423,7 @@ const Debt = () => {
         <div className="mt-10 p-2 flex flex-col gap-5">
           <DndContext
             sensors={sensors}
-            collisionDetection={closestCenter}
+            collisionDetection={closestCenter} // Determines the drop target
             onDragStart={(event) => setActiveId(Number(event.active.id))}
             onDragOver={(event) => setOverId(Number(event.over?.id))}
             onDragEnd={handleDragEnd}
@@ -453,10 +441,8 @@ const Debt = () => {
                 </div>
               ) : (
                 <div
-                  className={`
-          grid gap-4 p-2
-          ${isMobile ? "grid-cols-1" : isTab ? "grid-cols-2" : "grid-cols-3"}
-        `}
+                  className={`grid gap-4 p-2 transition-all duration-300
+  ${isMobile ? "grid-cols-1" : isTab ? "grid-cols-2" : "grid-cols-3"}`}
                 >
                   {tableData.map((row) => (
                     <SortableCardFull
