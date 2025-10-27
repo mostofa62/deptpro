@@ -57,6 +57,89 @@ interface DataRow {
   custom_payoff_order: number;
 }
 
+const SortableCardFull: React.FC<{
+  row: DataRow;
+  activeId: number | null;
+  overId: number | null;
+}> = ({ row, activeId, overId }) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: row.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform)
+      ? `${CSS.Transform.toString(transform)} scale(${isDragging ? 1.05 : 1})`
+      : undefined,
+    transition: isDragging
+      ? "transform 0.15s ease-out"
+      : "transform 0.25s cubic-bezier(0.25, 1, 0.5, 1)",
+    zIndex: isDragging ? 50 : row.id === overId ? 25 : 1,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className={`rounded-2xl border bg-white p-4 cursor-grab active:cursor-grabbing
+        transition-all duration-300 ease-out
+        ${
+          isDragging
+            ? "shadow-2xl scale-[1.03] rotate-[1deg]"
+            : "shadow-md hover:shadow-lg hover:scale-[1.01]"
+        }
+        ${row.id === activeId ? "bg-blue-500 text-white" : ""}
+        ${row.id === overId ? "bg-blue-50" : ""}
+      `}
+    >
+      <div className="flex flex-col gap-2 select-none">
+        <div className="flex justify-between items-center mb-2">
+          <div className="font-semibold text-lg">{row.name}</div>
+          <span className="text-sm text-gray-500 capitalize">
+            {row.debt_type}
+          </span>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2 mt-2 text-sm">
+          <div>
+            <span className="font-medium">Balance:</span>{" "}
+            <span>${row.balance.toFixed(2)}</span>
+          </div>
+          <div>
+            <span className="font-medium">Payment:</span>{" "}
+            <span>${row.monthly_payment.toFixed(2)}</span>
+          </div>
+          <div>
+            <span className="font-medium">Interest:</span>{" "}
+            <span>${row.monthly_interest.toFixed(2)}</span>
+          </div>
+        </div>
+
+        <div className="flex justify-between mt-4">
+          <button
+            onClick={() => console.log("Move Up")}
+            className="text-xs px-3 py-1 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-600"
+          >
+            ↑ Move Up
+          </button>
+          <button
+            onClick={() => console.log("Move Down")}
+            className="text-xs px-3 py-1 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-600"
+          >
+            ↓ Move Down
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Debt = () => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const isTab = useMediaQuery({ maxWidth: 900 });
@@ -353,131 +436,37 @@ const Debt = () => {
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
-            modifiers={[restrictToVerticalAxis]}
-            onDragStart={(event) => {
-              setActiveId(Number(event.active.id));
-            }}
-            onDragOver={(event) => {
-              setOverId(Number(event.over?.id));
-            }}
+            onDragStart={(event) => setActiveId(Number(event.active.id))}
+            onDragOver={(event) => setOverId(Number(event.over?.id))}
             onDragEnd={handleDragEnd}
           >
             <SortableContext items={tableData.map((row) => row.id)}>
-              {isMobile || isTab ? (
-                <div className="flex flex-col gap-3">
-                  {error && (
-                    <div className="col-span-full text-center p-4 font-normal">
-                      <span>{error}</span>
-                    </div>
-                  )}
-
-                  {loading ? (
-                    <div className="col-span-full text-center p-4 font-normal">
-                      <span>... Loading ...</span>
-                    </div>
-                  ) : (
-                    <>
-                      {table.getRowModel().rows.length > 0 ? (
-                        table
-                          .getRowModel()
-                          .rows.map((row: any) => (
-                            <SortableDiv
-                              key={row.id}
-                              row={row}
-                              getVisibleCells={() => row.getVisibleCells()}
-                            />
-                          ))
-                      ) : (
-                        <div className="col-span-full text-center p-4 font-normal">
-                          <span className="capitalize">No data found!</span>
-                        </div>
-                      )}
-                    </>
-                  )}
+              {loading ? (
+                <div className="text-center py-10 text-gray-500">
+                  Loading...
+                </div>
+              ) : error ? (
+                <div className="text-center py-10 text-red-500">{error}</div>
+              ) : tableData.length === 0 ? (
+                <div className="text-center py-10 text-gray-400">
+                  No data found!
                 </div>
               ) : (
-                <table className="tanstack-table table-auto w-full text-left">
-                  <thead>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                      <tr key={headerGroup.id}>
-                        {headerGroup.headers.map((header) => (
-                          <th
-                            className={`font-medium
-                  ${
-                    header.column.getCanSort()
-                      ? "cursor-pointer select-none"
-                      : ""
-                  }`}
-                            key={header.id}
-                            onClick={header.column.getToggleSortingHandler()}
-                          >
-                            {flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                            {{
-                              asc: " 🔼",
-                              desc: " 🔽",
-                            }[header.column.getIsSorted() as string] ?? null}
-                          </th>
-                        ))}
-                      </tr>
-                    ))}
-                  </thead>
-                  <tbody>
-                    {error && (
-                      <>
-                        <tr className="col-span-full row-span-full">
-                          <td
-                            colSpan={table.getAllColumns().length}
-                            className="col-span-full text-center w-full p-2 font-normal"
-                          >
-                            <span>{error}</span>
-                          </td>
-                        </tr>
-                      </>
-                    )}
-                    {loading ? (
-                      <>
-                        <tr className="col-span-full row-span-full">
-                          <td
-                            colSpan={table.getAllColumns().length}
-                            className="col-span-full text-center w-full p-2 font-normal"
-                          >
-                            <span>... Loading ...</span>
-                          </td>
-                        </tr>
-                      </>
-                    ) : (
-                      <>
-                        {rows.length > 0 ? (
-                          table
-                            .getRowModel()
-                            .rows.map((row) => (
-                              <SortableRow
-                                key={row.id}
-                                row={row}
-                                getVisibleCells={() => row.getVisibleCells()}
-                                activeId={activeId}
-                                overId={overId}
-                              />
-                            ))
-                        ) : (
-                          <tr className="col-span-full row-span-full">
-                            <td
-                              colSpan={table.getAllColumns().length}
-                              className="col-span-full text-center w-full p-2 font-normal"
-                            >
-                              <span className=" capitalize">
-                                No data found!
-                              </span>
-                            </td>
-                          </tr>
-                        )}
-                      </>
-                    )}
-                  </tbody>
-                </table>
+                <div
+                  className={`
+          grid gap-4 p-2
+          ${isMobile ? "grid-cols-1" : isTab ? "grid-cols-2" : "grid-cols-3"}
+        `}
+                >
+                  {tableData.map((row) => (
+                    <SortableCardFull
+                      key={row.id}
+                      row={row}
+                      activeId={activeId}
+                      overId={overId}
+                    />
+                  ))}
+                </div>
               )}
             </SortableContext>
           </DndContext>
